@@ -4,7 +4,7 @@
  * @date       2024-11-01
  * @author     Tuan Nguyen
  *
- * @brief      Header for Light Sensor driver
+ * @brief      Header file for Light Sensor driver
  *
  */
 
