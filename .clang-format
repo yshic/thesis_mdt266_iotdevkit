@@ -1,6 +1,6 @@
 # .clang-format file
 
-BasedOnStyle: Google
+BasedOnStyle: LLVM
 IndentWidth: 2
 TabWidth: 2
 UseTab: Never
@@ -28,6 +28,7 @@ ContinuationIndentWidth: 0
 KeepEmptyLinesAtTheStartOfBlocks: false
 BreakBeforeBraces: Custom
 ReflowComments: true
+IndentPPDirectives: BeforeHash
 BraceWrapping:
   AfterClass: true
   AfterControlStatement: true
