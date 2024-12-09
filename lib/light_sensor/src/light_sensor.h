@@ -1,10 +1,11 @@
 /**
  * @file       light_sensor.h
- * @version    1.0.0
+ * @license    This library is released under the MIT License
+ * @version    0.1.0
  * @date       2024-11-01
  * @author     Tuan Nguyen
  *
- * @brief      Header file for Light Sensor driver
+ * @brief      Header for Light Sensor Library
  *
  */
 
@@ -13,7 +14,11 @@
 #define LIGHT_SENSOR_H
 
 /* Includes ----------------------------------------------------------- */
+#if ARDUINO >= 100
 #include "Arduino.h"
+#else
+#include "WProgram.h"
+#endif
 
 /* Public defines ----------------------------------------------------- */
 
@@ -26,7 +31,7 @@
 /* Class Declaration -------------------------------------------------- */
 class LightSensor
 {
- public:
+public:
   /**
    * @brief  init the Light Sensor with a specified pin
    */
@@ -52,11 +57,38 @@ class LightSensor
    */
   int readAndMap(int minValue, int maxValue);
 
- private:
-  int      _pin;        /** SIG pin of the Light Sensor */
-  uint32_t sensorValue; /** Value from the sensor */
+  /**
+   * @brief Check if the light intensity is above or below a threshold.
+   *
+   * @param[in] threshold   Threshold value for light intensity.
+   *
+   * @return bool           True if light intensity is above the threshold, false otherwise.
+   */
+  bool isAboveThreshold(int threshold);
+
+  /**
+   * @brief Get the average sensor reading over a specified number of samples.
+   *
+   * @param[in] samples   Number of samples to average.
+   *
+   * @return int          The averaged sensor value.
+   */
+  int getAverageReading(int samples = 10);
+
+  /**
+   * @brief Set a callback function to trigger when light intensity crosses a threshold.
+   *
+   * @param[in] threshold Threshold for triggering the callback.
+   * @param[in] callback  Function to call when threshold is crossed.
+   */
+  void onThresholdCross(int threshold, void (*callback)());
+
+private:
+  int      _pin;                 /** SIG pin of the Light Sensor */
+  uint32_t sensorValue;          /** Value from the sensor */
+  void (*_callback)() = nullptr; /** Callback function */
 };
 
-#endif  // LIGHT_SENSOR_H
+#endif // LIGHT_SENSOR_H
 
 /* End of file -------------------------------------------------------- */
