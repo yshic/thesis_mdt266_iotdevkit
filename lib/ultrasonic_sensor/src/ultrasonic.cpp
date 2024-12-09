@@ -26,12 +26,10 @@
 
 // Constructor
 Ultrasonic::Ultrasonic(uint8_t _triggerPin, uint8_t _echoPin, unsigned long timeOut)
+    : triggerPin(_triggerPin), echoPin(_echoPin), timeout(timeOut)
 {
-  triggerPin = _triggerPin;
-  echoPin    = _echoPin;
   pinMode(triggerPin, OUTPUT);
   pinMode(echoPin, INPUT);
-  timeout = timeOut;
 }
 
 unsigned int Ultrasonic::duration()

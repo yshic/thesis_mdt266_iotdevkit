@@ -11,21 +11,21 @@
 
 /* Define to prevent recursive inclusion ------------------------------ */
 #ifndef ULTRASONIC_H
-#define ULTRASONIC_H
+  #define ULTRASONIC_H
 
-/* Includes ----------------------------------------------------------- */
-#if ARDUINO >= 100
-#include "Arduino.h"
-#else
-#include "WProgram.h"
-#endif
+  /* Includes ----------------------------------------------------------- */
+  #if ARDUINO >= 100
+    #include "Arduino.h"
+  #else
+    #include "WProgram.h"
+  #endif
 
-/* Public defines ----------------------------------------------------- */
-#define ULTRASONIC_LIB_VERSION (F("0.1.0"))
+  /* Public defines ----------------------------------------------------- */
+  #define ULTRASONIC_LIB_VERSION (F("0.1.0"))
 
-#define CM_DIVISOR             58
-#define MM_DIVISOR             5.8
-#define IN_DIVISOR             148
+  #define CM_DIVISOR             58
+  #define MM_DIVISOR             5.8
+  #define IN_DIVISOR             148
 /* Public enumerate/structure ----------------------------------------- */
 typedef enum
 {
@@ -52,7 +52,6 @@ class Ultrasonic
 private:
   uint8_t       triggerPin;
   uint8_t       echoPin;
-  unsigned long previousMicros;
   unsigned long timeout;
 
 public:
