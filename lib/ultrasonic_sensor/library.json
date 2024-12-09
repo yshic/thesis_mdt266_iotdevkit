@@ -1,0 +1,15 @@
+{
+  "name": "Ultrasonic Sensor Library",
+  "keywords": "ultrasonic, sensor, distance, HC-SR04, range, distance measurement, obstacle detection",
+  "description": "A library for interfacing with ultrasonic distance sensors such as the HC-SR04. This library simplifies the process of measuring distance using ultrasonic waves and provides an easy-to-use API for obtaining distance measurements in centimeters or inches.",
+  "authors": [
+    {
+      "name": "Tuan Nguyen",
+      "email": "tuanl799@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "version": "0.1.0",
+  "frameworks": "arduino",
+  "platforms": "*"
+}

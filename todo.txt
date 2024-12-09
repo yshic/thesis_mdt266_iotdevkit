@@ -1,0 +1,40 @@
+Advanced
+LCD 16x2                    Not yet
+Oled                        Need modification
+Servo                       Not yet
+IR Receiver + Remote        Need modification
+NeoPixel RGB                Need modification
+Scheduler???
+
+Communication
+Wifi                             Need modification
+BLE                              Need modification
+MQTT (Adafruit IO/Thingsboard)   Need modification
+RS485                            Not yet
+
+AI/TiniML
+Key Word Spotting using Edge Impulse
+
+Finished
+DHT20
+Ultrasonic Ranging
+Light sensor
+Soil Moisture sensor
+Mini fan
+Relay
+PIR sensor                  Need Documentation
+USB Switch Module
+
+
+Magic Word
+python -m esptool -p COM8 flash_id
+
+
+
+==================
+Database / AI / Web
+Health Insurance
+DKMH
+
+
+
