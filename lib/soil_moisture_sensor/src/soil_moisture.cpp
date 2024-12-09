@@ -30,14 +30,12 @@ SoilMoisture::SoilMoisture(int pin) : _pin(pin), sensorValue(0) { pinMode(_pin, 
 uint32_t SoilMoisture::read()
 {
   sensorValue = analogRead(_pin);
-  Serial.println(sensorValue);
   return sensorValue;
 }
 
 uint32_t SoilMoisture::readAndMap(int minValue, int maxValue)
 {
   // Read the raw sensor value
-  Serial.println(":::");
   sensorValue = read();
 
   // Map the sensor value from 0-1023 to a range of minValue - maxValue
