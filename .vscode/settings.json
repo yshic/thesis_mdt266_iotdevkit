@@ -1,6 +1,10 @@
 {
   "files.associations": {
     "*.embeddedhtml": "html",
-    "random": "cpp"
+    "random": "cpp",
+    "*.tcc": "cpp",
+    "array": "cpp",
+    "string": "cpp",
+    "string_view": "cpp"
   }
 }
