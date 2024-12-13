@@ -25,37 +25,46 @@
 /* Class method Definitions ---------------------------------- */
 
 // Constructor
-LightSensor::LightSensor(int pin) : _pin(pin), sensorValue(0)
+LightSensor::LightSensor(int pin) : _pin(pin)
 {
   pinMode(_pin, INPUT);
+  sensorValue[0] = 0;
+  sensorValue[1] = 0;
   // Change the ADC resolution to 12 bits
   analogReadResolution(12);
 }
 
-int LightSensor::read()
+void LightSensor::read()
 {
-  sensorValue = analogRead(_pin);
-  return sensorValue;
+  sensorValue[0] = analogRead(_pin);
+  sensorValue[1] = map(sensorValue[0], 0, 4095, 0, 100);
+  sensorValue[1] = constrain(sensorValue[1], 0, 100);
 }
 
 int LightSensor::readAndMap(int minValue, int maxValue)
 {
   // Read the raw sensor value
-  sensorValue = read();
+  read();
+
   // Map the sensor value from 0-4095 to a range of minValue - maxValue
-  int mappedValue = map(sensorValue, 0, 4095, minValue, maxValue);
-  mappedValue     = constrain(mappedValue, 0, 100);
+  int mappedValue = map(sensorValue[0], 0, 4095, minValue, maxValue);
+  mappedValue     = constrain(mappedValue, minValue, maxValue);
   return mappedValue;
 }
 
-bool LightSensor::isAboveThreshold(int threshold) { return read() > threshold; }
+int LightSensor::getLightValue() { return sensorValue[0]; }
+
+int LightSensor::getLightValuePercentage() { return sensorValue[1]; }
+
+bool LightSensor::isAboveThreshold(int threshold) { return sensorValue[0] > threshold; }
 
 int LightSensor::getAverageReading(int samples)
 {
   long total = 0;
   for (int i = 0; i < samples; i++)
   {
-    total += read();
+    read();
+    total += sensorValue[0];
     delay(10); // Small delay between readings
   }
   return total / samples;
