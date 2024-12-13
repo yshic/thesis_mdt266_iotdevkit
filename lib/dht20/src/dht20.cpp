@@ -136,7 +136,7 @@ dht20_error_t DHT20::readTargetData(uint32_t *data)
   return DHT20_OK; // Success
 }
 
-int DHT20::readTempAndHumidity(float *data)
+dht20_error_t DHT20::readTempAndHumidity()
 {
   uint32_t target_val[2] = {0};
   uint32_t cnt           = 0;
@@ -147,7 +147,7 @@ int DHT20::readTempAndHumidity(float *data)
     cnt++;
     if (cnt > 3)
     {
-      return -1;
+      return DHT20_TIMEOUT;
     }
   }
   // wait for data ready。
@@ -157,14 +157,20 @@ int DHT20::readTempAndHumidity(float *data)
     delay(50);
     if (cnt > 5)
     {
-      return -1;
+      return DHT20_TIMEOUT;
     }
   }
-  data[0] = target_val[0] * 9.5367431640625e-5; // equivalent to target_val[0] * 100.0 / 1024 / 1024 but more
-                                                // optimize by not using division
-  data[1] = target_val[1] * 1.9073486328125e-4 - 50; // target_val[1] * 200.0 / 1024 / 1024 - 50
-  return 0;
+  sensorValue[HUMIDITY_INDEX] =
+  target_val[0] * 9.5367431640625e-5; // equivalent to target_val[0] * 100.0 / 1024 / 1024 but more
+                                      // optimize by not using division
+  sensorValue[TEMPERATURE_INDEX] =
+  target_val[1] * 1.9073486328125e-4 - 50; // target_val[1] * 200.0 / 1024 / 1024 - 50
+  return DHT20_OK;
 }
+
+float DHT20::getHumidity() { return sensorValue[HUMIDITY_INDEX]; }
+
+float DHT20::getTemperature() { return sensorValue[TEMPERATURE_INDEX]; }
 
 /****************************************************/
 /* I2C Interface */
