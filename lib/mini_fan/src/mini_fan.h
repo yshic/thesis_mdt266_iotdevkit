@@ -11,14 +11,14 @@
 
 /* Define to prevent recursive inclusion ------------------------------ */
 #ifndef MINI_FAN_H
-#define MINI_FAN_H
+  #define MINI_FAN_H
 
-/* Includes ----------------------------------------------------------- */
-#if ARDUINO >= 100
-#include "Arduino.h"
-#else
-#include "WProgram.h"
-#endif
+  /* Includes ----------------------------------------------------------- */
+  #if ARDUINO >= 100
+    #include "Arduino.h"
+  #else
+    #include "WProgram.h"
+  #endif
 
 /* Public defines ----------------------------------------------------- */
 
@@ -100,9 +100,9 @@ public:
   bool isFanRunning();
 
 private:
-  int  _pin;   /** SIG pin of the Mini Fan */
-  int  _speed; /** Speed of the fan */
-  bool status; /**< Status of the fan (ON/OFF) */
+  int  _pin;      /** SIG pin of the Mini Fan */
+  int  _speed[2]; /** Speed of the fan */
+  bool status;    /**< Status of the fan (ON/OFF) */
 };
 
 #endif // MINI_FAN_H

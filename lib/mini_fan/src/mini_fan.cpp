@@ -28,13 +28,16 @@
 MiniFan::MiniFan(int pin) : _pin(pin)
 {
   pinMode(_pin, OUTPUT);
-  _speed = 0;
-  status = false;
+  _speed[0] = 0;
+  _speed[1] = 0;
+  status    = false;
 }
 
 void MiniFan::setFanSpeed(int speed)
 {
-  _speed = speed;
+  _speed[0]      = speed;
+  int percentage = map(_speed[0], 0, 255, 0, 100);
+  _speed[1]      = constrain(percentage, 0, 100);
 
   // Change status of the fan
   if (_speed > 0)
@@ -47,41 +50,42 @@ void MiniFan::setFanSpeed(int speed)
   }
 
   // Spin the fan
-  analogWrite(_pin, _speed);
+  analogWrite(_pin, _speed[0]);
 }
 
 void MiniFan::setFanSpeedPercentage(int percentage)
 {
   // Ensure the input percentage is within 0-100
   percentage = constrain(percentage, 0, 100);
+  _speed[1]  = percentage;
 
   // Map the percentage to a range of 0-255
-  int pwmValue = map(percentage, 0, 100, 0, 255);
+  _speed[0] = map(percentage, 0, 100, 0, 255);
 
   // Set the fan speed using the mapped PWM value
-  analogWrite(_pin, pwmValue);
+  analogWrite(_pin, _speed[0]);
 
   // Update the fan state
-  status = (pwmValue > 0);
+  status = (_speed[0] > 0);
 }
 
-int MiniFan::getFanSpeed() { return _speed; }
+int MiniFan::getFanSpeed() { return _speed[0]; }
 
-int MiniFan::getFanSpeedPercentage()
-{
-  int percentage = map(_speed, 0, 255, 0, 100);
-  return constrain(percentage, 0, 100);
-}
+int MiniFan::getFanSpeedPercentage() { return _speed[1]; }
 
 void MiniFan::toggleFan()
 {
   if (isFanRunning())
   {
     digitalWrite(_pin, LOW);
+    _speed[0] = 0;
+    _speed[1] = 0;
   }
   else
   {
     digitalWrite(_pin, HIGH);
+    _speed[0] = 255;
+    _speed[1] = 100;
   }
   status = !status;
 }
