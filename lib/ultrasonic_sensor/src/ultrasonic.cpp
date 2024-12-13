@@ -49,21 +49,40 @@ unsigned int Ultrasonic::duration()
   return duration;
 }
 
-unsigned int Ultrasonic::read(char unit)
+void Ultrasonic::read(char unit)
 {
   switch (unit)
   {
     case 'c':
-      return duration() / CM_DIVISOR;
+      distance[CM_INDEX] = duration() / CM_DIVISOR;
       break;
     case 'm':
-      return duration() / MM_DIVISOR;
+      distance[MM_INDEX] = duration() / MM_DIVISOR;
       break;
     case 'i':
-      return duration() / IN_DIVISOR;
+      distance[IN_INDEX] = duration() / IN_DIVISOR;
+      break;
+    default:
+      break;
+  }
+}
+
+unsigned int Ultrasonic::getDistance(char unit)
+{
+  switch (unit)
+  {
+    case 'c':
+      return distance[CM_INDEX];
+      break;
+    case 'm':
+      return distance[MM_INDEX];
+      break;
+    case 'i':
+      return distance[IN_INDEX];
       break;
     default:
       return -1;
+      break;
   }
 }
 

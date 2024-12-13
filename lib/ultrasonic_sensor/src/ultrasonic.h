@@ -26,6 +26,10 @@
   #define CM_DIVISOR             58
   #define MM_DIVISOR             5.8
   #define IN_DIVISOR             148
+
+  #define CM_INDEX               0
+  #define MM_INDEX               1
+  #define IN_INDEX               2
 /* Public enumerate/structure ----------------------------------------- */
 typedef enum
 {
@@ -52,7 +56,26 @@ class Ultrasonic
 private:
   uint8_t       triggerPin;
   uint8_t       echoPin;
+  unsigned int  distance[3];
   unsigned long timeout;
+
+  /**
+   * @brief  Measures the time duration of the echo received by the ultrasonic sensor.
+   *
+   * This function resets the trigger pin, sends a pulse to initiate measurement, and reads the duration
+   * of the echo signal received, which corresponds to the distance measured by the ultrasonic sensor.
+   *
+   * @param[in]     None
+   * @param[out]    None
+   * @param[inout]  None
+   *
+   * @attention  Ensure that the trigger pin and echo pin are correctly connected and configured.
+   *             This function may block for a short period while waiting for the echo signal.
+   *
+   * @return
+   *  - The duration of the echo signal in microseconds.
+   */
+  unsigned int duration();
 
 public:
   /**
@@ -77,24 +100,6 @@ public:
   Ultrasonic(uint8_t _triggerPin, uint8_t _echoPin, unsigned long timeOut = 20000UL);
 
   /**
-   * @brief  Measures the time duration of the echo received by the ultrasonic sensor.
-   *
-   * This function resets the trigger pin, sends a pulse to initiate measurement, and reads the duration
-   * of the echo signal received, which corresponds to the distance measured by the ultrasonic sensor.
-   *
-   * @param[in]     None
-   * @param[out]    None
-   * @param[inout]  None
-   *
-   * @attention  Ensure that the trigger pin and echo pin are correctly connected and configured.
-   *             This function may block for a short period while waiting for the echo signal.
-   *
-   * @return
-   *  - The duration of the echo signal in microseconds.
-   */
-  unsigned int duration();
-
-  /**
    * @brief  Reads the distance measured by the ultrasonic sensor in the specified unit.
    *
    * This function reads the time duration from the ultrasonic sensor and converts it
@@ -114,7 +119,9 @@ public:
    *
    *  - -1: If an invalid unit is provided.
    */
-  unsigned int read(char unit);
+  void read(char unit);
+
+  unsigned int getDistance(char unit);
 
   /**
    * @brief  Sets the timeout value for the ultrasonic sensor's pulse measurement.
