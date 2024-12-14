@@ -1,0 +1,43 @@
+@startuml Libraries
+package "Peripherals" {
+    package "Display" {
+        - LCD 16x2 (I²C)
+        - OLED (I²C)
+    }
+
+    package "Actuators" {
+        - Servo (PWM)
+        - Mini Fan (PWM)
+        - Relay Module (GPIO)
+        - USB Switch Module (GPIO)
+    }
+
+    package "Sensors" {
+        - IR Receiver + Remote (GPIO)
+        - Temperature & Humidity Sensor (I²C)
+        - Ultrasonic Sensor (GPIO)
+        - Light Sensor (Analog)
+        - Soil Moisture Sensor (Analog)
+        - PIR Sensor (GPIO)
+    }
+
+    package "Indicators" {
+        - NeoPixel RGB (GPIO)
+    }
+
+    package "Input Devices" {
+        - Button (GPIO)
+    }
+
+    package "Connectivity" {
+        - Wi-Fi (Communication)
+        - BLE (Communication)
+        - MQTT (Protocol)
+    }
+}
+
+package "Software Libraries" {
+    - Scheduler (Task Management)
+    - TinyML (Machine Learning)
+}
+@enduml

@@ -25,31 +25,36 @@
 /* Class method Definitions ---------------------------------- */
 
 // Constructor
-PIRSensor::PIRSensor(uint8_t pin) : _pin(pin), _lastMotionTime(0), _debounceTime(0), _motionCallback(nullptr)
+PIRSensor::PIRSensor(uint8_t pin)
+    : _pin(pin), status(0), _lastMotionTime(0), _debounceTime(0), _motionCallback(nullptr)
 {
   pinMode(_pin, INPUT);
 }
 
-int PIRSensor::read()
+void PIRSensor::read()
 {
   unsigned long currentTime = millis();
   if ((currentTime - _lastMotionTime) < _debounceTime)
   {
-    return 0; // Debounce in effect, ignore motion
+    status = 0;
+    return; // Debounce in effect, ignore motion
   }
 
   int motionDetected = digitalRead(_pin);
   if (motionDetected == HIGH)
   {
+    status          = 1;
     _lastMotionTime = currentTime;
     if (_motionCallback)
     {
       _motionCallback();
     }
-    return 1;
+    return;
   }
-  return 0;
+  status = 0;
 }
+
+uint8_t PIRSensor::getStatus() { return status; }
 
 int PIRSensor::setDebounceTime(unsigned long debounceTime)
 {
@@ -114,6 +119,7 @@ int PIRSensor::setSensitivity(int level)
 
 int PIRSensor::reset()
 {
+  status          = 0;
   _lastMotionTime = 0;
   _debounceTime   = 0;
   _motionCallback = nullptr;

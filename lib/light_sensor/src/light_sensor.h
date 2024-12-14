@@ -11,14 +11,14 @@
 
 /* Define to prevent recursive inclusion ------------------------------ */
 #ifndef LIGHT_SENSOR_H
-#define LIGHT_SENSOR_H
+  #define LIGHT_SENSOR_H
 
-/* Includes ----------------------------------------------------------- */
-#if ARDUINO >= 100
-#include "Arduino.h"
-#else
-#include "WProgram.h"
-#endif
+  /* Includes ----------------------------------------------------------- */
+  #if ARDUINO >= 100
+    #include "Arduino.h"
+  #else
+    #include "WProgram.h"
+  #endif
 
 /* Public defines ----------------------------------------------------- */
 
@@ -45,7 +45,7 @@ public:
    * @return     int            The analog value read from the sensor.
    *
    */
-  int read();
+  void read();
 
   /**
    * @brief Read the sensor and map its raw analog values to a range (e.g., 0-100).
@@ -67,6 +67,24 @@ public:
   bool isAboveThreshold(int threshold);
 
   /**
+   * @brief Get the analog reading.
+   *
+   * @param[in] None
+   *
+   * @return int          The analog sensor value.
+   */
+  int getLightValue();
+
+  /**
+   * @brief Get the percentage value converted from the analog reading.
+   *
+   * @param[in] None
+   *
+   * @return int          The percentage sensor value.
+   */
+  int getLightValuePercentage();
+
+  /**
    * @brief Get the average sensor reading over a specified number of samples.
    *
    * @param[in] samples   Number of samples to average.
@@ -85,7 +103,7 @@ public:
 
 private:
   int      _pin;                 /** SIG pin of the Light Sensor */
-  uint32_t sensorValue;          /** Value from the sensor */
+  uint32_t sensorValue[2];       /** Value from the sensor */
   void (*_callback)() = nullptr; /** Callback function */
 };
 

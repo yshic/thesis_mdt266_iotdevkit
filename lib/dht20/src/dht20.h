@@ -32,7 +32,7 @@
 /* Public enumerate/structure ----------------------------------------- */
 typedef enum
 {
-  DHT20_OK = 0,           /* No error */
+  DHT20_OK = 0,       /* No error */
   DHT20_ERR,          /* Generic error */
   DHT20_ERR_INIT,     /* Initialization error */
   DHT20_ERR_RESET,    /* Reset error */
@@ -74,20 +74,40 @@ public:
    * The raw sensor values are then converted to floating-point temperature and humidity values.
    *
    * @param[in]     None
-   * @param[out]    data  Pointer to a buffer where the temperature and humidity data will be stored.
-   *                      - `data[0]` will hold the temperature data.
-   *                      - `data[1]` will hold the humidity data.
    *
    * @attention  Ensure that the sensor is correctly connected and that I2C communication is functioning.
    *             This function may block for short periods while waiting for the sensor to be ready and for
    * data to be available.
    *
    * @return
-   *  - 0: Success
+   *  - `DHT20_OK`: Success
    *
-   *  - -1: Error, if the sensor is not ready or data is not available after multiple attempts.
+   *  - `DHT20_TIMEOUT`: Timeout, the sensor is not ready or data is not available after multiple attempts.
    */
-  int readTempAndHumidity(float *data);
+  dht20_error_t readTempAndHumidity();
+
+  /**
+   * @brief  Get humidity data from the DHT20 sensor.
+   *
+   * @param[in]     None
+   *
+   * @return   int      The humidity data
+   *
+   */
+  float getHumidity();
+
+  /**
+   * @brief  Get temperature data from the DHT20 sensor.
+   *
+   * @param[in]     None
+   *
+   * @return   int      The temperature data
+   *
+   */
+  float getTemperature();
+
+private:
+  float sensorValue[2];
 
   /**
    * @brief  Reads temperature and humidity data from the DHT20 sensor.
@@ -155,7 +175,6 @@ public:
    */
   int reset();
 
-private:
   /**
    * @brief  Resets a specific register of the DHT20 sensor.
    *

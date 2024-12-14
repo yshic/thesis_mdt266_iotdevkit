@@ -11,14 +11,14 @@
 
 /* Define to prevent recursive inclusion ------------------------------ */
 #ifndef SOIL_MOISTURE_H
-#define SOIL_MOISTURE_H
+  #define SOIL_MOISTURE_H
 
-/* Includes ----------------------------------------------------------- */
-#if ARDUINO >= 100
-#include "Arduino.h"
-#else
-#include "WProgram.h"
-#endif
+  /* Includes ----------------------------------------------------------- */
+  #if ARDUINO >= 100
+    #include "Arduino.h"
+  #else
+    #include "WProgram.h"
+  #endif
 
 /* Public defines ----------------------------------------------------- */
 
@@ -45,7 +45,7 @@ public:
    * @return     uint32_t            The analog value read from the sensor.
    *
    */
-  uint32_t read();
+  void read();
 
   /**
    * @brief Read the sensor and map its raw analog values to a range (e.g., 0-100).
@@ -58,15 +58,6 @@ public:
   uint32_t readAndMap(int minValue, int maxValue);
 
   /**
-   * @brief Convert value to percentage
-   *
-   * @param[in]   value              Value to be converted
-   *
-   * @return      unit8_t           The percentage
-   */
-  uint8_t convertToPercentage(int value);
-
-  /**
    * @brief Check if the moisture level is above or below a threshold.
    *
    * @param[in] threshold   Threshold value for moisture.
@@ -74,6 +65,24 @@ public:
    * @return bool           True if moisture is above the threshold, false otherwise.
    */
   bool isAboveThreshold(int threshold);
+
+  /**
+   * @brief Get the analog sensor value
+   *
+   * @param[in]   None
+   *
+   * @return      int           The analog sensor value
+   */
+  int getMoisture();
+
+  /**
+   * @brief Get the percentage sensor value from the analog value
+   *
+   * @param[in]   None
+   *
+   * @return      int           The percentage value
+   */
+  int getMoisturePercentage();
 
   /**
    * @brief Get the average sensor reading over a specified number of samples.
@@ -94,7 +103,7 @@ public:
 
 private:
   int      _pin;                 /** SIG pin of the Soil Moisture Sensor */
-  uint32_t sensorValue;          /** Value from the sensor */
+  uint32_t sensorValue[2];       /** Value from the sensor */
   void (*_callback)() = nullptr; /** Callback function */
 };
 

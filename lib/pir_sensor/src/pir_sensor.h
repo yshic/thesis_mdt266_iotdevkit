@@ -53,11 +53,21 @@ public:
    *
    * @param[in]   None
    *
-   * @return
+   * @return      None
+   *
+   */
+  void read();
+
+  /**
+   * @brief  Get the current motion status from the PIR sensor.
+   *
+   * @param[in]   None
+   *
+   * @return  uint8_t
    *  - 1: Motion detected
    *  - 0: No motion detected
    */
-  int read();
+  uint8_t getStatus();
 
   /**
    * @brief  Sets a debounce time to avoid false motion triggers.
@@ -134,6 +144,7 @@ public:
 
 private:
   uint8_t       _pin;            /**< Pin connected to the PIR sensor output. */
+  uint8_t       status;          /** Status of the detection */
   unsigned long _lastMotionTime; /**< Timestamp of the last detected motion. */
   unsigned long _debounceTime;   /**< Debounce time in milliseconds. */
   void (*_motionCallback)();     /**< Callback function for motion detection. */
