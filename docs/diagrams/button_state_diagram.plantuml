@@ -1,0 +1,20 @@
+@startuml button
+[*] --> STATE_IDLE
+
+STATE_IDLE : Default state when the button is not being pressed
+STATE_IDLE --> STATE_BUTTON_DOWN : Button Pressed
+
+STATE_BUTTON_DOWN : Button is pressed and debounced
+STATE_BUTTON_DOWN --> STATE_HOLDING : Hold duration elapsed
+STATE_BUTTON_DOWN --> STATE_WAIT_FOR_SECOND_CLICK : Button Released
+
+STATE_WAIT_FOR_SECOND_CLICK : Waiting for a second click for double click
+STATE_WAIT_FOR_SECOND_CLICK --> STATE_BUTTON_DOWN : Button Pressed Again
+STATE_WAIT_FOR_SECOND_CLICK --> STATE_IDLE : Double Click Timeout
+
+STATE_HOLDING : Button is being held
+STATE_HOLDING --> STATE_HOLD_RELEASE : Button Released
+
+STATE_HOLD_RELEASE : Hold event completed
+STATE_HOLD_RELEASE --> STATE_IDLE
+@enduml
