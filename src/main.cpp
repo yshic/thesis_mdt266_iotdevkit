@@ -44,7 +44,7 @@
   #define USE_SCHEDULER
 
   // Connectivity
-  #define BLE_ENABLE
+  // #define BLE_ENABLE
   #define WIFI_ENABLE
   #define MQTT_ENABLE
 
@@ -71,7 +71,7 @@
   #define AIO_SERVER     "io.adafruit.com"
   #define AIO_SERVERPORT 1883
   #define AIO_USERNAME   "yshic"
-  #define AIO_KEY        ""
+  #define AIO_KEY        "aio_mtOJ25rUqKW2h1s159boohMbqWmF"
 #endif
 
 /* Forward function declaration --------------------------------------- */
@@ -82,6 +82,7 @@ void lcdScreenStateUpdate(bool increment);
 
 // Connectivity
 void bleSetup();
+void checkBLECredentials();
 void wifiConnect();
 void wifiCheck();
 void mqttConnect();
@@ -181,12 +182,22 @@ bool               mqttFirstConnection = true;
 BLECharacteristic *ssidCharacteristic;
 BLECharacteristic *passwordCharacteristic;
 
-// Wi-Fi Credentials
+  // Wi-Fi Credentials
+  #ifdef BLE_ENABLE
+char ssid[32]     = "";
+char password[32] = "";
+  #else
 char ssid[32]     = "Chi Huong";
 char password[32] = "nlhtnlat";
+  #endif
+
+bool wifiCredentialsReady = false;
 
   // Tasks
   #ifdef USE_SCHEDULER
+    #ifdef BLE_ENABLE
+Task tCheckBLECredentials(1000, TASK_FOREVER, &checkBLECredentials);
+    #endif
 Task tWifiConnect(TASK_IMMEDIATE, TASK_ONCE, &wifiConnect);   // Run once at start
 Task tMqttConnect(TASK_IMMEDIATE, TASK_ONCE, &mqttConnect);   // Run once after established WiFi connection
 Task tLcd(500, TASK_FOREVER, &lcdUpdate);                     // Update every 0.5s
@@ -246,12 +257,48 @@ void bleSetup()
   // Attach callbacks
   ssidCharacteristic->setCallbacks(new SSIDCallback());
   passwordCharacteristic->setCallbacks(new PasswordCallback());
-
   pService->start();
   BLEAdvertising *pAdvertising = BLEDevice::getAdvertising();
-  pAdvertising->start();
-  lcd.clear();
-  lcd.print("BLE READY");
+  pAdvertising->addServiceUUID("c3251bfb-5e94-4a01-93e7-6cb22b839cac");
+  pAdvertising->setScanResponse(true);
+  pAdvertising->setMinPreferred(0x06);
+  pAdvertising->setMinPreferred(0x12);
+  BLEDevice::startAdvertising();
+  Serial.println("Characteristic defined! Now you can read it in your phone!");
+}
+
+void checkBLECredentials()
+{
+  // Check if BLE has provided valid credentials
+  if (strlen(ssid) > 0 && strlen(password) > 0 && !wifiCredentialsReady)
+  {
+    WiFi.begin(ssid, password);
+    unsigned long       startAttemptTime      = millis();
+    const unsigned long wifiValidationTimeout = 5000; // 5 seconds timeout for validation
+
+    // Try connecting for a short period
+    while (WiFi.status() != WL_CONNECTED)
+    {
+      delay(100); // Allow system tasks to run
+      if (millis() - startAttemptTime >= wifiValidationTimeout)
+      {
+        // Clear the invalid credentials and notify user
+        memset(ssid, 0, sizeof(ssid));
+        memset(password, 0, sizeof(password));
+        return;
+      }
+    }
+
+    // Wi-Fi credentials validated
+    WiFi.disconnect(); // Disconnect for main Wi-Fi connection later
+    wifiCredentialsReady = true;
+
+    // Proceed with Wi-Fi connection
+    ts.addTask(tWifiConnect);
+    tWifiConnect.enable();
+    tCheckBLECredentials.disable();
+    ts.deleteTask(tCheckBLECredentials);
+  }
 }
 #endif
 
@@ -538,9 +585,17 @@ void setup()
 #ifdef MAIN
   #ifdef USE_SCHEDULER
   ts.init();
-    #ifdef WIFI_ENABLE
+    #ifdef BLE_ENABLE
+  bleSetup();
+  ts.addTask(tCheckBLECredentials);
+  tCheckBLECredentials.enable();
+    #endif
+
+    #ifndef BLE_ENABLE
+      #ifdef WIFI_ENABLE
   ts.addTask(tWifiConnect);
   tWifiConnect.enable();
+      #endif
     #endif
   #endif
 
