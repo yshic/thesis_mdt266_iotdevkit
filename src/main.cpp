@@ -44,7 +44,7 @@
   #define USE_SCHEDULER
 
   // Connectivity
-  // #define BLE_ENABLE
+  #define BLE_ENABLE
   #define WIFI_ENABLE
   #define MQTT_ENABLE
 
@@ -63,15 +63,13 @@
 // #define RELAY_MODULE
 // #define USB_SWITCH_MODULE
 
-  #define NUMBER_OF_FEEDS 10
-
 // Input
   #define BUTTON_MODULE
 
   #define AIO_SERVER     "io.adafruit.com"
   #define AIO_SERVERPORT 1883
   #define AIO_USERNAME   "yshic"
-  #define AIO_KEY        "aio_mtOJ25rUqKW2h1s159boohMbqWmF"
+  #define AIO_KEY        ""
 #endif
 
 /* Forward function declaration --------------------------------------- */
@@ -123,7 +121,6 @@ typedef enum
   LCD_SCREEN_MOISTURE,
   LCD_SCREEN_PIR,
   LCD_SCREEN_MINIFAN,
-  LCD_SCREEN_PUMPING,
   LCD_SCREEN_COUNT // Total number of states
 } lcd_screen_state_t;
   #endif
@@ -293,6 +290,7 @@ void checkBLECredentials()
     WiFi.disconnect(); // Disconnect for main Wi-Fi connection later
     wifiCredentialsReady = true;
 
+    lcd.clear();
     // Proceed with Wi-Fi connection
     ts.addTask(tWifiConnect);
     tWifiConnect.enable();
