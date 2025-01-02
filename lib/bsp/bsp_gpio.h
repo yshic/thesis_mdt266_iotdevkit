@@ -80,6 +80,15 @@ void bspAnalogReadResolution(uint8_t bits);
 void bspAnalogWrite(uint8_t pin, int value);
 void bspAnalogWriteResolution(uint8_t bits);
 
+/* Advanced I/O ------------------------------------------------------- */
+
+unsigned long bspGpioPulseIn(uint8_t pin, uint8_t state, unsigned long timeout);
+unsigned long bspGpioPulseInLong(uint8_t pin, uint8_t state, unsigned long timeout);
+uint8_t       bspGpioShiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder);
+void          bspGpioShiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val);
+void          bspGpioTone(uint8_t pin, unsigned int frequency, unsigned long duration);
+void          bspGpioNoTone(uint8_t pin);
+
 #endif /* BSP_GPIO_H */
 
 /* End of file -------------------------------------------------------- */

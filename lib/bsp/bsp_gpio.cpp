@@ -77,5 +77,29 @@ void bspGpioAnalogReadResolution(uint8_t bits) { analogReadResolution(bits); }
 void bspGpioAnalogWrite(uint8_t pin, int value) { analogWrite(pin, value); }
 void bspGpioAnalogWriteResolution(uint8_t bits) { analogWriteResolution(bits); }
 
+/* Advanced I/O ------------------------------------------------------- */
+
+unsigned long bspGpioPulseIn(uint8_t pin, uint8_t state, unsigned long timeout)
+{
+  return pulseIn(pin, state, timeout);
+}
+unsigned long bspGpioPulseInLong(uint8_t pin, uint8_t state, unsigned long timeout)
+{
+  return pulseInLong(pin, state, timeout);
+}
+uint8_t bspGpioShiftIn(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder)
+{
+  return shiftIn(dataPin, clockPin, bitOrder);
+}
+void bspGpioShiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val)
+{
+  shiftOut(dataPin, clockPin, bitOrder, val);
+}
+void bspGpioTone(uint8_t pin, unsigned int frequency, unsigned long duration)
+{
+  tone(pin, frequency, duration);
+}
+void bspGpioNoTone(uint8_t pin) { noTone(pin); }
+
 /* Private definitions ------------------------------------------------ */
 /* End of file -------------------------------------------------------- */
