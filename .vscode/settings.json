@@ -5,6 +5,9 @@
     "*.tcc": "cpp",
     "array": "cpp",
     "string": "cpp",
-    "string_view": "cpp"
+    "string_view": "cpp",
+    "esp32-hal.h": "c",
+    "soc_caps.h": "c",
+    "esp32-hal-gpio.h": "c"
   }
 }
