@@ -29,6 +29,22 @@
 /* Public function prototypes ----------------------------------------- */
 
 /**
+ * @brief This function set the mode of a GPIO pin
+ *
+ * @param[in] pin      GPIO Pin
+ * @param[in] mode     GPIO Mode
+ *
+ * @attention  None
+ *
+ * @return
+ *
+ * None
+ */
+void bspGpioPinMode(uint8_t pin, uint8_t mode);
+
+/* Digital Pin -------------------------------------------------------- */
+
+/**
  * @brief This function write the state of a digital pin
  *
  * @param[in] pin           GPIO Pin
@@ -57,19 +73,12 @@ void bspGpioDigitalWrite(uint8_t pin, uint8_t state);
  */
 bool bspGpioDigitalRead(uint8_t pin);
 
-/**
- * @brief This function set the mode of a GPIO pin
- *
- * @param[in] pin      GPIO Pin
- * @param[in] mode     GPIO Mode
- *
- * @attention  None
- *
- * @return
- *
- * None
- */
-void bspPinMode(uint8_t pin, uint8_t mode);
+/* Analog Pin -------------------------------------------------------- */
+
+int  bspAnalogRead(uint8_t pin);
+void bspAnalogReadResolution(uint8_t bits);
+void bspAnalogWrite(uint8_t pin, int value);
+void bspAnalogWriteResolution(uint8_t bits);
 
 #endif /* BSP_GPIO_H */
 
