@@ -79,11 +79,11 @@ void bspGpioAnalogWriteResolution(uint8_t bits) { analogWriteResolution(bits); }
 
 /* Advanced I/O ------------------------------------------------------- */
 
-unsigned long bspGpioPulseIn(uint8_t pin, uint8_t state, unsigned long timeout)
+unsigned long bspGpioPulseIn(uint8_t pin, uint8_t state, unsigned long timeout = 1000000UL)
 {
   return pulseIn(pin, state, timeout);
 }
-unsigned long bspGpioPulseInLong(uint8_t pin, uint8_t state, unsigned long timeout)
+unsigned long bspGpioPulseInLong(uint8_t pin, uint8_t state, unsigned long timeout = 1000000UL)
 {
   return pulseInLong(pin, state, timeout);
 }
