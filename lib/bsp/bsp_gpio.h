@@ -238,6 +238,9 @@ void bspGpioTone(uint8_t pin, unsigned int frequency, unsigned long duration);
  */
 void bspGpioNoTone(uint8_t pin);
 
+
+
+
 #endif /* BSP_GPIO_H */
 
 /* End of file -------------------------------------------------------- */
