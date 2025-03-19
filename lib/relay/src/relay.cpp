@@ -11,6 +11,7 @@
 
 /* Includes ----------------------------------------------------------- */
 #include "relay.h"
+#include "bsp_gpio.h"
 
 /* Private defines ---------------------------------------------------- */
 
@@ -25,18 +26,18 @@
 /* Class method Definitions ---------------------------------- */
 
 // Constructor
-Relay::Relay(int pin) : _pin(pin), status(false) { pinMode(_pin, OUTPUT); }
+Relay::Relay(int pin) : _pin(pin), status(false) { bspGpioPinMode(_pin, OUTPUT); }
 
 void Relay::on()
 {
   status = true;
-  digitalWrite(_pin, HIGH);
+  bspGpioDigitalWrite(_pin, HIGH);
 }
 
 void Relay::off()
 {
   status = false;
-  digitalWrite(_pin, LOW);
+  bspGpioDigitalWrite(_pin, LOW);
 }
 
 void Relay::toggle()

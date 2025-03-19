@@ -11,6 +11,7 @@
 
 /* Includes ----------------------------------------------------------- */
 #include "usb_switch.h"
+#include "bsp_gpio.h"
 
 /* Private defines ---------------------------------------------------- */
 
@@ -26,12 +27,12 @@
 
 UsbSwitch::UsbSwitch(uint8_t pin1, uint8_t pin2) : _pin1(pin1), _pin2(pin2)
 {
-  pinMode(_pin1, OUTPUT);
-  pinMode(_pin2, OUTPUT);
+  bspGpioPinMode(_pin1, OUTPUT);
+  bspGpioPinMode(_pin2, OUTPUT);
   status[0] = false;
   status[1] = false;
-  analogWrite(_pin1, 0);
-  analogWrite(_pin2, 0);
+  bspGpioAnalogWrite(_pin1, 0);
+  bspGpioAnalogWrite(_pin2, 0);
 }
 
 void UsbSwitch::setOutputValue(uint8_t outputNo, int value)
@@ -40,12 +41,12 @@ void UsbSwitch::setOutputValue(uint8_t outputNo, int value)
 
   if (outputNo == 1 || outputNo == 0)
   {
-    analogWrite(_pin1, value);
+    bspGpioAnalogWrite(_pin1, value);
     status[0] = (value > 0);
   }
   if (outputNo == 2 || outputNo == 0)
   {
-    analogWrite(_pin2, value);
+    bspGpioAnalogWrite(_pin2, value);
     status[1] = (value > 0);
   }
 }
@@ -60,9 +61,9 @@ void UsbSwitch::setOutputValuePercentage(uint8_t outputNo, int percentage)
 int UsbSwitch::getOutputValue(uint8_t outputNo)
 {
   if (outputNo == 1)
-    return analogRead(_pin1);
+    return bspGpioAnalogRead(_pin1);
   else if (outputNo == 2)
-    return analogRead(_pin2);
+    return bspGpioAnalogRead(_pin2);
 
   return 0;
 }
@@ -78,12 +79,12 @@ void UsbSwitch::toggleOutput(uint8_t outputNo)
   if (outputNo == 1 || outputNo == 0)
   {
     status[0] = !status[0];
-    analogWrite(_pin1, status[0] ? 255 : 0);
+    bspGpioAnalogWrite(_pin1, status[0] ? 255 : 0);
   }
   if (outputNo == 2 || outputNo == 0)
   {
     status[1] = !status[1];
-    analogWrite(_pin2, status[1] ? 255 : 0);
+    bspGpioAnalogWrite(_pin2, status[1] ? 255 : 0);
   }
 }
 

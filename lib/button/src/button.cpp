@@ -1,4 +1,5 @@
 #include "button.h"
+#include "bsp_gpio.h"
 
 ButtonHandler::ButtonHandler(int pin, bool isActiveLow, bool usePullup)
     : buttonPin(pin), activeLow(isActiveLow), debounceDuration(50), doubleClickInterval(400),
@@ -8,7 +9,7 @@ ButtonHandler::ButtonHandler(int pin, bool isActiveLow, bool usePullup)
 {
   if (pin >= 0)
   {
-    pinMode(pin, usePullup ? INPUT_PULLUP : INPUT);
+    bspGpioPinMode(pin, usePullup ? INPUT_PULLUP : INPUT);
   }
 }
 
@@ -84,7 +85,7 @@ button_handler_error_t ButtonHandler::attachHoldReleaseCallback(ButtonCallback c
 
 void ButtonHandler::update()
 {
-  bool          isButtonPressed = digitalRead(buttonPin) == (activeLow ? LOW : HIGH);
+  bool          isButtonPressed = bspGpioDigitalRead(buttonPin) == (activeLow ? LOW : HIGH);
   unsigned long currentTime     = millis();
 
   // FSM for state handling

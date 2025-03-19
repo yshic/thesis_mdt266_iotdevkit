@@ -11,6 +11,7 @@
 
 /* Includes ----------------------------------------------------------- */
 #include "pir_sensor.h"
+#include "bsp_gpio.h"
 
 /* Private defines ---------------------------------------------------- */
 
@@ -28,7 +29,7 @@
 PIRSensor::PIRSensor(uint8_t pin)
     : _pin(pin), status(0), _lastMotionTime(0), _debounceTime(0), _motionCallback(nullptr)
 {
-  pinMode(_pin, INPUT);
+  bspGpioPinMode(_pin, INPUT);
 }
 
 void PIRSensor::read()
@@ -40,7 +41,7 @@ void PIRSensor::read()
     return; // Debounce in effect, ignore motion
   }
 
-  int motionDetected = digitalRead(_pin);
+  int motionDetected = bspGpioDigitalRead(_pin);
   if (motionDetected == HIGH)
   {
     status          = 1;
@@ -71,7 +72,7 @@ int PIRSensor::isMotionContinuous(unsigned long duration)
   unsigned long startTime = millis();
   while (millis() - startTime < duration)
   {
-    if (digitalRead(_pin) == LOW)
+    if (bspGpioDigitalRead(_pin) == LOW)
     {
       return 0; // No continuous motion detected
     }
