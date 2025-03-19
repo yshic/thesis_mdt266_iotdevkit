@@ -11,6 +11,7 @@
 
 /* Includes ----------------------------------------------------------- */
 #include "light_sensor.h"
+#include "bsp_gpio.h"
 
 /* Private defines ---------------------------------------------------- */
 
@@ -27,16 +28,16 @@
 // Constructor
 LightSensor::LightSensor(int pin) : _pin(pin)
 {
-  pinMode(_pin, INPUT);
+  bspGpioPinMode(_pin, INPUT);
   sensorValue[0] = 0;
   sensorValue[1] = 0;
   // Change the ADC resolution to 12 bits
-  analogReadResolution(12);
+  bspGpioAnalogReadResolution(12);
 }
 
 void LightSensor::read()
 {
-  sensorValue[0] = analogRead(_pin);
+  sensorValue[0] = bspGpioAnalogRead(_pin);
   sensorValue[1] = map(sensorValue[0], 0, 4095, 0, 100);
   sensorValue[1] = constrain(sensorValue[1], 0, 100);
 }

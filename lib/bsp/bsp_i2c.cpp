@@ -110,5 +110,59 @@ bsp_i2c_error_t bspI2CFlush(void)
   return BSP_I2C_OK;
 }
 
+bsp_i2c_error_t bspI2CReadByte(uint8_t &byte, int address)
+{
+  int cnt = 0;
+  i2cWire->requestFrom(address, 1);
+  while (1 != i2cWire->available())
+  {
+    cnt++;
+    if (cnt >= 10)
+    {
+      return BSP_I2C_ERR_READ;
+    }
+    delay(1);
+  }
+  byte = i2cWire->read();
+  return BSP_I2C_OK;
+}
+
+bsp_i2c_error_t bspI2CReadBytes(uint8_t *bytes, uint32_t len, int address)
+{
+  int cnt = 0;
+  i2cWire->requestFrom(address, len);
+  while (len != i2cWire->available())
+  {
+    cnt++;
+    if (cnt >= 10)
+    {
+      return BSP_I2C_ERR_READ;
+    }
+    delay(1);
+  }
+  for (int i = 0; i < len; i++)
+  {
+    bytes[i] = i2cWire->read();
+  }
+  return BSP_I2C_OK;
+}
+
+bsp_i2c_error_t bspI2CWriteByte(uint8_t byte, int address)
+{
+  i2cWire->beginTransmission(address);
+  i2cWire->write(byte);
+  return (i2cWire->endTransmission() == 0) ? BSP_I2C_OK : BSP_I2C_ERR_WRITE;
+}
+
+bsp_i2c_error_t bspI2CWriteBytes(uint8_t *bytes, uint32_t len, int address)
+{
+  i2cWire->beginTransmission(address);
+  for (int i = 0; i < len; i++)
+  {
+    i2cWire->write(bytes[i]);
+  }
+  return (i2cWire->endTransmission() == 0) ? BSP_I2C_OK : BSP_I2C_ERR_WRITE;
+}
+
 /* Private definitions ------------------------------------------------ */
 /* End of file -------------------------------------------------------- */

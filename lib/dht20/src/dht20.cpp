@@ -11,6 +11,7 @@
 
 /* Includes ----------------------------------------------------------- */
 #include "dht20.h"
+#include "bsp_i2c.h"
 
 /* Private defines ---------------------------------------------------- */
 
@@ -61,17 +62,17 @@ bool DHT20::_resetRegister(uint8_t reg)
 {
   uint8_t values[3]    = {0};
   uint8_t resetParam[] = {reg, 0x00, 0x00};
-  if (i2cWriteBytes(resetParam, sizeof(resetParam)))
+  if (bspI2CWriteBytes(resetParam, sizeof(resetParam), DHT20_I2C_ADDR))
   {
     return false;
   }
   delay(5);
 
-  i2cReadBytes(values, sizeof(values));
+  bspI2CReadBytes(values, sizeof(values), DHT20_I2C_ADDR);
   delay(10);
 
   values[0] = (0xB0 | reg);
-  if (i2cWriteBytes(values, sizeof(values)))
+  if (bspI2CWriteBytes(values, sizeof(values), DHT20_I2C_ADDR))
   {
     return false;
   }
@@ -86,7 +87,7 @@ int DHT20::readStatus(void)
   int     returnVal = 0;
   uint8_t status    = 0;
 
-  returnVal = i2cReadByte(status);
+  returnVal = bspI2CReadByte(status, DHT20_I2C_ADDR);
   if (returnVal)
   {
     Serial.println("Failed to read byte\n");
@@ -107,7 +108,7 @@ dht20_error_t DHT20::readTargetData(uint32_t *data)
   uint8_t configParams[] = {0xAC, 0x33, 0x00}; // Command to start measurement
 
   // Send the measurement command
-  if (i2cWriteBytes(configParams, sizeof(configParams)) != DHT20_OK)
+  if (bspI2CWriteBytes(configParams, sizeof(configParams), DHT20_I2C_ADDR) != BSP_I2C_OK)
   {
     return DHT20_ERR_I2C_WRITE; // Write failed
   }
@@ -115,7 +116,7 @@ dht20_error_t DHT20::readTargetData(uint32_t *data)
   delay(80); // Wait for measurement to complete
 
   // Read 6 bytes from the sensor
-  if (i2cReadBytes(bytes, sizeof(bytes)) != DHT20_OK)
+  if (bspI2CReadBytes(bytes, sizeof(bytes), DHT20_I2C_ADDR) != BSP_I2C_OK)
   {
     return DHT20_ERR_I2C_READ; // Read failed
   }
@@ -171,62 +172,6 @@ dht20_error_t DHT20::readTempAndHumidity()
 float DHT20::getHumidity() { return sensorValue[HUMIDITY_INDEX]; }
 
 float DHT20::getTemperature() { return sensorValue[TEMPERATURE_INDEX]; }
-
-/****************************************************/
-/* I2C Interface */
-dht20_error_t DHT20::i2cReadByte(uint8_t &byte)
-{
-  int cnt = 0;
-  Wire.requestFrom(DHT20_I2C_ADDR, 1);
-  while (1 != Wire.available())
-  {
-    cnt++;
-    if (cnt >= 10)
-    {
-      return DHT20_ERR_I2C_READ;
-    }
-    delay(1);
-  }
-  byte = Wire.read();
-  return DHT20_OK;
-}
-
-dht20_error_t DHT20::i2cReadBytes(uint8_t *bytes, uint32_t len)
-{
-  int cnt = 0;
-  Wire.requestFrom(DHT20_I2C_ADDR, len);
-  while (len != Wire.available())
-  {
-    cnt++;
-    if (cnt >= 10)
-    {
-      return DHT20_ERR_I2C_READ;
-    }
-    delay(1);
-  }
-  for (int i = 0; i < len; i++)
-  {
-    bytes[i] = Wire.read();
-  }
-  return DHT20_OK;
-}
-
-dht20_error_t DHT20::i2cWriteBytes(uint8_t *bytes, uint32_t len)
-{
-  Wire.beginTransmission(DHT20_I2C_ADDR);
-  for (int i = 0; i < len; i++)
-  {
-    Wire.write(bytes[i]);
-  }
-  return (Wire.endTransmission() == 0) ? DHT20_OK : DHT20_ERR_I2C_WRITE;
-}
-
-dht20_error_t DHT20::i2cWriteByte(uint8_t byte)
-{
-  Wire.beginTransmission(DHT20_I2C_ADDR);
-  Wire.write(byte);
-  return (Wire.endTransmission() == 0) ? DHT20_OK : DHT20_ERR_I2C_WRITE;
-}
 
 /* Private function prototypes ---------------------------------------- */
 

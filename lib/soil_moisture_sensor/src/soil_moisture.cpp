@@ -11,6 +11,7 @@
 
 /* Includes ----------------------------------------------------------- */
 #include "soil_moisture.h"
+#include "bsp_gpio.h"
 
 /* Private defines ---------------------------------------------------- */
 
@@ -27,14 +28,14 @@
 // Constructor
 SoilMoisture::SoilMoisture(int pin) : _pin(pin)
 {
-  pinMode(_pin, INPUT);
+  bspGpioPinMode(_pin, INPUT);
   sensorValue[0] = 0;
   sensorValue[1] = 0;
 }
 
 void SoilMoisture::read()
 {
-  sensorValue[0] = analogRead(_pin);
+  sensorValue[0] = bspGpioAnalogRead(_pin);
   sensorValue[1] = map(sensorValue[0], 0, 1023, 0, 100);
   sensorValue[1] = constrain(sensorValue[1], 0, 100);
 }
