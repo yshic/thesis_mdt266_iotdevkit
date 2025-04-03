@@ -12,7 +12,6 @@
 /* Define to prevent recursive inclusion ------------------------------ */
 #ifndef BLE_TASK_H
   #define BLE_TASK_H
-
   /* Includes ----------------------------------------------------------- */
   #if ARDUINO >= 100
     #include "Arduino.h"
@@ -31,7 +30,6 @@
 /* Funtions Declaration -------------------------------------------------- */
 void bleTask(void *pvParameters);
 void bleSetup();
-
 #endif // BLE_TASK_H
 
 /* End of file -------------------------------------------------------- */

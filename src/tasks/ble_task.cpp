@@ -16,6 +16,7 @@
 #include <BLEServer.h>
 #include <BLEUtils.h>
 
+#ifndef ENTERPRISE_WIFI
 /* Private defines ---------------------------------------------------- */
 
 /* Private enumerate/structure ---------------------------------------- */
@@ -84,5 +85,6 @@ void bleTask(void *pvParameters)
 }
 
 void bleSetup() { xTaskCreate(bleTask, "BLETask", 4096, NULL, 1, NULL); }
+#endif // ENTERPRISE_WIFI
 
 /* End of file -------------------------------------------------------- */
