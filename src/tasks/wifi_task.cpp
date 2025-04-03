@@ -15,6 +15,10 @@
 #include <LCD-I2C.h>
 #include <WiFi.h>
 
+#ifdef ENTERPRISE_WIFI
+  #include <esp_wpa2.h>
+#endif
+
 /* Private defines ---------------------------------------------------- */
 
 /* Private enumerate/structure ---------------------------------------- */
@@ -24,6 +28,11 @@
 /* Public variables --------------------------------------------------- */
 
 /* Private variables -------------------------------------------------- */
+#ifdef ENTERPRISE_WIFI
+const char *_ssid     = "HCMUT01";
+const char *_username = "tuan.nguyen4416";
+const char *_password = "#$vl#$vl0456";
+#endif
 
 /* Task definitions ------------------------------------------- */
 void wifiTask(void *pvParameters)
@@ -32,8 +41,19 @@ void wifiTask(void *pvParameters)
   {
     if (WiFi.status() != WL_CONNECTED)
     {
+      WiFi.mode(WIFI_STA);
+#if defined(ENTERPRISE_WIFI)
+      // WPA2-Enterprise Config
+      esp_wifi_sta_wpa2_ent_set_identity((uint8_t *) _username, strlen(_username));
+      esp_wifi_sta_wpa2_ent_set_username((uint8_t *) _username, strlen(_username));
+      esp_wifi_sta_wpa2_ent_set_password((uint8_t *) _password, strlen(_password));
+      esp_wifi_sta_wpa2_ent_enable();
+      WiFi.begin(_ssid);
+#elif defined(BLE_MODULE)
       WiFi.begin(ssid, password);
-
+#else
+      WiFi.begin("Chi Huong", "nlhtnlat");
+#endif // defined(ENTERPRISE_WIFI)
       // Set a timeout (10 seconds)
       unsigned long startTime = millis();
       while (WiFi.status() != WL_CONNECTED && millis() - startTime < 10000)
@@ -43,26 +63,35 @@ void wifiTask(void *pvParameters)
 
       if (WiFi.status() == WL_CONNECTED)
       {
+        wifiConnected = true;
         Serial.println("Connected to WiFi");
+#ifdef LCD_MODULE
         lcd.clear();
         lcd.print("WiFi connected");
         lcd.setCursor(0, 1);
         lcd.print("IP: ");
         lcd.print(WiFi.localIP());
+#endif // LCD_MODULE
       }
       else
       {
+        wifiConnected = false;
         Serial.println("Failed to connect to WiFi. Retrying...");
+#ifdef LCD_MODULE
         lcd.clear();
         lcd.print("WiFi Failed");
         lcd.setCursor(0, 1);
         lcd.print("Check SSID/PW");
+#endif // LCD_MODULE
       }
     }
     vTaskDelay(10000 / portTICK_PERIOD_MS); // Retry after 10 seconds
   }
 }
 
-void wifiSetup() { xTaskCreate(wifiTask, "WiFiTask", 4096, NULL, 1, NULL); }
+void wifiSetup()
+{
+  xTaskCreatePinnedToCore(wifiTask, "WiFiTask", 4096, NULL, 1, NULL, CONFIG_ARDUINO_RUNNING_CORE);
+}
 
 /* End of file -------------------------------------------------------- */
