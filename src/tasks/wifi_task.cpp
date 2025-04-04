@@ -30,8 +30,8 @@
 /* Private variables -------------------------------------------------- */
 #ifdef ENTERPRISE_WIFI
 const char *_ssid     = "HCMUT01";
-const char *_username = "tuan.nguyen4416";
-const char *_password = "#$vl#$vl0456";
+const char *_username = "";
+const char *_password = "";
 #endif
 
 /* Task definitions ------------------------------------------- */
