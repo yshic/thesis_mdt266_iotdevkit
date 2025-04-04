@@ -278,7 +278,7 @@ void LCD_I2C::createChar(uint8_t memory_location, uint8_t charmap[])
   for (int i = 0; i < 8; i++)
     write(charmap[i]);
 
-  setCursor(0, 0);  // Set the address pointer back to the DDRAM
+  setCursor(0, 0); // Set the address pointer back to the DDRAM
 }
 
 /**
@@ -434,11 +434,11 @@ void LCD_I2C::progressBar(uint8_t row, uint8_t progress)
 
   // Define the custom characters for the progress bar
   uint8_t progressChars[customChars][8] = {
-  {0b10000, 0b10000, 0b10000, 0b10000, 0b10000, 0b10000, 0b10000, 0b10000},  // 1/5
-  {0b11000, 0b11000, 0b11000, 0b11000, 0b11000, 0b11000, 0b11000, 0b11000},  // 2/5
-  {0b11100, 0b11100, 0b11100, 0b11100, 0b11100, 0b11100, 0b11100, 0b11100},  // 3/5
-  {0b11110, 0b11110, 0b11110, 0b11110, 0b11110, 0b11110, 0b11110, 0b11110},  // 4/5
-  {0b11111, 0b11111, 0b11111, 0b11111, 0b11111, 0b11111, 0b11111, 0b11111}   // 5/5 (full block)
+  {0b10000, 0b10000, 0b10000, 0b10000, 0b10000, 0b10000, 0b10000, 0b10000}, // 1/5
+  {0b11000, 0b11000, 0b11000, 0b11000, 0b11000, 0b11000, 0b11000, 0b11000}, // 2/5
+  {0b11100, 0b11100, 0b11100, 0b11100, 0b11100, 0b11100, 0b11100, 0b11100}, // 3/5
+  {0b11110, 0b11110, 0b11110, 0b11110, 0b11110, 0b11110, 0b11110, 0b11110}, // 4/5
+  {0b11111, 0b11111, 0b11111, 0b11111, 0b11111, 0b11111, 0b11111, 0b11111}  // 5/5 (full block)
   };
 
   // Create the custom characters
@@ -459,15 +459,34 @@ void LCD_I2C::progressBar(uint8_t row, uint8_t progress)
   {
     if (i < fullBlocks)
     {
-      write(0xFF);  // Full block character (use 0xFF for a full block)
+      write(0xFF); // Full block character (use 0xFF for a full block)
     }
     else if (i == fullBlocks)
     {
-      write(partialBlock);  // Partial block character
+      write(partialBlock); // Partial block character
     }
     else
     {
-      write(' ');  // Empty space
+      write(' '); // Empty space
     }
+  }
+}
+
+lcd_screen_state_t LCD_I2C::getScreenState() { return lcdScreenState; }
+void               LCD_I2C::setScreenState(lcd_screen_state_t screenState) { lcdScreenState = screenState; }
+void               LCD_I2C::updateScreenState(bool increment)
+{
+  if (LCD_SCREEN_COUNT == 0)
+  {
+    return;
+  }
+  if (increment)
+  {
+    this->lcdScreenState = (lcd_screen_state_t) ((this->lcdScreenState + 1) % LCD_SCREEN_COUNT);
+  }
+  else
+  {
+    this->lcdScreenState =
+    (lcd_screen_state_t) ((this->lcdScreenState - 1 + LCD_SCREEN_COUNT) % LCD_SCREEN_COUNT);
   }
 }
