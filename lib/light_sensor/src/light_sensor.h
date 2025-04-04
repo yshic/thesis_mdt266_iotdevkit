@@ -21,6 +21,13 @@
   #endif
 
 /* Public defines ----------------------------------------------------- */
+typedef enum
+{
+  LIGHT_SENSOR_OK = 0x1010, /* No error */
+  LIGHT_SENSOR_ERR,         /* Generic error */
+  LIGHT_SENSOR_ERR_INIT,    /* Initialization error */
+  LIGHT_SENSOR_TIMEOUT,     /* Timeout error*/
+} light_sensor_error_t;
 
 /* Public enumerate/structure ----------------------------------------- */
 
@@ -45,7 +52,7 @@ public:
    * @return     int            The analog value read from the sensor.
    *
    */
-  void read();
+  light_sensor_error_t read();
 
   /**
    * @brief Read the sensor and map its raw analog values to a range (e.g., 0-100).
@@ -99,7 +106,7 @@ public:
    * @param[in] threshold Threshold for triggering the callback.
    * @param[in] callback  Function to call when threshold is crossed.
    */
-  void onThresholdCross(int threshold, void (*callback)());
+  light_sensor_error_t onThresholdCross(int threshold, void (*callback)());
 
 private:
   int      _pin;                 /** SIG pin of the Light Sensor */
