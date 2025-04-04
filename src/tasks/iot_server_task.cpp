@@ -14,6 +14,10 @@
 #include "globals.h"
 #include <Arduino_MQTT_Client.h>
 #include <ThingsBoard.h>
+<<<<<<< Updated upstream
+=======
+#include <Espressif_Updater.h>
+>>>>>>> Stashed changes
 #include <WiFi.h>
 
 /* Private defines ---------------------------------------------------- */
@@ -25,7 +29,11 @@
 /* Public variables --------------------------------------------------- */
 
 /* Private variables -------------------------------------------------- */
+<<<<<<< Updated upstream
 constexpr char     TOKEN[]              = "cM3JNEsWAsgFqE7g3O3E";
+=======
+constexpr char     TOKEN[]              = "8t6sbcmrx76pviaj6nx2";
+>>>>>>> Stashed changes
 constexpr char     THINGSBOARD_SERVER[] = "app.coreiot.io";
 constexpr uint16_t THINGSBOARD_PORT     = 1883U;
 
