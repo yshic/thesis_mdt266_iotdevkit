@@ -1,7 +1,7 @@
 /**
  * @file       dht20.h
  * @license    This library is released under the MIT License.
- * @version    0.1.0
+ * @version    0.3.0
  * @date       2024-11-01
  * @author     Tuan Nguyen
  *
@@ -21,16 +21,16 @@
   #endif
 
   /* Public defines ----------------------------------------------------- */
-  #define DHT20_LIB_VERSION (F("0.1.0"))
+  #define DHT20_LIB_VERSION       (F("0.1.0"))
 
-  #define DHT20_I2C_ADDR    0x38
-  #define HUMIDITY_INDEX    0
-  #define TEMPERATURE_INDEX 1
+  #define DHT20_I2C_ADDR          0x38
+  #define DHT20_HUMIDITY_INDEX    0
+  #define DHT20_TEMPERATURE_INDEX 1
 
 /* Public enumerate/structure ----------------------------------------- */
 typedef enum
 {
-  DHT20_OK = 0,       /* No error */
+  DHT20_OK = 0x1000,  /* No error */
   DHT20_ERR,          /* Generic error */
   DHT20_ERR_INIT,     /* Initialization error */
   DHT20_ERR_RESET,    /* Reset error */
