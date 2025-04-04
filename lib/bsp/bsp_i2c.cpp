@@ -1,7 +1,7 @@
 /**
  * @file       bsp_i2c.cpp
  * @license    This project is released under the MIT License.
- * @version    1.0.0
+ * @version    0.1.0
  * @date       2024-12-31
  * @author     Tuan Nguyen
  *
@@ -13,7 +13,9 @@
 
 /* Includes ----------------------------------------------------------- */
 #include "bsp_i2c.h"
+#include "config.h" // Global config file
 #include <Wire.h>
+
 /* Private defines ---------------------------------------------------- */
 
 /* Private enumerate/structure ---------------------------------------- */
@@ -110,7 +112,29 @@ bsp_i2c_error_t bspI2CFlush(void)
   return BSP_I2C_OK;
 }
 
-bsp_i2c_error_t bspI2CReadByte(uint8_t &byte, int address)
+bsp_i2c_error_t bspI2CReadByte(int address, uint8_t reg, uint8_t &byte)
+{
+  i2cWire->beginTransmission(address);
+  i2cWire->write(reg);
+  i2cWire->endTransmission();
+
+  int cnt = 0;
+  i2cWire->requestFrom(address, 1);
+
+  while (1 != i2cWire->available())
+  {
+    cnt++;
+    if (cnt >= 10)
+    {
+      return BSP_I2C_ERR_READ;
+    }
+    DELAY(1);
+  }
+  byte = i2cWire->read();
+  return BSP_I2C_OK;
+}
+
+bsp_i2c_error_t bspI2CReadByte(int address, uint8_t &byte)
 {
   int cnt = 0;
   i2cWire->requestFrom(address, 1);
@@ -127,7 +151,32 @@ bsp_i2c_error_t bspI2CReadByte(uint8_t &byte, int address)
   return BSP_I2C_OK;
 }
 
-bsp_i2c_error_t bspI2CReadBytes(uint8_t *bytes, uint32_t len, int address)
+bsp_i2c_error_t bspI2CReadBytes(int address, uint8_t reg, uint8_t *bytes, uint32_t len)
+{
+  i2cWire->beginTransmission(address);
+  i2cWire->write(reg);
+  i2cWire->endTransmission();
+
+  int cnt = 0;
+  i2cWire->requestFrom(address, len);
+
+  while (len != i2cWire->available())
+  {
+    cnt++;
+    if (cnt >= 10)
+    {
+      return BSP_I2C_ERR_READ;
+    }
+    DELAY(1);
+  }
+  for (int i = 0; i < len; i++)
+  {
+    bytes[i] = i2cWire->read();
+  }
+  return BSP_I2C_OK;
+}
+
+bsp_i2c_error_t bspI2CReadBytes(int address, uint8_t *bytes, uint32_t len)
 {
   int cnt = 0;
   i2cWire->requestFrom(address, len);
@@ -147,21 +196,29 @@ bsp_i2c_error_t bspI2CReadBytes(uint8_t *bytes, uint32_t len, int address)
   return BSP_I2C_OK;
 }
 
-bsp_i2c_error_t bspI2CWriteByte(uint8_t byte, int address)
+bsp_i2c_error_t bspI2CWriteByte(int address, uint8_t reg, uint8_t byte)
 {
   i2cWire->beginTransmission(address);
+  i2cWire->write(reg);
   i2cWire->write(byte);
   return (i2cWire->endTransmission() == 0) ? BSP_I2C_OK : BSP_I2C_ERR_WRITE;
 }
 
-bsp_i2c_error_t bspI2CWriteBytes(uint8_t *bytes, uint32_t len, int address)
+bsp_i2c_error_t bspI2CWriteBytes(int address, uint8_t reg, uint8_t *bytes, uint32_t len)
 {
   i2cWire->beginTransmission(address);
+  i2cWire->write(reg);
   for (int i = 0; i < len; i++)
   {
     i2cWire->write(bytes[i]);
   }
   return (i2cWire->endTransmission() == 0) ? BSP_I2C_OK : BSP_I2C_ERR_WRITE;
+}
+
+bool bspI2CExist(uint8_t address)
+{
+  i2cWire->beginTransmission(address);
+  return (i2cWire->endTransmission() == 0) ? true : false;
 }
 
 /* Private definitions ------------------------------------------------ */
