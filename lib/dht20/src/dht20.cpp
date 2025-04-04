@@ -1,7 +1,7 @@
 /**
  * @file       dht20.cpp
  * @license    This library is released under the MIT License.
- * @version    0.1.0
+ * @version    0.3.0
  * @date       2024-11-01
  * @author     Tuan Nguyen
  *
@@ -12,6 +12,7 @@
 /* Includes ----------------------------------------------------------- */
 #include "dht20.h"
 #include "bsp_i2c.h"
+#include "config.h" // Global config file
 
 /* Private defines ---------------------------------------------------- */
 
@@ -30,7 +31,7 @@ DHT20::DHT20() {}
 
 dht20_error_t DHT20::begin()
 {
-  delay(100); // Wait 100ms after power-on
+  DELAY(100); // Wait 100ms after power-on
   reset();
   return DHT20_OK;
 }
@@ -53,7 +54,7 @@ int DHT20::reset(void)
       count++;
     if (_resetRegister(0x1E))
       count++;
-    delay(10);
+    DELAY(10);
   }
   return count;
 }
@@ -61,22 +62,22 @@ int DHT20::reset(void)
 bool DHT20::_resetRegister(uint8_t reg)
 {
   uint8_t values[3]    = {0};
-  uint8_t resetParam[] = {reg, 0x00, 0x00};
-  if (bspI2CWriteBytes(resetParam, sizeof(resetParam), DHT20_I2C_ADDR))
+  uint8_t resetParam[] = {0x00, 0x00};
+  if (bspI2CWriteBytes(DHT20_I2C_ADDR, reg, resetParam, sizeof(resetParam)))
   {
     return false;
   }
-  delay(5);
 
-  bspI2CReadBytes(values, sizeof(values), DHT20_I2C_ADDR);
-  delay(10);
+  DELAY(5);
 
-  values[0] = (0xB0 | reg);
-  if (bspI2CWriteBytes(values, sizeof(values), DHT20_I2C_ADDR))
-  {
-    return false;
-  }
-  delay(5);
+  bspI2CReadBytes(DHT20_I2C_ADDR, values, sizeof(values));
+
+  DELAY(10);
+
+  uint8_t retVal[2] = {values[1], values[2]};
+  bspI2CWriteBytes(DHT20_I2C_ADDR, (0xB0 | reg), retVal, sizeof(retVal));
+
+  DELAY(5);
 
   return true;
 }
@@ -87,7 +88,7 @@ int DHT20::readStatus(void)
   int     returnVal = 0;
   uint8_t status    = 0;
 
-  returnVal = bspI2CReadByte(status, DHT20_I2C_ADDR);
+  returnVal = bspI2CReadByte(DHT20_I2C_ADDR, 0x71, status);
   if (returnVal)
   {
     Serial.println("Failed to read byte\n");
@@ -104,19 +105,21 @@ int DHT20::readStatus(void)
 
 dht20_error_t DHT20::readTargetData(uint32_t *data)
 {
-  uint8_t bytes[6]       = {0};                // Buffer to hold the 6 bytes
-  uint8_t configParams[] = {0xAC, 0x33, 0x00}; // Command to start measurement
+  uint8_t bytes[6]       = {0};          // Buffer to hold the 6 bytes
+  uint8_t configParams[] = {0x33, 0x00}; // Command to start measurement
 
   // Send the measurement command
-  if (bspI2CWriteBytes(configParams, sizeof(configParams), DHT20_I2C_ADDR) != BSP_I2C_OK)
+  if (bspI2CWriteBytes(DHT20_I2C_ADDR, 0xAC, configParams, sizeof(configParams)) != BSP_I2C_OK)
   {
     return DHT20_ERR_I2C_WRITE; // Write failed
   }
 
-  delay(80); // Wait for measurement to complete
+  // Wait for measurement to complete
+  DELAY(80);
 
   // Read 6 bytes from the sensor
-  if (bspI2CReadBytes(bytes, sizeof(bytes), DHT20_I2C_ADDR) != BSP_I2C_OK)
+
+  if (bspI2CReadBytes(DHT20_I2C_ADDR, bytes, sizeof(bytes)) != BSP_I2C_OK)
   {
     return DHT20_ERR_I2C_READ; // Read failed
   }
@@ -129,10 +132,10 @@ dht20_error_t DHT20::readTargetData(uint32_t *data)
   }
 
   // Process humidity data (20 bits: bytes[1], bytes[2], bytes[3])
-  data[HUMIDITY_INDEX] = ((bytes[1] << 12) | (bytes[2] << 4) | (bytes[3] >> 4));
+  data[DHT20_HUMIDITY_INDEX] = ((bytes[1] << 12) | (bytes[2] << 4) | (bytes[3] >> 4));
 
   // Process temperature data (20 bits: bytes[3], bytes[4], bytes[5])
-  data[TEMPERATURE_INDEX] = (((bytes[3] & 0x0F) << 16) | (bytes[4] << 8) | bytes[5]);
+  data[DHT20_TEMPERATURE_INDEX] = (((bytes[3] & 0x0F) << 16) | (bytes[4] << 8) | bytes[5]);
 
   return DHT20_OK; // Success
 }
@@ -144,7 +147,8 @@ dht20_error_t DHT20::readTempAndHumidity()
   while (readStatus() == 0)
   {
     begin();
-    delay(30);
+    DELAY(30);
+
     cnt++;
     if (cnt > 3)
     {
@@ -155,23 +159,24 @@ dht20_error_t DHT20::readTempAndHumidity()
   while (readTargetData(target_val))
   {
     cnt++;
-    delay(50);
+    DELAY(50);
+
     if (cnt > 5)
     {
       return DHT20_TIMEOUT;
     }
   }
-  sensorValue[HUMIDITY_INDEX] =
+  sensorValue[DHT20_HUMIDITY_INDEX] =
   target_val[0] * 9.5367431640625e-5; // equivalent to target_val[0] * 100.0 / 1024 / 1024 but more
                                       // optimize by not using division
-  sensorValue[TEMPERATURE_INDEX] =
+  sensorValue[DHT20_TEMPERATURE_INDEX] =
   target_val[1] * 1.9073486328125e-4 - 50; // target_val[1] * 200.0 / 1024 / 1024 - 50
   return DHT20_OK;
 }
 
-float DHT20::getHumidity() { return sensorValue[HUMIDITY_INDEX]; }
+float DHT20::getHumidity() { return sensorValue[DHT20_HUMIDITY_INDEX]; }
 
-float DHT20::getTemperature() { return sensorValue[TEMPERATURE_INDEX]; }
+float DHT20::getTemperature() { return sensorValue[DHT20_TEMPERATURE_INDEX]; }
 
 /* Private function prototypes ---------------------------------------- */
 

@@ -44,9 +44,42 @@ struct OutputState
   }
 };
 
+typedef enum
+{
+#ifdef DHT20_MODULE
+  LCD_SCREEN_DHT20,
+#endif
+
+#ifdef SHT4X_MODULE
+  LCD_SCREEN_SHT4X,
+#endif
+
+#ifdef LIGHT_SENSOR_MODULE
+  LCD_SCREEN_LIGHT,
+#endif
+
+#ifdef ULTRASONIC_MODULE
+  LCD_SCREEN_ULTRASONIC,
+#endif
+
+#ifdef SOIL_MOISTURE_MODULE
+  LCD_SCREEN_MOISTURE,
+#endif
+
+#ifdef PIR_MODULE
+  LCD_SCREEN_PIR,
+#endif
+
+#ifdef MINI_FAN_MODULE
+  LCD_SCREEN_MINIFAN,
+#endif
+
+  LCD_SCREEN_COUNT // Total number of states
+} lcd_screen_state_t;
+
 class LCD_I2C : public Print
 {
- public:
+public:
   LCD_I2C(uint8_t address, uint8_t columns = 16, uint8_t rows = 2)
       : _address(address), _columnMax(--columns), _rowMax(--rows)
   {
@@ -56,35 +89,40 @@ class LCD_I2C : public Print
   void backlight();
   void backlightOff();
 
-  void clear();
-  void home();
-  void leftToRight();
-  void rightToLeft();
-  void autoscroll();
-  void autoscrollOff();
-  void display();
-  void displayOff();
-  void cursor();
-  void cursorOff();
-  void blink();
-  void blinkOff();
-  void scrollDisplayLeft();
-  void scrollDisplayRight();
-  void createChar(uint8_t memory_location, uint8_t charmap[]);
-  void setCursor(uint8_t column, uint8_t row);
-  void writeCharCode(uint8_t code);
-  void progressBar(uint8_t row, uint8_t progress);
+  void               clear();
+  void               home();
+  void               leftToRight();
+  void               rightToLeft();
+  void               autoscroll();
+  void               autoscrollOff();
+  void               display();
+  void               displayOff();
+  void               cursor();
+  void               cursorOff();
+  void               blink();
+  void               blinkOff();
+  void               scrollDisplayLeft();
+  void               scrollDisplayRight();
+  void               createChar(uint8_t memory_location, uint8_t charmap[]);
+  void               setCursor(uint8_t column, uint8_t row);
+  void               writeCharCode(uint8_t code);
+  void               progressBar(uint8_t row, uint8_t progress);
+  lcd_screen_state_t getScreenState();
+  void               setScreenState(lcd_screen_state_t screenState);
+  void               updateScreenState(bool increment);
+
   // Method used by the Arduino class "Print" which is the one that provides the .print(string) method
   virtual size_t write(uint8_t character);
 
- private:
-  TwoWire    *_wire{nullptr};
-  uint8_t     _address;
-  uint8_t     _columnMax;
-  uint8_t     _rowMax;
-  OutputState _output;
-  uint8_t     _displayState = 0x00;
-  uint8_t     _entryState   = 0x00;
+private:
+  TwoWire           *_wire{nullptr};
+  uint8_t            _address;
+  uint8_t            _columnMax;
+  uint8_t            _rowMax;
+  OutputState        _output;
+  uint8_t            _displayState  = 0x00;
+  uint8_t            _entryState    = 0x00;
+  lcd_screen_state_t lcdScreenState = (lcd_screen_state_t) 0;
 
   void InitializeLCD();
   void I2C_Write(uint8_t output);

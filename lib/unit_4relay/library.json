@@ -1,0 +1,15 @@
+{
+  "name": "Unit 4 Relay Library",
+  "keywords": "relay, control, ,switch, i2c",
+  "description": "A library for interfacing with the Unit 4 Relay module.",
+  "authors": [
+    {
+      "name": "Tuan Nguyen",
+      "email": "tuanl799@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "version": "0.1.0",
+  "frameworks": "arduino",
+  "platforms": "*"
+}

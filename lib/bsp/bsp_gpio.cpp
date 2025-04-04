@@ -72,18 +72,18 @@ bool bspGpioDigitalRead(uint8_t pin) { return digitalRead(pin) == 1 ? true : fal
 
 /* Analog Pin --------------------------------------------------------- */
 
-int  bspGpioAnalogRead(uint8_t pin) { return digitalRead(pin); }
+int  bspGpioAnalogRead(uint8_t pin) { return analogRead(pin); }
 void bspGpioAnalogReadResolution(uint8_t bits) { analogReadResolution(bits); }
 void bspGpioAnalogWrite(uint8_t pin, int value) { analogWrite(pin, value); }
 void bspGpioAnalogWriteResolution(uint8_t bits) { analogWriteResolution(bits); }
 
 /* Advanced I/O ------------------------------------------------------- */
 
-unsigned long bspGpioPulseIn(uint8_t pin, uint8_t state, unsigned long timeout = 1000000UL)
+unsigned long bspGpioPulseIn(uint8_t pin, uint8_t state, unsigned long timeout)
 {
   return pulseIn(pin, state, timeout);
 }
-unsigned long bspGpioPulseInLong(uint8_t pin, uint8_t state, unsigned long timeout = 1000000UL)
+unsigned long bspGpioPulseInLong(uint8_t pin, uint8_t state, unsigned long timeout)
 {
   return pulseInLong(pin, state, timeout);
 }

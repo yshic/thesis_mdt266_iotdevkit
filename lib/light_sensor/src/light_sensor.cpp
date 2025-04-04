@@ -28,18 +28,19 @@
 // Constructor
 LightSensor::LightSensor(int pin) : _pin(pin)
 {
-  bspGpioPinMode(_pin, INPUT);
+  pinMode(_pin, INPUT);
   sensorValue[0] = 0;
   sensorValue[1] = 0;
   // Change the ADC resolution to 12 bits
-  bspGpioAnalogReadResolution(12);
+  analogReadResolution(12);
 }
 
-void LightSensor::read()
+light_sensor_error_t LightSensor::read()
 {
   sensorValue[0] = bspGpioAnalogRead(_pin);
   sensorValue[1] = map(sensorValue[0], 0, 4095, 0, 100);
   sensorValue[1] = constrain(sensorValue[1], 0, 100);
+  return LIGHT_SENSOR_OK;
 }
 
 int LightSensor::readAndMap(int minValue, int maxValue)
@@ -71,13 +72,14 @@ int LightSensor::getAverageReading(int samples)
   return total / samples;
 }
 
-void LightSensor::onThresholdCross(int threshold, void (*callback)())
+light_sensor_error_t LightSensor::onThresholdCross(int threshold, void (*callback)())
 {
   _callback = callback;
   if (isAboveThreshold(threshold) && _callback != nullptr)
   {
     _callback();
   }
+  return LIGHT_SENSOR_OK;
 }
 
 /* Private function definitions --------------------------------------- */
