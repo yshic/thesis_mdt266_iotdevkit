@@ -17,6 +17,10 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+#include <Espressif_Updater.h>
+>>>>>>> Stashed changes
 =======
 #include <Espressif_Updater.h>
 >>>>>>> Stashed changes
@@ -40,7 +44,11 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 constexpr char     TOKEN[]              = "cM3JNEsWAsgFqE7g3O3E";
+=======
+constexpr char     TOKEN[]              = "8t6sbcmrx76pviaj6nx2";
+>>>>>>> Stashed changes
 =======
 constexpr char     TOKEN[]              = "8t6sbcmrx76pviaj6nx2";
 >>>>>>> Stashed changes
