@@ -40,6 +40,11 @@
  */
 void scanI2CDevices(void);
 
+/**
+ * @brief  Scan for I2C devices and print the addresses to Serial.
+ */
+uint8_t crc8(const uint8_t *data, int len);
+
 #endif // UTILITY_H
 
 /* End of file -------------------------------------------------------- */
