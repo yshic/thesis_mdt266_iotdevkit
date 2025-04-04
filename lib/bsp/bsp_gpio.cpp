@@ -72,7 +72,7 @@ bool bspGpioDigitalRead(uint8_t pin) { return digitalRead(pin) == 1 ? true : fal
 
 /* Analog Pin --------------------------------------------------------- */
 
-int  bspGpioAnalogRead(uint8_t pin) { return digitalRead(pin); }
+int  bspGpioAnalogRead(uint8_t pin) { return analogRead(pin); }
 void bspGpioAnalogReadResolution(uint8_t bits) { analogReadResolution(bits); }
 void bspGpioAnalogWrite(uint8_t pin, int value) { analogWrite(pin, value); }
 void bspGpioAnalogWriteResolution(uint8_t bits) { analogWriteResolution(bits); }
