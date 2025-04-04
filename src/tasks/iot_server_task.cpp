@@ -15,6 +15,14 @@
 #include <Arduino_MQTT_Client.h>
 #include <ThingsBoard.h>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+#include <Espressif_Updater.h>
+>>>>>>> Stashed changes
+=======
+#include <Espressif_Updater.h>
+>>>>>>> Stashed changes
 =======
 #include <Espressif_Updater.h>
 >>>>>>> Stashed changes
@@ -30,7 +38,15 @@
 
 /* Private variables -------------------------------------------------- */
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 constexpr char     TOKEN[]              = "cM3JNEsWAsgFqE7g3O3E";
+=======
+constexpr char     TOKEN[]              = "8t6sbcmrx76pviaj6nx2";
+>>>>>>> Stashed changes
+=======
+constexpr char     TOKEN[]              = "8t6sbcmrx76pviaj6nx2";
+>>>>>>> Stashed changes
 =======
 constexpr char     TOKEN[]              = "8t6sbcmrx76pviaj6nx2";
 >>>>>>> Stashed changes
