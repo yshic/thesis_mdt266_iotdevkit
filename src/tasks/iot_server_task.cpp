@@ -26,11 +26,7 @@
 /* Public variables --------------------------------------------------- */
 
 /* Private variables -------------------------------------------------- */
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-constexpr char     TOKEN[]              = "cM3JNEsWAsgFqE7g3O3E";
+constexpr char     TOKEN[]              = "";
 constexpr char     THINGSBOARD_SERVER[] = "app.coreiot.io";
 constexpr uint16_t THINGSBOARD_PORT     = 1883U;
 
@@ -266,19 +262,19 @@ void sendTelemetryTask(void *pvParameters)
   {
     if (tb.connected())
     {
-        #ifdef DHT20_MODULE
+#ifdef DHT20_MODULE
       dht20.readTempAndHumidity();
       float temperature = dht20.getTemperature();
       float humidity    = dht20.getHumidity();
-        #endif // DHT20_MODULE
+#endif // DHT20_MODULE
 
-        #ifdef SHT4X_MODULE
+#ifdef SHT4X_MODULE
       sht40.update();
       float temperature = sht40.getTemperature();
       float humidity    = sht40.getHumidity();
-        #endif // SHT4X_MODULE
+#endif // SHT4X_MODULE
 
-        #ifdef BMP280_MODULE
+#ifdef BMP280_MODULE
       bmp280.update();
       float pressure = bmp280.getPressure();
       float altitude = bmp280.getAltitude();
@@ -292,9 +288,9 @@ void sendTelemetryTask(void *pvParameters)
 
       tb.sendTelemetryData("pressure", pressure);
       tb.sendTelemetryData("altitude", altitude);
-        #endif // BMP280_MODULE
+#endif // BMP280_MODULE
 
-        #ifdef AC_MEASURE_MODULE
+#ifdef AC_MEASURE_MODULE
       if (acMeasure.getReady())
       {
         float voltage     = acMeasure.getVoltage();
@@ -319,9 +315,9 @@ void sendTelemetryTask(void *pvParameters)
         tb.sendTelemetryData("power", power);
         tb.sendTelemetryData("powerFactor", powerFactor);
       }
-        #endif // AC_MEASURE_MODULE
+#endif // AC_MEASURE_MODULE
 
-        #ifdef LIGHT_SENSOR_MODULE
+#ifdef LIGHT_SENSOR_MODULE
       lightSensor.read();
       float illuminance = lightSensor.getLightValuePercentage();
       if (!(isnan(illuminance)))
@@ -331,9 +327,9 @@ void sendTelemetryTask(void *pvParameters)
         Serial.println(" lux");
         tb.sendTelemetryData("illuminance", illuminance);
       }
-        #endif // LIGHT_SENSOR_MODULE
+#endif // LIGHT_SENSOR_MODULE
 
-        #if defined(DHT20_MODULE) || defined(SHT4X_MODULE)
+#if defined(DHT20_MODULE) || defined(SHT4X_MODULE)
       if (!(isnan(temperature) || isnan(humidity)))
       {
         Serial.print("Temperature: ");
@@ -345,7 +341,7 @@ void sendTelemetryTask(void *pvParameters)
         tb.sendTelemetryData("temperature", temperature);
         tb.sendTelemetryData("humidity", humidity);
       }
-        #endif // defined(DHT20_MODULE) || defined(SHT4X_MODULE)
+#endif // defined(DHT20_MODULE) || defined(SHT4X_MODULE)
 
       // Send WiFi attributes
       tb.sendAttributeData("rssi", WiFi.RSSI());
