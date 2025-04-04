@@ -11,6 +11,7 @@
 
 /* Includes ----------------------------------------------------------- */
 #include "ultrasonic.h"
+#include "bsp_gpio.h"
 
 /* Private defines ---------------------------------------------------- */
 
@@ -28,23 +29,23 @@
 Ultrasonic::Ultrasonic(uint8_t _triggerPin, uint8_t _echoPin, unsigned long timeOut)
     : triggerPin(_triggerPin), echoPin(_echoPin), timeout(timeOut)
 {
-  pinMode(triggerPin, OUTPUT);
-  pinMode(echoPin, INPUT);
+  bspGpioPinMode(triggerPin, OUTPUT);
+  bspGpioPinMode(echoPin, INPUT);
 }
 
 unsigned int Ultrasonic::duration()
 {
   unsigned int duration;
   // Reset trigger pin
-  digitalWrite(triggerPin, LOW);
+  bspGpioDigitalWrite(triggerPin, LOW);
   delayMicroseconds(2);
 
   // Start the ranging by setting the trigger pin high for 10 microsec
-  digitalWrite(triggerPin, HIGH);
+  bspGpioDigitalWrite(triggerPin, HIGH);
   delayMicroseconds(10);
-  digitalWrite(triggerPin, LOW);
+  bspGpioDigitalWrite(triggerPin, LOW);
 
-  duration = pulseIn(echoPin, HIGH, timeout);
+  duration = bspGpioPulseIn(echoPin, HIGH, timeout);
 
   return duration;
 }

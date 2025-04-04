@@ -1,7 +1,7 @@
 /**
  * @file       dht20.h
  * @license    This library is released under the MIT License.
- * @version    0.1.0
+ * @version    0.3.0
  * @date       2024-11-01
  * @author     Tuan Nguyen
  *
@@ -20,19 +20,17 @@
     #include "WProgram.h"
   #endif
 
-  #include "Wire.h"
-
   /* Public defines ----------------------------------------------------- */
-  #define DHT20_LIB_VERSION (F("0.1.0"))
+  #define DHT20_LIB_VERSION       (F("0.1.0"))
 
-  #define DHT20_I2C_ADDR    0x38
-  #define HUMIDITY_INDEX    0
-  #define TEMPERATURE_INDEX 1
+  #define DHT20_I2C_ADDR          0x38
+  #define DHT20_HUMIDITY_INDEX    0
+  #define DHT20_TEMPERATURE_INDEX 1
 
 /* Public enumerate/structure ----------------------------------------- */
 typedef enum
 {
-  DHT20_OK = 0,       /* No error */
+  DHT20_OK = 0x1000,  /* No error */
   DHT20_ERR,          /* Generic error */
   DHT20_ERR_INIT,     /* Initialization error */
   DHT20_ERR_RESET,    /* Reset error */
@@ -190,81 +188,6 @@ private:
    *  - false: Failed to reset the register.
    */
   bool _resetRegister(uint8_t reg);
-
-  /**
-   * @brief  Reads a single byte from the DHT20 sensor using I2C.
-   *
-   * This function requests a single byte from the DHT20 sensor over the I2C interface
-   * and stores it in the provided reference variable.
-   *
-   * @param[in]     None
-   * @param[out]    byte  Reference to a variable where the read byte will be stored.
-   * @param[inout]  None
-   *
-   * @attention  Ensure that the sensor is correctly connected and that I2C communication is functioning.
-   *             The function includes a loop with retries and delays to handle cases where the byte is not
-   * immediately available.
-   *
-   * @return
-   *  - `DHT20_OK`: Success
-   *  - `DHT20_ERR_I2C_READ`: Error reading from the I2C bus.
-   */
-  dht20_error_t i2cReadByte(uint8_t &byte);
-
-  /**
-   * @brief  Reads multiple bytes from the DHT20 sensor using I2C.
-   *
-   * This function requests multiple bytes from the DHT20 sensor over the I2C interface
-   * and stores them in the provided buffer.
-   *
-   * @param[in]     len  The number of bytes to read.
-   * @param[out]    bytes  Pointer to a buffer where the read bytes will be stored.
-   * @param[inout]  None
-   *
-   * @attention  Ensure that the sensor is correctly connected and that I2C communication is functioning.
-   *             The function includes a loop with retries and delays to handle cases where the bytes are not
-   * immediately available.
-   *
-   * @return
-   *  - `DHT20_OK`: Success
-   *  - `DHT20_ERR_I2C_READ`: Error reading from the I2C bus.
-   */
-  dht20_error_t i2cReadBytes(uint8_t *bytes, uint32_t len);
-
-  /**
-   * @brief  Writes multiple bytes to the DHT20 sensor using I2C.
-   *
-   * This function writes multiple bytes to the DHT20 sensor over the I2C interface.
-   *
-   * @param[in]     bytes  Pointer to a buffer containing the bytes to write.
-   * @param[in]     len  The number of bytes to write.
-   * @param[out]    None
-   * @param[inout]  None
-   *
-   * @attention  Ensure that the sensor is correctly connected and that I2C communication is functioning.
-   *
-   * @return
-   *  - `DHT20_OK`: Success
-   *  - `DHT20_ERR_I2C_WRITE`: Error writing to the I2C bus.
-   */
-  dht20_error_t i2cWriteBytes(uint8_t *bytes, uint32_t len);
-
-  /**
-   * @brief  Writes a single byte to the DHT20 sensor using I2C.
-   *
-   * This function writes a single byte to the DHT20 sensor over the I2C interface.
-   *
-   * @param[in]     byte  The byte to write.
-   * @param[out]    None
-   * @param[inout]  None
-   *
-   * @attention  Ensure that the sensor is correctly connected and that I2C communication is functioning.
-   *
-   * @return
-   *  - `DHT20_OK`: Success
-   *  - `DHT20_ERR_I2C_WRITE`: Error writing to the I2C bus.
-   */
-  dht20_error_t i2cWriteByte(uint8_t byte);
 };
 
 #endif // DHT20_H

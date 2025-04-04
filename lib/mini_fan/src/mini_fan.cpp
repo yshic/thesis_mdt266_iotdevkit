@@ -11,7 +11,7 @@
 
 /* Includes ----------------------------------------------------------- */
 #include "mini_fan.h"
-
+#include "bsp_gpio.h"
 /* Private defines ---------------------------------------------------- */
 
 /* Private enumerate/structure ---------------------------------------- */
@@ -27,7 +27,7 @@
 // Constructor
 MiniFan::MiniFan(int pin) : _pin(pin)
 {
-  pinMode(_pin, OUTPUT);
+  bspGpioPinMode(_pin, OUTPUT);
   _speed[0] = 0;
   _speed[1] = 0;
   status    = false;
@@ -50,7 +50,7 @@ void MiniFan::setFanSpeed(int speed)
   }
 
   // Spin the fan
-  analogWrite(_pin, _speed[0]);
+  bspGpioAnalogWrite(_pin, _speed[0]);
 }
 
 void MiniFan::setFanSpeedPercentage(int percentage)
@@ -63,7 +63,7 @@ void MiniFan::setFanSpeedPercentage(int percentage)
   _speed[0] = map(percentage, 0, 100, 0, 255);
 
   // Set the fan speed using the mapped PWM value
-  analogWrite(_pin, _speed[0]);
+  bspGpioAnalogWrite(_pin, _speed[0]);
 
   // Update the fan state
   status = (_speed[0] > 0);
@@ -77,13 +77,13 @@ void MiniFan::toggleFan()
 {
   if (isFanRunning())
   {
-    digitalWrite(_pin, LOW);
+    bspGpioDigitalWrite(_pin, LOW);
     _speed[0] = 0;
     _speed[1] = 0;
   }
   else
   {
-    digitalWrite(_pin, HIGH);
+    bspGpioDigitalWrite(_pin, HIGH);
     _speed[0] = 255;
     _speed[1] = 100;
   }

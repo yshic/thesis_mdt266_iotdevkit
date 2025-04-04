@@ -1,0 +1,15 @@
+{
+  "name": "AC Measure Library",
+  "keywords": "ac, sensor, i2c",
+  "description": "Provides functions to initialize, read AC Measure sensor and various other ultilities functions.",
+  "authors": [
+    {
+      "name": "Tuan Nguyen",
+      "email": "tuanl799@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "version": "0.1.0",
+  "frameworks": "arduino",
+  "platforms": "*"
+}
