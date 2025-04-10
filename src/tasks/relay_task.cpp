@@ -24,6 +24,7 @@
 /* Private variables -------------------------------------------------- */
 
 /* Tasks definitions-------------------------------------------- */
+#ifdef UNIT_4_RELAY_MODULE
 void unit4RelaySetup()
 {
   unit4Relay.begin();
@@ -31,7 +32,7 @@ void unit4RelaySetup()
   unit4Relay.relayAll(0);
   // xTaskCreate(unit4RelayTask, "Unit 4 Relay Task", 4096, NULL, 1 NULL);
 }
-
+#endif
 /* Private function prototypes ---------------------------------------- */
 
 /* End of file -------------------------------------------------------- */
