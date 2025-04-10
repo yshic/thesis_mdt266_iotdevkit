@@ -64,7 +64,10 @@ void wifiTask(void *pvParameters)
       if (WiFi.status() == WL_CONNECTED)
       {
         wifiConnected = true;
+#ifdef DEBUG_PRINT
         Serial.println("Connected to WiFi");
+#endif // DEBUG_PRINT
+
 #ifdef LCD_MODULE
         lcd.clear();
         lcd.print("WiFi connected");
@@ -76,7 +79,10 @@ void wifiTask(void *pvParameters)
       else
       {
         wifiConnected = false;
+#ifdef DEBUG_PRINT
         Serial.println("Failed to connect to WiFi. Retrying...");
+#endif // DEBUG_PRINT
+
 #ifdef LCD_MODULE
         lcd.clear();
         lcd.print("WiFi Failed");
