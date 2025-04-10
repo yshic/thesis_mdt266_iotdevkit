@@ -12,28 +12,40 @@
 #ifndef GLOBALS_H
   #define GLOBALS_H
 
-/* Private defines ---------------------------------------------------- */
-  // Communication
+  /* Private defines ---------------------------------------------------- */
+  // DEBUGGING
+  // #define DEBUG_I2C
+  #ifndef DEBUG_PRINT
+    #define DEBUG_PRINT
+  #endif // DEBUG_PRINT
+
+// Communication
+/* Wireless   --------------------------------------------------------- */
   // #define BLE_MODULE
   #define WIFI_MODULE
-  #define ENTERPRISE_WIFI
+  // #define ENTERPRISE_WIFI
   #define IOT_SERVER_MODULE
+  #define OTA_UPDATE_MODULE
 
-  // Peripherals
+/* Wired -------------------------------------------------------------- */
+// #define UART_MODULE
+// #define RS485_MODULE
 
-  // Sensors
-  #define DHT20_MODULE
+// Peripherals
+
+// Sensors
+//  #define DHT20_MODULE
 // #define UNIT_ENV_IV_MODULE
 // #define SHT4X_MODULE
 // #define BMP280_MODULE
-// #define AC_MEASURE_MODULE
+  #define AC_MEASURE_MODULE
   #define LIGHT_SENSOR_MODULE
 // #define PIR_MODULE
 // #define SOIL_MOISTURE_MODULE
-// #define ULTRASONIC_MODULE
+//  #define ULTRASONIC_MODULE
 
 // Display
-// #define LCD_MODULE
+//  #define LCD_MODULE
 
 // MOTORS / ACTUATORS
   #define MINI_FAN_MODULE
@@ -147,6 +159,7 @@ extern UsbSwitch usbSwitch(D7, D6);
   #include "../src/tasks/lcd_task.h"
   #include "../src/tasks/relay_task.h"
   #include "../src/tasks/sensors_task.h"
+  #include "../src/tasks/uart_task.h"
   #include "../src/tasks/wifi_task.h"
 
   // WiFi credentials

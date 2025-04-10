@@ -58,7 +58,7 @@ void lcdTask(void *pvParameters)
           lcd.print(sht40.getTemperature());
           lcd.print(" *C");
           lcd.setScreenState(LCD_SCREEN_LIGHT);
-          // NOTE: RTOS BREAK instr ERROR when use updateScreenState();
+          //  NOTE: RTOS BREAK instr ERROR when use updateScreenState();
           break;
   #endif
 
@@ -68,17 +68,17 @@ void lcdTask(void *pvParameters)
           lcd.print("Light level: ");
           lcd.print(lightSensor.getLightValuePercentage());
           lcd.progressBar(1, lightSensor.getLightValuePercentage());
-          // lcd.setScreenState(LCD_SCREEN_DHT20);
-          // lcd.setScreenState(LCD_SCREEN_SHT4X);
+          lcd.setScreenState(LCD_SCREEN_ULTRASONIC);
           break;
   #endif
 
-  #ifdef ULTRASONIC
+  #ifdef ULTRASONIC_MODULE
         case LCD_SCREEN_ULTRASONIC:
           lcd.clear();
           lcd.print("Distance: ");
           lcd.print(ultrasonic.getDistance('c'));
           lcd.print(" cm");
+          lcd.setScreenState(LCD_SCREEN_DHT20);
           break;
   #endif
 

@@ -1,16 +1,16 @@
 /**
- * @file       relay_task.cpp
+ * @file       uart_task.cpp
  * @license    This library is released under the MIT License.
  * @version    0.1.0
- * @date       2025-03-30
+ * @date       2025-04-07
  * @author     Tuan Nguyen
  *
- * @brief      Source file for relay_task
+ * @brief      Source file for uart_task.cpp library
  *
  */
 
 /* Includes ----------------------------------------------------------- */
-#include "relay_task.h"
+#include "uart_task.h"
 #include "globals.h"
 
 /* Private defines ---------------------------------------------------- */
@@ -23,16 +23,28 @@
 
 /* Private variables -------------------------------------------------- */
 
-/* Tasks definitions-------------------------------------------- */
-#ifdef UNIT_4_RELAY_MODULE
-void unit4RelaySetup()
+/* Task definitions   ------------------------------------------------- */
+void uartTask(void *pvParameters)
 {
-  unit4Relay.begin();
-  unit4Relay.init(1);
-  unit4Relay.relayAll(0);
-  // xTaskCreate(unit4RelayTask, "Unit 4 Relay Task", 4096, NULL, 1 NULL);
+  for (;;)
+  {
+    if (uart1.available())
+    {
+      char incominByte = uart1.read();
+      uart1.print("I received : ");
+      uart1.println(incominByte);
+    }
+
+    vTaskDelay(pdMS_TO_TICKS(10));
+  }
 }
-#endif
+
 /* Private function prototypes ---------------------------------------- */
+
+void uartSetup()
+{
+  uart1.begin(9600, SERIAL_8N1, RX_PIN, TX_PIN);
+  xTaskCreate(&uartTask, "UART Task", 4096, nullptr, 1, nullptr);
+}
 
 /* End of file -------------------------------------------------------- */

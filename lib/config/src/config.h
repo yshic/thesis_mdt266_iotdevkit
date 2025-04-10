@@ -25,6 +25,10 @@
     #endif
   #endif
 
+  #ifndef DEBUG_PRINT
+    #define DEBUG_PRINT
+  #endif // DEBUG_PRINT
+
 /* Public enumerate/structure ----------------------------------------- */
 
 /* Public macros ------------------------------------------------------ */

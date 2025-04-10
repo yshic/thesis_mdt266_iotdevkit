@@ -2,9 +2,6 @@
 #include "globals.h"
 
 /* Public defines ----------------------------------------------------- */
-// DEBUGGING
-// #define DEBUG_I2C
-
 // Main code
 #ifndef DEBUG_I2C
   #define MAIN
@@ -24,14 +21,21 @@ void setup()
   Serial.begin(9600);
   Wire.begin();
   bspGpioPinMode(LED_BUILTIN, OUTPUT);
+  bspGpioDigitalWrite(LED_BUILTIN, HIGH); // TURN OFF LED
 
 #ifdef MAIN
   #ifndef ENTERPRISE_WIFI
+    #ifdef BLE_MODULE
   bleSetup();
-  #endif
+    #endif // BLE_MODULE
+  #endif   // ENTERPRISE_WIFI
 
   #ifdef WIFI_MODULE
   wifiSetup();
+  #endif
+
+  #ifdef UART_MODULE
+  uartSetup();
   #endif
 
   #ifdef DHT20_MODULE
