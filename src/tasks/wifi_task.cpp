@@ -29,9 +29,9 @@
 
 /* Private variables -------------------------------------------------- */
 #ifdef ENTERPRISE_WIFI
-const char *_ssid     = "HCMUT01";
-const char *_username = "";
-const char *_password = "";
+const char *_ssid     = UNI_SSID;
+const char *_username = UNI_USERNAME;
+const char *_password = UNI_PASSWORD;
 #endif
 
 /* Task definitions ------------------------------------------- */
@@ -52,7 +52,7 @@ void wifiTask(void *pvParameters)
 #elif defined(BLE_MODULE)
       WiFi.begin(ssid, password);
 #else
-      WiFi.begin("Chi Huong", "nlhtnlat");
+      WiFi.begin(DEFAULT_SSID, DEFAULT_PASSWORD);
 #endif // defined(ENTERPRISE_WIFI)
       // Set a timeout (10 seconds)
       unsigned long startTime = millis();

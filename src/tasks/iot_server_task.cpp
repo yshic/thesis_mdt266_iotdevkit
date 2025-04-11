@@ -46,7 +46,7 @@ constexpr uint8_t FIRMWARE_FAILURE_RETRIES = 12U;
 // increased packet size, might increase download speed
 constexpr uint16_t FIRMWARE_PACKET_SIZE = 4096U;
 
-constexpr char     TOKEN[]          = "nn0o282f0s9xx6m6ujp6";
+constexpr char     TOKEN[]          = COREIOT_TOKEN;
 constexpr char     COREIOT_SERVER[] = "app.coreiot.io";
 constexpr uint16_t COREIOT_PORT     = 1883U;
 

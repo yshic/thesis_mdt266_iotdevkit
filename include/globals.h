@@ -150,6 +150,7 @@ extern Unit4Relay unit4Relay;
 extern UsbSwitch usbSwitch(D7, D6);
   #endif // USB_SWITCH_MODULE
 
+  #include "secrets.h"
   #include "utility.h"
 
 // RTOS
