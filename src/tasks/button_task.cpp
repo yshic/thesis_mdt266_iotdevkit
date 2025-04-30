@@ -30,7 +30,7 @@ void buttonTask(void *pvParameters)
   for (;;)
   {
     button.update();
-    vTaskDelay(DELAY_BUTTON / portTICK_PERIOD_MS);
+    vTaskDelay(pdMS_TO_TICKS(DELAY_BUTTON));
   }
 }
 
@@ -42,10 +42,21 @@ void buttonSetup()
   button.setHoldDuration(1000);
 
   // Setup callback
-  button.attachSingleClickCallback([]() { lcd.updateScreenState(true); });
-  button.attachDoubleClickCallback([]() { lcd.updateScreenState(false); });
+  button.attachSingleClickCallback([]() {
+  #ifdef DEBUG_BUTTON_CALLBACK
+    Serial.println("Single Click");
+  #endif // DEBUG_BUTTON_CALLBACK
+    lcd.updateScreenState(true);
+  });
 
-  xTaskCreate(buttonTask, "Button Task", 8192, NULL, 3, NULL);
+  button.attachDoubleClickCallback([]() {
+  #ifdef DEBUG_BUTTON_CALLBACK
+    Serial.println("Double Click");
+  #endif // DEBUG_BUTTON_CALLBACK
+    lcd.updateScreenState(false);
+  });
+
+  xTaskCreate(buttonTask, "Button Task", 4096, NULL, 2, NULL);
 }
 #endif
 /* End of file -------------------------------------------------------- */
