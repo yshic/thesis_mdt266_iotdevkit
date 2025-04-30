@@ -24,18 +24,18 @@
 /* Private variables -------------------------------------------------- */
 
 /* Task definitions   ------------------------------------------------- */
+#ifdef UART_MODULE
 void uartTask(void *pvParameters)
 {
   for (;;)
   {
     if (uart1.available())
     {
-      char incominByte = uart1.read();
-      uart1.print("I received : ");
-      uart1.println(incominByte);
+      String message = uart1.readStringUntil('\n');
+      uart1.println("Received: " + message);
+      Serial.println("Received: " + message);
     }
-
-    vTaskDelay(pdMS_TO_TICKS(10));
+    vTaskDelay(pdMS_TO_TICKS(100));
   }
 }
 
@@ -43,8 +43,8 @@ void uartTask(void *pvParameters)
 
 void uartSetup()
 {
-  uart1.begin(9600, SERIAL_8N1, RX_PIN, TX_PIN);
+  uart1.begin(115200, SERIAL_8N1, RX_PIN, TX_PIN);
   xTaskCreate(&uartTask, "UART Task", 4096, nullptr, 1, nullptr);
 }
-
-/* End of file -------------------------------------------------------- */
+#endif // UART_MODULE
+       /* End of file -------------------------------------------------------- */
