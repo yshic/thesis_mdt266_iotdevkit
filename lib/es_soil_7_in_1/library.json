@@ -1,0 +1,15 @@
+{
+  "name": "ES Soil 7 in 1 Library",
+  "keywords": "soil, moisture, ph, npk",
+  "description": "A versatile library for handling button input with features like single click, double click, and hold detection using a finite state machine.",
+  "authors": [
+    {
+      "name": "Tuan Nguyen",
+      "email": "tuanl799@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "version": "0.1.0",
+  "frameworks": "arduino",
+  "platforms": "*"
+}
