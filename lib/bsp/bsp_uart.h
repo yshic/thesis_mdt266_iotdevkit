@@ -39,77 +39,92 @@ typedef enum
 /* Public variables --------------------------------------------------- */
 
 /* Functions Declaration -------------------------------------------------- */
-bool bspUartSetRxTimeout(uint8_t symbols_timeout);
+class BspUart : public Stream
+{
+public:
+  BspUart(uint8_t uart_nr);
 
-bool bspUartSetRxFIFOFull(uint8_t fifoBytes);
+public:
+  bool setRxTimeout(uint8_t symbols_timeout);
 
-bsp_uart_error_t bspUartOnReceive(OnReceiveCb function, bool onlyOnTimeout = false);
+  bool setRxFIFOFull(uint8_t fifoBytes);
 
-bsp_uart_error_t bspUartOnReceiveError(OnReceiveErrorCb function);
+  bsp_uart_error_t onReceive(OnReceiveCb function, bool onlyOnTimeout = false);
 
-bsp_uart_error_t bspUartEventQueueReset();
+  bsp_uart_error_t onReceiveError(OnReceiveErrorCb function);
 
-bsp_uart_error_t bspUartUpdateBaudRate(unsigned long baud);
+  bsp_uart_error_t eventQueueReset();
 
-bsp_uart_error_t bspUartBegin(unsigned long baud, uint32_t config = SERIAL_8N1, int8_t rxPin = -1,
-                              int8_t txPin = -1, bool invert = false, unsigned long timeout_ms = 20000UL,
-                              uint8_t rxfifo_full_thrhd = 112);
+  bsp_uart_error_t updateBaudRate(unsigned long baud);
 
-bsp_uart_error_t bspUartEnd(void);
+  bsp_uart_error_t begin(unsigned long baud, uint32_t config = SERIAL_8N1, int8_t rxPin = -1,
+                         int8_t txPin = -1, bool invert = false, unsigned long timeout_ms = 20000UL,
+                         uint8_t rxfifo_full_thrhd = 112);
 
-int bspUartAvailable(void);
+  bsp_uart_error_t end(void);
 
-int bspUartAvailableForWrite(void);
+  int available(void) override;
 
-int bspUartPeek(void);
+  int availableForWrite(void);
 
-int bspUartRead(void);
+  int peek(void) override;
 
-size_t bspUartRead(uint8_t *buffer, size_t size);
+  int read(void) override;
 
-size_t bspUartRead(char *buffer, size_t size);
+  size_t read(uint8_t *buffer, size_t size);
 
-size_t bspUartReadBytes(uint8_t *buffer, size_t length);
+  size_t read(char *buffer, size_t size);
 
-size_t bspUartReadBytes(char *buffer, size_t length);
+  size_t readBytes(uint8_t *buffer, size_t length);
 
-bsp_uart_error_t bspUartFlush(void);
+  size_t readBytes(char *buffer, size_t length);
 
-bsp_uart_error_t bspUartFlush(bool txOnly);
+  void flush(void) override;
 
-size_t bspUartWrite(uint8_t);
+  bsp_uart_error_t flush(bool txOnly);
 
-size_t bspUartWrite(const uint8_t *buffer, size_t size);
+  size_t write(uint8_t);
 
-inline size_t bspUartWrite(const char *buffer, size_t size) { return bspUartWrite((uint8_t *) buffer, size); }
+  size_t write(const uint8_t *buffer, size_t size);
 
-inline size_t bspUartWrite(const char *s) { return bspUartWrite((uint8_t *) s, strlen(s)); }
+  inline size_t write(const char *buffer, size_t size) { return write((uint8_t *) buffer, size); }
 
-inline size_t bspUartWrite(unsigned long n) { return bspUartWrite((uint8_t) n); }
+  inline size_t write(const char *s) { return write((uint8_t *) s, strlen(s)); }
 
-inline size_t bspUartWrite(long n) { return bspUartWrite((uint8_t) n); }
+  inline size_t write(unsigned long n) { return write((uint8_t) n); }
 
-inline size_t bspUartWrite(unsigned int n) { return bspUartWrite((uint8_t) n); }
+  inline size_t write(long n) { return write((uint8_t) n); }
 
-inline size_t bspUartWrite(int n) { return bspUartWrite((uint8_t) n); }
+  inline size_t write(unsigned int n) { return write((uint8_t) n); }
 
-uint32_t bspUartBaudRate();
+  inline size_t write(int n) { return write((uint8_t) n); }
 
-bsp_uart_error_t bspUartSetDebugOutput(bool);
+  uint32_t baudRate();
 
-bsp_uart_error_t bspUartSetRxInvert(bool);
+  bsp_uart_error_t setDebugOutput(bool);
 
-bool bspUartSetPins(int8_t rxPin, int8_t txPin, int8_t ctsPin = -1, int8_t rtsPin = -1);
+  bsp_uart_error_t setRxInvert(bool);
 
-bool bspUartSetHwFlowCtrlMode(SerialHwFlowCtrl mode      = UART_HW_FLOWCTRL_CTS_RTS,
-                              uint8_t          threshold = 64); // 64 is half FIFO Length
+  bool setPins(int8_t rxPin, int8_t txPin, int8_t ctsPin = -1, int8_t rtsPin = -1);
 
-bool bspUartSetMode(SerialMode mode);
+  bool setHwFlowCtrlMode(SerialHwFlowCtrl mode      = UART_HW_FLOWCTRL_CTS_RTS,
+                         uint8_t          threshold = 64); // 64 is half FIFO Length
 
-size_t bspUartSetRxBufferSize(size_t new_size);
+  bool setMode(SerialMode mode);
 
-size_t bspUartSetTxBufferSize(size_t new_size);
+  size_t setRxBufferSize(size_t new_size);
 
+  size_t setTxBufferSize(size_t new_size);
+
+private:
+  HardwareSerial *_uart;
+};
+
+extern BspUart uart0;
+
+extern BspUart uart1;
+
+extern BspUart uart2;
 #endif // BSP_UART_H
 
 /* End of file -------------------------------------------------------- */

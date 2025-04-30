@@ -21,13 +21,14 @@
   #endif
 
   /* Public defines ----------------------------------------------------- */
-  #define DELAY_DHT20        15000
-  #define DELAY_SHT4X        15000
-  #define DELAY_BMP280       15000
-  #define DELAY_LIGHT_SENSOR 1000
+  #define DELAY_DHT20        60000
+  #define DELAY_SHT4X        60000
+  #define DELAY_BMP280       60000
+  #define DELAY_LIGHT_SENSOR 10000
   #define DELAY_ULTRASONIC   1000
   #define DELAY_PIRSENSOR    1000
-  #define DELAY_MOISTURE     15000
+  #define DELAY_MOISTURE     60000
+  #define DELAY_SOIL_RS485   60000
 
 /* Public enumerate/structure ----------------------------------------- */
 

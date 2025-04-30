@@ -11,6 +11,7 @@
 
 /* Includes ----------------------------------------------------------- */
 #include "sensors_task.h"
+#include "bsp_rs485.h"
 #include "globals.h"
 
 /* Private defines ---------------------------------------------------- */
@@ -55,7 +56,7 @@ void sht40Setup()
   sht40.begin();
   sht40.setHeater(SHT4X_NO_HEATER);
   sht40.setPrecision(SHT4X_HIGH_PRECISION);
-  xTaskCreate(sht40Task, "SHT40 Task", 8192, NULL, 1, NULL);
+  xTaskCreate(sht40Task, "SHT40 Task", 4096, NULL, 1, NULL);
 }
 #endif // SHT4X_MODULE
 
@@ -77,7 +78,7 @@ void bmp280Setup()
                      SAMPLING_X16,    /* Pressure oversampling */
                      FILTER_X16,      /* Filtering. */
                      STANDBY_MS_500); /* Standby time. */
-  xTaskCreate(bmp280Task, "BMP280 Task", 8192, NULL, 1, NULL);
+  xTaskCreate(bmp280Task, "BMP280 Task", 4096, NULL, 1, NULL);
 }
 #endif // BMP280_MODULE
 
@@ -103,7 +104,7 @@ void lightSensorTask(void *pvParameters)
   }
 }
 
-void lightSensorSetup() { xTaskCreate(lightSensorTask, "Light Sensor Task", 4096, NULL, 2, NULL); }
+void lightSensorSetup() { xTaskCreate(lightSensorTask, "Light Sensor Task", 4096, NULL, 1, NULL); }
 #endif // LIGHT_SENSOR_MODULE
 
 #ifdef ULTRASONIC_MODULE
@@ -117,7 +118,7 @@ void ultrasonicTask(void *pvParameters)
     vTaskDelay(DELAY_ULTRASONIC / portTICK_PERIOD_MS);
   }
 }
-void ultrasonicSetup() { xTaskCreate(ultrasonicTask, "Ultrasonic Sensor Task", 4096, NULL, 2, NULL); }
+void ultrasonicSetup() { xTaskCreate(ultrasonicTask, "Ultrasonic Sensor Task", 4096, NULL, 1, NULL); }
 #endif // ULTRASONIC_MODULE
 
 #ifdef PIR_MODULE
@@ -129,7 +130,7 @@ void pirSensorTask(void *pvParameters)
     vTaskDelay(DELAY_PIRSENSOR / portTICK_PERIOD_MS);
   }
 }
-void pirSensorSetup() { xTaskCreate(pirSensorTask, "PIR Sensor Task", 4096, NULL, 2, NULL); }
+void pirSensorSetup() { xTaskCreate(pirSensorTask, "PIR Sensor Task", 4096, NULL, 1, NULL); }
 #endif // PIR_MODULE
 
 #ifdef SOIL_MOISTURE_MODULE

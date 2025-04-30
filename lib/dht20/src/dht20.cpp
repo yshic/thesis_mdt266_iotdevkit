@@ -63,7 +63,7 @@ bool DHT20::_resetRegister(uint8_t reg)
 {
   uint8_t values[3]    = {0};
   uint8_t resetParam[] = {0x00, 0x00};
-  if (bspI2CWriteBytes(DHT20_I2C_ADDR, reg, resetParam, sizeof(resetParam)))
+  if (bspI2CWriteBytes(DHT20_I2C_ADDR, reg, resetParam, sizeof(resetParam)) != BSP_I2C_OK)
   {
     return false;
   }
@@ -85,13 +85,15 @@ bool DHT20::_resetRegister(uint8_t reg)
 
 int DHT20::readStatus(void)
 {
-  int     returnVal = 0;
-  uint8_t status    = 0;
+  bsp_i2c_error_t returnVal;
+  uint8_t         status = 0;
 
   returnVal = bspI2CReadByte(DHT20_I2C_ADDR, 0x71, status);
-  if (returnVal)
+  if (returnVal == BSP_I2C_ERR_READ)
   {
+#ifdef DEBUG_PRINT
     Serial.println("Failed to read byte\n");
+#endif // DEBUG_PRINT
   }
   if ((status & 0x18) == 0x18)
   {
@@ -127,7 +129,10 @@ dht20_error_t DHT20::readTargetData(uint32_t *data)
   // Check the busy flag in the state byte (bytes[0])
   if (bytes[0] & 0x80)
   {
+#ifdef DEBUG_PRINT
     Serial.println("Sensor is still busy");
+#endif // DEBUG_PRINT
+
     return DHT20_ERR; // Sensor not ready
   }
 
@@ -156,7 +161,7 @@ dht20_error_t DHT20::readTempAndHumidity()
     }
   }
   // wait for data ready。
-  while (readTargetData(target_val))
+  while (readTargetData(target_val) != DHT20_OK)
   {
     cnt++;
     DELAY(50);

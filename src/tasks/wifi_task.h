@@ -30,6 +30,7 @@
 
 /* Funtions Declaration -------------------------------------------------- */
 void wifiTask(void *pvParameters);
+void wmProcessTask(void *pvParameters);
 void wifiSetup();
 
 #endif // WIFI_TASK_H

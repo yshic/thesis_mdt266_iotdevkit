@@ -52,6 +52,7 @@ public:
    *
    * @return
    *  - `UNIT_4RELAY_OK (8208)`: Device detected and ready.
+   *
    *  - `UNIT_4RELAY_ERR_I2C (8213)`: Device not found.
    */
   unit_4relay_error_t begin();
@@ -64,75 +65,103 @@ public:
    *                 - `1`: Synchronous mode.
    *
    * @return
-   *  - `UNIT_4RELAY_OK`: Success.
+   *  - `UNIT_4RELAY_OK (8208)`: Success.
+   *
+   *  - `UNIT_4RELAY_ERR_INIT(8210)`: Failed to write initial configuration to device.
    */
   unit_4relay_error_t init(bool mode);
 
   /**
-   * @brief  Controls the on/off state of a specific relay.
+   * @brief Sets the state of an individual relay.
    *
-   * @param[in] number Relay index (0 to 3).
-   * @param[in] state  Relay state:
-   *                   - `0`: OFF.
-   *                   - `1`: ON.
+   * This function turns ON or OFF a specified relay by index.
+   *
+   * @param[in] number  Relay number (0-3).
+   * @param[in] state   Desired relay state (`true` = ON, `false` = OFF).
    *
    * @return
-   *  - `UNIT_4RELAY_OK`: Success.
+   *  - `UNIT_4RELAY_OK (8208)`: Success.
+   *
+   *  - `UNIT_4RELAY_ERR_INDEX (8211)`: Invalid relay index.
    */
   unit_4relay_error_t relayWrite(uint8_t number, bool state);
 
   /**
-   * @brief  Sets the state of all relays at the same time.
+   * @brief Sets all relays to the same state.
    *
-   * @param[in] state Relay state:
-   *                  - `0`: All relays OFF.
-   *                  - `1`: All relays ON.
+   * This function turns all relays ON or OFF.
+   *
+   * @param[in] state  Desired relay state for all (`true` = ON, `false` = OFF).
    *
    * @return
-   *  - `UNIT_4RELAY_OK`: Success.
+   *  - `UNIT_4RELAY_OK (8208)`: Success.
    */
   unit_4relay_error_t relayAll(bool state);
 
   /**
-   * @brief  Controls the on/off state of a specific LED.
+   * @brief Sets the state of an individual LED.
    *
-   * @param[in] number LED index (0 to 3).
-   * @param[in] state  LED state:
-   *                   - `0`: OFF.
-   *                   - `1`: ON.
+   * This function turns ON or OFF a specified indicator LED by index.
+   *
+   * @param[in] number  LED number (0-3).
+   * @param[in] state   Desired LED state (`true` = ON, `false` = OFF).
    *
    * @return
-   *  - `UNIT_4RELAY_OK`: Success.
+   *  - `UNIT_4RELAY_OK (8208)`: Success.
+   *
+   *  - `UNIT_4RELAY_ERR_INDEX (8211)`: Invalid LED index.
    */
   unit_4relay_error_t ledWrite(uint8_t number, bool state);
 
   /**
-   * @brief  Sets the state of all LEDs at the same time.
+   * @brief Sets all LEDs to the same state.
    *
-   * @param[in] state LED state:
-   *                  - `0`: All LEDs OFF.
-   *                  - `1`: All LEDs ON.
+   * This function turns all indicator LEDs ON or OFF.
+   *
+   * @param[in] state  Desired LED state for all (`true` = ON, `false` = OFF).
    *
    * @return
-   *  - `UNIT_4RELAY_OK`: Success.
+   *  - `UNIT_4RELAY_OK (8208)`: Success.
    */
   unit_4relay_error_t ledAll(bool state);
 
   /**
-   * @brief  Sets the operation mode of the device.
+   * @brief Sets the operating mode of the relay unit.
    *
-   * @param[in] mode Operation mode:
-   *                 - `0`: Asynchronous mode.
-   *                 - `1`: Synchronous mode.
+   * This function changes the internal mode of the device, such as LED or relay mode.
+   *
+   * @param[in] mode  Desired mode setting.
    *
    * @return
-   *  - `UNIT_4RELAY_OK`: Success.
+   *  - `UNIT_4RELAY_OK (8208)`: Success.
    */
   unit_4relay_error_t switchMode(bool mode);
 
+  /**
+   * @brief Gets the state of a specific relay.
+   *
+   * @param[in] number  Relay number (0-3).
+   *
+   * @return
+   *  - Relay state (`0` = OFF, `1` = ON).
+   *
+   *  - `UNIT_4RELAY_ERR_INDEX (8211)`: If an invalid index is provided.
+   */
   int getRelayState(uint8_t number);
 
+  /**
+   * @brief Gets the state of a specific LED.
+   *
+   * @param[in] number  LED number (0-3).
+   *
+   * @return
+   *  - LED state (`0` = OFF, `1` = ON).
+   *
+   *  - `UNIT_4RELAY_ERR_INDEX (8211)`: If an invalid index is provided.
+   */
   int getLedState(uint8_t number);
+
+  void setRelayState(bool state[4]);
 
 private:
   bool relayState[4] = {false};

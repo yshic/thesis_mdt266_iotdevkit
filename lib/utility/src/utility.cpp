@@ -52,7 +52,9 @@ void scanI2CDevices()
     {
       Serial.print("Unknown error at address 0x");
       if (address < 16)
+      {
         Serial.print("0");
+      }
       Serial.println(address, HEX);
     }
   }
@@ -94,6 +96,42 @@ uint8_t crc8(const uint8_t *data, int len)
     }
   }
   return crc;
+}
+
+int compareVersion(String v1, String v2)
+{
+  int parts1[3] = {0}, parts2[3] = {0};
+
+  // Helper to parse a version string into 3 int parts
+  auto parseVersion = [](const String &ver, int *parts) {
+    int partIndex = 0;
+    int lastDot   = -1;
+    for (int i = 0; i <= ver.length(); ++i)
+    {
+      if (ver[i] == '.' || i == ver.length())
+      {
+        if (partIndex < 3)
+        {
+          parts[partIndex++] = ver.substring(lastDot + 1, i).toInt();
+        }
+        lastDot = i;
+      }
+    }
+  };
+
+  parseVersion(v1, parts1);
+  parseVersion(v2, parts2);
+
+  // Compare part by part
+  for (int i = 0; i < 3; i++)
+  {
+    if (parts1[i] < parts2[i])
+      return -1; // v1 < v2
+    if (parts1[i] > parts2[i])
+      return 1; // v1 > v2
+  }
+
+  return 0; // equal
 }
 
 /* Private definitions ----------------------------------------------- */

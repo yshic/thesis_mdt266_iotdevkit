@@ -46,34 +46,17 @@ struct OutputState
 
 typedef enum
 {
-#ifdef DHT20_MODULE
-  LCD_SCREEN_DHT20,
-#endif
-
-#ifdef SHT4X_MODULE
+  // LCD_SCREEN_DHT20 = 0,
+  LCD_SCREEN_DOOR = 0,
   LCD_SCREEN_SHT4X,
-#endif
-
-#ifdef LIGHT_SENSOR_MODULE
+  LCD_SCREEN_BMP280,
   LCD_SCREEN_LIGHT,
-#endif
-
-#ifdef ULTRASONIC_MODULE
-  LCD_SCREEN_ULTRASONIC,
-#endif
-
-#ifdef SOIL_MOISTURE_MODULE
-  LCD_SCREEN_MOISTURE,
-#endif
-
-#ifdef PIR_MODULE
+  // LCD_SCREEN_ULTRASONIC,
+  // LCD_SCREEN_MOISTURE,
   LCD_SCREEN_PIR,
-#endif
-
-#ifdef MINI_FAN_MODULE
   LCD_SCREEN_MINIFAN,
-#endif
-
+  LCD_SCREEN_CAMERA_FACE_DETECTED,
+  LCD_SCREEN_CAMERA_NONE,
   LCD_SCREEN_COUNT // Total number of states
 } lcd_screen_state_t;
 
@@ -122,7 +105,7 @@ private:
   OutputState        _output;
   uint8_t            _displayState  = 0x00;
   uint8_t            _entryState    = 0x00;
-  lcd_screen_state_t lcdScreenState = (lcd_screen_state_t) 0;
+  lcd_screen_state_t lcdScreenState = LCD_SCREEN_SHT4X;
 
   void InitializeLCD();
   void I2C_Write(uint8_t output);

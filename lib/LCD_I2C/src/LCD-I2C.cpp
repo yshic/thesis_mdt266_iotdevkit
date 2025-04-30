@@ -473,8 +473,10 @@ void LCD_I2C::progressBar(uint8_t row, uint8_t progress)
 }
 
 lcd_screen_state_t LCD_I2C::getScreenState() { return lcdScreenState; }
-void               LCD_I2C::setScreenState(lcd_screen_state_t screenState) { lcdScreenState = screenState; }
-void               LCD_I2C::updateScreenState(bool increment)
+
+void LCD_I2C::setScreenState(lcd_screen_state_t screenState) { lcdScreenState = screenState; }
+
+void LCD_I2C::updateScreenState(bool increment)
 {
   if (LCD_SCREEN_COUNT == 0)
   {
@@ -482,11 +484,12 @@ void               LCD_I2C::updateScreenState(bool increment)
   }
   if (increment)
   {
-    this->lcdScreenState = (lcd_screen_state_t) ((this->lcdScreenState + 1) % LCD_SCREEN_COUNT);
+    lcdScreenState = (lcd_screen_state_t) ((lcdScreenState + 1) % LCD_SCREEN_COUNT);
+    Serial.println(lcdScreenState);
   }
   else
   {
-    this->lcdScreenState =
-    (lcd_screen_state_t) ((this->lcdScreenState - 1 + LCD_SCREEN_COUNT) % LCD_SCREEN_COUNT);
+    lcdScreenState = (lcd_screen_state_t) ((lcdScreenState - 1 + LCD_SCREEN_COUNT) % LCD_SCREEN_COUNT);
+    Serial.println(lcdScreenState);
   }
 }

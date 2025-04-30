@@ -22,7 +22,8 @@
 /* Public variables --------------------------------------------------- */
 
 /* Private variables -------------------------------------------------- */
-
+HUSKYLENSResult _result;
+bool            doorState = false;
 /* Task definitions ------------------------------------------- */
 #ifdef LCD_MODULE
 void lcdTask(void *pvParameters)
@@ -43,9 +44,25 @@ void lcdTask(void *pvParameters)
           lcd.print("Temp: ");
           lcd.print(dht20.getTemperature());
           lcd.print(" *C");
-          lcd.setScreenState(LCD_SCREEN_LIGHT);
           break;
   #endif
+
+  #ifdef SERVO_MODULE
+        case LCD_SCREEN_DOOR:
+          doorState = doorServo.getDoorStatus();
+          lcd.clear();
+          lcd.print("Door Status: ");
+          lcd.setCursor(0, 1);
+          if (doorState)
+          {
+            lcd.print("Opened");
+          }
+          else
+          {
+            lcd.print("Closed");
+          }
+          break;
+  #endif // SERVO_MODULE
 
   #ifdef SHT4X_MODULE
         case LCD_SCREEN_SHT4X:
@@ -57,8 +74,19 @@ void lcdTask(void *pvParameters)
           lcd.print("Temp: ");
           lcd.print(sht40.getTemperature());
           lcd.print(" *C");
-          lcd.setScreenState(LCD_SCREEN_LIGHT);
-          // NOTE: RTOS BREAK instr ERROR when use updateScreenState();
+          break;
+  #endif
+
+  #ifdef BMP280_MODULE
+        case LCD_SCREEN_BMP280:
+          lcd.clear();
+          lcd.print("Pres.: ");
+          lcd.print(bmp280.getPressure());
+          lcd.print(" atm");
+          lcd.setCursor(0, 1);
+          lcd.print("Alt.: ");
+          lcd.print(bmp280.getAltitude());
+          lcd.print(" m");
           break;
   #endif
 
@@ -68,12 +96,10 @@ void lcdTask(void *pvParameters)
           lcd.print("Light level: ");
           lcd.print(lightSensor.getLightValuePercentage());
           lcd.progressBar(1, lightSensor.getLightValuePercentage());
-          // lcd.setScreenState(LCD_SCREEN_DHT20);
-          // lcd.setScreenState(LCD_SCREEN_SHT4X);
           break;
   #endif
 
-  #ifdef ULTRASONIC
+  #ifdef ULTRASONIC_MODULE
         case LCD_SCREEN_ULTRASONIC:
           lcd.clear();
           lcd.print("Distance: ");
@@ -110,12 +136,29 @@ void lcdTask(void *pvParameters)
           break;
   #endif
 
+  #ifdef HUSKYLENS_MODULE
+        case LCD_SCREEN_CAMERA_FACE_DETECTED:
+          lcd.clear();
+          lcd.print("Face Detected");
+          lcd.setCursor(0, 1);
+          lcd.print("ID: ");
+          _result = huskylens.getResult();
+          lcd.print(_result.ID);
+          break;
+
+        case LCD_SCREEN_CAMERA_NONE:
+          lcd.clear();
+          lcd.print("Nothing");
+          break;
+  #endif // HUSKYLENS_MODULE
+
         default:
           lcd.clear();
+          lcd.print("Blank screen");
           break;
       }
     }
-    vTaskDelay(DELAY_LCD / portTICK_PERIOD_MS);
+    vTaskDelay(pdMS_TO_TICKS(DELAY_LCD));
   }
 }
 

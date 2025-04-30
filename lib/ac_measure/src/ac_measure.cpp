@@ -65,7 +65,7 @@ float AcMeasure::getVoltage(void)
 {
   uint16_t value = getRawVoltage();
 
-  return (float) (value / 100);
+  return (float) (value / 100.0f);
 }
 
 uint16_t AcMeasure::getRawCurrent(void)
@@ -80,9 +80,9 @@ uint16_t AcMeasure::getRawCurrent(void)
 
 float AcMeasure::getCurrent(void)
 {
-  uint8_t value = getRawCurrent();
+  uint16_t value = getRawCurrent();
 
-  return (float) (value / 100);
+  return (float) (value / 100.0f);
 }
 
 uint32_t AcMeasure::getRawPower(void)
@@ -99,7 +99,7 @@ float AcMeasure::getPower(void)
 {
   uint32_t value = getRawPower();
 
-  return (float) (value / 100);
+  return (float) (value / 100.0f);
 }
 
 uint32_t AcMeasure::getRawApparentPower(void)
@@ -116,23 +116,23 @@ float AcMeasure::getApparentPower(void)
 {
   uint32_t value = getRawApparentPower();
 
-  return (float) (value / 100);
+  return (float) (value / 100.0f);
 }
 
 uint8_t AcMeasure::getRawPowerFactor(void)
 {
   uint8_t data[4];
 
-  bspI2CReadBytes(_addr, UNIT_ACMEASURE_CURRENT_REG, data, 1);
+  bspI2CReadBytes(_addr, UNIT_ACMEASURE_POWER_FACTOR_REG, data, 1);
 
   return data[0];
 }
 
 float AcMeasure::getPowerFactor(void)
 {
-  uint32_t value = getRawPowerFactor();
+  uint8_t value = getRawPowerFactor();
 
-  return (float) (value / 100);
+  return (float) (value / 100.0f);
 }
 
 uint32_t AcMeasure::getRawKWH(void)
@@ -148,7 +148,7 @@ uint32_t AcMeasure::getRawKWH(void)
 float AcMeasure::getKWH(void)
 {
   uint32_t value = getRawKWH();
-  return (float) (value / 100);
+  return (float) (value / 100.0f);
 }
 
 ac_measure_error_t AcMeasure::getVoltageString(char *str)

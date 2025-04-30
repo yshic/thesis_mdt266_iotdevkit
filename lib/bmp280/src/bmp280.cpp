@@ -113,11 +113,11 @@ bmp280_error_t BMP280::readTemperature()
   return BMP280_OK;
 }
 
-bmp280_error_t BMP280::readAltitude(float seaLevelhPa)
+bmp280_error_t BMP280::readAltitude()
 {
-  float pressure = readPressure(); // in SI units for Pascal
+  float pressure = getPressure(); // in SI units for Pascal
   pressure /= 100;
-  sensorValue[2] = 44330 * (1.0 - pow(pressure / seaLevelhPa, 0.1903));
+  sensorValue[2] = 44330 * (1.0 - pow(pressure / _seaLevelhPa, 0.1903));
   return BMP280_OK;
 }
 
@@ -131,6 +131,8 @@ float BMP280::seaLevelForAltitude(float altitude, float atmospheric)
 {
   return atmospheric / pow(1.0 - (altitude / 44330.0), 5.255);
 }
+
+void BMP280::setSeaLevelPressure(float pressure) { _seaLevelhPa = pressure; }
 
 float BMP280::waterBoilingPoint(float pressure)
 {
