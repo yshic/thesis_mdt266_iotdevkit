@@ -142,6 +142,17 @@ int Unit4Relay::getRelayState(uint8_t number)
   return relayState[number];
 }
 
+void Unit4Relay::setRelayState(bool state[4])
+{
+  for (int i = 0; i < UNIT_4RELAY_MAX_RELAYS; i++)
+  {
+    if (state[i])
+    {
+      relayState[i] = state[i];
+    }
+  }
+}
+
 int Unit4Relay::getLedState(uint8_t number)
 {
   if (number >= UNIT_4RELAY_MAX_RELAYS)

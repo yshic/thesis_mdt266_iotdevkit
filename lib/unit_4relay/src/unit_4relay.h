@@ -161,6 +161,8 @@ public:
    */
   int getLedState(uint8_t number);
 
+  void setRelayState(bool state[4]);
+
 private:
   bool relayState[4] = {false};
   bool ledState[4]   = {false};
