@@ -137,11 +137,12 @@ public:
 
   bmp280_error_t readPressure();
   bmp280_error_t readTemperature();
-  bmp280_error_t readAltitude(float seaLevelhPa = 1013.25);
+  bmp280_error_t readAltitude();
   float          getPressure();
   float          getTemperature();
   float          getAltitude();
   float          seaLevelForAltitude(float altitude, float atmospheric);
+  void           setSeaLevelPressure(float pressure);
   float          waterBoilingPoint(float pressure);
   bool           takeForcedMeasurement();
 
@@ -154,6 +155,8 @@ private:
   float sensorValue[3] = {0.f}; // Index 0: Pressure
                                 // Index 1: Temperature
                                 // Index 2: Altitude
+
+  float _seaLevelhPa = 1013.25f;
 
   /** Encapsulates the config register */
   struct config
