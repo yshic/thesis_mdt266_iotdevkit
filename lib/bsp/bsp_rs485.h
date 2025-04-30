@@ -55,12 +55,17 @@ public:
   int               read(void) override;
   void              flush() override;
   size_t            write(uint8_t);
-  void              sendRs485Command(byte *command, uint32_t cmdLen, byte *response, uint32_t resLen);
+  void              sendModbusCommand(byte *command, uint32_t cmdLen, byte *response, uint32_t resLen);
 
 private:
   BspUart *_uart;
 };
 
+extern BspRs485 rs485Serial0;
+
+extern BspRs485 rs485Serial1;
+
+extern BspRs485 rs485Serial2;
 #endif // BSP_RS485_H
 
 /* End of file -------------------------------------------------------- */

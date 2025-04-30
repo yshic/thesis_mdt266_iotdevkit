@@ -20,7 +20,11 @@
 /* Private macros ----------------------------------------------------- */
 
 /* Public variables --------------------------------------------------- */
+BspRs485 rs485Serial0(0);
 
+BspRs485 rs485Serial1(1);
+
+BspRs485 rs485Serial2(2);
 /* Private variables -------------------------------------------------- */
 
 /* Class method definitions-------------------------------------------- */
@@ -66,7 +70,7 @@ void BspRs485::flush() { _uart->flush(); }
 
 size_t BspRs485::write(uint8_t c) { return _uart->write(c); }
 
-void BspRs485::sendRs485Command(byte *command, uint32_t cmdLen, byte *response, uint32_t resLen)
+void BspRs485::sendModbusCommand(byte *command, uint32_t cmdLen, byte *response, uint32_t resLen)
 {
   _uart->write(command, cmdLen);
   _uart->flush();
