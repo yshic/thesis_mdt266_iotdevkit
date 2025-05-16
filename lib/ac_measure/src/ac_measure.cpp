@@ -25,6 +25,7 @@
 /* Private variables -------------------------------------------------- */
 
 /* Class method definitions-------------------------------------------- */
+
 ac_measure_error_t AcMeasure::begin(void)
 {
   if (!bspI2CExist(_addr))
