@@ -1,0 +1,44 @@
+\doxysection{Bsp\+Rs485 Class Reference}
+\hypertarget{class_bsp_rs485}{}\label{class_bsp_rs485}\index{BspRs485@{BspRs485}}
+Inheritance diagram for Bsp\+Rs485\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_bsp_rs485}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_bsp_rs485_a68342b746b79b769bebcf91c4a6a52c8}\label{class_bsp_rs485_a68342b746b79b769bebcf91c4a6a52c8} 
+{\bfseries Bsp\+Rs485} (uint8\+\_\+t uart\+\_\+nr)
+\item 
+\Hypertarget{class_bsp_rs485_abdba186213e9f3c33d5c4e2592288d7e}\label{class_bsp_rs485_abdba186213e9f3c33d5c4e2592288d7e} 
+bsp\+\_\+rs485\+\_\+error\+\_\+t {\bfseries begin} (unsigned long baud, uint32\+\_\+t config=SERIAL\+\_\+8\+N1, int8\+\_\+t rx\+Pin=-\/1, int8\+\_\+t tx\+Pin=-\/1, bool invert=false, unsigned long timeout\+\_\+ms=20000\+UL, uint8\+\_\+t rxfifo\+\_\+full\+\_\+thrhd=112)
+\item 
+\Hypertarget{class_bsp_rs485_a49113b835eadfd8bfbea35ee060078ca}\label{class_bsp_rs485_a49113b835eadfd8bfbea35ee060078ca} 
+bsp\+\_\+rs485\+\_\+error\+\_\+t {\bfseries end} ()
+\item 
+\Hypertarget{class_bsp_rs485_accf916b2888e38d05c9596b09d75d01f}\label{class_bsp_rs485_accf916b2888e38d05c9596b09d75d01f} 
+int {\bfseries available} (void) override
+\item 
+\Hypertarget{class_bsp_rs485_a05ea4e91c888e891896320fd9fe1221e}\label{class_bsp_rs485_a05ea4e91c888e891896320fd9fe1221e} 
+int {\bfseries peek} (void) override
+\item 
+\Hypertarget{class_bsp_rs485_a7b6c2485137900fec9df17de743fea83}\label{class_bsp_rs485_a7b6c2485137900fec9df17de743fea83} 
+int {\bfseries read} (void) override
+\item 
+\Hypertarget{class_bsp_rs485_a88ac1420a907f652390949864fae03e7}\label{class_bsp_rs485_a88ac1420a907f652390949864fae03e7} 
+void {\bfseries flush} () override
+\item 
+\Hypertarget{class_bsp_rs485_a1800f68f01250788eea3dbb2663a181a}\label{class_bsp_rs485_a1800f68f01250788eea3dbb2663a181a} 
+size\+\_\+t {\bfseries write} (uint8\+\_\+t)
+\item 
+\Hypertarget{class_bsp_rs485_aefd57774e9a0c1ad87daee5817bd4853}\label{class_bsp_rs485_aefd57774e9a0c1ad87daee5817bd4853} 
+void {\bfseries send\+Modbus\+Command} (byte \texorpdfstring{$\ast$}{*}command, uint32\+\_\+t cmd\+Len, byte \texorpdfstring{$\ast$}{*}response, uint32\+\_\+t res\+Len)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/bsp/\mbox{\hyperlink{bsp__rs485_8h}{bsp\+\_\+rs485.\+h}}\item 
+lib/bsp/\mbox{\hyperlink{bsp__rs485_8cpp}{bsp\+\_\+rs485.\+cpp}}\end{DoxyCompactItemize}

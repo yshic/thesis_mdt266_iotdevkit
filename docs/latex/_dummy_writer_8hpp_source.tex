@@ -1,0 +1,28 @@
+\doxysection{Dummy\+Writer.\+hpp}
+\hypertarget{_dummy_writer_8hpp_source}{}\label{_dummy_writer_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Serialization/Writers/DummyWriter.hpp@{lib/ArduinoJson/src/ArduinoJson/Serialization/Writers/DummyWriter.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Namespace.hpp>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_dummy_writer}{DummyWriter}}\ \{}
+\DoxyCodeLine{00012\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \textcolor{keywordtype}{size\_t}\ write(uint8\_t)\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00015\ \ \ \}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \textcolor{keywordtype}{size\_t}\ write(\textcolor{keyword}{const}\ uint8\_t*,\ \textcolor{keywordtype}{size\_t}\ n)\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordflow}{return}\ n;}
+\DoxyCodeLine{00019\ \ \ \}}
+\DoxyCodeLine{00020\ \};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

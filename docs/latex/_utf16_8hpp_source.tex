@@ -1,0 +1,73 @@
+\doxysection{Utf16.\+hpp}
+\hypertarget{_utf16_8hpp_source}{}\label{_utf16_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Json/Utf16.hpp@{lib/ArduinoJson/src/ArduinoJson/Json/Utf16.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Namespace.hpp>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <stdint.h>}\ \ \textcolor{comment}{//\ uint16\_t,\ uint32\_t}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ The\ high\ surrogate\ may\ be\ uninitialized\ if\ the\ pair\ is\ invalid,}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ we\ choose\ to\ ignore\ the\ problem\ to\ reduce\ the\ size\ of\ the\ code}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ Garbage\ in\ =>\ Garbage\ out}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#if\ defined(\_\_GNUC\_\_)}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#\ \ if\ \_\_GNUC\_\_\ >=\ 7}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#\ \ \ \ pragma\ GCC\ diagnostic\ push}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#\ \ \ \ pragma\ GCC\ diagnostic\ ignored\ "{}-\/Wmaybe-\/uninitialized"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{namespace\ }Utf16\ \{}
+\DoxyCodeLine{00024\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ isHighSurrogate(uint16\_t\ codeunit)\ \{}
+\DoxyCodeLine{00025\ \ \ \textcolor{keywordflow}{return}\ codeunit\ >=\ 0xD800\ \&\&\ codeunit\ <\ 0xDC00;}
+\DoxyCodeLine{00026\ \}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ isLowSurrogate(uint16\_t\ codeunit)\ \{}
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordflow}{return}\ codeunit\ >=\ 0xDC00\ \&\&\ codeunit\ <\ 0xE000;}
+\DoxyCodeLine{00030\ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{class\ }Codepoint\ \{}
+\DoxyCodeLine{00033\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00034\ \ \ Codepoint()\ :\ highSurrogate\_(0),\ codepoint\_(0)\ \{\}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \textcolor{keywordtype}{bool}\ append(uint16\_t\ codeunit)\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordflow}{if}\ (isHighSurrogate(codeunit))\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ highSurrogate\_\ =\ codeunit\ \&\ 0x3FF;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00040\ \ \ \ \ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{if}\ (isLowSurrogate(codeunit))\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ codepoint\_\ =}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ uint32\_t(0x10000\ +\ ((highSurrogate\_\ <<\ 10)\ |\ (codeunit\ \&\ 0x3FF)));}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00046\ \ \ \ \ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ codepoint\_\ =\ codeunit;}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00050\ \ \ \}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ uint32\_t\ value()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordflow}{return}\ codepoint\_;}
+\DoxyCodeLine{00054\ \ \ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00057\ \ \ uint16\_t\ highSurrogate\_;}
+\DoxyCodeLine{00058\ \ \ uint32\_t\ codepoint\_;}
+\DoxyCodeLine{00059\ \};}
+\DoxyCodeLine{00060\ \}\ \ \textcolor{comment}{//\ namespace\ Utf16}}
+\DoxyCodeLine{00061\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#if\ defined(\_\_GNUC\_\_)}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#\ \ if\ \_\_GNUC\_\_\ >=\ 8}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#\ \ \ \ pragma\ GCC\ diagnostic\ pop}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

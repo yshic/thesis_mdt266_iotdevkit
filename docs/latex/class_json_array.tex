@@ -1,0 +1,95 @@
+\doxysection{Json\+Array Class Reference}
+\hypertarget{class_json_array}{}\label{class_json_array}\index{JsonArray@{JsonArray}}
+Inheritance diagram for Json\+Array\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_json_array}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_json_array_abeecd4a7f66f5fefe32c94e470773118}\label{class_json_array_abeecd4a7f66f5fefe32c94e470773118} 
+typedef \mbox{\hyperlink{class_json_array_iterator}{Json\+Array\+Iterator}} {\bfseries iterator}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_json_array_a36e47839b35a565ccab2c0f95b1be6dd}\label{class_json_array_a36e47839b35a565ccab2c0f95b1be6dd} 
+FORCE\+\_\+\+INLINE {\bfseries Json\+Array} (detail\+::\+Memory\+Pool \texorpdfstring{$\ast$}{*}pool, detail\+::\+Collection\+Data \texorpdfstring{$\ast$}{*}data)
+\item 
+\Hypertarget{class_json_array_a43e7bf57925e808f0cdd6a3fab1e25b1}\label{class_json_array_a43e7bf57925e808f0cdd6a3fab1e25b1} 
+{\bfseries operator Json\+Variant} ()
+\item 
+\Hypertarget{class_json_array_a8db7de3afadd1cbd40edbbfc4e6784d1}\label{class_json_array_a8db7de3afadd1cbd40edbbfc4e6784d1} 
+{\bfseries operator Json\+Array\+Const} () const
+\item 
+\Hypertarget{class_json_array_af11a2e5dca58127d65694b47e0110b34}\label{class_json_array_af11a2e5dca58127d65694b47e0110b34} 
+\mbox{\hyperlink{class_json_variant}{Json\+Variant}} {\bfseries add} () const
+\item 
+\Hypertarget{class_json_array_a0796354149ed056f259eabafd4a95940}\label{class_json_array_a0796354149ed056f259eabafd4a95940} 
+{\footnotesize template$<$typename T$>$ }\\FORCE\+\_\+\+INLINE bool {\bfseries add} (const T \&value) const
+\item 
+\Hypertarget{class_json_array_ab886c66a3b49521ae397b5567025d366}\label{class_json_array_ab886c66a3b49521ae397b5567025d366} 
+{\footnotesize template$<$typename T$>$ }\\FORCE\+\_\+\+INLINE bool {\bfseries add} (T \texorpdfstring{$\ast$}{*}value) const
+\item 
+\Hypertarget{class_json_array_a9236e8f6580edcca9c0c269b42dd2713}\label{class_json_array_a9236e8f6580edcca9c0c269b42dd2713} 
+FORCE\+\_\+\+INLINE \mbox{\hyperlink{class_json_array_iterator}{iterator}} {\bfseries begin} () const
+\item 
+\Hypertarget{class_json_array_a94afde3b9efe72ff2c642b1800fe0378}\label{class_json_array_a94afde3b9efe72ff2c642b1800fe0378} 
+FORCE\+\_\+\+INLINE \mbox{\hyperlink{class_json_array_iterator}{iterator}} {\bfseries end} () const
+\item 
+\Hypertarget{class_json_array_ab29caa9f69c56bb284d08e84278c45b9}\label{class_json_array_ab29caa9f69c56bb284d08e84278c45b9} 
+FORCE\+\_\+\+INLINE bool {\bfseries set} (\mbox{\hyperlink{class_json_array_const}{Json\+Array\+Const}} src) const
+\item 
+\Hypertarget{class_json_array_acff793cfcae347c0a41f8ec737c3e524}\label{class_json_array_acff793cfcae347c0a41f8ec737c3e524} 
+FORCE\+\_\+\+INLINE bool {\bfseries operator==} (\mbox{\hyperlink{class_json_array}{Json\+Array}} rhs) const
+\item 
+\Hypertarget{class_json_array_aaf32a7778f40ab37c7d82aa96f5effae}\label{class_json_array_aaf32a7778f40ab37c7d82aa96f5effae} 
+FORCE\+\_\+\+INLINE void {\bfseries remove} (\mbox{\hyperlink{class_json_array_iterator}{iterator}} it) const
+\item 
+\Hypertarget{class_json_array_a2225ac0c5325a7a4d9fec787d90e5ca0}\label{class_json_array_a2225ac0c5325a7a4d9fec787d90e5ca0} 
+FORCE\+\_\+\+INLINE void {\bfseries remove} (size\+\_\+t index) const
+\item 
+\Hypertarget{class_json_array_ad9cfcac6e9e7eff6d010ebcec72a5a1b}\label{class_json_array_ad9cfcac6e9e7eff6d010ebcec72a5a1b} 
+void {\bfseries clear} () const
+\item 
+\Hypertarget{class_json_array_ad3300779b443c58e52245e4f17fb601c}\label{class_json_array_ad3300779b443c58e52245e4f17fb601c} 
+FORCE\+\_\+\+INLINE detail\+::\+Element\+Proxy$<$ \mbox{\hyperlink{class_json_array}{Json\+Array}} $>$ {\bfseries operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t index) const
+\item 
+\Hypertarget{class_json_array_ae6c32110eaa35baead76a77df8f9d40d}\label{class_json_array_ae6c32110eaa35baead76a77df8f9d40d} 
+FORCE\+\_\+\+INLINE \mbox{\hyperlink{class_json_object}{Json\+Object}} {\bfseries create\+Nested\+Object} () const
+\item 
+\Hypertarget{class_json_array_a31595896b19c11ff6fd418ab822d1283}\label{class_json_array_a31595896b19c11ff6fd418ab822d1283} 
+FORCE\+\_\+\+INLINE \mbox{\hyperlink{class_json_array}{Json\+Array}} {\bfseries create\+Nested\+Array} () const
+\item 
+\Hypertarget{class_json_array_ae06b07f54399d9d1e109998ce4af7d27}\label{class_json_array_ae06b07f54399d9d1e109998ce4af7d27} 
+{\bfseries operator Json\+Variant\+Const} () const
+\item 
+\Hypertarget{class_json_array_aceafb299ebf6a2b4bb0b4a7eef70b06a}\label{class_json_array_aceafb299ebf6a2b4bb0b4a7eef70b06a} 
+FORCE\+\_\+\+INLINE bool {\bfseries is\+Null} () const
+\item 
+\Hypertarget{class_json_array_a3fcf365ba215bf0be4f501734d189fb9}\label{class_json_array_a3fcf365ba215bf0be4f501734d189fb9} 
+FORCE\+\_\+\+INLINE {\bfseries operator bool} () const
+\item 
+\Hypertarget{class_json_array_a737dfe9915bd5215b1316a18b17f475d}\label{class_json_array_a737dfe9915bd5215b1316a18b17f475d} 
+FORCE\+\_\+\+INLINE size\+\_\+t {\bfseries memory\+Usage} () const
+\item 
+\Hypertarget{class_json_array_af27b32cc6fed51f93c1069531bd529ce}\label{class_json_array_af27b32cc6fed51f93c1069531bd529ce} 
+FORCE\+\_\+\+INLINE size\+\_\+t {\bfseries nesting} () const
+\item 
+\Hypertarget{class_json_array_a5f3dab113fbd94d29697524d78a4ca9b}\label{class_json_array_a5f3dab113fbd94d29697524d78a4ca9b} 
+FORCE\+\_\+\+INLINE size\+\_\+t {\bfseries size} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_json_array_a4fb48047f96b1f9e639e7e0f87f33733}\label{class_json_array_a4fb48047f96b1f9e639e7e0f87f33733} 
+class {\bfseries detail\+::\+Variant\+Attorney}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Arduino\+Json/src/\+Arduino\+Json/\+Array/Json\+Array.\+hpp\item 
+lib/\+Arduino\+Json/src/\+Arduino\+Json/\+Array/Json\+Array\+Impl.\+hpp\end{DoxyCompactItemize}

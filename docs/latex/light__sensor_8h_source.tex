@@ -1,0 +1,63 @@
+\doxysection{light\+\_\+sensor.\+h}
+\hypertarget{light__sensor_8h_source}{}\label{light__sensor_8h_source}\index{lib/light\_sensor/src/light\_sensor.h@{lib/light\_sensor/src/light\_sensor.h}}
+\mbox{\hyperlink{light__sensor_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{/*\ Define\ to\ prevent\ recursive\ inclusion\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#ifndef\ LIGHT\_SENSOR\_H}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\ \ \#define\ LIGHT\_SENSOR\_H}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \textcolor{comment}{/*\ Includes\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\ \ \#if\ ARDUINO\ >=\ 100}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\ \ \ \ \#include\ "{}Arduino.h"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\ \ \#else}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\ \ \ \ \#include\ "{}WProgram.h"{}}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\ \ \#endif}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{comment}{/*\ Public\ defines\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00024\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{00025\ \{}
+\DoxyCodeLine{00026\ \ \ LIGHT\_SENSOR\_OK\ =\ 0x1010,\ \textcolor{comment}{/*\ No\ error\ */}}
+\DoxyCodeLine{00027\ \ \ LIGHT\_SENSOR\_ERR,\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Generic\ error\ */}}
+\DoxyCodeLine{00028\ \ \ LIGHT\_SENSOR\_ERR\_INIT,\ \ \ \ \textcolor{comment}{/*\ Initialization\ error\ */}}
+\DoxyCodeLine{00029\ \ \ LIGHT\_SENSOR\_TIMEOUT,\ \ \ \ \ \textcolor{comment}{/*\ Timeout\ error*/}}
+\DoxyCodeLine{00030\ \}\ light\_sensor\_error\_t;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{comment}{/*\ Public\ enumerate/structure\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{comment}{/*\ Public\ macros\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{/*\ Public\ variables\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{comment}{/*\ Class\ Declaration\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00039\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_light_sensor_a9add6ef1b1b4ff5bf6bd2dc34b84cbbb}{LightSensor}}}
+\DoxyCodeLine{00040\ \{}
+\DoxyCodeLine{00041\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00045\ \ \ \mbox{\hyperlink{class_light_sensor_a9add6ef1b1b4ff5bf6bd2dc34b84cbbb}{LightSensor}}(\textcolor{keywordtype}{int}\ pin);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00055\ \ \ light\_sensor\_error\_t\ \mbox{\hyperlink{class_light_sensor_a7706fb1a75f1711ddcfa25b9b90c3fd9}{read}}();}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00065\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_light_sensor_a8fe3d926c42065e23b14b41c6a7bbbc1}{readAndMap}}(\textcolor{keywordtype}{int}\ minValue,\ \textcolor{keywordtype}{int}\ maxValue);}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00074\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_light_sensor_aa3e88fce5560831b6ff8ccf508fa8328}{isAboveThreshold}}(\textcolor{keywordtype}{int}\ threshold);}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00083\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_light_sensor_a8e5f8fc679864dd9e7dd7e71e926a613}{getLightValue}}();}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00092\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_light_sensor_a751212ac84d8b0541fbcdc35478f733e}{getLightValuePercentage}}();}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00101\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_light_sensor_af31fbe6b1894a1a460097a78f6306363}{getAverageReading}}(\textcolor{keywordtype}{int}\ samples\ =\ 10);}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00109\ \ \ light\_sensor\_error\_t\ \mbox{\hyperlink{class_light_sensor_af02e3f37f34ecc55a5d3ecc75915dc47}{onThresholdCross}}(\textcolor{keywordtype}{int}\ threshold,\ \textcolor{keywordtype}{void}\ (*callback)());}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00112\ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \_pin;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00113\ \ \ uint32\_t\ sensorValue[2];\ \ \ \ \ \ \ }
+\DoxyCodeLine{00114\ \ \ void\ (*\_callback)()\ =\ \textcolor{keyword}{nullptr};\ }
+\DoxyCodeLine{00115\ \};}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ LIGHT\_SENSOR\_H}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \textcolor{comment}{/*\ End\ of\ file\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+
+\end{DoxyCode}

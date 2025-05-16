@@ -1,0 +1,118 @@
+\doxysection{Variant\+Slot.\+hpp}
+\hypertarget{_variant_slot_8hpp_source}{}\label{_variant_slot_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Variant/VariantSlot.hpp@{lib/ArduinoJson/src/ArduinoJson/Variant/VariantSlot.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/integer.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/limits.hpp>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/type\_traits.hpp>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Variant/VariantContent.hpp>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structint__t}{int\_t<ARDUINOJSON\_SLOT\_OFFSET\_SIZE\ *\ 8>::type}}\ VariantSlotDiff;}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_variant_slot}{VariantSlot}}\ \{}
+\DoxyCodeLine{00017\ \ \ \textcolor{comment}{//\ CAUTION:\ same\ layout\ as\ VariantData}}
+\DoxyCodeLine{00018\ \ \ \textcolor{comment}{//\ we\ cannot\ use\ composition\ because\ it\ adds\ padding}}
+\DoxyCodeLine{00019\ \ \ \textcolor{comment}{//\ (+20\%\ on\ ESP8266\ for\ example)}}
+\DoxyCodeLine{00020\ \ \ \mbox{\hyperlink{union_variant_content}{VariantContent}}\ content\_;}
+\DoxyCodeLine{00021\ \ \ uint8\_t\ flags\_;}
+\DoxyCodeLine{00022\ \ \ VariantSlotDiff\ next\_;}
+\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ key\_;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \textcolor{comment}{//\ Must\ be\ a\ POD!}}
+\DoxyCodeLine{00027\ \ \ \textcolor{comment}{//\ -\/\ no\ constructor}}
+\DoxyCodeLine{00028\ \ \ \textcolor{comment}{//\ -\/\ no\ destructor}}
+\DoxyCodeLine{00029\ \ \ \textcolor{comment}{//\ -\/\ no\ virtual}}
+\DoxyCodeLine{00030\ \ \ \textcolor{comment}{//\ -\/\ no\ inheritance}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \mbox{\hyperlink{class_variant_data}{VariantData}}*\ data()\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{reinterpret\_cast<}\mbox{\hyperlink{class_variant_data}{VariantData}}*\textcolor{keyword}{>}(\&content\_);}
+\DoxyCodeLine{00034\ \ \ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_variant_data}{VariantData}}*\ data()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\mbox{\hyperlink{class_variant_data}{VariantData}}*\textcolor{keyword}{>}(\&content\_);}
+\DoxyCodeLine{00038\ \ \ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\ next()\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordflow}{return}\ next\_\ ?\ \textcolor{keyword}{this}\ +\ next\_\ :\ 0;}
+\DoxyCodeLine{00042\ \ \ \}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\ next()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{const\_cast<}\mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>next();}
+\DoxyCodeLine{00046\ \ \ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\ next(\textcolor{keywordtype}{size\_t}\ distance)\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\ slot\ =\ \textcolor{keyword}{this};}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{while}\ (distance-\/-\/)\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!slot-\/>next\_)}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ slot\ +=\ slot-\/>next\_;}
+\DoxyCodeLine{00054\ \ \ \ \ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordflow}{return}\ slot;}
+\DoxyCodeLine{00056\ \ \ \}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\ next(\textcolor{keywordtype}{size\_t}\ distance)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{const\_cast<}\mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\textcolor{keyword}{>}(\textcolor{keyword}{this})-\/>next(distance);}
+\DoxyCodeLine{00060\ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \textcolor{keywordtype}{void}\ setNext(\mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\ slot)\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ ARDUINOJSON\_ASSERT(!slot\ ||\ slot\ -\/\ \textcolor{keyword}{this}\ >=}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structnumeric__limits}{numeric\_limits<VariantSlotDiff>::lowest}}());}
+\DoxyCodeLine{00065\ \ \ \ \ ARDUINOJSON\_ASSERT(!slot\ ||\ slot\ -\/\ \textcolor{keyword}{this}\ <=}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structnumeric__limits}{numeric\_limits<VariantSlotDiff>::highest}}());}
+\DoxyCodeLine{00067\ \ \ \ \ next\_\ =\ VariantSlotDiff(slot\ ?\ slot\ -\/\ \textcolor{keyword}{this}\ :\ 0);}
+\DoxyCodeLine{00068\ \ \ \}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \textcolor{keywordtype}{void}\ setNextNotNull(\mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\ slot)\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ ARDUINOJSON\_ASSERT(slot\ !=\ 0);}
+\DoxyCodeLine{00072\ \ \ \ \ ARDUINOJSON\_ASSERT(slot\ -\/\ \textcolor{keyword}{this}\ >=}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structnumeric__limits}{numeric\_limits<VariantSlotDiff>::lowest}}());}
+\DoxyCodeLine{00074\ \ \ \ \ ARDUINOJSON\_ASSERT(slot\ -\/\ \textcolor{keyword}{this}\ <=}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structnumeric__limits}{numeric\_limits<VariantSlotDiff>::highest}}());}
+\DoxyCodeLine{00076\ \ \ \ \ next\_\ =\ VariantSlotDiff(slot\ -\/\ \textcolor{keyword}{this});}
+\DoxyCodeLine{00077\ \ \ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \textcolor{keywordtype}{void}\ setKey(\mbox{\hyperlink{class_json_string}{JsonString}}\ k)\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ ARDUINOJSON\_ASSERT(k);}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordflow}{if}\ (k.isLinked())}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ flags\_\ \&=\ VALUE\_MASK;}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ flags\_\ |=\ OWNED\_KEY\_BIT;}
+\DoxyCodeLine{00085\ \ \ \ \ key\_\ =\ k.c\_str();}
+\DoxyCodeLine{00086\ \ \ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ key()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordflow}{return}\ key\_;}
+\DoxyCodeLine{00090\ \ \ \}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \textcolor{keywordtype}{bool}\ ownsKey()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{return}\ (flags\_\ \&\ OWNED\_KEY\_BIT)\ !=\ 0;}
+\DoxyCodeLine{00094\ \ \ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \textcolor{keywordtype}{void}\ clear()\ \{}
+\DoxyCodeLine{00097\ \ \ \ \ next\_\ =\ 0;}
+\DoxyCodeLine{00098\ \ \ \ \ flags\_\ =\ 0;}
+\DoxyCodeLine{00099\ \ \ \ \ key\_\ =\ 0;}
+\DoxyCodeLine{00100\ \ \ \}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \textcolor{keywordtype}{void}\ movePointers(ptrdiff\_t\ stringDistance,\ ptrdiff\_t\ variantDistance)\ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordflow}{if}\ (flags\_\ \&\ OWNED\_KEY\_BIT)}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ key\_\ +=\ stringDistance;}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordflow}{if}\ (flags\_\ \&\ OWNED\_VALUE\_BIT)}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ content\_.asString.data\ +=\ stringDistance;}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordflow}{if}\ (flags\_\ \&\ COLLECTION\_MASK)}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ content\_.asCollection.movePointers(stringDistance,\ variantDistance);}
+\DoxyCodeLine{00109\ \ \ \}}
+\DoxyCodeLine{00110\ \};}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

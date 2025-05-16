@@ -1,0 +1,91 @@
+\doxysection{Json\+Object\+Impl.\+hpp}
+\hypertarget{_json_object_impl_8hpp_source}{}\label{_json_object_impl_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Object/JsonObjectImpl.hpp@{lib/ArduinoJson/src/ArduinoJson/Object/JsonObjectImpl.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Array/JsonArray.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Object/JsonObject.hpp>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ ARDUINOJSON\_BEGIN\_PUBLIC\_NAMESPACE}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TString>}
+\DoxyCodeLine{00013\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_json_array}{JsonArray}}\ JsonObject::createNestedArray(\textcolor{keyword}{const}\ TString\&\ key)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00014\ \ \ \textcolor{keywordflow}{return}\ operator[](key).template\ to<JsonArray>();}
+\DoxyCodeLine{00015\ \}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TChar>}
+\DoxyCodeLine{00018\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_json_array}{JsonArray}}\ JsonObject::createNestedArray(TChar*\ key)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00019\ \ \ \textcolor{keywordflow}{return}\ operator[](key).template\ to<JsonArray>();}
+\DoxyCodeLine{00020\ \}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ ARDUINOJSON\_END\_PUBLIC\_NAMESPACE}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00027\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TString>}
+\DoxyCodeLine{00028\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_json_array}{JsonArray}}\ VariantRefBase<TDerived>::createNestedArray(}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{const}\ TString\&\ key)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00030\ \ \ \textcolor{keywordflow}{return}\ operator[](key).template\ to<JsonArray>();}
+\DoxyCodeLine{00031\ \}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00034\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TChar>}
+\DoxyCodeLine{00035\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_json_array}{JsonArray}}\ VariantRefBase<TDerived>::createNestedArray(TChar*\ key)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00036\ \ \ \textcolor{keywordflow}{return}\ operator[](key).template\ to<JsonArray>();}
+\DoxyCodeLine{00037\ \}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00040\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TString>}
+\DoxyCodeLine{00041\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_json_object}{JsonObject}}\ VariantRefBase<TDerived>::createNestedObject(}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{const}\ TString\&\ key)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00043\ \ \ \textcolor{keywordflow}{return}\ operator[](key).template\ to<JsonObject>();}
+\DoxyCodeLine{00044\ \}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00047\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TChar>}
+\DoxyCodeLine{00048\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_json_object}{JsonObject}}\ VariantRefBase<TDerived>::createNestedObject(}
+\DoxyCodeLine{00049\ \ \ \ \ TChar*\ key)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00050\ \ \ \textcolor{keywordflow}{return}\ operator[](key).template\ to<JsonObject>();}
+\DoxyCodeLine{00051\ \}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00054\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TString>}
+\DoxyCodeLine{00055\ \textcolor{keyword}{inline}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<IsString<TString>::value}},\ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00056\ VariantRefBase<TDerived>::containsKey(\textcolor{keyword}{const}\ TString\&\ key)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00057\ \ \ \textcolor{keywordflow}{return}\ variantGetMember(VariantAttorney::getData(derived()),}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ adaptString(key))\ !=\ 0;}
+\DoxyCodeLine{00059\ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00062\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TChar>}
+\DoxyCodeLine{00063\ \textcolor{keyword}{inline}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<IsString<TChar*>::value}},\ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00064\ VariantRefBase<TDerived>::containsKey(TChar*\ key)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00065\ \ \ \textcolor{keywordflow}{return}\ variantGetMember(VariantAttorney::getData(derived()),}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ adaptString(key))\ !=\ 0;}
+\DoxyCodeLine{00067\ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00070\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TString>}
+\DoxyCodeLine{00071\ \textcolor{keyword}{inline}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<IsString<TString*>::value}},}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_member_proxy}{MemberProxy<TDerived,\ TString*>}}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00073\ VariantRefBase<TDerived>::operator[](TString*\ key)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00074\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_member_proxy}{MemberProxy<TDerived,\ TString*>}}(derived(),\ key);}
+\DoxyCodeLine{00075\ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00078\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TString>}
+\DoxyCodeLine{00079\ \textcolor{keyword}{inline}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<IsString<TString>::value}},}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_member_proxy}{MemberProxy<TDerived,\ TString>}}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00081\ VariantRefBase<TDerived>::operator[](\textcolor{keyword}{const}\ TString\&\ key)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00082\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_member_proxy}{MemberProxy<TDerived,\ TString>}}(derived(),\ key);}
+\DoxyCodeLine{00083\ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

@@ -1,0 +1,81 @@
+\doxysection{Reader.\+hpp}
+\hypertarget{_reader_8hpp_source}{}\label{_reader_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Deserialization/Reader.hpp@{lib/ArduinoJson/src/ArduinoJson/Deserialization/Reader.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Namespace.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/utility.hpp>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <stdlib.h>}\ \ \textcolor{comment}{//\ for\ size\_t}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ The\ default\ reader\ is\ a\ simple\ wrapper\ for\ Readers\ that\ are\ not\ copiable}}
+\DoxyCodeLine{00015\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TSource,\ \textcolor{keyword}{typename}\ Enable\ =\ \textcolor{keywordtype}{void}>}
+\DoxyCodeLine{00016\ \textcolor{keyword}{struct\ }Reader\ \{}
+\DoxyCodeLine{00017\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ Reader(TSource\&\ source)\ :\ source\_(\&source)\ \{\}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \textcolor{keywordtype}{int}\ read()\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ clang-\/format\ off}}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordflow}{return}\ source\_-\/>read();\ \ \textcolor{comment}{//\ Error\ here?\ See\ https://arduinojson.org/v6/invalid-\/input/}}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{comment}{//\ clang-\/format\ on}}
+\DoxyCodeLine{00024\ \ \ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \textcolor{keywordtype}{size\_t}\ readBytes(\textcolor{keywordtype}{char}*\ buffer,\ \textcolor{keywordtype}{size\_t}\ length)\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{return}\ source\_-\/>readBytes(buffer,\ length);}
+\DoxyCodeLine{00028\ \ \ \}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00031\ \ \ TSource*\ source\_;}
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TSource,\ \textcolor{keyword}{typename}\ Enable\ =\ \textcolor{keywordtype}{void}>}
+\DoxyCodeLine{00035\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_bounded_reader}{BoundedReader}}\ \{}
+\DoxyCodeLine{00036\ \ \ \textcolor{comment}{//\ no\ default\ implementation\ because\ we\ need\ to\ pass\ the\ size\ to\ the}}
+\DoxyCodeLine{00037\ \ \ \textcolor{comment}{//\ constructor}}
+\DoxyCodeLine{00038\ \};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Deserialization/Readers/IteratorReader.hpp>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Deserialization/Readers/RamReader.hpp>}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Deserialization/Readers/VariantReader.hpp>}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_ENABLE\_ARDUINO\_STREAM}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#\ \ include\ <ArduinoJson/Deserialization/Readers/ArduinoStreamReader.hpp>}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_ENABLE\_ARDUINO\_STRING}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#\ \ include\ <ArduinoJson/Deserialization/Readers/ArduinoStringReader.hpp>}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_ENABLE\_PROGMEM}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#\ \ include\ <ArduinoJson/Deserialization/Readers/FlashReader.hpp>}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_ENABLE\_STD\_STREAM}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#\ \ include\ <ArduinoJson/Deserialization/Readers/StdStreamReader.hpp>}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TInput>}
+\DoxyCodeLine{00065\ \mbox{\hyperlink{struct_reader}{Reader<typename\ remove\_reference<TInput>::type}}>\ makeReader(TInput\&\&\ input)\ \{}
+\DoxyCodeLine{00066\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_reader}{Reader<typename\ remove\_reference<TInput>::type}}>\{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ detail::forward<TInput>(input)\};}
+\DoxyCodeLine{00068\ \}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TChar>}
+\DoxyCodeLine{00071\ \mbox{\hyperlink{struct_bounded_reader}{BoundedReader<TChar*>}}\ makeReader(TChar*\ input,\ \textcolor{keywordtype}{size\_t}\ inputSize)\ \{}
+\DoxyCodeLine{00072\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_bounded_reader}{BoundedReader<TChar*>}}\{input,\ inputSize\};}
+\DoxyCodeLine{00073\ \}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

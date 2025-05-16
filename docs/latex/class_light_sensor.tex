@@ -1,0 +1,158 @@
+\doxysection{Light\+Sensor Class Reference}
+\hypertarget{class_light_sensor}{}\label{class_light_sensor}\index{LightSensor@{LightSensor}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_light_sensor_a9add6ef1b1b4ff5bf6bd2dc34b84cbbb}\label{class_light_sensor_a9add6ef1b1b4ff5bf6bd2dc34b84cbbb} 
+{\bfseries Light\+Sensor} (int pin)
+\begin{DoxyCompactList}\small\item\em init the Light Sensor with a specified pin \end{DoxyCompactList}\item 
+light\+\_\+sensor\+\_\+error\+\_\+t \mbox{\hyperlink{class_light_sensor_a7706fb1a75f1711ddcfa25b9b90c3fd9}{read}} ()
+\begin{DoxyCompactList}\small\item\em Read the analog value from the sensor using the arduino function analog\+Read. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_light_sensor_a8fe3d926c42065e23b14b41c6a7bbbc1}{read\+And\+Map}} (int min\+Value, int max\+Value)
+\begin{DoxyCompactList}\small\item\em Read the sensor and map its raw analog values to a range (e.\+g., 0-\/100). \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_light_sensor_aa3e88fce5560831b6ff8ccf508fa8328}{is\+Above\+Threshold}} (int threshold)
+\begin{DoxyCompactList}\small\item\em Check if the light intensity is above or below a threshold. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_light_sensor_a8e5f8fc679864dd9e7dd7e71e926a613}{get\+Light\+Value}} ()
+\begin{DoxyCompactList}\small\item\em Get the analog reading. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_light_sensor_a751212ac84d8b0541fbcdc35478f733e}{get\+Light\+Value\+Percentage}} ()
+\begin{DoxyCompactList}\small\item\em Get the percentage value converted from the analog reading. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_light_sensor_af31fbe6b1894a1a460097a78f6306363}{get\+Average\+Reading}} (int samples=10)
+\begin{DoxyCompactList}\small\item\em Get the average sensor reading over a specified number of samples. \end{DoxyCompactList}\item 
+light\+\_\+sensor\+\_\+error\+\_\+t \mbox{\hyperlink{class_light_sensor_af02e3f37f34ecc55a5d3ecc75915dc47}{on\+Threshold\+Cross}} (int threshold, void(\texorpdfstring{$\ast$}{*}callback)())
+\begin{DoxyCompactList}\small\item\em Set a callback function to trigger when light intensity crosses a threshold. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_light_sensor_af31fbe6b1894a1a460097a78f6306363}\index{LightSensor@{LightSensor}!getAverageReading@{getAverageReading}}
+\index{getAverageReading@{getAverageReading}!LightSensor@{LightSensor}}
+\doxysubsubsection{\texorpdfstring{getAverageReading()}{getAverageReading()}}
+{\footnotesize\ttfamily \label{class_light_sensor_af31fbe6b1894a1a460097a78f6306363} 
+int Light\+Sensor\+::get\+Average\+Reading (\begin{DoxyParamCaption}\item[{int}]{samples}{ = {\ttfamily 10}}\end{DoxyParamCaption})}
+
+
+
+Get the average sensor reading over a specified number of samples. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em samples} & Number of samples to average.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int The averaged sensor value. 
+\end{DoxyReturn}
+\Hypertarget{class_light_sensor_a8e5f8fc679864dd9e7dd7e71e926a613}\index{LightSensor@{LightSensor}!getLightValue@{getLightValue}}
+\index{getLightValue@{getLightValue}!LightSensor@{LightSensor}}
+\doxysubsubsection{\texorpdfstring{getLightValue()}{getLightValue()}}
+{\footnotesize\ttfamily \label{class_light_sensor_a8e5f8fc679864dd9e7dd7e71e926a613} 
+int Light\+Sensor\+::get\+Light\+Value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get the analog reading. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int The analog sensor value. 
+\end{DoxyReturn}
+\Hypertarget{class_light_sensor_a751212ac84d8b0541fbcdc35478f733e}\index{LightSensor@{LightSensor}!getLightValuePercentage@{getLightValuePercentage}}
+\index{getLightValuePercentage@{getLightValuePercentage}!LightSensor@{LightSensor}}
+\doxysubsubsection{\texorpdfstring{getLightValuePercentage()}{getLightValuePercentage()}}
+{\footnotesize\ttfamily \label{class_light_sensor_a751212ac84d8b0541fbcdc35478f733e} 
+int Light\+Sensor\+::get\+Light\+Value\+Percentage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get the percentage value converted from the analog reading. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int The percentage sensor value. 
+\end{DoxyReturn}
+\Hypertarget{class_light_sensor_aa3e88fce5560831b6ff8ccf508fa8328}\index{LightSensor@{LightSensor}!isAboveThreshold@{isAboveThreshold}}
+\index{isAboveThreshold@{isAboveThreshold}!LightSensor@{LightSensor}}
+\doxysubsubsection{\texorpdfstring{isAboveThreshold()}{isAboveThreshold()}}
+{\footnotesize\ttfamily \label{class_light_sensor_aa3e88fce5560831b6ff8ccf508fa8328} 
+bool Light\+Sensor\+::is\+Above\+Threshold (\begin{DoxyParamCaption}\item[{int}]{threshold}{}\end{DoxyParamCaption})}
+
+
+
+Check if the light intensity is above or below a threshold. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em threshold} & Threshold value for light intensity.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool True if light intensity is above the threshold, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_light_sensor_af02e3f37f34ecc55a5d3ecc75915dc47}\index{LightSensor@{LightSensor}!onThresholdCross@{onThresholdCross}}
+\index{onThresholdCross@{onThresholdCross}!LightSensor@{LightSensor}}
+\doxysubsubsection{\texorpdfstring{onThresholdCross()}{onThresholdCross()}}
+{\footnotesize\ttfamily \label{class_light_sensor_af02e3f37f34ecc55a5d3ecc75915dc47} 
+light\+\_\+sensor\+\_\+error\+\_\+t Light\+Sensor\+::on\+Threshold\+Cross (\begin{DoxyParamCaption}\item[{int}]{threshold}{, }\item[{void(\texorpdfstring{$\ast$}{*}}]{callback~}{)()}\end{DoxyParamCaption})}
+
+
+
+Set a callback function to trigger when light intensity crosses a threshold. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em threshold} & Threshold for triggering the callback. \\
+\hline
+\mbox{\texttt{ in}}  & {\em callback} & Function to call when threshold is crossed. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_light_sensor_a7706fb1a75f1711ddcfa25b9b90c3fd9}\index{LightSensor@{LightSensor}!read@{read}}
+\index{read@{read}!LightSensor@{LightSensor}}
+\doxysubsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily \label{class_light_sensor_a7706fb1a75f1711ddcfa25b9b90c3fd9} 
+light\+\_\+sensor\+\_\+error\+\_\+t Light\+Sensor\+::read (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Read the analog value from the sensor using the arduino function analog\+Read. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int The analog value read from the sensor. 
+\end{DoxyReturn}
+\Hypertarget{class_light_sensor_a8fe3d926c42065e23b14b41c6a7bbbc1}\index{LightSensor@{LightSensor}!readAndMap@{readAndMap}}
+\index{readAndMap@{readAndMap}!LightSensor@{LightSensor}}
+\doxysubsubsection{\texorpdfstring{readAndMap()}{readAndMap()}}
+{\footnotesize\ttfamily \label{class_light_sensor_a8fe3d926c42065e23b14b41c6a7bbbc1} 
+int Light\+Sensor\+::read\+And\+Map (\begin{DoxyParamCaption}\item[{int}]{min\+Value}{, }\item[{int}]{max\+Value}{}\end{DoxyParamCaption})}
+
+
+
+Read the sensor and map its raw analog values to a range (e.\+g., 0-\/100). 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em min\+Value} & Minimum value of the range \\
+\hline
+\mbox{\texttt{ in}}  & {\em max\+Value} & Maximum value of the range\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int The calibrated sensor value mapped to a range of min\+Value to max\+Value. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/light\+\_\+sensor/src/\mbox{\hyperlink{light__sensor_8h}{light\+\_\+sensor.\+h}}\item 
+lib/light\+\_\+sensor/src/\mbox{\hyperlink{light__sensor_8cpp}{light\+\_\+sensor.\+cpp}}\end{DoxyCompactItemize}

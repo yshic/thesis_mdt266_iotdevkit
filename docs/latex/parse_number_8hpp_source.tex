@@ -1,0 +1,158 @@
+\doxysection{parse\+Number.\+hpp}
+\hypertarget{parse_number_8hpp_source}{}\label{parse_number_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Numbers/parseNumber.hpp@{lib/ArduinoJson/src/ArduinoJson/Numbers/parseNumber.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Numbers/FloatTraits.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Numbers/convertNumber.hpp>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/assert.hpp>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/ctype.hpp>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/math.hpp>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/type\_traits.hpp>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Variant/Converter.hpp>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Variant/VariantData.hpp>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ A,\ \textcolor{keyword}{typename}\ B>}
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structchoose__largest}{choose\_largest}}\ :\ \mbox{\hyperlink{structconditional}{conditional}}<(sizeof(A)\ >\ sizeof(B)),\ A,\ B>\ \{\};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ parseNumber(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ s,\ \mbox{\hyperlink{class_variant_data}{VariantData}}\&\ result)\ \{}
+\DoxyCodeLine{00022\ \ \ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{struct_float_traits}{FloatTraits<JsonFloat>}}\ traits;}
+\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structchoose__largest}{choose\_largest<traits::mantissa\_type,\ JsonUInt>::type}}\ mantissa\_t;}
+\DoxyCodeLine{00024\ \ \ \textcolor{keyword}{typedef}\ traits::exponent\_type\ exponent\_t;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ ARDUINOJSON\_ASSERT(s\ !=\ 0);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \textcolor{keywordtype}{bool}\ is\_negative\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordflow}{switch}\ (*s)\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'-\/'}:}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ is\_negative\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ s++;}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'+'}:}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ s++;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00037\ \ \ \}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_ENABLE\_NAN}}
+\DoxyCodeLine{00040\ \ \ \textcolor{keywordflow}{if}\ (*s\ ==\ \textcolor{charliteral}{'n'}\ ||\ *s\ ==\ \textcolor{charliteral}{'N'})\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ result.setFloat(traits::nan());}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00043\ \ \ \}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_ENABLE\_INFINITY}}
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordflow}{if}\ (*s\ ==\ \textcolor{charliteral}{'i'}\ ||\ *s\ ==\ \textcolor{charliteral}{'I'})\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ result.setFloat(is\_negative\ ?\ -\/traits::inf()\ :\ traits::inf());}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00050\ \ \ \}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \textcolor{keywordflow}{if}\ (!isdigit(*s)\ \&\&\ *s\ !=\ \textcolor{charliteral}{'.'})}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ mantissa\_t\ mantissa\ =\ 0;}
+\DoxyCodeLine{00057\ \ \ exponent\_t\ exponent\_offset\ =\ 0;}
+\DoxyCodeLine{00058\ \ \ \textcolor{keyword}{const}\ mantissa\_t\ maxUint\ =\ JsonUInt(-\/1);}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \textcolor{keywordflow}{while}\ (isdigit(*s))\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ uint8\_t\ digit\ =\ uint8\_t(*s\ -\/\ \textcolor{charliteral}{'0'});}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{if}\ (mantissa\ >\ maxUint\ /\ 10)}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00064\ \ \ \ \ mantissa\ *=\ 10;}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordflow}{if}\ (mantissa\ >\ maxUint\ -\/\ digit)}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00067\ \ \ \ \ mantissa\ +=\ digit;}
+\DoxyCodeLine{00068\ \ \ \ \ s++;}
+\DoxyCodeLine{00069\ \ \ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \textcolor{keywordflow}{if}\ (*s\ ==\ \textcolor{charliteral}{'\(\backslash\)0'})\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{if}\ (is\_negative)\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \textcolor{keyword}{const}\ mantissa\_t\ sintMantissaMax\ =\ mantissa\_t(1)}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ (\textcolor{keyword}{sizeof}(JsonInteger)\ *\ 8\ -\/\ 1);}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mantissa\ <=\ sintMantissaMax)\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ result.setInteger(JsonInteger(\string~mantissa\ +\ 1));}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00079\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ result.setInteger(JsonUInt(mantissa));}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+\DoxyCodeLine{00083\ \ \ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \textcolor{comment}{//\ avoid\ mantissa\ overflow}}
+\DoxyCodeLine{00086\ \ \ \textcolor{keywordflow}{while}\ (mantissa\ >\ traits::mantissa\_max)\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ mantissa\ /=\ 10;}
+\DoxyCodeLine{00088\ \ \ \ \ exponent\_offset++;}
+\DoxyCodeLine{00089\ \ \ \}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \textcolor{comment}{//\ remaing\ digits\ can't\ fit\ in\ the\ mantissa}}
+\DoxyCodeLine{00092\ \ \ \textcolor{keywordflow}{while}\ (isdigit(*s))\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ exponent\_offset++;}
+\DoxyCodeLine{00094\ \ \ \ \ s++;}
+\DoxyCodeLine{00095\ \ \ \}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \textcolor{keywordflow}{if}\ (*s\ ==\ \textcolor{charliteral}{'.'})\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ s++;}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordflow}{while}\ (isdigit(*s))\ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mantissa\ <\ traits::mantissa\_max\ /\ 10)\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ mantissa\ =\ mantissa\ *\ 10\ +\ uint8\_t(*s\ -\/\ \textcolor{charliteral}{'0'});}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ exponent\_offset-\/-\/;}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ s++;}
+\DoxyCodeLine{00105\ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \ \ \}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \textcolor{keywordtype}{int}\ exponent\ =\ 0;}
+\DoxyCodeLine{00109\ \ \ \textcolor{keywordflow}{if}\ (*s\ ==\ \textcolor{charliteral}{'e'}\ ||\ *s\ ==\ \textcolor{charliteral}{'E'})\ \{}
+\DoxyCodeLine{00110\ \ \ \ \ s++;}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{bool}\ negative\_exponent\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordflow}{if}\ (*s\ ==\ \textcolor{charliteral}{'-\/'})\ \{}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ negative\_exponent\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ s++;}
+\DoxyCodeLine{00115\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (*s\ ==\ \textcolor{charliteral}{'+'})\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ s++;}
+\DoxyCodeLine{00117\ \ \ \ \ \}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordflow}{while}\ (isdigit(*s))\ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ exponent\ =\ exponent\ *\ 10\ +\ (*s\ -\/\ \textcolor{charliteral}{'0'});}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (exponent\ +\ exponent\_offset\ >\ traits::exponent\_max)\ \{}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (negative\_exponent)}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ result.setFloat(is\_negative\ ?\ -\/0.0f\ :\ 0.0f);}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ result.setFloat(is\_negative\ ?\ -\/traits::inf()\ :\ traits::inf());}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ s++;}
+\DoxyCodeLine{00129\ \ \ \ \ \}}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordflow}{if}\ (negative\_exponent)}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ exponent\ =\ -\/exponent;}
+\DoxyCodeLine{00132\ \ \ \}}
+\DoxyCodeLine{00133\ \ \ exponent\ +=\ exponent\_offset;}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \textcolor{comment}{//\ we\ should\ be\ at\ the\ end\ of\ the\ string,\ otherwise\ it's\ an\ error}}
+\DoxyCodeLine{00136\ \ \ \textcolor{keywordflow}{if}\ (*s\ !=\ \textcolor{charliteral}{'\(\backslash\)0'})}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ JsonFloat\ final\_result\ =}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ make\_float(\textcolor{keyword}{static\_cast<}JsonFloat\textcolor{keyword}{>}(mantissa),\ exponent);}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ result.setFloat(is\_negative\ ?\ -\/final\_result\ :\ final\_result);}
+\DoxyCodeLine{00143\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00144\ \}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00147\ \textcolor{keyword}{inline}\ T\ parseNumber(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ s)\ \{}
+\DoxyCodeLine{00148\ \ \ \mbox{\hyperlink{class_variant_data}{VariantData}}\ value;}
+\DoxyCodeLine{00149\ \ \ parseNumber(s,\ value);}
+\DoxyCodeLine{00150\ \ \ \textcolor{keywordflow}{return}\ Converter<T>::fromJson(\mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}(\&value));}
+\DoxyCodeLine{00151\ \}}
+\DoxyCodeLine{00152\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

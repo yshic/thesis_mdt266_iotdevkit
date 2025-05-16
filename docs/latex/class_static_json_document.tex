@@ -1,0 +1,142 @@
+\doxysection{Static\+Json\+Document\texorpdfstring{$<$}{<} desired\+Capacity \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{class_static_json_document}{}\label{class_static_json_document}\index{StaticJsonDocument$<$ desiredCapacity $>$@{StaticJsonDocument$<$ desiredCapacity $>$}}
+Inheritance diagram for Static\+Json\+Document\texorpdfstring{$<$}{<} desired\+Capacity \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_static_json_document}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_static_json_document_acfb2bb037404bb6f333586a993b9608e}\label{class_static_json_document_acfb2bb037404bb6f333586a993b9608e} 
+{\bfseries Static\+Json\+Document} (const \mbox{\hyperlink{class_static_json_document}{Static\+Json\+Document}} \&src)
+\item 
+\Hypertarget{class_static_json_document_ad2529f6e864132dac3b87caa4599de4b}\label{class_static_json_document_ad2529f6e864132dac3b87caa4599de4b} 
+{\footnotesize template$<$typename T$>$ }\\{\bfseries Static\+Json\+Document} (const T \&src, typename detail\+::enable\+\_\+if$<$ detail\+::is\+\_\+convertible$<$ T, \mbox{\hyperlink{class_json_variant_const}{Json\+Variant\+Const}} $>$\+::value $>$\mbox{\hyperlink{structconditional}{\+::type}} \texorpdfstring{$\ast$}{*}=0)
+\item 
+\Hypertarget{class_static_json_document_a7ff543af9235fbd94db607d8c028689d}\label{class_static_json_document_a7ff543af9235fbd94db607d8c028689d} 
+{\bfseries Static\+Json\+Document} (\mbox{\hyperlink{class_json_variant}{Json\+Variant}} src)
+\item 
+\Hypertarget{class_static_json_document_ab71a242b4c5c465238f82fd7f37e5847}\label{class_static_json_document_ab71a242b4c5c465238f82fd7f37e5847} 
+\mbox{\hyperlink{class_static_json_document}{Static\+Json\+Document}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_static_json_document}{Static\+Json\+Document}} \&src)
+\item 
+\Hypertarget{class_static_json_document_af633de1ab78ad2e6350f671573e2676a}\label{class_static_json_document_af633de1ab78ad2e6350f671573e2676a} 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{class_static_json_document}{Static\+Json\+Document}} \& {\bfseries operator=} (const T \&src)
+\item 
+\Hypertarget{class_static_json_document_a324df93b4e511765561ff2b6c13b943d}\label{class_static_json_document_a324df93b4e511765561ff2b6c13b943d} 
+void {\bfseries garbage\+Collect} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_json_document}{Json\+Document}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Json\+Document} (const \mbox{\hyperlink{class_json_document}{Json\+Document}} \&)=delete
+\item 
+\mbox{\hyperlink{class_json_document}{Json\+Document}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_json_document}{Json\+Document}} \&)=delete
+\item 
+{\footnotesize template$<$typename T$>$ }\\T {\bfseries as} ()
+\item 
+{\footnotesize template$<$typename T$>$ }\\T {\bfseries as} () const
+\item 
+void {\bfseries clear} ()
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries is} ()
+\item 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries is} () const
+\item 
+bool {\bfseries is\+Null} () const
+\item 
+size\+\_\+t {\bfseries memory\+Usage} () const
+\item 
+bool {\bfseries overflowed} () const
+\item 
+size\+\_\+t {\bfseries nesting} () const
+\item 
+size\+\_\+t {\bfseries capacity} () const
+\item 
+size\+\_\+t {\bfseries size} () const
+\item 
+bool {\bfseries set} (const \mbox{\hyperlink{class_json_document}{Json\+Document}} \&src)
+\item 
+{\footnotesize template$<$typename T$>$ }\\detail\+::enable\+\_\+if$<$!detail\+::is\+\_\+base\+\_\+of$<$ \mbox{\hyperlink{class_json_document}{Json\+Document}}, T $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries set} (const T \&src)
+\item 
+{\footnotesize template$<$typename T$>$ }\\detail\+::\+Variant\+To$<$ T $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries to} ()
+\item 
+\mbox{\hyperlink{class_json_array}{Json\+Array}} {\bfseries create\+Nested\+Array} ()
+\item 
+{\footnotesize template$<$typename TChar$>$ }\\\mbox{\hyperlink{class_json_array}{Json\+Array}} {\bfseries create\+Nested\+Array} (TChar \texorpdfstring{$\ast$}{*}key)
+\item 
+{\footnotesize template$<$typename TString$>$ }\\\mbox{\hyperlink{class_json_array}{Json\+Array}} {\bfseries create\+Nested\+Array} (const TString \&key)
+\item 
+\mbox{\hyperlink{class_json_object}{Json\+Object}} {\bfseries create\+Nested\+Object} ()
+\item 
+{\footnotesize template$<$typename TChar$>$ }\\\mbox{\hyperlink{class_json_object}{Json\+Object}} {\bfseries create\+Nested\+Object} (TChar \texorpdfstring{$\ast$}{*}key)
+\item 
+{\footnotesize template$<$typename TString$>$ }\\\mbox{\hyperlink{class_json_object}{Json\+Object}} {\bfseries create\+Nested\+Object} (const TString \&key)
+\item 
+{\footnotesize template$<$typename TChar$>$ }\\bool {\bfseries contains\+Key} (TChar \texorpdfstring{$\ast$}{*}key) const
+\item 
+{\footnotesize template$<$typename TString$>$ }\\bool {\bfseries contains\+Key} (const TString \&key) const
+\item 
+{\footnotesize template$<$typename TString$>$ }\\FORCE\+\_\+\+INLINE detail\+::enable\+\_\+if$<$ detail\+::\+Is\+String$<$ TString $>$\+::value, detail\+::\+Member\+Proxy$<$ \mbox{\hyperlink{class_json_document}{Json\+Document}} \&, TString $>$ $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator\mbox{[}$\,$\mbox{]}} (const TString \&key)
+\item 
+{\footnotesize template$<$typename TChar$>$ }\\FORCE\+\_\+\+INLINE detail\+::enable\+\_\+if$<$ detail\+::\+Is\+String$<$ TChar \texorpdfstring{$\ast$}{*} $>$\+::value, detail\+::\+Member\+Proxy$<$ \mbox{\hyperlink{class_json_document}{Json\+Document}} \&, TChar \texorpdfstring{$\ast$}{*} $>$ $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator\mbox{[}$\,$\mbox{]}} (TChar \texorpdfstring{$\ast$}{*}key)
+\item 
+{\footnotesize template$<$typename TString$>$ }\\FORCE\+\_\+\+INLINE detail\+::enable\+\_\+if$<$ detail\+::\+Is\+String$<$ TString $>$\+::value, \mbox{\hyperlink{class_json_variant_const}{Json\+Variant\+Const}} $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator\mbox{[}$\,$\mbox{]}} (const TString \&key) const
+\item 
+{\footnotesize template$<$typename TChar$>$ }\\FORCE\+\_\+\+INLINE detail\+::enable\+\_\+if$<$ detail\+::\+Is\+String$<$ TChar \texorpdfstring{$\ast$}{*} $>$\+::value, \mbox{\hyperlink{class_json_variant_const}{Json\+Variant\+Const}} $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator\mbox{[}$\,$\mbox{]}} (TChar \texorpdfstring{$\ast$}{*}key) const
+\item 
+FORCE\+\_\+\+INLINE detail\+::\+Element\+Proxy$<$ \mbox{\hyperlink{class_json_document}{Json\+Document}} \& $>$ {\bfseries operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t index)
+\item 
+FORCE\+\_\+\+INLINE \mbox{\hyperlink{class_json_variant_const}{Json\+Variant\+Const}} {\bfseries operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t index) const
+\item 
+FORCE\+\_\+\+INLINE \mbox{\hyperlink{class_json_variant}{Json\+Variant}} {\bfseries add} ()
+\item 
+{\footnotesize template$<$typename TValue$>$ }\\FORCE\+\_\+\+INLINE bool {\bfseries add} (const TValue \&value)
+\item 
+{\footnotesize template$<$typename TChar$>$ }\\FORCE\+\_\+\+INLINE bool {\bfseries add} (TChar \texorpdfstring{$\ast$}{*}value)
+\item 
+FORCE\+\_\+\+INLINE void {\bfseries remove} (size\+\_\+t index)
+\item 
+{\footnotesize template$<$typename TChar$>$ }\\FORCE\+\_\+\+INLINE detail\+::enable\+\_\+if$<$ detail\+::\+Is\+String$<$ TChar \texorpdfstring{$\ast$}{*} $>$\+::value $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries remove} (TChar \texorpdfstring{$\ast$}{*}key)
+\item 
+{\footnotesize template$<$typename TString$>$ }\\FORCE\+\_\+\+INLINE detail\+::enable\+\_\+if$<$ detail\+::\+Is\+String$<$ TString $>$\+::value $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries remove} (const TString \&key)
+\item 
+FORCE\+\_\+\+INLINE {\bfseries operator Json\+Variant} ()
+\item 
+FORCE\+\_\+\+INLINE {\bfseries operator Json\+Variant\+Const} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_json_document}{Json\+Document}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Json\+Document} (detail\+::\+Memory\+Pool pool)
+\item 
+{\bfseries Json\+Document} (char \texorpdfstring{$\ast$}{*}buf, size\+\_\+t capa)
+\item 
+void {\bfseries replace\+Pool} (detail\+::\+Memory\+Pool pool)
+\item 
+\mbox{\hyperlink{class_json_variant}{Json\+Variant}} {\bfseries get\+Variant} ()
+\item 
+\mbox{\hyperlink{class_json_variant_const}{Json\+Variant\+Const}} {\bfseries get\+Variant} () const
+\item 
+detail\+::\+Memory\+Pool \texorpdfstring{$\ast$}{*} {\bfseries get\+Pool} ()
+\item 
+detail\+::\+Variant\+Data \texorpdfstring{$\ast$}{*} {\bfseries get\+Data} ()
+\item 
+const detail\+::\+Variant\+Data \texorpdfstring{$\ast$}{*} {\bfseries get\+Data} () const
+\item 
+detail\+::\+Variant\+Data \texorpdfstring{$\ast$}{*} {\bfseries get\+Or\+Create\+Data} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_json_document}{Json\+Document}}}
+\begin{DoxyCompactItemize}
+\item 
+detail\+::\+Memory\+Pool {\bfseries pool\+\_\+}
+\item 
+detail\+::\+Variant\+Data {\bfseries data\+\_\+}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Arduino\+Json/src/\+Arduino\+Json/\+Document/Static\+Json\+Document.\+hpp\end{DoxyCompactItemize}

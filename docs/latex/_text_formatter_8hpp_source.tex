@@ -1,0 +1,179 @@
+\doxysection{Text\+Formatter.\+hpp}
+\hypertarget{_text_formatter_8hpp_source}{}\label{_text_formatter_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Json/TextFormatter.hpp@{lib/ArduinoJson/src/ArduinoJson/Json/TextFormatter.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string.h>}\ \ \textcolor{comment}{//\ for\ strlen}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Json/EscapeSequence.hpp>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Numbers/FloatParts.hpp>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Numbers/JsonInteger.hpp>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/assert.hpp>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/attributes.hpp>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/type\_traits.hpp>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Serialization/CountingDecorator.hpp>}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TWriter>}
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }TextFormatter\ \{}
+\DoxyCodeLine{00022\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{explicit}\ TextFormatter(TWriter\ writer)\ :\ writer\_(writer)\ \{\}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ TextFormatter\&\ operator=(\textcolor{keyword}{const}\ TextFormatter\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \textcolor{comment}{//\ Returns\ the\ number\ of\ bytes\ sent\ to\ the\ TWriter\ implementation.}}
+\DoxyCodeLine{00028\ \ \ \textcolor{keywordtype}{size\_t}\ bytesWritten()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordflow}{return}\ writer\_.count();}
+\DoxyCodeLine{00030\ \ \ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordtype}{void}\ writeBoolean(\textcolor{keywordtype}{bool}\ value)\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{if}\ (value)}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ writeRaw(\textcolor{stringliteral}{"{}true"{}});}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ writeRaw(\textcolor{stringliteral}{"{}false"{}});}
+\DoxyCodeLine{00037\ \ \ \}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \textcolor{keywordtype}{void}\ writeString(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ value)\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ ARDUINOJSON\_ASSERT(value\ !=\ NULL);}
+\DoxyCodeLine{00041\ \ \ \ \ writeRaw(\textcolor{charliteral}{'\(\backslash\)"{}'});}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{while}\ (*value)}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ writeChar(*value++);}
+\DoxyCodeLine{00044\ \ \ \ \ writeRaw(\textcolor{charliteral}{'\(\backslash\)"{}'});}
+\DoxyCodeLine{00045\ \ \ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordtype}{void}\ writeString(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ value,\ \textcolor{keywordtype}{size\_t}\ n)\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ ARDUINOJSON\_ASSERT(value\ !=\ NULL);}
+\DoxyCodeLine{00049\ \ \ \ \ writeRaw(\textcolor{charliteral}{'\(\backslash\)"{}'});}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{while}\ (n-\/-\/)}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ writeChar(*value++);}
+\DoxyCodeLine{00052\ \ \ \ \ writeRaw(\textcolor{charliteral}{'\(\backslash\)"{}'});}
+\DoxyCodeLine{00053\ \ \ \}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \textcolor{keywordtype}{void}\ writeChar(\textcolor{keywordtype}{char}\ c)\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{char}\ specialChar\ =\ EscapeSequence::escapeChar(c);}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordflow}{if}\ (specialChar)\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ writeRaw(\textcolor{charliteral}{'\(\backslash\)\(\backslash\)'});}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ writeRaw(specialChar);}
+\DoxyCodeLine{00060\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (c)\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ writeRaw(c);}
+\DoxyCodeLine{00062\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ writeRaw(\textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)u0000"{}});}
+\DoxyCodeLine{00064\ \ \ \ \ \}}
+\DoxyCodeLine{00065\ \ \ \}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00068\ \ \ \textcolor{keywordtype}{void}\ writeFloat(T\ value)\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordflow}{if}\ (isnan(value))}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ writeRaw(ARDUINOJSON\_ENABLE\_NAN\ ?\ \textcolor{stringliteral}{"{}NaN"{}}\ :\ \textcolor{stringliteral}{"{}null"{}});}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_ENABLE\_INFINITY}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordflow}{if}\ (value\ <\ 0.0)\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ writeRaw(\textcolor{charliteral}{'-\/'});}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ value\ =\ -\/value;}
+\DoxyCodeLine{00076\ \ \ \ \ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordflow}{if}\ (isinf(value))}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ writeRaw(\textcolor{stringliteral}{"{}Infinity"{}});}
+\DoxyCodeLine{00080\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordflow}{if}\ (isinf(value))}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ writeRaw(\textcolor{stringliteral}{"{}null"{}});}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{if}\ (value\ <\ 0.0)\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ writeRaw(\textcolor{charliteral}{'-\/'});}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ value\ =\ -\/value;}
+\DoxyCodeLine{00087\ \ \ \ \ \}}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \mbox{\hyperlink{struct_float_parts}{FloatParts<T>}}\ parts(value);}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ writeInteger(parts.integral);}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{if}\ (parts.decimalPlaces)}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ writeDecimals(parts.decimal,\ parts.decimalPlaces);}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordflow}{if}\ (parts.exponent)\ \{}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ writeRaw(\textcolor{charliteral}{'e'});}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ writeInteger(parts.exponent);}
+\DoxyCodeLine{00099\ \ \ \ \ \}}
+\DoxyCodeLine{00100\ \ \ \}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00103\ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<is\_signed<T>::value}}>\mbox{\hyperlink{structconditional}{::type}}\ writeInteger(T\ value)\ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structmake__unsigned}{make\_unsigned<T>::type}}\ unsigned\_type;}
+\DoxyCodeLine{00105\ \ \ \ \ unsigned\_type\ unsigned\_value;}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordflow}{if}\ (value\ <\ 0)\ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ writeRaw(\textcolor{charliteral}{'-\/'});}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ unsigned\_value\ =\ unsigned\_type(unsigned\_type(\string~value)\ +\ 1);}
+\DoxyCodeLine{00109\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ unsigned\_value\ =\ unsigned\_type(value);}
+\DoxyCodeLine{00111\ \ \ \ \ \}}
+\DoxyCodeLine{00112\ \ \ \ \ writeInteger(unsigned\_value);}
+\DoxyCodeLine{00113\ \ \ \}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00116\ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<is\_unsigned<T>::value}}>\mbox{\hyperlink{structconditional}{::type}}\ writeInteger(T\ value)\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{char}\ buffer[22];}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordtype}{char}*\ end\ =\ buffer\ +\ \textcolor{keyword}{sizeof}(buffer);}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{char}*\ begin\ =\ end;}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//\ write\ the\ string\ in\ reverse\ order}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordflow}{do}\ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ *-\/-\/begin\ =\ char(value\ \%\ 10\ +\ \textcolor{charliteral}{'0'});}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ value\ =\ T(value\ /\ 10);}
+\DoxyCodeLine{00125\ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (value);}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{comment}{//\ and\ dump\ it\ in\ the\ right\ order}}
+\DoxyCodeLine{00128\ \ \ \ \ writeRaw(begin,\ end);}
+\DoxyCodeLine{00129\ \ \ \}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \ \ \textcolor{keywordtype}{void}\ writeDecimals(uint32\_t\ value,\ int8\_t\ width)\ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{comment}{//\ buffer\ should\ be\ big\ enough\ for\ all\ digits\ and\ the\ dot}}
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{char}\ buffer[16];}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordtype}{char}*\ end\ =\ buffer\ +\ \textcolor{keyword}{sizeof}(buffer);}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordtype}{char}*\ begin\ =\ end;}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{comment}{//\ write\ the\ string\ in\ reverse\ order}}
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{keywordflow}{while}\ (width-\/-\/)\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ *-\/-\/begin\ =\ char(value\ \%\ 10\ +\ \textcolor{charliteral}{'0'});}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ value\ /=\ 10;}
+\DoxyCodeLine{00141\ \ \ \ \ \}}
+\DoxyCodeLine{00142\ \ \ \ \ *-\/-\/begin\ =\ \textcolor{charliteral}{'.'};}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{comment}{//\ and\ dump\ it\ in\ the\ right\ order}}
+\DoxyCodeLine{00145\ \ \ \ \ writeRaw(begin,\ end);}
+\DoxyCodeLine{00146\ \ \ \}}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \ \ \textcolor{keywordtype}{void}\ writeRaw(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ s)\ \{}
+\DoxyCodeLine{00149\ \ \ \ \ writer\_.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }uint8\_t*\textcolor{keyword}{>}(s),\ strlen(s));}
+\DoxyCodeLine{00150\ \ \ \}}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \textcolor{keywordtype}{void}\ writeRaw(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ s,\ \textcolor{keywordtype}{size\_t}\ n)\ \{}
+\DoxyCodeLine{00153\ \ \ \ \ writer\_.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }uint8\_t*\textcolor{keyword}{>}(s),\ n);}
+\DoxyCodeLine{00154\ \ \ \}}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \textcolor{keywordtype}{void}\ writeRaw(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ begin,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ end)\ \{}
+\DoxyCodeLine{00157\ \ \ \ \ writer\_.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }uint8\_t*\textcolor{keyword}{>}(begin),}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(end\ -\/\ begin));}
+\DoxyCodeLine{00159\ \ \ \}}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{size\_t}\ N>}
+\DoxyCodeLine{00162\ \ \ \textcolor{keywordtype}{void}\ writeRaw(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ (\&s)[N])\ \{}
+\DoxyCodeLine{00163\ \ \ \ \ writer\_.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }uint8\_t*\textcolor{keyword}{>}(s),\ N\ -\/\ 1);}
+\DoxyCodeLine{00164\ \ \ \}}
+\DoxyCodeLine{00165\ \ \ \textcolor{keywordtype}{void}\ writeRaw(\textcolor{keywordtype}{char}\ c)\ \{}
+\DoxyCodeLine{00166\ \ \ \ \ writer\_.write(\textcolor{keyword}{static\_cast<}uint8\_t\textcolor{keyword}{>}(c));}
+\DoxyCodeLine{00167\ \ \ \}}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00170\ \ \ \mbox{\hyperlink{class_counting_decorator}{CountingDecorator<TWriter>}}\ writer\_;}
+\DoxyCodeLine{00171\ \};}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

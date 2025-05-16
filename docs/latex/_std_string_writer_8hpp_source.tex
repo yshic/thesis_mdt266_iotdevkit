@@ -1,0 +1,49 @@
+\doxysection{Std\+String\+Writer.\+hpp}
+\hypertarget{_std_string_writer_8hpp_source}{}\label{_std_string_writer_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Serialization/Writers/StdStringWriter.hpp@{lib/ArduinoJson/src/ArduinoJson/Serialization/Writers/StdStringWriter.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Namespace.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/type\_traits.hpp>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}...>}
+\DoxyCodeLine{00013\ \textcolor{keyword}{using\ }void\_t\ =\ void;}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{typename}\ =\ \textcolor{keywordtype}{void}>}
+\DoxyCodeLine{00016\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structis__std__string}{is\_std\_string}}\ :\ false\_type\ \{\};}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structis__std__string}{is\_std\_string}}<}
+\DoxyCodeLine{00020\ \ \ \ \ T,\ void\_t<\textcolor{keyword}{decltype}(T().push\_back(\textcolor{charliteral}{'a'})),\ \textcolor{keyword}{decltype}(T().append(\textcolor{stringliteral}{"{}"{}}))>>}
+\DoxyCodeLine{00021\ \ \ \ \ :\ true\_type\ \{\};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDestination>}
+\DoxyCodeLine{00024\ \textcolor{keyword}{class\ }Writer<TDestination,}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ typename\ \mbox{\hyperlink{structenable__if}{enable\_if}}<\mbox{\hyperlink{structis__std__string}{is\_std\_string}}<TDestination>::value>\mbox{\hyperlink{structconditional}{::type}}>\ \{}
+\DoxyCodeLine{00026\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ \ \ Writer(TDestination\&\ str)\ :\ str\_(\&str)\ \{\}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordtype}{size\_t}\ write(uint8\_t\ c)\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ str\_-\/>push\_back(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{char}\textcolor{keyword}{>}(c));}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00032\ \ \ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \textcolor{keywordtype}{size\_t}\ write(\textcolor{keyword}{const}\ uint8\_t*\ s,\ \textcolor{keywordtype}{size\_t}\ n)\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ str\_-\/>append(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(s),\ n);}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{return}\ n;}
+\DoxyCodeLine{00037\ \ \ \}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00040\ \ \ TDestination*\ str\_;}
+\DoxyCodeLine{00041\ \};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

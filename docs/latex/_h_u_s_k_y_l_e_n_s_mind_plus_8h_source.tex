@@ -1,0 +1,265 @@
+\doxysection{HUSKYLENSMind\+Plus.\+h}
+\hypertarget{_h_u_s_k_y_l_e_n_s_mind_plus_8h_source}{}\label{_h_u_s_k_y_l_e_n_s_mind_plus_8h_source}\index{lib/HUSKYLENS/HUSKYLENSMindPlus.h@{lib/HUSKYLENS/HUSKYLENSMindPlus.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_h_u_s_k_y_l_e_n_s_8h}{HUSKYLENS.h}}"{}}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#ifndef\ \_HUSKYLENS\_MIND\_PLUS\_H}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#define\ \_HUSKYLENS\_MIND\_PLUS\_H}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_h_u_s_k_y_l_e_n_s_block_info__t}{HUSKYLENSBlockInfo\_t}}}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ \ \ \ \ int32\_t\ xCenter;}
+\DoxyCodeLine{00009\ \ \ \ \ int32\_t\ yCenter;}
+\DoxyCodeLine{00010\ \ \ \ \ int32\_t\ width;}
+\DoxyCodeLine{00011\ \ \ \ \ int32\_t\ height;}
+\DoxyCodeLine{00012\ \}\ HUSKYLENSBlockInfo;}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_h_u_s_k_y_l_e_n_s_arrow_info__t}{HUSKYLENSArrowInfo\_t}}}
+\DoxyCodeLine{00015\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ int32\_t\ xOrigin;}
+\DoxyCodeLine{00017\ \ \ \ \ int32\_t\ yOrigin;}
+\DoxyCodeLine{00018\ \ \ \ \ int32\_t\ xTarget;}
+\DoxyCodeLine{00019\ \ \ \ \ int32\_t\ yTarget;}
+\DoxyCodeLine{00020\ \}\ HUSKYLENSArrowInfo;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_h_u_s_k_y_l_e_n_s_block_direct_info__t}{HUSKYLENSBlockDirectInfo\_t}}}
+\DoxyCodeLine{00023\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ int32\_t\ xCenter;}
+\DoxyCodeLine{00025\ \ \ \ \ int32\_t\ yCenter;}
+\DoxyCodeLine{00026\ \ \ \ \ int32\_t\ width;}
+\DoxyCodeLine{00027\ \ \ \ \ int32\_t\ height;}
+\DoxyCodeLine{00028\ \ \ \ \ int32\_t\ ID;}
+\DoxyCodeLine{00029\ \}\ HUSKYLENSBlockDirectInfo;}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_h_u_s_k_y_l_e_n_s_arrow_direct_info__t}{HUSKYLENSArrowDirectInfo\_t}}}
+\DoxyCodeLine{00032\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ int32\_t\ xOrigin;}
+\DoxyCodeLine{00034\ \ \ \ \ int32\_t\ yOrigin;}
+\DoxyCodeLine{00035\ \ \ \ \ int32\_t\ xTarget;}
+\DoxyCodeLine{00036\ \ \ \ \ int32\_t\ yTarget;}
+\DoxyCodeLine{00037\ \ \ \ \ int32\_t\ ID;}
+\DoxyCodeLine{00038\ \}\ HUSKYLENSArrowDirectInfo;}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ HUSKYLENSResultType\_t}
+\DoxyCodeLine{00041\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ HUSKYLENSResultBlock,}
+\DoxyCodeLine{00043\ \ \ \ \ HUSKYLENSResultArrow,}
+\DoxyCodeLine{00044\ \}HUSKYLENSResultType;}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_h_u_s_k_y_l_e_n_s_mind_plus}{HUSKYLENSMindPlus}}\ :\ \textcolor{keyword}{public}\ HUSKYLENS}
+\DoxyCodeLine{00047\ \{}
+\DoxyCodeLine{00048\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{bool}\ isWire\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00050\ \textcolor{keyword}{public}:\ \ \ \ }
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ beginI2CUntilSuccess()\{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ Wire.begin();}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ Wire.setClock(100000);}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!begin(Wire))}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ delay(100);}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ isWire\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ beginSoftwareSerialUntilSuccess(\textcolor{keywordtype}{int}\ RXPin,\ \textcolor{keywordtype}{int}\ TXPin)\{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ SoftwareSerial\ mySerial(RXPin,\ TXPin);}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ mySerial.begin(9600);}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!begin(mySerial))}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ delay(100);}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ isWire\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00070\ \ \ \ \ \}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{bool}\ writeAlgorithm(protocolAlgorithm\ algorithmType)\{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ Wire.setClock(100000);}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ HUSKYLENS::writeAlgorithm(algorithmType);}
+\DoxyCodeLine{00076\ \ \ \ \ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{bool}\ request()\{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ Wire.setClock(100000);}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ HUSKYLENS::request();}
+\DoxyCodeLine{00081\ \ \ \ \ \}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{bool}\ isAppear(\textcolor{keywordtype}{int}\ ID,\ HUSKYLENSResultType\ \mbox{\hyperlink{structconditional}{type}})\{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (\mbox{\hyperlink{structconditional}{type}})}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ HUSKYLENSResultBlock:}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ countBlocks(ID);}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ HUSKYLENSResultArrow:}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ countArrows(ID);}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00093\ \ \ \ \ \}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ HUSKYLENSBlockInfo\ readBlockParameter(\textcolor{keywordtype}{int}\ ID,\ \textcolor{keywordtype}{int}\ index=1)\{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ HUSKYLENSResult\ result\ =\ getBlock(ID,\ index-\/1);}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ HUSKYLENSBlockInfo\ block;}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ block.xCenter\ =\ result.xCenter;}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ block.yCenter\ =\ result.yCenter;}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ block.width\ =\ result.width;}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ block.height\ =\ result.height;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ block;}
+\DoxyCodeLine{00103\ \ \ \ \ \}\ }
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ HUSKYLENSArrowInfo\ readArrowParameter(\textcolor{keywordtype}{int}\ ID,\ \textcolor{keywordtype}{int}\ index=1)\{}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ HUSKYLENSResult\ result\ =\ getArrow(ID,\ index-\/1);}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ HUSKYLENSArrowInfo\ arrow;}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ arrow.xOrigin\ =\ result.xOrigin;}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ arrow.yOrigin\ =\ result.yOrigin;}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ arrow.xTarget\ =\ result.xTarget;}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ arrow.yTarget\ =\ result.yTarget;}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ arrow;}
+\DoxyCodeLine{00113\ \ \ \ \ \}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{bool}\ isAppearDirect(HUSKYLENSResultType\ \mbox{\hyperlink{structconditional}{type}})\{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (\mbox{\hyperlink{structconditional}{type}})}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ HUSKYLENSResultBlock:}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ countBlocks();}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ HUSKYLENSResultArrow:}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ countArrows();}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00125\ \ \ \ \ \}}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ HUSKYLENSBlockDirectInfo\ readBlockCenterParameterDirect()\{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ int32\_t\ distanceMin\ =\ INT32\_MAX;}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ int16\_t\ distanceMinIndex\ =\ -\/1;}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ countBlocks();\ i++)}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ HUSKYLENSResult\ resultBuffer\ =\ getBlock(i);}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ int32\_t\ distance\ =\ sq(resultBuffer.xCenter\ -\/\ 320/2)\ +\ sq(resultBuffer.yCenter\ -\/\ 240/2);}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (distance\ <\ distanceMin)}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ distanceMin\ =\ distance;}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ distanceMinIndex\ =\ i;}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ HUSKYLENSResult\ result\ =\ getBlock(distanceMinIndex);}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ HUSKYLENSBlockDirectInfo\ block;}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ block.xCenter\ =\ result.xCenter;}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ block.yCenter\ =\ result.yCenter;}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ block.width\ =\ result.width;}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ block.height\ =\ result.height;}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ block.ID\ =\ result.ID;}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ block;}
+\DoxyCodeLine{00150\ \ \ \ \ \}\ }
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \ \ HUSKYLENSArrowDirectInfo\ readArrowCenterParameterDirect()\{}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ int32\_t\ distanceMin\ =\ INT32\_MAX;}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ int16\_t\ distanceMinIndex\ =\ -\/1;}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ countArrows();\ i++)}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ HUSKYLENSResult\ resultBuffer\ =\ getArrow(i);}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ int32\_t\ distance\ =\ sq((resultBuffer.xOrigin\ +\ resultBuffer.xTarget)/2\ -\/\ 320/2)\ +\ sq((resultBuffer.yOrigin\ +\ resultBuffer.yTarget)/2\ -\/\ 240/2);}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (distance\ <\ distanceMin)}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ distanceMin\ =\ distance;}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ distanceMinIndex\ =\ i;}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ HUSKYLENSResult\ result\ =\ getArrow(distanceMinIndex);}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ HUSKYLENSArrowDirectInfo\ arrow;}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ arrow.xOrigin\ =\ result.xOrigin;}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ arrow.yOrigin\ =\ result.yOrigin;}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ arrow.xTarget\ =\ result.xTarget;}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ arrow.yTarget\ =\ result.yTarget;}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ arrow.ID\ =\ result.ID;}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ arrow;}
+\DoxyCodeLine{00175\ \ \ \ \ \}}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordtype}{float}\ readLearnedIDCount()\{}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ countLearnedIDs();}
+\DoxyCodeLine{00179\ \ \ \ \ \}}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keywordtype}{float}\ readCountLearned(HUSKYLENSResultType\ \mbox{\hyperlink{structconditional}{type}})\{}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (\mbox{\hyperlink{structconditional}{type}})}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ HUSKYLENSResultBlock:}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ countBlocksLearned();}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ HUSKYLENSResultArrow:}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ countArrowsLearned();}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1.0f;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00191\ \ \ \ \ \}}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{keywordtype}{float}\ readIDLearned(\textcolor{keywordtype}{int}\ index,\ HUSKYLENSResultType\ \mbox{\hyperlink{structconditional}{type}})\{}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_protocol__t}{Protocol\_t}}\ protocol;}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (\mbox{\hyperlink{structconditional}{type}})}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ HUSKYLENSResultBlock:}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ protocol\ =\ getBlockLearned(index);}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ protocol.ID;}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ HUSKYLENSResultArrow:}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ protocol\ =\ getArrowLearned(index);}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ protocol.ID;}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1.0f;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00206\ \ \ \ \ \}}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordtype}{float}\ readCount(HUSKYLENSResultType\ \mbox{\hyperlink{structconditional}{type}})\{}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (\mbox{\hyperlink{structconditional}{type}})}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ HUSKYLENSResultBlock:}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ countBlocks();}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ HUSKYLENSResultArrow:}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ countArrows();}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1.0f;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00218\ \ \ \ \ \}}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ HUSKYLENSBlockDirectInfo\ readBlockParameterDirect(\textcolor{keywordtype}{int}\ index)\{}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ HUSKYLENSResult\ result\ =\ getBlock(index-\/1);}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ HUSKYLENSBlockDirectInfo\ block;}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ block.xCenter\ =\ result.xCenter;}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ block.yCenter\ =\ result.yCenter;}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ block.width\ =\ result.width;}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ block.height\ =\ result.height;}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ block.ID\ =\ result.ID;}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ block;}
+\DoxyCodeLine{00229\ \ \ \ \ \}\ }
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00231\ \ \ \ \ HUSKYLENSArrowDirectInfo\ readArrowParameterDirect(\textcolor{keywordtype}{int}\ index)\{}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ HUSKYLENSResult\ result\ =\ getArrow(index-\/1);}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ HUSKYLENSArrowDirectInfo\ arrow;}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ arrow.xOrigin\ =\ result.xOrigin;}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ arrow.yOrigin\ =\ result.yOrigin;}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ arrow.xTarget\ =\ result.xTarget;}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ arrow.yTarget\ =\ result.yTarget;}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ arrow.ID\ =\ result.ID;}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ arrow;}
+\DoxyCodeLine{00240\ \ \ \ \ \}}
+\DoxyCodeLine{00241\ }
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keywordtype}{float}\ readCount(\textcolor{keywordtype}{int}\ ID,\ HUSKYLENSResultType\ \mbox{\hyperlink{structconditional}{type}})\{}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (\mbox{\hyperlink{structconditional}{type}})}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ HUSKYLENSResultBlock:}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ countBlocks(ID);}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ HUSKYLENSResultArrow:}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ countArrows(ID);}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1.0f;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00252\ \ \ \ \ \}}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00255\ \};}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

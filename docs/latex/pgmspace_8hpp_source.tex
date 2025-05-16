@@ -1,0 +1,150 @@
+\doxysection{pgmspace.\+hpp}
+\hypertarget{pgmspace_8hpp_source}{}\label{pgmspace_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Polyfills/pgmspace.hpp@{lib/ArduinoJson/src/ArduinoJson/Polyfills/pgmspace.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifdef\ ARDUINO}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#\ \ include\ <Arduino.h>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ Allow\ using\ PROGMEM\ outside\ of\ Arduino\ (issue\ \#1903)}}
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\_\_FlashStringHelper;}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#\ \ include\ <avr/pgmspace.h>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Configuration.hpp>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Namespace.hpp>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/assert.hpp>}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ Wraps\ a\ const\ char*\ so\ that\ the\ our\ functions\ are\ picked\ only\ if\ the}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ originals\ are\ missing}}
+\DoxyCodeLine{00022\ \textcolor{keyword}{struct\ }pgm\_p\ \{}
+\DoxyCodeLine{00023\ \ \ pgm\_p(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ p)\ :\ address(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(p))\ \{\}}
+\DoxyCodeLine{00024\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ address;}
+\DoxyCodeLine{00025\ \};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#ifndef\ strlen\_P}}
+\DoxyCodeLine{00030\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ strlen\_P(ArduinoJson::detail::pgm\_p\ s)\ \{}
+\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ p\ =\ s.address;}
+\DoxyCodeLine{00032\ \ \ ARDUINOJSON\_ASSERT(p\ !=\ NULL);}
+\DoxyCodeLine{00033\ \ \ \textcolor{keywordflow}{while}\ (pgm\_read\_byte(p))}
+\DoxyCodeLine{00034\ \ \ \ \ p++;}
+\DoxyCodeLine{00035\ \ \ \textcolor{keywordflow}{return}\ size\_t(p\ -\/\ s.address);}
+\DoxyCodeLine{00036\ \}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#ifndef\ strncmp\_P}}
+\DoxyCodeLine{00040\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ strncmp\_P(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ a,\ ArduinoJson::detail::pgm\_p\ b,\ \textcolor{keywordtype}{size\_t}\ n)\ \{}
+\DoxyCodeLine{00041\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ s1\ =\ a;}
+\DoxyCodeLine{00042\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ s2\ =\ b.address;}
+\DoxyCodeLine{00043\ \ \ ARDUINOJSON\_ASSERT(s1\ !=\ NULL);}
+\DoxyCodeLine{00044\ \ \ ARDUINOJSON\_ASSERT(s2\ !=\ NULL);}
+\DoxyCodeLine{00045\ \ \ \textcolor{keywordflow}{while}\ (n-\/-\/\ >\ 0)\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{char}\ c1\ =\ *s1++;}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{char}\ c2\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{char}\textcolor{keyword}{>}(pgm\_read\_byte(s2++));}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{if}\ (c1\ <\ c2)}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{if}\ (c1\ >\ c2)}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{if}\ (c1\ ==\ 0\ \textcolor{comment}{/*\ and\ c2\ as\ well\ */})}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00054\ \ \ \}}
+\DoxyCodeLine{00055\ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00056\ \}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#ifndef\ strcmp\_P}}
+\DoxyCodeLine{00060\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ strcmp\_P(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ a,\ ArduinoJson::detail::pgm\_p\ b)\ \{}
+\DoxyCodeLine{00061\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ s1\ =\ a;}
+\DoxyCodeLine{00062\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ s2\ =\ b.address;}
+\DoxyCodeLine{00063\ \ \ ARDUINOJSON\_ASSERT(s1\ !=\ NULL);}
+\DoxyCodeLine{00064\ \ \ ARDUINOJSON\_ASSERT(s2\ !=\ NULL);}
+\DoxyCodeLine{00065\ \ \ \textcolor{keywordflow}{for}\ (;;)\ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{char}\ c1\ =\ *s1++;}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{char}\ c2\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{char}\textcolor{keyword}{>}(pgm\_read\_byte(s2++));}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordflow}{if}\ (c1\ <\ c2)}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordflow}{if}\ (c1\ >\ c2)}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{if}\ (c1\ ==\ 0\ \textcolor{comment}{/*\ and\ c2\ as\ well\ */})}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00074\ \ \ \}}
+\DoxyCodeLine{00075\ \}}
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \textcolor{preprocessor}{\#ifndef\ memcmp\_P}}
+\DoxyCodeLine{00079\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ memcmp\_P(\textcolor{keyword}{const}\ \textcolor{keywordtype}{void}*\ a,\ ArduinoJson::detail::pgm\_p\ b,\ \textcolor{keywordtype}{size\_t}\ n)\ \{}
+\DoxyCodeLine{00080\ \ \ \textcolor{keyword}{const}\ uint8\_t*\ p1\ =\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }uint8\_t*\textcolor{keyword}{>}(a);}
+\DoxyCodeLine{00081\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ p2\ =\ b.address;}
+\DoxyCodeLine{00082\ \ \ ARDUINOJSON\_ASSERT(p1\ !=\ NULL);}
+\DoxyCodeLine{00083\ \ \ ARDUINOJSON\_ASSERT(p2\ !=\ NULL);}
+\DoxyCodeLine{00084\ \ \ \textcolor{keywordflow}{while}\ (n-\/-\/\ >\ 0)\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ uint8\_t\ v1\ =\ *p1++;}
+\DoxyCodeLine{00086\ \ \ \ \ uint8\_t\ v2\ =\ pgm\_read\_byte(p2++);}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordflow}{if}\ (v1\ !=\ v2)}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ v1\ -\/\ v2;}
+\DoxyCodeLine{00089\ \ \ \}}
+\DoxyCodeLine{00090\ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00091\ \}}
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{\#ifndef\ memcpy\_P}}
+\DoxyCodeLine{00095\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}*\ memcpy\_P(\textcolor{keywordtype}{void}*\ dst,\ ArduinoJson::detail::pgm\_p\ src,\ \textcolor{keywordtype}{size\_t}\ n)\ \{}
+\DoxyCodeLine{00096\ \ \ uint8\_t*\ d\ =\ \textcolor{keyword}{reinterpret\_cast<}uint8\_t*\textcolor{keyword}{>}(dst);}
+\DoxyCodeLine{00097\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ s\ =\ src.address;}
+\DoxyCodeLine{00098\ \ \ ARDUINOJSON\_ASSERT(d\ !=\ NULL);}
+\DoxyCodeLine{00099\ \ \ ARDUINOJSON\_ASSERT(s\ !=\ NULL);}
+\DoxyCodeLine{00100\ \ \ \textcolor{keywordflow}{while}\ (n-\/-\/\ >\ 0)\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ *d++\ =\ pgm\_read\_byte(s++);}
+\DoxyCodeLine{00102\ \ \ \}}
+\DoxyCodeLine{00103\ \ \ \textcolor{keywordflow}{return}\ dst;}
+\DoxyCodeLine{00104\ \}}
+\DoxyCodeLine{00105\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \textcolor{preprocessor}{\#ifndef\ pgm\_read\_dword}}
+\DoxyCodeLine{00108\ \textcolor{keyword}{inline}\ uint32\_t\ pgm\_read\_dword(ArduinoJson::detail::pgm\_p\ p)\ \{}
+\DoxyCodeLine{00109\ \ \ uint32\_t\ result;}
+\DoxyCodeLine{00110\ \ \ memcpy\_P(\&result,\ p.address,\ 4);}
+\DoxyCodeLine{00111\ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00112\ \}}
+\DoxyCodeLine{00113\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \textcolor{preprocessor}{\#ifndef\ pgm\_read\_float}}
+\DoxyCodeLine{00116\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ pgm\_read\_float(ArduinoJson::detail::pgm\_p\ p)\ \{}
+\DoxyCodeLine{00117\ \ \ \textcolor{keywordtype}{float}\ result;}
+\DoxyCodeLine{00118\ \ \ memcpy\_P(\&result,\ p.address,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float}));}
+\DoxyCodeLine{00119\ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00120\ \}}
+\DoxyCodeLine{00121\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \textcolor{preprocessor}{\#ifndef\ pgm\_read\_double}}
+\DoxyCodeLine{00124\ \textcolor{preprocessor}{\#\ \ if\ defined(\_\_SIZEOF\_DOUBLE\_\_)\ \&\&\ defined(\_\_SIZEOF\_FLOAT\_\_)\ \&\&\ \(\backslash\)}}
+\DoxyCodeLine{00125\ \textcolor{preprocessor}{\ \ \ \ \ \ \_\_SIZEOF\_DOUBLE\_\_\ ==\ \_\_SIZEOF\_FLOAT\_\_}}
+\DoxyCodeLine{00126\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ pgm\_read\_double(ArduinoJson::detail::pgm\_p\ p)\ \{}
+\DoxyCodeLine{00127\ \ \ \textcolor{keywordflow}{return}\ pgm\_read\_float(p.address);}
+\DoxyCodeLine{00128\ \}}
+\DoxyCodeLine{00129\ \textcolor{preprocessor}{\#\ \ else}}
+\DoxyCodeLine{00130\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ pgm\_read\_double(ArduinoJson::detail::pgm\_p\ p)\ \{}
+\DoxyCodeLine{00131\ \ \ \textcolor{keywordtype}{double}\ result;}
+\DoxyCodeLine{00132\ \ \ memcpy\_P(\&result,\ p.address,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));}
+\DoxyCodeLine{00133\ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00134\ \}}
+\DoxyCodeLine{00135\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{00136\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \textcolor{preprocessor}{\#ifndef\ pgm\_read\_ptr}}
+\DoxyCodeLine{00139\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}*\ pgm\_read\_ptr(ArduinoJson::detail::pgm\_p\ p)\ \{}
+\DoxyCodeLine{00140\ \ \ \textcolor{keywordtype}{void}*\ result;}
+\DoxyCodeLine{00141\ \ \ memcpy\_P(\&result,\ p.address,\ \textcolor{keyword}{sizeof}(result));}
+\DoxyCodeLine{00142\ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00143\ \}}
+\DoxyCodeLine{00144\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

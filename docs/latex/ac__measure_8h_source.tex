@@ -1,0 +1,104 @@
+\doxysection{ac\+\_\+measure.\+h}
+\hypertarget{ac__measure_8h_source}{}\label{ac__measure_8h_source}\index{lib/ac\_measure/src/ac\_measure.h@{lib/ac\_measure/src/ac\_measure.h}}
+\mbox{\hyperlink{ac__measure_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{comment}{/*\ Define\ to\ prevent\ recursive\ inclusion\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ AC\_MEASURE\_H}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\ \ \#define\ AC\_MEASURE\_H}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \textcolor{comment}{/*\ Includes\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\ \ \#if\ ARDUINO\ >=\ 100}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\ \ \ \ \#include\ "{}Arduino.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\ \ \#else}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\ \ \ \ \#include\ "{}WProgram.h"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\ \ \#endif}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \textcolor{comment}{/*\ Public\ defines\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\ \ \#define\ AC\_MEASURE\_LIB\_VERSION\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (F("{}0.1.0"{}))}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_DEFAULT\_ADDR\ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x42}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_VOLTAGE\_STRING\_REG\ \ \ \ \ \ \ \ 0x00}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_CURRENT\_STRING\_REG\ \ \ \ \ \ \ \ 0x10}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_POWER\_STRING\_REG\ \ \ \ \ \ \ \ \ \ 0x20}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_APPARENT\_POWER\_STRING\_REG\ 0x30}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_POWER\_FACTOR\_STRING\_REG\ \ \ 0x40}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_KWH\_STRING\_REG\ \ \ \ \ \ \ \ \ \ \ \ 0x50}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_VOLTAGE\_REG\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x60}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_CURRENT\_REG\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x70}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_POWER\_REG\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x80}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_APPARENT\_POWER\_REG\ \ \ \ \ \ \ \ 0x90}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_POWER\_FACTOR\_REG\ \ \ \ \ \ \ \ \ \ 0xA0}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_KWH\_REG\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0xB0}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_VOLTAGE\_FACTOR\_REG\ \ \ \ \ \ \ \ 0xC0}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_CURRENT\_FACTOR\_REG\ \ \ \ \ \ \ \ 0xD0}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_SAVE\_FACTOR\_REG\ \ \ \ \ \ \ \ \ \ \ 0xE0}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_GET\_READY\_REG\ \ \ \ \ \ \ \ \ \ \ \ \ 0xFC}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_JUMP\_TO\_BOOTLOADER\_REG\ \ \ \ 0xFD}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_FIRMWARE\_VERSION\_REG\ \ \ \ \ \ 0xFE}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\ \ \#define\ UNIT\_ACMEASURE\_I2C\_ADDRESS\_REG\ \ \ \ \ \ \ \ \ \ \ 0xFF}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{comment}{/*\ Public\ enumerate/structure\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{00049\ \{}
+\DoxyCodeLine{00050\ \ \ UNIT\_AC\_MEASURE\_OK\ =\ 0,\ \ \ \textcolor{comment}{/*\ No\ error\ */}}
+\DoxyCodeLine{00051\ \ \ UNIT\_AC\_MEASURE\_ERR,\ \ \ \ \ \ \textcolor{comment}{/*\ Generic\ error\ */}}
+\DoxyCodeLine{00052\ \ \ UNIT\_AC\_MEASURE\_ERR\_INIT,\ \textcolor{comment}{/*\ Initialization\ error\ */}}
+\DoxyCodeLine{00053\ \ \ UNIT\_AC\_MEASURE\_TIMEOUT,\ \ \textcolor{comment}{/*\ Timeout\ error*/}}
+\DoxyCodeLine{00054\ \ \ UNIT\_AC\_MEASURE\_ERR\_I2C,\ \ \textcolor{comment}{/*\ I2C\ error\ */}}
+\DoxyCodeLine{00055\ \}\ ac\_measure\_error\_t;}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{comment}{/*\ Public\ macros\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{comment}{/*\ Public\ variables\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{comment}{/*\ Class\ Declaration\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00062\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_ac_measure}{AcMeasure}}}
+\DoxyCodeLine{00063\ \{}
+\DoxyCodeLine{00064\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00065\ \ \ uint8\_t\ \_addr\ =\ UNIT\_ACMEASURE\_DEFAULT\_ADDR;}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00068\ \ \ ac\_measure\_error\_t\ begin(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00069\ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ getFirmwareVersion(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00070\ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ getReady(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ uint16\_t\ getRawVoltage(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00073\ \ \ \textcolor{keywordtype}{float}\ getVoltage(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00074\ \ \ uint16\_t\ getRawCurrent(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00075\ \ \ \textcolor{keywordtype}{float}\ getCurrent(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00076\ \ \ uint32\_t\ getRawPower(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00077\ \ \ \textcolor{keywordtype}{float}\ getPower(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00078\ \ \ uint32\_t\ getRawApparentPower(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00079\ \ \ \textcolor{keywordtype}{float}\ getApparentPower(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00080\ \ \ uint8\_t\ \ getRawPowerFactor(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00081\ \ \ \textcolor{keywordtype}{float}\ \ getPowerFactor(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00082\ \ \ uint32\_t\ getRawKWH(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00083\ \ \ \textcolor{keywordtype}{float}\ getKWH(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ ac\_measure\_error\_t\ getVoltageString(\textcolor{keywordtype}{char}\ *str);}
+\DoxyCodeLine{00086\ \ \ ac\_measure\_error\_t\ getCurrentString(\textcolor{keywordtype}{char}\ *str);}
+\DoxyCodeLine{00087\ \ \ ac\_measure\_error\_t\ getPowerString(\textcolor{keywordtype}{char}\ *str);}
+\DoxyCodeLine{00088\ \ \ ac\_measure\_error\_t\ getApparentPowerString(\textcolor{keywordtype}{char}\ *str);}
+\DoxyCodeLine{00089\ \ \ ac\_measure\_error\_t\ getPowerFactorString(\textcolor{keywordtype}{char}\ *str);}
+\DoxyCodeLine{00090\ \ \ ac\_measure\_error\_t\ getKWHString(\textcolor{keywordtype}{char}\ *str);}
+\DoxyCodeLine{00091\ \ \ ac\_measure\_error\_t\ setKWH(uint32\_t\ value);}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ getVoltageFactor(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00094\ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ getCurrentFactor(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00095\ \ \ ac\_measure\_error\_t\ setVoltageFactor(uint8\_t\ value);}
+\DoxyCodeLine{00096\ \ \ ac\_measure\_error\_t\ setCurrentFactor(uint8\_t\ value);}
+\DoxyCodeLine{00097\ \ \ ac\_measure\_error\_t\ saveVoltageCurrentFactor(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ ac\_measure\_error\_t\ jumpBootloader(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00100\ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ setI2CAddress(uint8\_t\ addr);}
+\DoxyCodeLine{00101\ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ getI2CAddress(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00102\ \};}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ AC\_MEASURE\_H}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{comment}{/*\ End\ of\ file\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+
+\end{DoxyCode}

@@ -1,0 +1,245 @@
+\doxysection{Unit4\+Relay Class Reference}
+\hypertarget{class_unit4_relay}{}\label{class_unit4_relay}\index{Unit4Relay@{Unit4Relay}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+unit\+\_\+4relay\+\_\+error\+\_\+t \mbox{\hyperlink{class_unit4_relay_adc660c2e5941b7921e8f32dec1a88172}{begin}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the Unit 4-\/\doxylink{class_relay}{Relay} module. \end{DoxyCompactList}\item 
+unit\+\_\+4relay\+\_\+error\+\_\+t \mbox{\hyperlink{class_unit4_relay_aae6e0d7daca1902707378c714047ef65}{init}} (bool mode)
+\begin{DoxyCompactList}\small\item\em Sets the mode of the device and turns off all relays. \end{DoxyCompactList}\item 
+unit\+\_\+4relay\+\_\+error\+\_\+t \mbox{\hyperlink{class_unit4_relay_a058eddf27fc3dacd823cb183016f7d48}{relay\+Write}} (uint8\+\_\+t number, bool state)
+\begin{DoxyCompactList}\small\item\em Sets the state of an individual relay. \end{DoxyCompactList}\item 
+unit\+\_\+4relay\+\_\+error\+\_\+t \mbox{\hyperlink{class_unit4_relay_ae1ae938e7f9ef4a340da551b5ea2f157}{relay\+All}} (bool state)
+\begin{DoxyCompactList}\small\item\em Sets all relays to the same state. \end{DoxyCompactList}\item 
+unit\+\_\+4relay\+\_\+error\+\_\+t \mbox{\hyperlink{class_unit4_relay_a4afd86f0f07bd53cc2c52f1a1faaf708}{led\+Write}} (uint8\+\_\+t number, bool state)
+\begin{DoxyCompactList}\small\item\em Sets the state of an individual LED. \end{DoxyCompactList}\item 
+unit\+\_\+4relay\+\_\+error\+\_\+t \mbox{\hyperlink{class_unit4_relay_afdca9c42a3cfb64c47273e9b03b0b9ea}{led\+All}} (bool state)
+\begin{DoxyCompactList}\small\item\em Sets all LEDs to the same state. \end{DoxyCompactList}\item 
+unit\+\_\+4relay\+\_\+error\+\_\+t \mbox{\hyperlink{class_unit4_relay_a25c9b5c0263a67a95d58519cd1b6cad2}{switch\+Mode}} (bool mode)
+\begin{DoxyCompactList}\small\item\em Sets the operating mode of the relay unit. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_unit4_relay_ad1d85b5a5002356b938ce463c0821029}{get\+Relay\+State}} (uint8\+\_\+t number)
+\begin{DoxyCompactList}\small\item\em Gets the state of a specific relay. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_unit4_relay_a6b48921c7a0836ea7e36d5994c5e0a7e}{get\+Led\+State}} (uint8\+\_\+t number)
+\begin{DoxyCompactList}\small\item\em Gets the state of a specific LED. \end{DoxyCompactList}\item 
+\Hypertarget{class_unit4_relay_a957acf90f70a704ac7b5322dfbab5869}\label{class_unit4_relay_a957acf90f70a704ac7b5322dfbab5869} 
+void {\bfseries set\+Relay\+State} (bool state\mbox{[}4\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_unit4_relay_adc660c2e5941b7921e8f32dec1a88172}\index{Unit4Relay@{Unit4Relay}!begin@{begin}}
+\index{begin@{begin}!Unit4Relay@{Unit4Relay}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily \label{class_unit4_relay_adc660c2e5941b7921e8f32dec1a88172} 
+unit\+\_\+4relay\+\_\+error\+\_\+t Unit4\+Relay\+::begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the Unit 4-\/\doxylink{class_relay}{Relay} module. 
+
+This function checks if the device is available on the I2C bus.
+
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily UNIT\+\_\+4\+RELAY\+\_\+\+OK (8208)}\+: Device detected and ready.
+\item {\ttfamily UNIT\+\_\+4\+RELAY\+\_\+\+ERR\+\_\+\+I2C (8213)}\+: Device not found. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_unit4_relay_a6b48921c7a0836ea7e36d5994c5e0a7e}\index{Unit4Relay@{Unit4Relay}!getLedState@{getLedState}}
+\index{getLedState@{getLedState}!Unit4Relay@{Unit4Relay}}
+\doxysubsubsection{\texorpdfstring{getLedState()}{getLedState()}}
+{\footnotesize\ttfamily \label{class_unit4_relay_a6b48921c7a0836ea7e36d5994c5e0a7e} 
+int Unit4\+Relay\+::get\+Led\+State (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{number}{}\end{DoxyParamCaption})}
+
+
+
+Gets the state of a specific LED. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em number} & LED number (0-\/3).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item LED state ({\ttfamily 0} = OFF, {\ttfamily 1} = ON).
+\item {\ttfamily UNIT\+\_\+4\+RELAY\+\_\+\+ERR\+\_\+\+INDEX (8211)}\+: If an invalid index is provided. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_unit4_relay_ad1d85b5a5002356b938ce463c0821029}\index{Unit4Relay@{Unit4Relay}!getRelayState@{getRelayState}}
+\index{getRelayState@{getRelayState}!Unit4Relay@{Unit4Relay}}
+\doxysubsubsection{\texorpdfstring{getRelayState()}{getRelayState()}}
+{\footnotesize\ttfamily \label{class_unit4_relay_ad1d85b5a5002356b938ce463c0821029} 
+int Unit4\+Relay\+::get\+Relay\+State (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{number}{}\end{DoxyParamCaption})}
+
+
+
+Gets the state of a specific relay. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em number} & \doxylink{class_relay}{Relay} number (0-\/3).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item \doxylink{class_relay}{Relay} state ({\ttfamily 0} = OFF, {\ttfamily 1} = ON).
+\item {\ttfamily UNIT\+\_\+4\+RELAY\+\_\+\+ERR\+\_\+\+INDEX (8211)}\+: If an invalid index is provided. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_unit4_relay_aae6e0d7daca1902707378c714047ef65}\index{Unit4Relay@{Unit4Relay}!init@{init}}
+\index{init@{init}!Unit4Relay@{Unit4Relay}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily \label{class_unit4_relay_aae6e0d7daca1902707378c714047ef65} 
+unit\+\_\+4relay\+\_\+error\+\_\+t Unit4\+Relay\+::init (\begin{DoxyParamCaption}\item[{bool}]{mode}{}\end{DoxyParamCaption})}
+
+
+
+Sets the mode of the device and turns off all relays. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em mode} & Operation mode\+:
+\begin{DoxyItemize}
+\item {\ttfamily 0}\+: Asynchronous mode.
+\item {\ttfamily 1}\+: Synchronous mode.
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily UNIT\+\_\+4\+RELAY\+\_\+\+OK (8208)}\+: Success.
+\item {\ttfamily UNIT\+\_\+4\+RELAY\+\_\+\+ERR\+\_\+\+INIT(8210)}\+: Failed to write initial configuration to device. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_unit4_relay_afdca9c42a3cfb64c47273e9b03b0b9ea}\index{Unit4Relay@{Unit4Relay}!ledAll@{ledAll}}
+\index{ledAll@{ledAll}!Unit4Relay@{Unit4Relay}}
+\doxysubsubsection{\texorpdfstring{ledAll()}{ledAll()}}
+{\footnotesize\ttfamily \label{class_unit4_relay_afdca9c42a3cfb64c47273e9b03b0b9ea} 
+unit\+\_\+4relay\+\_\+error\+\_\+t Unit4\+Relay\+::led\+All (\begin{DoxyParamCaption}\item[{bool}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Sets all LEDs to the same state. 
+
+This function turns all indicator LEDs ON or OFF.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em state} & Desired LED state for all ({\ttfamily true} = ON, {\ttfamily false} = OFF).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily UNIT\+\_\+4\+RELAY\+\_\+\+OK (8208)}\+: Success. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_unit4_relay_a4afd86f0f07bd53cc2c52f1a1faaf708}\index{Unit4Relay@{Unit4Relay}!ledWrite@{ledWrite}}
+\index{ledWrite@{ledWrite}!Unit4Relay@{Unit4Relay}}
+\doxysubsubsection{\texorpdfstring{ledWrite()}{ledWrite()}}
+{\footnotesize\ttfamily \label{class_unit4_relay_a4afd86f0f07bd53cc2c52f1a1faaf708} 
+unit\+\_\+4relay\+\_\+error\+\_\+t Unit4\+Relay\+::led\+Write (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{number}{, }\item[{bool}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Sets the state of an individual LED. 
+
+This function turns ON or OFF a specified indicator LED by index.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em number} & LED number (0-\/3). \\
+\hline
+\mbox{\texttt{ in}}  & {\em state} & Desired LED state ({\ttfamily true} = ON, {\ttfamily false} = OFF).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily UNIT\+\_\+4\+RELAY\+\_\+\+OK (8208)}\+: Success.
+\item {\ttfamily UNIT\+\_\+4\+RELAY\+\_\+\+ERR\+\_\+\+INDEX (8211)}\+: Invalid LED index. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_unit4_relay_ae1ae938e7f9ef4a340da551b5ea2f157}\index{Unit4Relay@{Unit4Relay}!relayAll@{relayAll}}
+\index{relayAll@{relayAll}!Unit4Relay@{Unit4Relay}}
+\doxysubsubsection{\texorpdfstring{relayAll()}{relayAll()}}
+{\footnotesize\ttfamily \label{class_unit4_relay_ae1ae938e7f9ef4a340da551b5ea2f157} 
+unit\+\_\+4relay\+\_\+error\+\_\+t Unit4\+Relay\+::relay\+All (\begin{DoxyParamCaption}\item[{bool}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Sets all relays to the same state. 
+
+This function turns all relays ON or OFF.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em state} & Desired relay state for all ({\ttfamily true} = ON, {\ttfamily false} = OFF).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily UNIT\+\_\+4\+RELAY\+\_\+\+OK (8208)}\+: Success. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_unit4_relay_a058eddf27fc3dacd823cb183016f7d48}\index{Unit4Relay@{Unit4Relay}!relayWrite@{relayWrite}}
+\index{relayWrite@{relayWrite}!Unit4Relay@{Unit4Relay}}
+\doxysubsubsection{\texorpdfstring{relayWrite()}{relayWrite()}}
+{\footnotesize\ttfamily \label{class_unit4_relay_a058eddf27fc3dacd823cb183016f7d48} 
+unit\+\_\+4relay\+\_\+error\+\_\+t Unit4\+Relay\+::relay\+Write (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{number}{, }\item[{bool}]{state}{}\end{DoxyParamCaption})}
+
+
+
+Sets the state of an individual relay. 
+
+This function turns ON or OFF a specified relay by index.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em number} & \doxylink{class_relay}{Relay} number (0-\/3). \\
+\hline
+\mbox{\texttt{ in}}  & {\em state} & Desired relay state ({\ttfamily true} = ON, {\ttfamily false} = OFF).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily UNIT\+\_\+4\+RELAY\+\_\+\+OK (8208)}\+: Success.
+\item {\ttfamily UNIT\+\_\+4\+RELAY\+\_\+\+ERR\+\_\+\+INDEX (8211)}\+: Invalid relay index. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_unit4_relay_a25c9b5c0263a67a95d58519cd1b6cad2}\index{Unit4Relay@{Unit4Relay}!switchMode@{switchMode}}
+\index{switchMode@{switchMode}!Unit4Relay@{Unit4Relay}}
+\doxysubsubsection{\texorpdfstring{switchMode()}{switchMode()}}
+{\footnotesize\ttfamily \label{class_unit4_relay_a25c9b5c0263a67a95d58519cd1b6cad2} 
+unit\+\_\+4relay\+\_\+error\+\_\+t Unit4\+Relay\+::switch\+Mode (\begin{DoxyParamCaption}\item[{bool}]{mode}{}\end{DoxyParamCaption})}
+
+
+
+Sets the operating mode of the relay unit. 
+
+This function changes the internal mode of the device, such as LED or relay mode.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em mode} & Desired mode setting.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily UNIT\+\_\+4\+RELAY\+\_\+\+OK (8208)}\+: Success. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/unit\+\_\+4relay/src/\mbox{\hyperlink{unit__4relay_8h}{unit\+\_\+4relay.\+h}}\item 
+lib/unit\+\_\+4relay/src/\mbox{\hyperlink{unit__4relay_8cpp}{unit\+\_\+4relay.\+cpp}}\end{DoxyCompactItemize}

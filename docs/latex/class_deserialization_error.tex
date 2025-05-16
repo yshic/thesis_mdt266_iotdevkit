@@ -1,0 +1,57 @@
+\doxysection{Deserialization\+Error Class Reference}
+\hypertarget{class_deserialization_error}{}\label{class_deserialization_error}\index{DeserializationError@{DeserializationError}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_deserialization_error_a33c641cc421f6310dc3f529838203e21}\label{class_deserialization_error_a33c641cc421f6310dc3f529838203e21} 
+enum {\bfseries Code} \{ \newline
+{\bfseries Ok}
+, {\bfseries Empty\+Input}
+, {\bfseries Incomplete\+Input}
+, {\bfseries Invalid\+Input}
+, \newline
+{\bfseries No\+Memory}
+, {\bfseries Too\+Deep}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_deserialization_error_a0f1a7145d8bbc920d2d650a31a68d09c}\label{class_deserialization_error_a0f1a7145d8bbc920d2d650a31a68d09c} 
+{\bfseries Deserialization\+Error} (Code c)
+\item 
+\Hypertarget{class_deserialization_error_a9d4650c877f8ce21ede22e156b60430f}\label{class_deserialization_error_a9d4650c877f8ce21ede22e156b60430f} 
+{\bfseries operator bool} () const
+\item 
+\Hypertarget{class_deserialization_error_af01d9294df35819f9a978f3226606d05}\label{class_deserialization_error_af01d9294df35819f9a978f3226606d05} 
+Code {\bfseries code} () const
+\item 
+\Hypertarget{class_deserialization_error_a08fb58f92ecbd00aed59fa731f088526}\label{class_deserialization_error_a08fb58f92ecbd00aed59fa731f088526} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries c\+\_\+str} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_deserialization_error_ad72f4ec552a3b04ea43347621f6784b9}\label{class_deserialization_error_ad72f4ec552a3b04ea43347621f6784b9} 
+bool {\bfseries operator==} (const \mbox{\hyperlink{class_deserialization_error}{Deserialization\+Error}} \&lhs, const \mbox{\hyperlink{class_deserialization_error}{Deserialization\+Error}} \&rhs)
+\item 
+\Hypertarget{class_deserialization_error_ad14e0b183e9e2d2751681d1b0c1abb11}\label{class_deserialization_error_ad14e0b183e9e2d2751681d1b0c1abb11} 
+bool {\bfseries operator!=} (const \mbox{\hyperlink{class_deserialization_error}{Deserialization\+Error}} \&lhs, const \mbox{\hyperlink{class_deserialization_error}{Deserialization\+Error}} \&rhs)
+\item 
+\Hypertarget{class_deserialization_error_a6060d0c6345e059fd5b39f4324c93ed9}\label{class_deserialization_error_a6060d0c6345e059fd5b39f4324c93ed9} 
+bool {\bfseries operator==} (const \mbox{\hyperlink{class_deserialization_error}{Deserialization\+Error}} \&lhs, Code rhs)
+\item 
+\Hypertarget{class_deserialization_error_aaeee7f181e421f3ae9c105895eed46ed}\label{class_deserialization_error_aaeee7f181e421f3ae9c105895eed46ed} 
+bool {\bfseries operator==} (Code lhs, const \mbox{\hyperlink{class_deserialization_error}{Deserialization\+Error}} \&rhs)
+\item 
+\Hypertarget{class_deserialization_error_a162497cf39b2b177e6e69a38f3a61573}\label{class_deserialization_error_a162497cf39b2b177e6e69a38f3a61573} 
+bool {\bfseries operator!=} (const \mbox{\hyperlink{class_deserialization_error}{Deserialization\+Error}} \&lhs, Code rhs)
+\item 
+\Hypertarget{class_deserialization_error_ad6dd04ba35fd152e3999850fa4c2359b}\label{class_deserialization_error_ad6dd04ba35fd152e3999850fa4c2359b} 
+bool {\bfseries operator!=} (Code lhs, const \mbox{\hyperlink{class_deserialization_error}{Deserialization\+Error}} \&rhs)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Arduino\+Json/src/\+Arduino\+Json/\+Deserialization/Deserialization\+Error.\+hpp\end{DoxyCompactItemize}

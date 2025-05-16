@@ -1,0 +1,70 @@
+\doxysection{Json\+Variant\+Const Class Reference}
+\hypertarget{class_json_variant_const}{}\label{class_json_variant_const}\index{JsonVariantConst@{JsonVariantConst}}
+Inheritance diagram for Json\+Variant\+Const\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_json_variant_const}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_json_variant_const_aad858704fde916b606169a7a6f6d6056}\label{class_json_variant_const_aad858704fde916b606169a7a6f6d6056} 
+{\bfseries Json\+Variant\+Const} (const detail\+::\+Variant\+Data \texorpdfstring{$\ast$}{*}data)
+\item 
+\Hypertarget{class_json_variant_const_a18bafec6c332ce5647d33d1ff5743a6a}\label{class_json_variant_const_a18bafec6c332ce5647d33d1ff5743a6a} 
+FORCE\+\_\+\+INLINE bool {\bfseries is\+Null} () const
+\item 
+\Hypertarget{class_json_variant_const_ae5482073948878b4c137f929b71ee873}\label{class_json_variant_const_ae5482073948878b4c137f929b71ee873} 
+FORCE\+\_\+\+INLINE bool {\bfseries is\+Unbound} () const
+\item 
+\Hypertarget{class_json_variant_const_ac4147f89ecc4e9167276753660cccf1e}\label{class_json_variant_const_ac4147f89ecc4e9167276753660cccf1e} 
+FORCE\+\_\+\+INLINE size\+\_\+t {\bfseries memory\+Usage} () const
+\item 
+\Hypertarget{class_json_variant_const_ae1982e3880821cdd073dfdf5cd1c532b}\label{class_json_variant_const_ae1982e3880821cdd073dfdf5cd1c532b} 
+FORCE\+\_\+\+INLINE size\+\_\+t {\bfseries nesting} () const
+\item 
+\Hypertarget{class_json_variant_const_ae365d5873434ce6cf198a7d6f8358ada}\label{class_json_variant_const_ae365d5873434ce6cf198a7d6f8358ada} 
+size\+\_\+t {\bfseries size} () const
+\item 
+\Hypertarget{class_json_variant_const_a86532727f460ef0d29bdcc769c5f2f77}\label{class_json_variant_const_a86532727f460ef0d29bdcc769c5f2f77} 
+{\footnotesize template$<$typename T$>$ }\\FORCE\+\_\+\+INLINE detail\+::enable\+\_\+if$<$!detail\+::is\+\_\+same$<$ T, char \texorpdfstring{$\ast$}{*} $>$\+::value \&\&!detail\+::is\+\_\+same$<$ T, char $>$\+::value, T $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries as} () const
+\item 
+\Hypertarget{class_json_variant_const_ac8e56ef7f945b50f0cd4c788ebdbaff9}\label{class_json_variant_const_ac8e56ef7f945b50f0cd4c788ebdbaff9} 
+{\footnotesize template$<$typename T$>$ }\\FORCE\+\_\+\+INLINE detail\+::enable\+\_\+if$<$!detail\+::is\+\_\+same$<$ T, char \texorpdfstring{$\ast$}{*} $>$\+::value \&\&!detail\+::is\+\_\+same$<$ T, char $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries is} () const
+\item 
+\Hypertarget{class_json_variant_const_a22f0a4b521bcccf7adcf04bf6434994b}\label{class_json_variant_const_a22f0a4b521bcccf7adcf04bf6434994b} 
+{\footnotesize template$<$typename T$>$ }\\FORCE\+\_\+\+INLINE {\bfseries operator T} () const
+\item 
+\Hypertarget{class_json_variant_const_a3c62e12ca1cf230a2d765d715f35112d}\label{class_json_variant_const_a3c62e12ca1cf230a2d765d715f35112d} 
+FORCE\+\_\+\+INLINE \mbox{\hyperlink{class_json_variant_const}{Json\+Variant\+Const}} {\bfseries operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t index) const
+\item 
+\Hypertarget{class_json_variant_const_abd91cd350d84ca285ed177d8c5d4d09a}\label{class_json_variant_const_abd91cd350d84ca285ed177d8c5d4d09a} 
+{\footnotesize template$<$typename TString$>$ }\\FORCE\+\_\+\+INLINE detail\+::enable\+\_\+if$<$ detail\+::\+Is\+String$<$ TString $>$\+::value, \mbox{\hyperlink{class_json_variant_const}{Json\+Variant\+Const}} $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator\mbox{[}$\,$\mbox{]}} (const TString \&key) const
+\item 
+\Hypertarget{class_json_variant_const_af452766281a6dc02563695d89ef4a495}\label{class_json_variant_const_af452766281a6dc02563695d89ef4a495} 
+{\footnotesize template$<$typename TChar$>$ }\\FORCE\+\_\+\+INLINE detail\+::enable\+\_\+if$<$ detail\+::\+Is\+String$<$ TChar \texorpdfstring{$\ast$}{*} $>$\+::value, \mbox{\hyperlink{class_json_variant_const}{Json\+Variant\+Const}} $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator\mbox{[}$\,$\mbox{]}} (TChar \texorpdfstring{$\ast$}{*}key) const
+\item 
+\Hypertarget{class_json_variant_const_a1c4ff4b256d93fabf731c7a376b2b825}\label{class_json_variant_const_a1c4ff4b256d93fabf731c7a376b2b825} 
+{\footnotesize template$<$typename TString$>$ }\\FORCE\+\_\+\+INLINE detail\+::enable\+\_\+if$<$ detail\+::\+Is\+String$<$ TString $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries contains\+Key} (const TString \&key) const
+\item 
+\Hypertarget{class_json_variant_const_a3be748363a28c8367e95b750fc2a58ba}\label{class_json_variant_const_a3be748363a28c8367e95b750fc2a58ba} 
+{\footnotesize template$<$typename TChar$>$ }\\FORCE\+\_\+\+INLINE detail\+::enable\+\_\+if$<$ detail\+::\+Is\+String$<$ TChar \texorpdfstring{$\ast$}{*} $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries contains\+Key} (TChar \texorpdfstring{$\ast$}{*}key) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_json_variant_const_a99ab50eb8111eb16703c3b62ba8595da}\label{class_json_variant_const_a99ab50eb8111eb16703c3b62ba8595da} 
+const detail\+::\+Variant\+Data \texorpdfstring{$\ast$}{*} {\bfseries get\+Data} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_json_variant_const_a4fb48047f96b1f9e639e7e0f87f33733}\label{class_json_variant_const_a4fb48047f96b1f9e639e7e0f87f33733} 
+class {\bfseries detail\+::\+Variant\+Attorney}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Arduino\+Json/src/\+Arduino\+Json/\+Variant/Json\+Variant\+Const.\+hpp\end{DoxyCompactItemize}

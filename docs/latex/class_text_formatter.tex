@@ -1,0 +1,64 @@
+\doxysection{Text\+Formatter\texorpdfstring{$<$}{<} TWriter \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{class_text_formatter}{}\label{class_text_formatter}\index{TextFormatter$<$ TWriter $>$@{TextFormatter$<$ TWriter $>$}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_text_formatter_a8a44c650ccd4e4aa20a911d7e20ef3ed}\label{class_text_formatter_a8a44c650ccd4e4aa20a911d7e20ef3ed} 
+{\bfseries Text\+Formatter} (TWriter writer)
+\item 
+\Hypertarget{class_text_formatter_aebcf5ca3db008b53e7876e47fc577922}\label{class_text_formatter_aebcf5ca3db008b53e7876e47fc577922} 
+\mbox{\hyperlink{class_text_formatter}{Text\+Formatter}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_text_formatter}{Text\+Formatter}} \&)=delete
+\item 
+\Hypertarget{class_text_formatter_a2948e5a27641827595948e2a2379a09d}\label{class_text_formatter_a2948e5a27641827595948e2a2379a09d} 
+size\+\_\+t {\bfseries bytes\+Written} () const
+\item 
+\Hypertarget{class_text_formatter_aef3580e71a538ce9b8ba3906b7be865a}\label{class_text_formatter_aef3580e71a538ce9b8ba3906b7be865a} 
+void {\bfseries write\+Boolean} (bool value)
+\item 
+\Hypertarget{class_text_formatter_a4d5d03aa057cb471693dfd4c46f9aba0}\label{class_text_formatter_a4d5d03aa057cb471693dfd4c46f9aba0} 
+void {\bfseries write\+String} (const char \texorpdfstring{$\ast$}{*}value)
+\item 
+\Hypertarget{class_text_formatter_abbba0280bb3179d619e787775841660a}\label{class_text_formatter_abbba0280bb3179d619e787775841660a} 
+void {\bfseries write\+String} (const char \texorpdfstring{$\ast$}{*}value, size\+\_\+t n)
+\item 
+\Hypertarget{class_text_formatter_a392e7acc08dbe4e601f7652428d10a69}\label{class_text_formatter_a392e7acc08dbe4e601f7652428d10a69} 
+void {\bfseries write\+Char} (char c)
+\item 
+\Hypertarget{class_text_formatter_a80284e3dcb399891637d68033ee59300}\label{class_text_formatter_a80284e3dcb399891637d68033ee59300} 
+{\footnotesize template$<$typename T$>$ }\\void {\bfseries write\+Float} (T value)
+\item 
+\Hypertarget{class_text_formatter_a6f33aece24aa2238ff083fab2da680dd}\label{class_text_formatter_a6f33aece24aa2238ff083fab2da680dd} 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{structis__signed}{is\+\_\+signed}}$<$ T $>$\+::value $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries write\+Integer} (T value)
+\item 
+\Hypertarget{class_text_formatter_abd006b32d7b9e55e73b36c76ceb1793c}\label{class_text_formatter_abd006b32d7b9e55e73b36c76ceb1793c} 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{structis__unsigned}{is\+\_\+unsigned}}$<$ T $>$\+::value $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries write\+Integer} (T value)
+\item 
+\Hypertarget{class_text_formatter_a0473a80be08e6c5e244281004a75fda4}\label{class_text_formatter_a0473a80be08e6c5e244281004a75fda4} 
+void {\bfseries write\+Decimals} (uint32\+\_\+t value, int8\+\_\+t width)
+\item 
+\Hypertarget{class_text_formatter_aa7c80381c9c1864860a73ca10f54d311}\label{class_text_formatter_aa7c80381c9c1864860a73ca10f54d311} 
+void {\bfseries write\+Raw} (const char \texorpdfstring{$\ast$}{*}s)
+\item 
+\Hypertarget{class_text_formatter_a4f1c7197201fda118fd046f439e9b948}\label{class_text_formatter_a4f1c7197201fda118fd046f439e9b948} 
+void {\bfseries write\+Raw} (const char \texorpdfstring{$\ast$}{*}s, size\+\_\+t n)
+\item 
+\Hypertarget{class_text_formatter_a284064845dca204f789457c3ccb875bb}\label{class_text_formatter_a284064845dca204f789457c3ccb875bb} 
+void {\bfseries write\+Raw} (const char \texorpdfstring{$\ast$}{*}begin, const char \texorpdfstring{$\ast$}{*}end)
+\item 
+\Hypertarget{class_text_formatter_a6a4cb93a827502c1f513cc54f682f27d}\label{class_text_formatter_a6a4cb93a827502c1f513cc54f682f27d} 
+{\footnotesize template$<$size\+\_\+t N$>$ }\\void {\bfseries write\+Raw} (const char(\&s)\mbox{[}N\mbox{]})
+\item 
+\Hypertarget{class_text_formatter_aae8e482498cc042d8c81ceb2789e4afc}\label{class_text_formatter_aae8e482498cc042d8c81ceb2789e4afc} 
+void {\bfseries write\+Raw} (char c)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_text_formatter_a43216884154bf29727f643d34ec465e8}\label{class_text_formatter_a43216884154bf29727f643d34ec465e8} 
+\mbox{\hyperlink{class_counting_decorator}{Counting\+Decorator}}$<$ TWriter $>$ {\bfseries writer\+\_\+}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Arduino\+Json/src/\+Arduino\+Json/\+Json/Text\+Formatter.\+hpp\end{DoxyCompactItemize}

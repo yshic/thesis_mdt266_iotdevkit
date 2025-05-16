@@ -1,0 +1,32 @@
+\doxysection{Converter.\+hpp}
+\hypertarget{_converter_8hpp_source}{}\label{_converter_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Variant/Converter.hpp@{lib/ArduinoJson/src/ArduinoJson/Variant/Converter.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Namespace.hpp>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ ARDUINOJSON\_BEGIN\_PUBLIC\_NAMESPACE}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ Enable\ =\ \textcolor{keywordtype}{void}>}
+\DoxyCodeLine{00012\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_converter}{Converter}};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ ARDUINOJSON\_END\_PUBLIC\_NAMESPACE}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ clang-\/format\ off}}
+\DoxyCodeLine{00019\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T1,\ \textcolor{keyword}{typename}\ T2>}
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_invalid_conversion}{InvalidConversion}};\ \ \textcolor{comment}{//\ Error\ here?\ See\ https://arduinojson.org/v6/invalid-\/conversion/}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ clang-\/format\ on}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00024\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_converter_needs_writeable_ref}{ConverterNeedsWriteableRef}};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

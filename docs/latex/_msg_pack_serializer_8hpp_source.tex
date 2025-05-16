@@ -1,0 +1,233 @@
+\doxysection{Msg\+Pack\+Serializer.\+hpp}
+\hypertarget{_msg_pack_serializer_8hpp_source}{}\label{_msg_pack_serializer_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/MsgPack/MsgPackSerializer.hpp@{lib/ArduinoJson/src/ArduinoJson/MsgPack/MsgPackSerializer.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/MsgPack/endianess.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/assert.hpp>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/type\_traits.hpp>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Serialization/CountingDecorator.hpp>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Serialization/measure.hpp>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Serialization/serialize.hpp>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Variant/VariantData.hpp>}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TWriter>}
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }MsgPackSerializer\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{struct_visitor}{Visitor}}<size\_t>\ \{}
+\DoxyCodeLine{00019\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ producesText\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ MsgPackSerializer(TWriter\ writer)\ :\ writer\_(writer)\ \{\}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00025\ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if}}<\textcolor{keyword}{sizeof}(T)\ ==\ 4,\ \textcolor{keywordtype}{size\_t}>\mbox{\hyperlink{structconditional}{::type}}\ visitFloat(T\ value32)\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordflow}{if}\ (canConvertNumber<JsonInteger>(value32))\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ JsonInteger\ truncatedValue\ =\ JsonInteger(value32);}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (value32\ ==\ T(truncatedValue))}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ visitSignedInteger(truncatedValue);}
+\DoxyCodeLine{00030\ \ \ \ \ \}}
+\DoxyCodeLine{00031\ \ \ \ \ writeByte(0xCA);}
+\DoxyCodeLine{00032\ \ \ \ \ writeInteger(value32);}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{return}\ bytesWritten();}
+\DoxyCodeLine{00034\ \ \ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00037\ \ \ ARDUINOJSON\_NO\_SANITIZE(\textcolor{stringliteral}{"{}float-\/cast-\/overflow"{}})}
+\DoxyCodeLine{00038\ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if}}<\textcolor{keyword}{sizeof}(T)\ ==\ 8,\ \textcolor{keywordtype}{size\_t}>\mbox{\hyperlink{structconditional}{::type}}\ visitFloat(T\ value64)\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{float}\ value32\ =\ float(value64);}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{if}\ (value32\ ==\ value64)}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ visitFloat(value32);}
+\DoxyCodeLine{00042\ \ \ \ \ writeByte(0xCB);}
+\DoxyCodeLine{00043\ \ \ \ \ writeInteger(value64);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordflow}{return}\ bytesWritten();}
+\DoxyCodeLine{00045\ \ \ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordtype}{size\_t}\ visitArray(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_collection_data}{CollectionData}}\&\ array)\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ n\ =\ array.size();}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ <\ 0x10)\ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ writeByte(uint8\_t(0x90\ +\ n));}
+\DoxyCodeLine{00051\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (n\ <\ 0x10000)\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ writeByte(0xDC);}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ writeInteger(uint16\_t(n));}
+\DoxyCodeLine{00054\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ writeByte(0xDD);}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ writeInteger(uint32\_t(n));}
+\DoxyCodeLine{00057\ \ \ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\ slot\ =\ array.head();\ slot;\ slot\ =\ slot-\/>next())\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ slot-\/>data()-\/>accept(*\textcolor{keyword}{this});}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{return}\ bytesWritten();}
+\DoxyCodeLine{00062\ \ \ \}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \textcolor{keywordtype}{size\_t}\ visitObject(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_collection_data}{CollectionData}}\&\ \textcolor{keywordtype}{object})\ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ n\ =\ \textcolor{keywordtype}{object}.size();}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ <\ 0x10)\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ writeByte(uint8\_t(0x80\ +\ n));}
+\DoxyCodeLine{00068\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (n\ <\ 0x10000)\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ writeByte(0xDE);}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ writeInteger(uint16\_t(n));}
+\DoxyCodeLine{00071\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ writeByte(0xDF);}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ writeInteger(uint32\_t(n));}
+\DoxyCodeLine{00074\ \ \ \ \ \}}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\ slot\ =\ \textcolor{keywordtype}{object}.head();\ slot;\ slot\ =\ slot-\/>next())\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ visitString(slot-\/>key());}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ slot-\/>data()-\/>accept(*\textcolor{keyword}{this});}
+\DoxyCodeLine{00078\ \ \ \ \ \}}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordflow}{return}\ bytesWritten();}
+\DoxyCodeLine{00080\ \ \ \}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \textcolor{keywordtype}{size\_t}\ visitString(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ value)\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{return}\ visitString(value,\ strlen(value));}
+\DoxyCodeLine{00084\ \ \ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \textcolor{keywordtype}{size\_t}\ visitString(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ value,\ \textcolor{keywordtype}{size\_t}\ n)\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ ARDUINOJSON\_ASSERT(value\ !=\ NULL);}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ <\ 0x20)\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ writeByte(uint8\_t(0xA0\ +\ n));}
+\DoxyCodeLine{00091\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (n\ <\ 0x100)\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ writeByte(0xD9);}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ writeInteger(uint8\_t(n));}
+\DoxyCodeLine{00094\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (n\ <\ 0x10000)\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ writeByte(0xDA);}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ writeInteger(uint16\_t(n));}
+\DoxyCodeLine{00097\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ writeByte(0xDB);}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ writeInteger(uint32\_t(n));}
+\DoxyCodeLine{00100\ \ \ \ \ \}}
+\DoxyCodeLine{00101\ \ \ \ \ writeBytes(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }uint8\_t*\textcolor{keyword}{>}(value),\ n);}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordflow}{return}\ bytesWritten();}
+\DoxyCodeLine{00103\ \ \ \}}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \textcolor{keywordtype}{size\_t}\ visitRawJson(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ data,\ \textcolor{keywordtype}{size\_t}\ size)\ \{}
+\DoxyCodeLine{00106\ \ \ \ \ writeBytes(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }uint8\_t*\textcolor{keyword}{>}(data),\ size);}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordflow}{return}\ bytesWritten();}
+\DoxyCodeLine{00108\ \ \ \}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \textcolor{keywordtype}{size\_t}\ visitSignedInteger(JsonInteger\ value)\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordflow}{if}\ (value\ >\ 0)\ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ visitUnsignedInteger(\textcolor{keyword}{static\_cast<}JsonUInt\textcolor{keyword}{>}(value));}
+\DoxyCodeLine{00113\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (value\ >=\ -\/0x20)\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ writeInteger(int8\_t(value));}
+\DoxyCodeLine{00115\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (value\ >=\ -\/0x80)\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ writeByte(0xD0);}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ writeInteger(int8\_t(value));}
+\DoxyCodeLine{00118\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (value\ >=\ -\/0x8000)\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ writeByte(0xD1);}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ writeInteger(int16\_t(value));}
+\DoxyCodeLine{00121\ \ \ \ \ \}}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_USE\_LONG\_LONG}}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (value\ >=\ -\/0x80000000LL)}
+\DoxyCodeLine{00124\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00126\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00127\ \ \ \ \ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ writeByte(0xD2);}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ writeInteger(int32\_t(value));}
+\DoxyCodeLine{00130\ \ \ \ \ \}}
+\DoxyCodeLine{00131\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_USE\_LONG\_LONG}}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ writeByte(0xD3);}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ writeInteger(int64\_t(value));}
+\DoxyCodeLine{00135\ \ \ \ \ \}}
+\DoxyCodeLine{00136\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordflow}{return}\ bytesWritten();}
+\DoxyCodeLine{00138\ \ \ \}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \ \ \textcolor{keywordtype}{size\_t}\ visitUnsignedInteger(JsonUInt\ value)\ \{}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordflow}{if}\ (value\ <=\ 0x7F)\ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ writeInteger(uint8\_t(value));}
+\DoxyCodeLine{00143\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (value\ <=\ 0xFF)\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ writeByte(0xCC);}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ writeInteger(uint8\_t(value));}
+\DoxyCodeLine{00146\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (value\ <=\ 0xFFFF)\ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ writeByte(0xCD);}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ writeInteger(uint16\_t(value));}
+\DoxyCodeLine{00149\ \ \ \ \ \}}
+\DoxyCodeLine{00150\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_USE\_LONG\_LONG}}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (value\ <=\ 0xFFFFFFFF)}
+\DoxyCodeLine{00152\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00154\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00155\ \ \ \ \ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ writeByte(0xCE);}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ writeInteger(uint32\_t(value));}
+\DoxyCodeLine{00158\ \ \ \ \ \}}
+\DoxyCodeLine{00159\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_USE\_LONG\_LONG}}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ writeByte(0xCF);}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ writeInteger(uint64\_t(value));}
+\DoxyCodeLine{00163\ \ \ \ \ \}}
+\DoxyCodeLine{00164\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordflow}{return}\ bytesWritten();}
+\DoxyCodeLine{00166\ \ \ \}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \ \ \textcolor{keywordtype}{size\_t}\ visitBoolean(\textcolor{keywordtype}{bool}\ value)\ \{}
+\DoxyCodeLine{00169\ \ \ \ \ writeByte(value\ ?\ 0xC3\ :\ 0xC2);}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keywordflow}{return}\ bytesWritten();}
+\DoxyCodeLine{00171\ \ \ \}}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \ \ \textcolor{keywordtype}{size\_t}\ visitNull()\ \{}
+\DoxyCodeLine{00174\ \ \ \ \ writeByte(0xC0);}
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordflow}{return}\ bytesWritten();}
+\DoxyCodeLine{00176\ \ \ \}}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00179\ \ \ \textcolor{keywordtype}{size\_t}\ bytesWritten()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{keywordflow}{return}\ writer\_.count();}
+\DoxyCodeLine{00181\ \ \ \}}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \ \ \textcolor{keywordtype}{void}\ writeByte(uint8\_t\ c)\ \{}
+\DoxyCodeLine{00184\ \ \ \ \ writer\_.write(c);}
+\DoxyCodeLine{00185\ \ \ \}}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ \ \ \textcolor{keywordtype}{void}\ writeBytes(\textcolor{keyword}{const}\ uint8\_t*\ p,\ \textcolor{keywordtype}{size\_t}\ n)\ \{}
+\DoxyCodeLine{00188\ \ \ \ \ writer\_.write(p,\ n);}
+\DoxyCodeLine{00189\ \ \ \}}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00192\ \ \ \textcolor{keywordtype}{void}\ writeInteger(T\ value)\ \{}
+\DoxyCodeLine{00193\ \ \ \ \ fixEndianess(value);}
+\DoxyCodeLine{00194\ \ \ \ \ writeBytes(\textcolor{keyword}{reinterpret\_cast<}uint8\_t*\textcolor{keyword}{>}(\&value),\ \textcolor{keyword}{sizeof}(value));}
+\DoxyCodeLine{00195\ \ \ \}}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ \ \ \mbox{\hyperlink{class_counting_decorator}{CountingDecorator<TWriter>}}\ writer\_;}
+\DoxyCodeLine{00198\ \};}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ ARDUINOJSON\_BEGIN\_PUBLIC\_NAMESPACE}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \textcolor{comment}{//\ Produces\ a\ MessagePack\ document.}}
+\DoxyCodeLine{00205\ \textcolor{comment}{//\ https://arduinojson.org/v6/api/msgpack/serializemsgpack/}}
+\DoxyCodeLine{00206\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDestination>}
+\DoxyCodeLine{00207\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ serializeMsgPack(\mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}\ source,\ TDestination\&\ output)\ \{}
+\DoxyCodeLine{00208\ \ \ \textcolor{keyword}{using\ namespace\ }ArduinoJson::detail;}
+\DoxyCodeLine{00209\ \ \ \textcolor{keywordflow}{return}\ serialize<MsgPackSerializer>(source,\ output);}
+\DoxyCodeLine{00210\ \}}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \textcolor{comment}{//\ Produces\ a\ MessagePack\ document.}}
+\DoxyCodeLine{00213\ \textcolor{comment}{//\ https://arduinojson.org/v6/api/msgpack/serializemsgpack/}}
+\DoxyCodeLine{00214\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ serializeMsgPack(\mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}\ source,\ \textcolor{keywordtype}{void}*\ output,}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size)\ \{}
+\DoxyCodeLine{00216\ \ \ \textcolor{keyword}{using\ namespace\ }ArduinoJson::detail;}
+\DoxyCodeLine{00217\ \ \ \textcolor{keywordflow}{return}\ serialize<MsgPackSerializer>(source,\ output,\ size);}
+\DoxyCodeLine{00218\ \}}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \textcolor{comment}{//\ Computes\ the\ length\ of\ the\ document\ that\ serializeMsgPack()\ produces.}}
+\DoxyCodeLine{00221\ \textcolor{comment}{//\ https://arduinojson.org/v6/api/msgpack/measuremsgpack/}}
+\DoxyCodeLine{00222\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ measureMsgPack(\mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}\ source)\ \{}
+\DoxyCodeLine{00223\ \ \ \textcolor{keyword}{using\ namespace\ }ArduinoJson::detail;}
+\DoxyCodeLine{00224\ \ \ \textcolor{keywordflow}{return}\ measure<MsgPackSerializer>(source);}
+\DoxyCodeLine{00225\ \}}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ ARDUINOJSON\_END\_PUBLIC\_NAMESPACE}
+
+\end{DoxyCode}

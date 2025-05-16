@@ -1,0 +1,41 @@
+\doxysection{Husky\+Lens\+Protocol\+Core.\+h}
+\hypertarget{_husky_lens_protocol_core_8h_source}{}\label{_husky_lens_protocol_core_8h_source}\index{lib/HUSKYLENS/HuskyLensProtocolCore.h@{lib/HUSKYLENS/HuskyLensProtocolCore.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_HUSKY\_LENS\_PROTOCOL\_CORE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_HUSKY\_LENS\_PROTOCOL\_CORE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}stdio.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}stdbool.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}string.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}stdint.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00011\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keywordtype}{bool}\ husky\_lens\_protocol\_receive(uint8\_t\ data);}
+\DoxyCodeLine{00015\ \textcolor{keywordtype}{bool}\ husky\_lens\_protocol\_read\_begin(uint8\_t\ command);}
+\DoxyCodeLine{00016\ uint8\_t\ husky\_lens\_protocol\_read\_uint8();}
+\DoxyCodeLine{00017\ int16\_t\ husky\_lens\_protocol\_read\_int16();}
+\DoxyCodeLine{00018\ int32\_t\ husky\_lens\_protocol\_read\_int32();}
+\DoxyCodeLine{00019\ \textcolor{keywordtype}{float}\ husky\_lens\_protocol\_read\_float();}
+\DoxyCodeLine{00020\ \textcolor{keywordtype}{bool}\ husky\_lens\_protocol\_read\_end();}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ uint8\_t*\ husky\_lens\_protocol\_write\_begin(uint8\_t\ command);}
+\DoxyCodeLine{00023\ \textcolor{keywordtype}{void}\ husky\_lens\_protocol\_write\_uint8(uint8\_t\ content);}
+\DoxyCodeLine{00024\ \textcolor{keywordtype}{void}\ husky\_lens\_protocol\_write\_int16(int16\_t\ content);}
+\DoxyCodeLine{00025\ \textcolor{keywordtype}{void}\ husky\_lens\_protocol\_write\_int32(int32\_t\ content);}
+\DoxyCodeLine{00026\ \textcolor{keywordtype}{void}\ husky\_lens\_protocol\_write\_float(\textcolor{keywordtype}{float}\ content);}
+\DoxyCodeLine{00027\ \textcolor{keywordtype}{void}\ husky\_lens\_protocol\_write\_buffer\_uint8(uint8\_t\ *content,\ uint32\_t\ length);}
+\DoxyCodeLine{00028\ \textcolor{keywordtype}{int}\ husky\_lens\_protocol\_write\_end();}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ IS\_BIG\_ENDIAN()\ (!*(uint8\_t\ *)\&(uint16\_t)\{1\})}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00033\ \}\ \textcolor{comment}{/*\ extern\ "{}C"{}\ */}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

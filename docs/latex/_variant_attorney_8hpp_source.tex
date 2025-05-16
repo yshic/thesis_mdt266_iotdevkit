@@ -1,0 +1,54 @@
+\doxysection{Variant\+Attorney.\+hpp}
+\hypertarget{_variant_attorney_8hpp_source}{}\label{_variant_attorney_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Variant/VariantAttorney.hpp@{lib/ArduinoJson/src/ArduinoJson/Variant/VariantAttorney.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/attributes.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/type\_traits.hpp>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Variant/VariantTo.hpp>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}JsonVariantConst.hpp"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ Grants\ access\ to\ the\ internal\ variant\ API}}
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_variant_attorney}{VariantAttorney}}\ \{}
+\DoxyCodeLine{00016\ \ \ \textcolor{comment}{//\ Tells\ whether\ getData()\ returns\ a\ const\ pointer}}
+\DoxyCodeLine{00017\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TClient>}
+\DoxyCodeLine{00018\ \ \ \textcolor{keyword}{struct\ }ResultOfGetData\ \{}
+\DoxyCodeLine{00019\ \ \ \ \textcolor{keyword}{protected}:\ \ \textcolor{comment}{//\ <-\/\ to\ avoid\ GCC's\ "{}all\ member\ functions\ in\ class\ are\ private"{}}}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ probe(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_variant_data}{VariantData}}*);}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{char}\ probe(\mbox{\hyperlink{class_variant_data}{VariantData}}*);}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{static}\ TClient\&\ client;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structconditional}{conditional}}<\textcolor{keyword}{sizeof}(probe(client.getData()))\ ==\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}),}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_variant_data}{VariantData}}*,\ \mbox{\hyperlink{class_variant_data}{VariantData}}*>\mbox{\hyperlink{structconditional}{::type}}\ \mbox{\hyperlink{structconditional}{type}};}
+\DoxyCodeLine{00028\ \ \ \};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TClient>}
+\DoxyCodeLine{00032\ \ \ FORCE\_INLINE\ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_memory_pool}{MemoryPool}}*\ getPool(TClient\&\ client)\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{return}\ client.getPool();}
+\DoxyCodeLine{00034\ \ \ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TClient>}
+\DoxyCodeLine{00037\ \ \ FORCE\_INLINE\ \textcolor{keyword}{static}\ \textcolor{keyword}{typename}\ ResultOfGetData<TClient>::type\ getData(}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ TClient\&\ client)\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{return}\ client.getData();}
+\DoxyCodeLine{00040\ \ \ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TClient>}
+\DoxyCodeLine{00043\ \ \ FORCE\_INLINE\ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_variant_data}{VariantData}}*\ getOrCreateData(TClient\&\ client)\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordflow}{return}\ client.getOrCreateData();}
+\DoxyCodeLine{00045\ \ \ \}}
+\DoxyCodeLine{00046\ \};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

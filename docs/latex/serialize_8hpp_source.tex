@@ -1,0 +1,57 @@
+\doxysection{serialize.\+hpp}
+\hypertarget{serialize_8hpp_source}{}\label{serialize_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Serialization/serialize.hpp@{lib/ArduinoJson/src/ArduinoJson/Serialization/serialize.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Serialization/Writer.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Variant/VariantFunctions.hpp>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{template}\ <\textcolor{keyword}{template}\ <\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }TSerializer,\ \textcolor{keyword}{typename}\ TWriter>}
+\DoxyCodeLine{00013\ \textcolor{keywordtype}{size\_t}\ doSerialize(ArduinoJson::JsonVariantConst\ source,\ TWriter\ writer)\ \{}
+\DoxyCodeLine{00014\ \ \ TSerializer<TWriter>\ serializer(writer);}
+\DoxyCodeLine{00015\ \ \ \textcolor{keywordflow}{return}\ variantAccept(VariantAttorney::getData(source),\ serializer);}
+\DoxyCodeLine{00016\ \}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{template}\ <\textcolor{keyword}{template}\ <\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }TSerializer,\ \textcolor{keyword}{typename}\ TDestination>}
+\DoxyCodeLine{00019\ \textcolor{keywordtype}{size\_t}\ serialize(ArduinoJson::JsonVariantConst\ source,}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TDestination\&\ destination)\ \{}
+\DoxyCodeLine{00021\ \ \ \mbox{\hyperlink{class_writer}{Writer<TDestination>}}\ writer(destination);}
+\DoxyCodeLine{00022\ \ \ \textcolor{keywordflow}{return}\ doSerialize<TSerializer>(source,\ writer);}
+\DoxyCodeLine{00023\ \}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{template}\ <\textcolor{keyword}{template}\ <\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }TSerializer>}
+\DoxyCodeLine{00026\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<!TSerializer<StaticStringWriter>::producesText}},\ \textcolor{keywordtype}{size\_t}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00027\ serialize(ArduinoJson::JsonVariantConst\ source,\ \textcolor{keywordtype}{void}*\ buffer,}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ bufferSize)\ \{}
+\DoxyCodeLine{00029\ \ \ \mbox{\hyperlink{class_static_string_writer}{StaticStringWriter}}\ writer(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(buffer),\ bufferSize);}
+\DoxyCodeLine{00030\ \ \ \textcolor{keywordflow}{return}\ doSerialize<TSerializer>(source,\ writer);}
+\DoxyCodeLine{00031\ \}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{template}\ <\textcolor{keyword}{template}\ <\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }TSerializer>}
+\DoxyCodeLine{00034\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<TSerializer<StaticStringWriter>::producesText}},\ \textcolor{keywordtype}{size\_t}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00035\ serialize(ArduinoJson::JsonVariantConst\ source,\ \textcolor{keywordtype}{void}*\ buffer,}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ bufferSize)\ \{}
+\DoxyCodeLine{00037\ \ \ \mbox{\hyperlink{class_static_string_writer}{StaticStringWriter}}\ writer(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(buffer),\ bufferSize);}
+\DoxyCodeLine{00038\ \ \ \textcolor{keywordtype}{size\_t}\ n\ =\ doSerialize<TSerializer>(source,\ writer);}
+\DoxyCodeLine{00039\ \ \ \textcolor{comment}{//\ add\ null-\/terminator\ for\ text\ output\ (not\ counted\ in\ the\ size)}}
+\DoxyCodeLine{00040\ \ \ \textcolor{keywordflow}{if}\ (n\ <\ bufferSize)}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(buffer)[n]\ =\ 0;}
+\DoxyCodeLine{00042\ \ \ \textcolor{keywordflow}{return}\ n;}
+\DoxyCodeLine{00043\ \}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{keyword}{template}\ <\textcolor{keyword}{template}\ <\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }TSerializer,\ \textcolor{keyword}{typename}\ TChar,\ \textcolor{keywordtype}{size\_t}\ N>}
+\DoxyCodeLine{00046\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<IsChar<TChar>::value}},\ \textcolor{keywordtype}{size\_t}>\mbox{\hyperlink{structconditional}{::type}}\ serialize(}
+\DoxyCodeLine{00047\ \ \ \ \ ArduinoJson::JsonVariantConst\ source,\ TChar\ (\&buffer)[N])\ \{}
+\DoxyCodeLine{00048\ \ \ \textcolor{keywordflow}{return}\ serialize<TSerializer>(source,\ buffer,\ N);}
+\DoxyCodeLine{00049\ \}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

@@ -1,0 +1,201 @@
+\doxysection{Variant\+Operators.\+hpp}
+\hypertarget{_variant_operators_8hpp_source}{}\label{_variant_operators_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Variant/VariantOperators.hpp@{lib/ArduinoJson/src/ArduinoJson/Variant/VariantOperators.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Numbers/arithmeticCompare.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/attributes.hpp>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/type\_traits.hpp>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Variant/VariantTag.hpp>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ ARDUINOJSON\_BEGIN\_PUBLIC\_NAMESPACE}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}};}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ ARDUINOJSON\_END\_PUBLIC\_NAMESPACE}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00021\ CompareResult\ compare(\mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}\ lhs,}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\&\ rhs);\ \ \textcolor{comment}{//\ VariantCompare.cpp}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_variant_operator_tag}{VariantOperatorTag}}\ \{\};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TVariant>}
+\DoxyCodeLine{00027\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_variant_operators}{VariantOperators}}\ :\ \mbox{\hyperlink{struct_variant_operator_tag}{VariantOperatorTag}}\ \{}
+\DoxyCodeLine{00028\ \ \ \textcolor{comment}{//\ Returns\ the\ default\ value\ if\ the\ JsonVariant\ is\ unbound\ or\ incompatible}}
+\DoxyCodeLine{00029\ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00030\ \ \ \textcolor{comment}{//\ int\ operator|(JsonVariant,\ int)}}
+\DoxyCodeLine{00031\ \ \ \textcolor{comment}{//\ float\ operator|(JsonVariant,\ float)}}
+\DoxyCodeLine{00032\ \ \ \textcolor{comment}{//\ bool\ operator|(JsonVariant,\ bool)}}
+\DoxyCodeLine{00033\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00034\ \ \ \textcolor{keyword}{friend}}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<!IsVariant<T>::value}}\ \&\&\ !is\_array<T>::value,\ T>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ operator|(\textcolor{keyword}{const}\ TVariant\&\ variant,\ \textcolor{keyword}{const}\ T\&\ defaultValue)\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordflow}{if}\ (variant.template\ is<T>())}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ variant.template\ as<T>();}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ defaultValue;}
+\DoxyCodeLine{00041\ \ \ \}}
+\DoxyCodeLine{00042\ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00043\ \ \ \textcolor{comment}{//\ const\ char*\ operator|(JsonVariant,\ const\ char*)}}
+\DoxyCodeLine{00044\ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ operator|(\textcolor{keyword}{const}\ TVariant\&\ variant,}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ defaultValue)\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordflow}{if}\ (variant.template\ is<const\ char*>())}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ variant.template\ as<const\ char*>();}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ defaultValue;}
+\DoxyCodeLine{00050\ \ \ \}}
+\DoxyCodeLine{00051\ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00052\ \ \ \textcolor{comment}{//\ JsonVariant\ operator|(JsonVariant,\ JsonVariant)}}
+\DoxyCodeLine{00053\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00054\ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<IsVariant<T>::value}},\ \mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00055\ \ \ operator|(\textcolor{keyword}{const}\ TVariant\&\ variant,\ T\ defaultValue)\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{if}\ (variant)}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ variant;}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ defaultValue;}
+\DoxyCodeLine{00060\ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \textcolor{comment}{//\ value\ ==\ TVariant}}
+\DoxyCodeLine{00063\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00064\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator==(T*\ lhs,\ TVariant\ rhs)\ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordflow}{return}\ compare(rhs,\ lhs)\ ==\ COMPARE\_RESULT\_EQUAL;}
+\DoxyCodeLine{00066\ \ \ \}}
+\DoxyCodeLine{00067\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00068\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ T\&\ lhs,\ TVariant\ rhs)\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordflow}{return}\ compare(rhs,\ lhs)\ ==\ COMPARE\_RESULT\_EQUAL;}
+\DoxyCodeLine{00070\ \ \ \}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \textcolor{comment}{//\ TVariant\ ==\ value}}
+\DoxyCodeLine{00073\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00074\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator==(TVariant\ lhs,\ T*\ rhs)\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordflow}{return}\ compare(lhs,\ rhs)\ ==\ COMPARE\_RESULT\_EQUAL;}
+\DoxyCodeLine{00076\ \ \ \}}
+\DoxyCodeLine{00077\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00078\ \ \ \textcolor{keyword}{friend}}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<!is\_base\_of<VariantOperatorTag,\ T>::value}},\ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ operator==(TVariant\ lhs,\ \textcolor{keyword}{const}\ T\&\ rhs)\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordflow}{return}\ compare(lhs,\ rhs)\ ==\ COMPARE\_RESULT\_EQUAL;}
+\DoxyCodeLine{00082\ \ \ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \textcolor{comment}{//\ value\ !=\ TVariant}}
+\DoxyCodeLine{00085\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00086\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator!=(T*\ lhs,\ TVariant\ rhs)\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordflow}{return}\ compare(rhs,\ lhs)\ !=\ COMPARE\_RESULT\_EQUAL;}
+\DoxyCodeLine{00088\ \ \ \}}
+\DoxyCodeLine{00089\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00090\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ T\&\ lhs,\ TVariant\ rhs)\ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordflow}{return}\ compare(rhs,\ lhs)\ !=\ COMPARE\_RESULT\_EQUAL;}
+\DoxyCodeLine{00092\ \ \ \}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \textcolor{comment}{//\ TVariant\ !=\ value}}
+\DoxyCodeLine{00095\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00096\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator!=(TVariant\ lhs,\ T*\ rhs)\ \{}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordflow}{return}\ compare(lhs,\ rhs)\ !=\ COMPARE\_RESULT\_EQUAL;}
+\DoxyCodeLine{00098\ \ \ \}}
+\DoxyCodeLine{00099\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00100\ \ \ \textcolor{keyword}{friend}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<!is\_base\_of<VariantOperatorTag,\ T>::value}},\ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ operator!=(TVariant\ lhs,\ \textcolor{keyword}{const}\ T\&\ rhs)\ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordflow}{return}\ compare(lhs,\ rhs)\ !=\ COMPARE\_RESULT\_EQUAL;}
+\DoxyCodeLine{00104\ \ \ \}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \textcolor{comment}{//\ value\ <\ TVariant}}
+\DoxyCodeLine{00107\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00108\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator<(T*\ lhs,\ TVariant\ rhs)\ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordflow}{return}\ compare(rhs,\ lhs)\ ==\ COMPARE\_RESULT\_GREATER;}
+\DoxyCodeLine{00110\ \ \ \}}
+\DoxyCodeLine{00111\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00112\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator<(\textcolor{keyword}{const}\ T\&\ lhs,\ TVariant\ rhs)\ \{}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordflow}{return}\ compare(rhs,\ lhs)\ ==\ COMPARE\_RESULT\_GREATER;}
+\DoxyCodeLine{00114\ \ \ \}}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \textcolor{comment}{//\ TVariant\ <\ value}}
+\DoxyCodeLine{00117\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00118\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator<(TVariant\ lhs,\ T*\ rhs)\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordflow}{return}\ compare(lhs,\ rhs)\ ==\ COMPARE\_RESULT\_LESS;}
+\DoxyCodeLine{00120\ \ \ \}}
+\DoxyCodeLine{00121\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00122\ \ \ \textcolor{keyword}{friend}}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<!is\_base\_of<VariantOperatorTag,\ T>::value}},\ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ operator<(TVariant\ lhs,\ \textcolor{keyword}{const}\ T\&\ rhs)\ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordflow}{return}\ compare(lhs,\ rhs)\ ==\ COMPARE\_RESULT\_LESS;}
+\DoxyCodeLine{00126\ \ \ \}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \ \ \textcolor{comment}{//\ value\ <=\ TVariant}}
+\DoxyCodeLine{00129\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00130\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator<=(T*\ lhs,\ TVariant\ rhs)\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordflow}{return}\ (compare(rhs,\ lhs)\ \&\ COMPARE\_RESULT\_GREATER\_OR\_EQUAL)\ !=\ 0;}
+\DoxyCodeLine{00132\ \ \ \}}
+\DoxyCodeLine{00133\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00134\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator<=(\textcolor{keyword}{const}\ T\&\ lhs,\ TVariant\ rhs)\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordflow}{return}\ (compare(rhs,\ lhs)\ \&\ COMPARE\_RESULT\_GREATER\_OR\_EQUAL)\ !=\ 0;}
+\DoxyCodeLine{00136\ \ \ \}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \ \ \textcolor{comment}{//\ TVariant\ <=\ value}}
+\DoxyCodeLine{00139\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00140\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator<=(TVariant\ lhs,\ T*\ rhs)\ \{}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keywordflow}{return}\ (compare(lhs,\ rhs)\ \&\ COMPARE\_RESULT\_LESS\_OR\_EQUAL)\ !=\ 0;}
+\DoxyCodeLine{00142\ \ \ \}}
+\DoxyCodeLine{00143\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00144\ \ \ \textcolor{keyword}{friend}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<!is\_base\_of<VariantOperatorTag,\ T>::value}},\ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ operator<=(TVariant\ lhs,\ \textcolor{keyword}{const}\ T\&\ rhs)\ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordflow}{return}\ (compare(lhs,\ rhs)\ \&\ COMPARE\_RESULT\_LESS\_OR\_EQUAL)\ !=\ 0;}
+\DoxyCodeLine{00148\ \ \ \}}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \ \ \textcolor{comment}{//\ value\ >\ TVariant}}
+\DoxyCodeLine{00151\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00152\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator>(T*\ lhs,\ TVariant\ rhs)\ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{keywordflow}{return}\ compare(rhs,\ lhs)\ ==\ COMPARE\_RESULT\_LESS;}
+\DoxyCodeLine{00154\ \ \ \}}
+\DoxyCodeLine{00155\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00156\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator>(\textcolor{keyword}{const}\ T\&\ lhs,\ TVariant\ rhs)\ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordflow}{return}\ compare(rhs,\ lhs)\ ==\ COMPARE\_RESULT\_LESS;}
+\DoxyCodeLine{00158\ \ \ \}}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \ \ \textcolor{comment}{//\ TVariant\ >\ value}}
+\DoxyCodeLine{00161\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00162\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator>(TVariant\ lhs,\ T*\ rhs)\ \{}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordflow}{return}\ compare(lhs,\ rhs)\ ==\ COMPARE\_RESULT\_GREATER;}
+\DoxyCodeLine{00164\ \ \ \}}
+\DoxyCodeLine{00165\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00166\ \ \ \textcolor{keyword}{friend}}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<!is\_base\_of<VariantOperatorTag,\ T>::value}},\ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ operator>(TVariant\ lhs,\ \textcolor{keyword}{const}\ T\&\ rhs)\ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordflow}{return}\ compare(lhs,\ rhs)\ ==\ COMPARE\_RESULT\_GREATER;}
+\DoxyCodeLine{00170\ \ \ \}}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00172\ \ \ \textcolor{comment}{//\ value\ >=\ TVariant}}
+\DoxyCodeLine{00173\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00174\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator>=(T*\ lhs,\ TVariant\ rhs)\ \{}
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordflow}{return}\ (compare(rhs,\ lhs)\ \&\ COMPARE\_RESULT\_LESS\_OR\_EQUAL)\ !=\ 0;}
+\DoxyCodeLine{00176\ \ \ \}}
+\DoxyCodeLine{00177\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00178\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator>=(\textcolor{keyword}{const}\ T\&\ lhs,\ TVariant\ rhs)\ \{}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordflow}{return}\ (compare(rhs,\ lhs)\ \&\ COMPARE\_RESULT\_LESS\_OR\_EQUAL)\ !=\ 0;}
+\DoxyCodeLine{00180\ \ \ \}}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \ \ \textcolor{comment}{//\ TVariant\ >=\ value}}
+\DoxyCodeLine{00183\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00184\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator>=(TVariant\ lhs,\ T*\ rhs)\ \{}
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordflow}{return}\ (compare(lhs,\ rhs)\ \&\ COMPARE\_RESULT\_GREATER\_OR\_EQUAL)\ !=\ 0;}
+\DoxyCodeLine{00186\ \ \ \}}
+\DoxyCodeLine{00187\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00188\ \ \ \textcolor{keyword}{friend}}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<!is\_base\_of<VariantOperatorTag,\ T>::value}},\ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ operator>=(TVariant\ lhs,\ \textcolor{keyword}{const}\ T\&\ rhs)\ \{}
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keywordflow}{return}\ (compare(lhs,\ rhs)\ \&\ COMPARE\_RESULT\_GREATER\_OR\_EQUAL)\ !=\ 0;}
+\DoxyCodeLine{00192\ \ \ \}}
+\DoxyCodeLine{00193\ \};}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

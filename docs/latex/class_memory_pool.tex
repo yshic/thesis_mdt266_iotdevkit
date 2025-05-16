@@ -1,0 +1,58 @@
+\doxysection{Memory\+Pool Class Reference}
+\hypertarget{class_memory_pool}{}\label{class_memory_pool}\index{MemoryPool@{MemoryPool}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_memory_pool_aca2839cb21157b61bc10f71e8a039578}\label{class_memory_pool_aca2839cb21157b61bc10f71e8a039578} 
+{\bfseries Memory\+Pool} (char \texorpdfstring{$\ast$}{*}buf, size\+\_\+t capa)
+\item 
+\Hypertarget{class_memory_pool_a6da889a5c40517f46ffca3620e10bc71}\label{class_memory_pool_a6da889a5c40517f46ffca3620e10bc71} 
+void \texorpdfstring{$\ast$}{*} {\bfseries buffer} ()
+\item 
+\Hypertarget{class_memory_pool_a471bfef21b675b36a8fce6b48f07b96c}\label{class_memory_pool_a471bfef21b675b36a8fce6b48f07b96c} 
+size\+\_\+t {\bfseries capacity} () const
+\item 
+\Hypertarget{class_memory_pool_a9faac0d6c29b79c1a98ae84bd69a337c}\label{class_memory_pool_a9faac0d6c29b79c1a98ae84bd69a337c} 
+size\+\_\+t {\bfseries size} () const
+\item 
+\Hypertarget{class_memory_pool_af48b7df3016f642f66cdd561c2dbdb6b}\label{class_memory_pool_af48b7df3016f642f66cdd561c2dbdb6b} 
+bool {\bfseries overflowed} () const
+\item 
+\Hypertarget{class_memory_pool_a158e8ec79c6ef0f81cdc88896c1b1016}\label{class_memory_pool_a158e8ec79c6ef0f81cdc88896c1b1016} 
+\mbox{\hyperlink{class_variant_slot}{Variant\+Slot}} \texorpdfstring{$\ast$}{*} {\bfseries alloc\+Variant} ()
+\item 
+\Hypertarget{class_memory_pool_a4b4fd858bbddf83f7699aa3af6490dc3}\label{class_memory_pool_a4b4fd858bbddf83f7699aa3af6490dc3} 
+{\footnotesize template$<$typename TAdapted\+String$>$ }\\const char \texorpdfstring{$\ast$}{*} {\bfseries save\+String} (TAdapted\+String str)
+\item 
+\Hypertarget{class_memory_pool_aeaa0c7dddf19df0f35b3db8e1c32486f}\label{class_memory_pool_aeaa0c7dddf19df0f35b3db8e1c32486f} 
+void {\bfseries get\+Free\+Zone} (char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}zone\+Start, size\+\_\+t \texorpdfstring{$\ast$}{*}zone\+Size) const
+\item 
+\Hypertarget{class_memory_pool_a090cf836336a4559c5731555a0f5e08f}\label{class_memory_pool_a090cf836336a4559c5731555a0f5e08f} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries save\+String\+From\+Free\+Zone} (size\+\_\+t len)
+\item 
+\Hypertarget{class_memory_pool_afec06adfdaa24859fff6d806218a4ef3}\label{class_memory_pool_afec06adfdaa24859fff6d806218a4ef3} 
+void {\bfseries mark\+As\+Overflowed} ()
+\item 
+\Hypertarget{class_memory_pool_a6259e605841a71d68b64413d4542d106}\label{class_memory_pool_a6259e605841a71d68b64413d4542d106} 
+void {\bfseries clear} ()
+\item 
+\Hypertarget{class_memory_pool_ab2bccf33f3c2e8261327ff8162ae95e2}\label{class_memory_pool_ab2bccf33f3c2e8261327ff8162ae95e2} 
+bool {\bfseries can\+Alloc} (size\+\_\+t bytes) const
+\item 
+\Hypertarget{class_memory_pool_a73e35b8abef3e929bc4207de2ed7235e}\label{class_memory_pool_a73e35b8abef3e929bc4207de2ed7235e} 
+bool {\bfseries owns} (void \texorpdfstring{$\ast$}{*}p) const
+\item 
+\Hypertarget{class_memory_pool_a1bd315f98e276473ade17102984b59f4}\label{class_memory_pool_a1bd315f98e276473ade17102984b59f4} 
+void \texorpdfstring{$\ast$}{*} {\bfseries operator new} (size\+\_\+t, void \texorpdfstring{$\ast$}{*}p)
+\item 
+\Hypertarget{class_memory_pool_a4d015e9590d2228c559dccf38556ad93}\label{class_memory_pool_a4d015e9590d2228c559dccf38556ad93} 
+ptrdiff\+\_\+t {\bfseries squash} ()
+\item 
+\Hypertarget{class_memory_pool_a623e5609a6283cc0c674d5bbe3157336}\label{class_memory_pool_a623e5609a6283cc0c674d5bbe3157336} 
+void {\bfseries move\+Pointers} (ptrdiff\+\_\+t offset)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Arduino\+Json/src/\+Arduino\+Json/\+Memory/Memory\+Pool.\+hpp\end{DoxyCompactItemize}

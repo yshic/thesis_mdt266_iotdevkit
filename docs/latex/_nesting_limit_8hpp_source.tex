@@ -1,0 +1,38 @@
+\doxysection{Nesting\+Limit.\+hpp}
+\hypertarget{_nesting_limit_8hpp_source}{}\label{_nesting_limit_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Deserialization/NestingLimit.hpp@{lib/ArduinoJson/src/ArduinoJson/Deserialization/NestingLimit.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Namespace.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/assert.hpp>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ ARDUINOJSON\_BEGIN\_PUBLIC\_NAMESPACE}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }DeserializationOption\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }NestingLimit\ \{}
+\DoxyCodeLine{00014\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ NestingLimit()\ :\ value\_(ARDUINOJSON\_DEFAULT\_NESTING\_LIMIT)\ \{\}}
+\DoxyCodeLine{00016\ \ \ \textcolor{keyword}{explicit}\ NestingLimit(uint8\_t\ n)\ :\ value\_(n)\ \{\}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ NestingLimit\ decrement()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00019\ \ \ \ \ ARDUINOJSON\_ASSERT(value\_\ >\ 0);}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordflow}{return}\ NestingLimit(\textcolor{keyword}{static\_cast<}uint8\_t\textcolor{keyword}{>}(value\_\ -\/\ 1));}
+\DoxyCodeLine{00021\ \ \ \}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \textcolor{keywordtype}{bool}\ reached()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordflow}{return}\ value\_\ ==\ 0;}
+\DoxyCodeLine{00025\ \ \ \}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00028\ \ \ uint8\_t\ value\_;}
+\DoxyCodeLine{00029\ \};}
+\DoxyCodeLine{00030\ \}\ \ \textcolor{comment}{//\ namespace\ DeserializationOption}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ ARDUINOJSON\_END\_PUBLIC\_NAMESPACE}
+
+\end{DoxyCode}

@@ -1,0 +1,52 @@
+\doxysection{Utf8.\+hpp}
+\hypertarget{_utf8_8hpp_source}{}\label{_utf8_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Json/Utf8.hpp@{lib/ArduinoJson/src/ArduinoJson/Json/Utf8.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Namespace.hpp>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }Utf8\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TStringBuilder>}
+\DoxyCodeLine{00013\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ encodeCodepoint(uint32\_t\ codepoint32,\ TStringBuilder\&\ str)\ \{}
+\DoxyCodeLine{00014\ \ \ \textcolor{comment}{//\ this\ function\ was\ optimize\ for\ code\ size\ on\ AVR}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \textcolor{keywordflow}{if}\ (codepoint32\ <\ 0x80)\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ str.append(\textcolor{keywordtype}{char}(codepoint32));}
+\DoxyCodeLine{00018\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{//\ a\ buffer\ to\ store\ the\ string\ in\ reverse}}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{char}\ buf[5];}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{char}*\ p\ =\ buf;}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ *(p++)\ =\ 0;}
+\DoxyCodeLine{00024\ \ \ \ \ *(p++)\ =\ \textcolor{keywordtype}{char}((codepoint32\ |\ 0x80)\ \&\ 0xBF);}
+\DoxyCodeLine{00025\ \ \ \ \ uint16\_t\ codepoint16\ =\ uint16\_t(codepoint32\ >>\ 6);}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordflow}{if}\ (codepoint16\ <\ 0x20)\ \{\ \ \textcolor{comment}{//\ 0x800}}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ *(p++)\ =\ \textcolor{keywordtype}{char}(codepoint16\ |\ 0xC0);}
+\DoxyCodeLine{00028\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ *(p++)\ =\ \textcolor{keywordtype}{char}((codepoint16\ |\ 0x80)\ \&\ 0xBF);}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ codepoint16\ =\ uint16\_t(codepoint16\ >>\ 6);}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (codepoint16\ <\ 0x10)\ \{\ \ \textcolor{comment}{//\ 0x10000}}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ *(p++)\ =\ \textcolor{keywordtype}{char}(codepoint16\ |\ 0xE0);}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ *(p++)\ =\ \textcolor{keywordtype}{char}((codepoint16\ |\ 0x80)\ \&\ 0xBF);}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ codepoint16\ =\ uint16\_t(codepoint16\ >>\ 6);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ *(p++)\ =\ \textcolor{keywordtype}{char}(codepoint16\ |\ 0xF0);}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00038\ \ \ \ \ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{while}\ (*(-\/-\/p))\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ str.append(*p);}
+\DoxyCodeLine{00042\ \ \ \ \ \}}
+\DoxyCodeLine{00043\ \ \ \}}
+\DoxyCodeLine{00044\ \}}
+\DoxyCodeLine{00045\ \}\ \ \textcolor{comment}{//\ namespace\ Utf8}}
+\DoxyCodeLine{00046\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

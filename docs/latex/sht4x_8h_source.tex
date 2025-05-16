@@ -1,0 +1,110 @@
+\doxysection{sht4x.\+h}
+\hypertarget{sht4x_8h_source}{}\label{sht4x_8h_source}\index{lib/sht4x/src/sht4x.h@{lib/sht4x/src/sht4x.h}}
+\mbox{\hyperlink{sht4x_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{/*\ Define\ to\ prevent\ recursive\ inclusion\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#ifndef\ SHT4X\_H}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\ \ \#define\ SHT4X\_H}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \textcolor{comment}{/*\ Includes\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\ \ \#if\ ARDUINO\ >=\ 100}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\ \ \ \ \#include\ "{}Arduino.h"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\ \ \#else}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\ \ \ \ \#include\ "{}WProgram.h"{}}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\ \ \#endif}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \textcolor{comment}{/*\ Public\ defines\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\ \ \#define\ SHT4X\_LIB\_VERSION\ \ \ \ \ \ \ \ \ \ \ \ \ \ (F("{}0.1.0"{}))}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\ \ \#define\ SHT40\_I2C\_ADDR\_44\ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x44}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\ \ \#define\ SHT40\_I2C\_ADDR\_45\ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x45}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\ \ \#define\ SHT41\_I2C\_ADDR\_44\ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x44}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\ \ \#define\ SHT41\_I2C\_ADDR\_45\ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x45}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\ \ \#define\ SHT45\_I2C\_ADDR\_44\ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x44}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\ \ \#define\ SHT45\_I2C\_ADDR\_45\ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x45}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\ \ \#define\ SHT4X\_HUMIDITY\_INDEX\ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\ \ \#define\ SHT4X\_TEMPERATURE\_INDEX\ \ \ \ \ \ \ \ 1}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\ \ \#define\ SHT4x\_CMD\_NOHEAT\_HIGHPRECISION\ 0xFD\ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\ \ \#define\ SHT4x\_CMD\_NOHEAT\_MEDPRECISION\ \ 0xF6\ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\ \ \#define\ SHT4x\_CMD\_NOHEAT\_LOWPRECISION\ \ 0xE0\ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\ \ \#define\ SHT4x\_CMD\_HIGHHEAT\_1S\ \ \ \ \ \ \ \ \ \ 0x39\ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\ \ \#define\ SHT4x\_CMD\_HIGHHEAT\_100MS\ \ \ \ \ \ \ 0x32\ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\ \ \#define\ SHT4x\_CMD\_MEDHEAT\_1S\ \ \ \ \ \ \ \ \ \ \ 0x2F\ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\ \ \#define\ SHT4x\_CMD\_MEDHEAT\_100MS\ \ \ \ \ \ \ \ 0x24\ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\ \ \#define\ SHT4x\_CMD\_LOWHEAT\_1S\ \ \ \ \ \ \ \ \ \ \ 0x1E\ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\ \ \#define\ SHT4x\_CMD\_LOWHEAT\_100MS\ \ \ \ \ \ \ \ 0x15\ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\ \ \#define\ SHT4x\_READSERIAL\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x89\ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\ \ \#define\ SHT4x\_SOFTRESET\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x94\ }\textcolor{preprocessor}{}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{comment}{/*\ Public\ enumerate/structure\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00051\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{00052\ \{}
+\DoxyCodeLine{00053\ \ \ SHT4X\_OK\ =\ 0,\ \ \ \ \ \ \textcolor{comment}{/*\ No\ error\ */}}
+\DoxyCodeLine{00054\ \ \ SHT4X\_ERR,\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Generic\ error\ */}}
+\DoxyCodeLine{00055\ \ \ SHT4X\_ERR\_INIT,\ \ \ \ \textcolor{comment}{/*\ Initialization\ error\ */}}
+\DoxyCodeLine{00056\ \ \ SHT4X\_ERR\_RESET,\ \ \ \textcolor{comment}{/*\ Reset\ error\ */}}
+\DoxyCodeLine{00057\ \ \ SHT4X\_TIMEOUT,\ \ \ \ \ \textcolor{comment}{/*\ Timeout\ error*/}}
+\DoxyCodeLine{00058\ \ \ SHT4X\_ERR\_I2C,\ \ \ \ \ \textcolor{comment}{/*\ I2C\ error\ */}}
+\DoxyCodeLine{00059\ \ \ SHT4X\_ERR\_CHECKSUM\ \textcolor{comment}{/*\ Checksum\ error\ */}}
+\DoxyCodeLine{00060\ \}\ sht4x\_error\_t;}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{00063\ \{}
+\DoxyCodeLine{00064\ \ \ SHT4X\_HIGH\_PRECISION,}
+\DoxyCodeLine{00065\ \ \ SHT4X\_MED\_PRECISION,}
+\DoxyCodeLine{00066\ \ \ SHT4X\_LOW\_PRECISION,}
+\DoxyCodeLine{00067\ \}\ sht4x\_precision\_t;}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00070\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{00071\ \{}
+\DoxyCodeLine{00072\ \ \ SHT4X\_NO\_HEATER,}
+\DoxyCodeLine{00073\ \ \ SHT4X\_HIGH\_HEATER\_1S,}
+\DoxyCodeLine{00074\ \ \ SHT4X\_HIGH\_HEATER\_100MS,}
+\DoxyCodeLine{00075\ \ \ SHT4X\_MED\_HEATER\_1S,}
+\DoxyCodeLine{00076\ \ \ SHT4X\_MED\_HEATER\_100MS,}
+\DoxyCodeLine{00077\ \ \ SHT4X\_LOW\_HEATER\_1S,}
+\DoxyCodeLine{00078\ \ \ SHT4X\_LOW\_HEATER\_100MS,}
+\DoxyCodeLine{00079\ \}\ \mbox{\hyperlink{sht4x_8h_a09de64040ffde758f50561c5d85e3b7d}{sht4x\_heater\_t}};}
+\DoxyCodeLine{00080\ \textcolor{comment}{/*\ Public\ macros\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \textcolor{comment}{/*\ Public\ variables\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{comment}{/*\ Class\ Declaration\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00092\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_s_h_t4_x}{SHT4X}}}
+\DoxyCodeLine{00093\ \{}
+\DoxyCodeLine{00094\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00106\ \ \ sht4x\_error\_t\ \mbox{\hyperlink{class_s_h_t4_x_a8e85778bec0e7b9d4bf8add2490778f3}{begin}}();}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00123\ \ \ sht4x\_error\_t\ \mbox{\hyperlink{class_s_h_t4_x_a6b98f00ab94cb56a4472e08b468424c5}{update}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00132\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_h_t4_x_ac21af46180b62c199abbc6a9f63b02b0}{setPrecision}}(sht4x\_precision\_t\ prec);}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00139\ \ \ sht4x\_precision\_t\ \mbox{\hyperlink{class_s_h_t4_x_a8d2a3954c9aa4fbba99c9fb8d8d7bd99}{getPrecision}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00148\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_s_h_t4_x_a9664390bcd963ba9317a5abffa4ed570}{setHeater}}(\mbox{\hyperlink{sht4x_8h_a09de64040ffde758f50561c5d85e3b7d}{sht4x\_heater\_t}}\ heat);}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00155\ \ \ \mbox{\hyperlink{sht4x_8h_a09de64040ffde758f50561c5d85e3b7d}{sht4x\_heater\_t}}\ \mbox{\hyperlink{class_s_h_t4_x_a6f65e80033a02d9fb1857b32ddf2502c}{getHeater}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00164\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_s_h_t4_x_a81aad791972516038e41fd8e02008da9}{getTemperature}}();}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00173\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_s_h_t4_x_afbbdcb2d7a4e690fb59f06462d9a1ccf}{getHumidity}}();}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00176\ \ \ \textcolor{keywordtype}{float}\ sensorValue[2]\ =\ \{0.f\};\ \textcolor{comment}{//\ Humidity:\ index\ 0}}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Temperature:\ index\ 1}}
+\DoxyCodeLine{00178\ \ \ sht4x\_precision\_t\ \_precision\ =\ SHT4X\_HIGH\_PRECISION;}
+\DoxyCodeLine{00179\ \ \ \mbox{\hyperlink{sht4x_8h_a09de64040ffde758f50561c5d85e3b7d}{sht4x\_heater\_t}}\ \ \ \ \_heater\ \ \ \ =\ SHT4X\_NO\_HEATER;}
+\DoxyCodeLine{00180\ \};}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ SHT40\_h}}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \textcolor{comment}{/*\ End\ of\ file\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+
+\end{DoxyCode}

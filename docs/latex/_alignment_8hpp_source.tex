@@ -1,0 +1,66 @@
+\doxysection{Alignment.\+hpp}
+\hypertarget{_alignment_8hpp_source}{}\label{_alignment_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Memory/Alignment.hpp@{lib/ArduinoJson/src/ArduinoJson/Memory/Alignment.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Namespace.hpp>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <stddef.h>}\ \ \textcolor{comment}{//\ size\_t}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_ENABLE\_ALIGNMENT}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ isAligned(\textcolor{keywordtype}{size\_t}\ value)\ \{}
+\DoxyCodeLine{00016\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ mask\ =\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{void}*)\ -\/\ 1;}
+\DoxyCodeLine{00017\ \ \ \textcolor{keywordtype}{size\_t}\ addr\ =\ value;}
+\DoxyCodeLine{00018\ \ \ \textcolor{keywordflow}{return}\ (addr\ \&\ mask)\ ==\ 0;}
+\DoxyCodeLine{00019\ \}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ addPadding(\textcolor{keywordtype}{size\_t}\ bytes)\ \{}
+\DoxyCodeLine{00022\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ mask\ =\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{void}*)\ -\/\ 1;}
+\DoxyCodeLine{00023\ \ \ \textcolor{keywordflow}{return}\ (bytes\ +\ mask)\ \&\ \string~mask;}
+\DoxyCodeLine{00024\ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{size\_t}\ \textcolor{keywordtype}{byte}s>}
+\DoxyCodeLine{00027\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_add_padding}{AddPadding}}\ \{}
+\DoxyCodeLine{00028\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ mask\ =\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{void}*)\ -\/\ 1;}
+\DoxyCodeLine{00029\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ value\ =\ (bytes\ +\ mask)\ \&\ \string~mask;}
+\DoxyCodeLine{00030\ \};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ isAligned(\textcolor{keywordtype}{size\_t})\ \{}
+\DoxyCodeLine{00035\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00036\ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ addPadding(\textcolor{keywordtype}{size\_t}\ bytes)\ \{}
+\DoxyCodeLine{00039\ \ \ \textcolor{keywordflow}{return}\ bytes;}
+\DoxyCodeLine{00040\ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{size\_t}\ \textcolor{keywordtype}{byte}s>}
+\DoxyCodeLine{00043\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_add_padding}{AddPadding}}\ \{}
+\DoxyCodeLine{00044\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ value\ =\ bytes;}
+\DoxyCodeLine{00045\ \};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00050\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ isAligned(T*\ ptr)\ \{}
+\DoxyCodeLine{00051\ \ \ \textcolor{keywordflow}{return}\ isAligned(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(ptr));}
+\DoxyCodeLine{00052\ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00055\ \textcolor{keyword}{inline}\ T*\ addPadding(T*\ p)\ \{}
+\DoxyCodeLine{00056\ \ \ \textcolor{keywordtype}{size\_t}\ address\ =\ addPadding(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(p));}
+\DoxyCodeLine{00057\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{reinterpret\_cast<}T*\textcolor{keyword}{>}(address);}
+\DoxyCodeLine{00058\ \}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

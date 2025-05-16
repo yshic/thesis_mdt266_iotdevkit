@@ -1,0 +1,127 @@
+\doxysection{Json\+Array\+Iterator.\+hpp}
+\hypertarget{_json_array_iterator_8hpp_source}{}\label{_json_array_iterator_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Array/JsonArrayIterator.hpp@{lib/ArduinoJson/src/ArduinoJson/Array/JsonArrayIterator.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Variant/JsonVariant.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Variant/SlotFunctions.hpp>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ ARDUINOJSON\_BEGIN\_PUBLIC\_NAMESPACE}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }VariantPtr\ \{}
+\DoxyCodeLine{00013\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ VariantPtr(detail::MemoryPool*\ pool,\ detail::VariantData*\ data)}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ :\ variant\_(pool,\ data)\ \{\}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \mbox{\hyperlink{class_json_variant}{JsonVariant}}*\ operator-\/>()\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordflow}{return}\ \&variant\_;}
+\DoxyCodeLine{00019\ \ \ \}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \mbox{\hyperlink{class_json_variant}{JsonVariant}}\&\ operator*()\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordflow}{return}\ variant\_;}
+\DoxyCodeLine{00023\ \ \ \}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00026\ \ \ \mbox{\hyperlink{class_json_variant}{JsonVariant}}\ variant\_;}
+\DoxyCodeLine{00027\ \};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{class\ }JsonArrayIterator\ \{}
+\DoxyCodeLine{00030\ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }JsonArray;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00033\ \ \ JsonArrayIterator()\ :\ slot\_(0)\ \{\}}
+\DoxyCodeLine{00034\ \ \ \textcolor{keyword}{explicit}\ JsonArrayIterator(detail::MemoryPool*\ pool,}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ detail::VariantSlot*\ slot)}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ :\ pool\_(pool),\ slot\_(slot)\ \{\}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \mbox{\hyperlink{class_json_variant}{JsonVariant}}\ operator*()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_json_variant}{JsonVariant}}(pool\_,\ slot\_-\/>data());}
+\DoxyCodeLine{00040\ \ \ \}}
+\DoxyCodeLine{00041\ \ \ \mbox{\hyperlink{class_variant_ptr}{VariantPtr}}\ operator-\/>()\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_variant_ptr}{VariantPtr}}(pool\_,\ slot\_-\/>data());}
+\DoxyCodeLine{00043\ \ \ \}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ JsonArrayIterator\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordflow}{return}\ slot\_\ ==\ other.slot\_;}
+\DoxyCodeLine{00047\ \ \ \}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ JsonArrayIterator\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{return}\ slot\_\ !=\ other.slot\_;}
+\DoxyCodeLine{00051\ \ \ \}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ JsonArrayIterator\&\ operator++()\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ slot\_\ =\ slot\_-\/>next();}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00056\ \ \ \}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ JsonArrayIterator\&\ operator+=(\textcolor{keywordtype}{size\_t}\ distance)\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ slot\_\ =\ slot\_-\/>next(distance);}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00061\ \ \ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00064\ \ \ detail::MemoryPool*\ pool\_;}
+\DoxyCodeLine{00065\ \ \ detail::VariantSlot*\ slot\_;}
+\DoxyCodeLine{00066\ \};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{keyword}{class\ }VariantConstPtr\ \{}
+\DoxyCodeLine{00069\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00070\ \ \ VariantConstPtr(\textcolor{keyword}{const}\ detail::VariantData*\ data)\ :\ variant\_(data)\ \{\}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}*\ operator-\/>()\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordflow}{return}\ \&variant\_;}
+\DoxyCodeLine{00074\ \ \ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}\&\ operator*()\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordflow}{return}\ variant\_;}
+\DoxyCodeLine{00078\ \ \ \}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00081\ \ \ \mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}\ variant\_;}
+\DoxyCodeLine{00082\ \};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{keyword}{class\ }JsonArrayConstIterator\ \{}
+\DoxyCodeLine{00085\ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }JsonArray;}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00088\ \ \ JsonArrayConstIterator()\ :\ slot\_(0)\ \{\}}
+\DoxyCodeLine{00089\ \ \ \textcolor{keyword}{explicit}\ JsonArrayConstIterator(\textcolor{keyword}{const}\ detail::VariantSlot*\ slot)}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ :\ slot\_(slot)\ \{\}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}\ operator*()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}(slot\_-\/>data());}
+\DoxyCodeLine{00094\ \ \ \}}
+\DoxyCodeLine{00095\ \ \ \mbox{\hyperlink{class_variant_const_ptr}{VariantConstPtr}}\ operator-\/>()\ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_variant_const_ptr}{VariantConstPtr}}(slot\_-\/>data());}
+\DoxyCodeLine{00097\ \ \ \}}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ JsonArrayConstIterator\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordflow}{return}\ slot\_\ ==\ other.slot\_;}
+\DoxyCodeLine{00101\ \ \ \}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ JsonArrayConstIterator\&\ other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordflow}{return}\ slot\_\ !=\ other.slot\_;}
+\DoxyCodeLine{00105\ \ \ \}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ JsonArrayConstIterator\&\ operator++()\ \{}
+\DoxyCodeLine{00108\ \ \ \ \ slot\_\ =\ slot\_-\/>next();}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00110\ \ \ \}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ JsonArrayConstIterator\&\ operator+=(\textcolor{keywordtype}{size\_t}\ distance)\ \{}
+\DoxyCodeLine{00113\ \ \ \ \ slot\_\ =\ slot\_-\/>next(distance);}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00115\ \ \ \}}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00118\ \ \ \textcolor{keyword}{const}\ detail::VariantSlot*\ slot\_;}
+\DoxyCodeLine{00119\ \};}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ ARDUINOJSON\_END\_PUBLIC\_NAMESPACE}
+
+\end{DoxyCode}

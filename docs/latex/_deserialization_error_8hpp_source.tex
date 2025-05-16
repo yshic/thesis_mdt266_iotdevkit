@@ -1,0 +1,112 @@
+\doxysection{Deserialization\+Error.\+hpp}
+\hypertarget{_deserialization_error_8hpp_source}{}\label{_deserialization_error_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Deserialization/DeserializationError.hpp@{lib/ArduinoJson/src/ArduinoJson/Deserialization/DeserializationError.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Namespace.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/pgmspace\_generic.hpp>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/preprocessor.hpp>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_ENABLE\_STD\_STREAM}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#\ \ include\ <ostream>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ ARDUINOJSON\_BEGIN\_PUBLIC\_NAMESPACE}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }DeserializationError\ \{}
+\DoxyCodeLine{00018\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{enum}\ Code\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ Ok,}
+\DoxyCodeLine{00021\ \ \ \ \ EmptyInput,}
+\DoxyCodeLine{00022\ \ \ \ \ IncompleteInput,}
+\DoxyCodeLine{00023\ \ \ \ \ InvalidInput,}
+\DoxyCodeLine{00024\ \ \ \ \ NoMemory,}
+\DoxyCodeLine{00025\ \ \ \ \ TooDeep}
+\DoxyCodeLine{00026\ \ \ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ DeserializationError()\ \{\}}
+\DoxyCodeLine{00029\ \ \ DeserializationError(Code\ c)\ :\ code\_(c)\ \{\}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \textcolor{comment}{//\ Compare\ with\ DeserializationError}}
+\DoxyCodeLine{00032\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ DeserializationError\&\ lhs,}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ DeserializationError\&\ rhs)\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordflow}{return}\ lhs.code\_\ ==\ rhs.code\_;}
+\DoxyCodeLine{00035\ \ \ \}}
+\DoxyCodeLine{00036\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ DeserializationError\&\ lhs,}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ DeserializationError\&\ rhs)\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordflow}{return}\ lhs.code\_\ !=\ rhs.code\_;}
+\DoxyCodeLine{00039\ \ \ \}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \textcolor{comment}{//\ Compare\ with\ Code}}
+\DoxyCodeLine{00042\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ DeserializationError\&\ lhs,\ Code\ rhs)\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordflow}{return}\ lhs.code\_\ ==\ rhs;}
+\DoxyCodeLine{00044\ \ \ \}}
+\DoxyCodeLine{00045\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator==(Code\ lhs,\ \textcolor{keyword}{const}\ DeserializationError\&\ rhs)\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordflow}{return}\ lhs\ ==\ rhs.code\_;}
+\DoxyCodeLine{00047\ \ \ \}}
+\DoxyCodeLine{00048\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ DeserializationError\&\ lhs,\ Code\ rhs)\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordflow}{return}\ lhs.code\_\ !=\ rhs;}
+\DoxyCodeLine{00050\ \ \ \}}
+\DoxyCodeLine{00051\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ operator!=(Code\ lhs,\ \textcolor{keyword}{const}\ DeserializationError\&\ rhs)\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{return}\ lhs\ !=\ rhs.code\_;}
+\DoxyCodeLine{00053\ \ \ \}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \textcolor{comment}{//\ Returns\ true\ if\ there\ is\ an\ error}}
+\DoxyCodeLine{00056\ \ \ \textcolor{keyword}{explicit}\ \textcolor{keyword}{operator}\ bool()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordflow}{return}\ code\_\ !=\ Ok;}
+\DoxyCodeLine{00058\ \ \ \}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \textcolor{comment}{//\ Returns\ internal\ enum,\ useful\ for\ switch\ statement}}
+\DoxyCodeLine{00061\ \ \ Code\ code()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{return}\ code\_;}
+\DoxyCodeLine{00063\ \ \ \}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ c\_str()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ messages[]\ =\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Ok"{}},\ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}EmptyInput"{}},\ \textcolor{stringliteral}{"{}IncompleteInput"{}},}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}InvalidInput"{}},\ \textcolor{stringliteral}{"{}NoMemory"{}},\ \ \ \textcolor{stringliteral}{"{}TooDeep"{}}\};}
+\DoxyCodeLine{00069\ \ \ \ \ ARDUINOJSON\_ASSERT(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(code\_)\ <}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(messages)\ /\ \textcolor{keyword}{sizeof}(messages[0]));}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordflow}{return}\ messages[code\_];}
+\DoxyCodeLine{00072\ \ \ \}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_ENABLE\_PROGMEM}}
+\DoxyCodeLine{00075\ \ \ \textcolor{keyword}{const}\ \_\_FlashStringHelper*\ f\_str()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00076\ \ \ \ \ ARDUINOJSON\_DEFINE\_PROGMEM\_ARRAY(\textcolor{keywordtype}{char},\ s0,\ \textcolor{stringliteral}{"{}Ok"{}});}
+\DoxyCodeLine{00077\ \ \ \ \ ARDUINOJSON\_DEFINE\_PROGMEM\_ARRAY(\textcolor{keywordtype}{char},\ s1,\ \textcolor{stringliteral}{"{}EmptyInput"{}});}
+\DoxyCodeLine{00078\ \ \ \ \ ARDUINOJSON\_DEFINE\_PROGMEM\_ARRAY(\textcolor{keywordtype}{char},\ s2,\ \textcolor{stringliteral}{"{}IncompleteInput"{}});}
+\DoxyCodeLine{00079\ \ \ \ \ ARDUINOJSON\_DEFINE\_PROGMEM\_ARRAY(\textcolor{keywordtype}{char},\ s3,\ \textcolor{stringliteral}{"{}InvalidInput"{}});}
+\DoxyCodeLine{00080\ \ \ \ \ ARDUINOJSON\_DEFINE\_PROGMEM\_ARRAY(\textcolor{keywordtype}{char},\ s4,\ \textcolor{stringliteral}{"{}NoMemory"{}});}
+\DoxyCodeLine{00081\ \ \ \ \ ARDUINOJSON\_DEFINE\_PROGMEM\_ARRAY(\textcolor{keywordtype}{char},\ s5,\ \textcolor{stringliteral}{"{}TooDeep"{}});}
+\DoxyCodeLine{00082\ \ \ \ \ ARDUINOJSON\_DEFINE\_PROGMEM\_ARRAY(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*,\ messages,}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{s0,\ s1,\ s2,\ s3,\ s4,\ s5\});}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\_\_FlashStringHelper*\textcolor{keyword}{>}(}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ detail::pgm\_read(messages\ +\ code\_));}
+\DoxyCodeLine{00086\ \ \ \}}
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00090\ \ \ Code\ code\_;}
+\DoxyCodeLine{00091\ \};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_ENABLE\_STD\_STREAM}}
+\DoxyCodeLine{00094\ \textcolor{keyword}{inline}\ std::ostream\&\ operator<<(std::ostream\&\ s,}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_deserialization_error}{DeserializationError}}\&\ e)\ \{}
+\DoxyCodeLine{00096\ \ \ s\ <<\ e.c\_str();}
+\DoxyCodeLine{00097\ \ \ \textcolor{keywordflow}{return}\ s;}
+\DoxyCodeLine{00098\ \}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{keyword}{inline}\ std::ostream\&\ operator<<(std::ostream\&\ s,\ DeserializationError::Code\ c)\ \{}
+\DoxyCodeLine{00101\ \ \ s\ <<\ \mbox{\hyperlink{class_deserialization_error}{DeserializationError}}(c).c\_str();}
+\DoxyCodeLine{00102\ \ \ \textcolor{keywordflow}{return}\ s;}
+\DoxyCodeLine{00103\ \}}
+\DoxyCodeLine{00104\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ ARDUINOJSON\_END\_PUBLIC\_NAMESPACE}
+
+\end{DoxyCode}

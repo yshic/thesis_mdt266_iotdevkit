@@ -1,0 +1,128 @@
+\doxysection{bsp\+\_\+uart.\+h}
+\hypertarget{bsp__uart_8h_source}{}\label{bsp__uart_8h_source}\index{lib/bsp/bsp\_uart.h@{lib/bsp/bsp\_uart.h}}
+\mbox{\hyperlink{bsp__uart_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{comment}{/*\ Define\ to\ prevent\ recursive\ inclusion\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ BSP\_UART\_H}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\ \ \#define\ BSP\_UART\_H}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \textcolor{comment}{/*\ Includes\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\ \ \#if\ ARDUINO\ >=\ 100}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\ \ \ \ \#include\ "{}Arduino.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\ \ \#else}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\ \ \ \ \#include\ "{}WProgram.h"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\ \ \#endif}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \textcolor{comment}{/*\ Public\ defines\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\ \ \#define\ BSP\_UART\_LIB\_VERSION\ (F("{}0.1.0"{}))}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{comment}{/*\ Public\ enumerate/structure\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{comment}{//\ Error\ codes\ for\ UART}}
+\DoxyCodeLine{00028\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{00029\ \{}
+\DoxyCodeLine{00030\ \ \ BSP\_UART\_OK\ =\ 0,}
+\DoxyCodeLine{00031\ \ \ BSP\_UART\_ERR,}
+\DoxyCodeLine{00032\ \ \ BSP\_UART\_ERR\_READ,}
+\DoxyCodeLine{00033\ \ \ BSP\_UART\_ERR\_WRITE,}
+\DoxyCodeLine{00034\ \ \ BSP\_UART\_TIMEOUT}
+\DoxyCodeLine{00035\ \}\ bsp\_uart\_error\_t;}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{comment}{/*\ Public\ macros\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{comment}{/*\ Public\ variables\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{comment}{/*\ Functions\ Declaration\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00042\ \textcolor{keyword}{class\ }BspUart\ :\ \textcolor{keyword}{public}\ Stream}
+\DoxyCodeLine{00043\ \{}
+\DoxyCodeLine{00044\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00045\ \ \ BspUart(uint8\_t\ uart\_nr);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00048\ \ \ \textcolor{keywordtype}{bool}\ setRxTimeout(uint8\_t\ symbols\_timeout);}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \textcolor{keywordtype}{bool}\ setRxFIFOFull(uint8\_t\ fifoBytes);}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ bsp\_uart\_error\_t\ onReceive(OnReceiveCb\ function,\ \textcolor{keywordtype}{bool}\ onlyOnTimeout\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ bsp\_uart\_error\_t\ onReceiveError(OnReceiveErrorCb\ function);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ bsp\_uart\_error\_t\ eventQueueReset();}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ bsp\_uart\_error\_t\ updateBaudRate(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ baud);}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ bsp\_uart\_error\_t\ begin(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ baud,\ uint32\_t\ config\ =\ SERIAL\_8N1,\ int8\_t\ rxPin\ =\ -\/1,}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ int8\_t\ txPin\ =\ -\/1,\ \textcolor{keywordtype}{bool}\ invert\ =\ \textcolor{keyword}{false},\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ timeout\_ms\ =\ 20000UL,}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint8\_t\ rxfifo\_full\_thrhd\ =\ 112);}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ bsp\_uart\_error\_t\ end(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \textcolor{keywordtype}{int}\ available(\textcolor{keywordtype}{void})\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \textcolor{keywordtype}{int}\ availableForWrite(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \textcolor{keywordtype}{int}\ peek(\textcolor{keywordtype}{void})\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \textcolor{keywordtype}{int}\ read(\textcolor{keywordtype}{void})\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \textcolor{keywordtype}{size\_t}\ read(uint8\_t\ *buffer,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \textcolor{keywordtype}{size\_t}\ read(\textcolor{keywordtype}{char}\ *buffer,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \textcolor{keywordtype}{size\_t}\ readBytes(uint8\_t\ *buffer,\ \textcolor{keywordtype}{size\_t}\ length);}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \textcolor{keywordtype}{size\_t}\ readBytes(\textcolor{keywordtype}{char}\ *buffer,\ \textcolor{keywordtype}{size\_t}\ length);}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \textcolor{keywordtype}{void}\ flush(\textcolor{keywordtype}{void})\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ bsp\_uart\_error\_t\ flush(\textcolor{keywordtype}{bool}\ txOnly);}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \textcolor{keywordtype}{size\_t}\ write(uint8\_t);}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \textcolor{keywordtype}{size\_t}\ write(\textcolor{keyword}{const}\ uint8\_t\ *buffer,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ write(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *buffer,\ \textcolor{keywordtype}{size\_t}\ size)\ \{\ \textcolor{keywordflow}{return}\ write((uint8\_t\ *)\ buffer,\ size);\ \}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ write(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s)\ \{\ \textcolor{keywordflow}{return}\ write((uint8\_t\ *)\ s,\ strlen(s));\ \}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ write(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ n)\ \{\ \textcolor{keywordflow}{return}\ write((uint8\_t)\ n);\ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ write(\textcolor{keywordtype}{long}\ n)\ \{\ \textcolor{keywordflow}{return}\ write((uint8\_t)\ n);\ \}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ write(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ n)\ \{\ \textcolor{keywordflow}{return}\ write((uint8\_t)\ n);\ \}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ write(\textcolor{keywordtype}{int}\ n)\ \{\ \textcolor{keywordflow}{return}\ write((uint8\_t)\ n);\ \}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ uint32\_t\ baudRate();}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ bsp\_uart\_error\_t\ setDebugOutput(\textcolor{keywordtype}{bool});}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ bsp\_uart\_error\_t\ setRxInvert(\textcolor{keywordtype}{bool});}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \textcolor{keywordtype}{bool}\ setPins(int8\_t\ rxPin,\ int8\_t\ txPin,\ int8\_t\ ctsPin\ =\ -\/1,\ int8\_t\ rtsPin\ =\ -\/1);}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \textcolor{keywordtype}{bool}\ setHwFlowCtrlMode(SerialHwFlowCtrl\ mode\ \ \ \ \ \ =\ UART\_HW\_FLOWCTRL\_CTS\_RTS,}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ threshold\ =\ 64);\ \textcolor{comment}{//\ 64\ is\ half\ FIFO\ Length}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \textcolor{keywordtype}{bool}\ setMode(SerialMode\ mode);}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \textcolor{keywordtype}{size\_t}\ setRxBufferSize(\textcolor{keywordtype}{size\_t}\ new\_size);}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \textcolor{keywordtype}{size\_t}\ setTxBufferSize(\textcolor{keywordtype}{size\_t}\ new\_size);}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00120\ \ \ HardwareSerial\ *\_uart;}
+\DoxyCodeLine{00121\ \};}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{class_bsp_uart}{BspUart}}\ uart0;}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{class_bsp_uart}{BspUart}}\ uart1;}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{class_bsp_uart}{BspUart}}\ uart2;}
+\DoxyCodeLine{00128\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ BSP\_UART\_H}}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \textcolor{comment}{/*\ End\ of\ file\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+
+\end{DoxyCode}

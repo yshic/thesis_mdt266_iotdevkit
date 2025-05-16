@@ -1,0 +1,203 @@
+\doxysection{Collection\+Impl.\+hpp}
+\hypertarget{_collection_impl_8hpp_source}{}\label{_collection_impl_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Collection/CollectionImpl.hpp@{lib/ArduinoJson/src/ArduinoJson/Collection/CollectionImpl.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Collection/CollectionData.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Strings/StoragePolicy.hpp>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Strings/StringAdapters.hpp>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Variant/VariantData.hpp>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\ CollectionData::addSlot(\mbox{\hyperlink{class_memory_pool}{MemoryPool}}*\ pool)\ \{}
+\DoxyCodeLine{00015\ \ \ VariantSlot*\ slot\ =\ pool-\/>allocVariant();}
+\DoxyCodeLine{00016\ \ \ \textcolor{keywordflow}{if}\ (!slot)}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \textcolor{keywordflow}{if}\ (tail\_)\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ ARDUINOJSON\_ASSERT(pool-\/>owns(tail\_));\ \ \textcolor{comment}{//\ Can't\ alter\ a\ linked\ array/object}}
+\DoxyCodeLine{00021\ \ \ \ \ tail\_-\/>setNextNotNull(slot);}
+\DoxyCodeLine{00022\ \ \ \ \ tail\_\ =\ slot;}
+\DoxyCodeLine{00023\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ head\_\ =\ slot;}
+\DoxyCodeLine{00025\ \ \ \ \ tail\_\ =\ slot;}
+\DoxyCodeLine{00026\ \ \ \}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ slot-\/>clear();}
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordflow}{return}\ slot;}
+\DoxyCodeLine{00030\ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_variant_data}{VariantData}}*\ CollectionData::addElement(\mbox{\hyperlink{class_memory_pool}{MemoryPool}}*\ pool)\ \{}
+\DoxyCodeLine{00033\ \ \ \textcolor{keywordflow}{return}\ slotData(addSlot(pool));}
+\DoxyCodeLine{00034\ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TAdaptedString>}
+\DoxyCodeLine{00037\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_variant_data}{VariantData}}*\ CollectionData::addMember(TAdaptedString\ key,}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_memory_pool}{MemoryPool}}*\ pool)\ \{}
+\DoxyCodeLine{00039\ \ \ VariantSlot*\ slot\ =\ addSlot(pool);}
+\DoxyCodeLine{00040\ \ \ \textcolor{keywordflow}{if}\ (!slotSetKey(slot,\ key,\ pool))\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ removeSlot(slot);}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00043\ \ \ \}}
+\DoxyCodeLine{00044\ \ \ \textcolor{keywordflow}{return}\ slot-\/>data();}
+\DoxyCodeLine{00045\ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ CollectionData::clear()\ \{}
+\DoxyCodeLine{00048\ \ \ head\_\ =\ 0;}
+\DoxyCodeLine{00049\ \ \ tail\_\ =\ 0;}
+\DoxyCodeLine{00050\ \}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TAdaptedString>}
+\DoxyCodeLine{00053\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ CollectionData::containsKey(\textcolor{keyword}{const}\ TAdaptedString\&\ key)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00054\ \ \ \textcolor{keywordflow}{return}\ getSlot(key)\ !=\ 0;}
+\DoxyCodeLine{00055\ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ CollectionData::copyFrom(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_collection_data}{CollectionData}}\&\ src,}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_memory_pool}{MemoryPool}}*\ pool)\ \{}
+\DoxyCodeLine{00059\ \ \ clear();}
+\DoxyCodeLine{00060\ \ \ \textcolor{keywordflow}{for}\ (VariantSlot*\ s\ =\ src.head\_;\ s;\ s\ =\ s-\/>next())\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ VariantData*\ var;}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{if}\ (s-\/>key()\ !=\ 0)\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ JsonString\ key(s-\/>key(),}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s-\/>ownsKey()\ ?\ JsonString::Copied\ :\ JsonString::Linked);}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ var\ =\ addMember(adaptString(key),\ pool);}
+\DoxyCodeLine{00066\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ var\ =\ addElement(pool);}
+\DoxyCodeLine{00068\ \ \ \ \ \}}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordflow}{if}\ (!var)}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordflow}{if}\ (!var-\/>copyFrom(*s-\/>data(),\ pool))}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00073\ \ \ \}}
+\DoxyCodeLine{00074\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00075\ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TAdaptedString>}
+\DoxyCodeLine{00078\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\ CollectionData::getSlot(TAdaptedString\ key)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00079\ \ \ \textcolor{keywordflow}{if}\ (key.isNull())}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00081\ \ \ VariantSlot*\ slot\ =\ head\_;}
+\DoxyCodeLine{00082\ \ \ \textcolor{keywordflow}{while}\ (slot)\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{if}\ (stringEquals(key,\ adaptString(slot-\/>key())))}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00085\ \ \ \ \ slot\ =\ slot-\/>next();}
+\DoxyCodeLine{00086\ \ \ \}}
+\DoxyCodeLine{00087\ \ \ \textcolor{keywordflow}{return}\ slot;}
+\DoxyCodeLine{00088\ \}}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\ CollectionData::getSlot(\textcolor{keywordtype}{size\_t}\ index)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00091\ \ \ \textcolor{keywordflow}{if}\ (!head\_)}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00093\ \ \ \textcolor{keywordflow}{return}\ head\_-\/>next(index);}
+\DoxyCodeLine{00094\ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\ CollectionData::getPreviousSlot(\mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\ target)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00097\ \ \ VariantSlot*\ current\ =\ head\_;}
+\DoxyCodeLine{00098\ \ \ \textcolor{keywordflow}{while}\ (current)\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ VariantSlot*\ next\ =\ current-\/>next();}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordflow}{if}\ (next\ ==\ target)}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ current;}
+\DoxyCodeLine{00102\ \ \ \ \ current\ =\ next;}
+\DoxyCodeLine{00103\ \ \ \}}
+\DoxyCodeLine{00104\ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00105\ \}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TAdaptedString>}
+\DoxyCodeLine{00108\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_variant_data}{VariantData}}*\ CollectionData::getMember(TAdaptedString\ key)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00109\ \ \ VariantSlot*\ slot\ =\ getSlot(key);}
+\DoxyCodeLine{00110\ \ \ \textcolor{keywordflow}{return}\ slot\ ?\ slot-\/>data()\ :\ 0;}
+\DoxyCodeLine{00111\ \}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TAdaptedString>}
+\DoxyCodeLine{00114\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_variant_data}{VariantData}}*\ CollectionData::getOrAddMember(TAdaptedString\ key,}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_memory_pool}{MemoryPool}}*\ pool)\ \{}
+\DoxyCodeLine{00116\ \ \ \textcolor{comment}{//\ ignore\ null\ key}}
+\DoxyCodeLine{00117\ \ \ \textcolor{keywordflow}{if}\ (key.isNull())}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \textcolor{comment}{//\ search\ a\ matching\ key}}
+\DoxyCodeLine{00121\ \ \ VariantSlot*\ slot\ =\ getSlot(key);}
+\DoxyCodeLine{00122\ \ \ \textcolor{keywordflow}{if}\ (slot)}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordflow}{return}\ slot-\/>data();}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \textcolor{keywordflow}{return}\ addMember(key,\ pool);}
+\DoxyCodeLine{00126\ \}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_variant_data}{VariantData}}*\ CollectionData::getElement(\textcolor{keywordtype}{size\_t}\ index)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00129\ \ \ VariantSlot*\ slot\ =\ getSlot(index);}
+\DoxyCodeLine{00130\ \ \ \textcolor{keywordflow}{return}\ slot\ ?\ slot-\/>data()\ :\ 0;}
+\DoxyCodeLine{00131\ \}}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_variant_data}{VariantData}}*\ CollectionData::getOrAddElement(\textcolor{keywordtype}{size\_t}\ index,}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_memory_pool}{MemoryPool}}*\ pool)\ \{}
+\DoxyCodeLine{00135\ \ \ VariantSlot*\ slot\ =\ head\_;}
+\DoxyCodeLine{00136\ \ \ \textcolor{keywordflow}{while}\ (slot\ \&\&\ index\ >\ 0)\ \{}
+\DoxyCodeLine{00137\ \ \ \ \ slot\ =\ slot-\/>next();}
+\DoxyCodeLine{00138\ \ \ \ \ index-\/-\/;}
+\DoxyCodeLine{00139\ \ \ \}}
+\DoxyCodeLine{00140\ \ \ \textcolor{keywordflow}{if}\ (!slot)}
+\DoxyCodeLine{00141\ \ \ \ \ index++;}
+\DoxyCodeLine{00142\ \ \ \textcolor{keywordflow}{while}\ (index\ >\ 0)\ \{}
+\DoxyCodeLine{00143\ \ \ \ \ slot\ =\ addSlot(pool);}
+\DoxyCodeLine{00144\ \ \ \ \ index-\/-\/;}
+\DoxyCodeLine{00145\ \ \ \}}
+\DoxyCodeLine{00146\ \ \ \textcolor{keywordflow}{return}\ slotData(slot);}
+\DoxyCodeLine{00147\ \}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ CollectionData::removeSlot(\mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\ slot)\ \{}
+\DoxyCodeLine{00150\ \ \ \textcolor{keywordflow}{if}\ (!slot)}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00152\ \ \ VariantSlot*\ prev\ =\ getPreviousSlot(slot);}
+\DoxyCodeLine{00153\ \ \ VariantSlot*\ next\ =\ slot-\/>next();}
+\DoxyCodeLine{00154\ \ \ \textcolor{keywordflow}{if}\ (prev)}
+\DoxyCodeLine{00155\ \ \ \ \ prev-\/>setNext(next);}
+\DoxyCodeLine{00156\ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00157\ \ \ \ \ head\_\ =\ next;}
+\DoxyCodeLine{00158\ \ \ \textcolor{keywordflow}{if}\ (!next)}
+\DoxyCodeLine{00159\ \ \ \ \ tail\_\ =\ prev;}
+\DoxyCodeLine{00160\ \}}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ CollectionData::removeElement(\textcolor{keywordtype}{size\_t}\ index)\ \{}
+\DoxyCodeLine{00163\ \ \ removeSlot(getSlot(index));}
+\DoxyCodeLine{00164\ \}}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ CollectionData::memoryUsage()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00167\ \ \ \textcolor{keywordtype}{size\_t}\ total\ =\ 0;}
+\DoxyCodeLine{00168\ \ \ \textcolor{keywordflow}{for}\ (VariantSlot*\ s\ =\ head\_;\ s;\ s\ =\ s-\/>next())\ \{}
+\DoxyCodeLine{00169\ \ \ \ \ total\ +=\ \textcolor{keyword}{sizeof}(VariantSlot)\ +\ s-\/>data()-\/>memoryUsage();}
+\DoxyCodeLine{00170\ \ \ \ \ \textcolor{keywordflow}{if}\ (s-\/>ownsKey())}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ total\ +=\ strlen(s-\/>key())\ +\ 1;}
+\DoxyCodeLine{00172\ \ \ \}}
+\DoxyCodeLine{00173\ \ \ \textcolor{keywordflow}{return}\ total;}
+\DoxyCodeLine{00174\ \}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ CollectionData::size()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00177\ \ \ \textcolor{keywordflow}{return}\ slotSize(head\_);}
+\DoxyCodeLine{00178\ \}}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00181\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ movePointer(T*\&\ p,\ ptrdiff\_t\ offset)\ \{}
+\DoxyCodeLine{00182\ \ \ \textcolor{keywordflow}{if}\ (!p)}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00184\ \ \ p\ =\ \textcolor{keyword}{reinterpret\_cast<}T*\textcolor{keyword}{>}(}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{void}*\textcolor{keyword}{>}(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(p)\ +\ offset));}
+\DoxyCodeLine{00186\ \ \ ARDUINOJSON\_ASSERT(isAligned(p));}
+\DoxyCodeLine{00187\ \}}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00189\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ CollectionData::movePointers(ptrdiff\_t\ stringDistance,}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ptrdiff\_t\ variantDistance)\ \{}
+\DoxyCodeLine{00191\ \ \ movePointer(head\_,\ variantDistance);}
+\DoxyCodeLine{00192\ \ \ movePointer(tail\_,\ variantDistance);}
+\DoxyCodeLine{00193\ \ \ \textcolor{keywordflow}{for}\ (VariantSlot*\ slot\ =\ head\_;\ slot;\ slot\ =\ slot-\/>next())}
+\DoxyCodeLine{00194\ \ \ \ \ slot-\/>movePointers(stringDistance,\ variantDistance);}
+\DoxyCodeLine{00195\ \}}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

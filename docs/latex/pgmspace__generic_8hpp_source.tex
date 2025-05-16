@@ -1,0 +1,73 @@
+\doxysection{pgmspace\+\_\+generic.\+hpp}
+\hypertarget{pgmspace__generic_8hpp_source}{}\label{pgmspace__generic_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Polyfills/pgmspace\_generic.hpp@{lib/ArduinoJson/src/ArduinoJson/Polyfills/pgmspace\_generic.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Namespace.hpp>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_ENABLE\_PROGMEM}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#\ \ include\ <ArduinoJson/Polyfills/pgmspace.hpp>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#\ \ include\ <ArduinoJson/Polyfills/type\_traits.hpp>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_ENABLE\_PROGMEM}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#\ \ ifndef\ ARDUINOJSON\_DEFINE\_PROGMEM\_ARRAY}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#\ \ \ \ define\ ARDUINOJSON\_DEFINE\_PROGMEM\_ARRAY(type,\ name,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\ \ \ \ \ \ static\ type\ const\ name[]\ PROGMEM\ =\ \_\_VA\_ARGS\_\_;}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00024\ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ T*\ pgm\_read(\textcolor{keyword}{const}\ T*\ \textcolor{keyword}{const}*\ p)\ \{}
+\DoxyCodeLine{00025\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }T*\textcolor{keyword}{>}(pgm\_read\_ptr(p));}
+\DoxyCodeLine{00026\ \}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{inline}\ uint32\_t\ pgm\_read(\textcolor{keyword}{const}\ uint32\_t*\ p)\ \{}
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordflow}{return}\ pgm\_read\_dword(p);}
+\DoxyCodeLine{00030\ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ pgm\_read(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}*\ p)\ \{}
+\DoxyCodeLine{00033\ \ \ \textcolor{keywordflow}{return}\ pgm\_read\_double(p);}
+\DoxyCodeLine{00034\ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ pgm\_read(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ p)\ \{}
+\DoxyCodeLine{00037\ \ \ \textcolor{keywordflow}{return}\ pgm\_read\_float(p);}
+\DoxyCodeLine{00038\ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#\ \ ifndef\ ARDUINOJSON\_DEFINE\_PROGMEM\_ARRAY}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#\ \ \ \ define\ ARDUINOJSON\_DEFINE\_PROGMEM\_ARRAY(type,\ name,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\ \ \ \ \ \ static\ type\ const\ name[]\ =\ \_\_VA\_ARGS\_\_;}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00048\ \textcolor{keyword}{inline}\ T\ pgm\_read(\textcolor{keyword}{const}\ T*\ p)\ \{}
+\DoxyCodeLine{00049\ \ \ \textcolor{keywordflow}{return}\ *p;}
+\DoxyCodeLine{00050\ \}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00055\ \textcolor{keyword}{class\ }pgm\_ptr\ \{}
+\DoxyCodeLine{00056\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00057\ \ \ \textcolor{keyword}{explicit}\ pgm\_ptr(\textcolor{keyword}{const}\ T*\ ptr)\ :\ ptr\_(ptr)\ \{\}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ T\ operator[](intptr\_t\ index)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordflow}{return}\ pgm\_read(ptr\_\ +\ index);}
+\DoxyCodeLine{00061\ \ \ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00064\ \ \ \textcolor{keyword}{const}\ T*\ ptr\_;}
+\DoxyCodeLine{00065\ \};}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

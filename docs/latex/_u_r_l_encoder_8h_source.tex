@@ -1,0 +1,31 @@
+\doxysection{URLEncoder.\+h}
+\hypertarget{_u_r_l_encoder_8h_source}{}\label{_u_r_l_encoder_8h_source}\index{lib/ArduinoHttpClient/URLEncoder.h@{lib/ArduinoHttpClient/URLEncoder.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Library\ to\ simplify\ HTTP\ fetching\ on\ Arduino}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ (c)\ Copyright\ Arduino.\ 2019}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ Released\ under\ Apache\ License,\ version\ 2.0}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ URL\_ENCODER\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ URL\_ENCODER\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }URLEncoderClass}
+\DoxyCodeLine{00011\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \ \ URLEncoderClass();}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~URLEncoderClass();}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{static}\ String\ encode(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str);}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{static}\ String\ encode(\textcolor{keyword}{const}\ String\&\ str);}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{static}\ String\ encode(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str,\ \textcolor{keywordtype}{int}\ length);}
+\DoxyCodeLine{00021\ \};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{class_u_r_l_encoder_class}{URLEncoderClass}}\ URLEncoder;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,97 @@
+\doxysection{Variant\+Operators\texorpdfstring{$<$}{<} TVariant \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{struct_variant_operators}{}\label{struct_variant_operators}\index{VariantOperators$<$ TVariant $>$@{VariantOperators$<$ TVariant $>$}}
+Inheritance diagram for Variant\+Operators\texorpdfstring{$<$}{<} TVariant \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_variant_operators}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_variant_operators_a20dfb91e9ccedbaa6fda82074b06f0d5}\label{struct_variant_operators_a20dfb91e9ccedbaa6fda82074b06f0d5} 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$!\mbox{\hyperlink{struct_is_variant}{Is\+Variant}}$<$ T $>$\+::value \&\&!\mbox{\hyperlink{structis__array}{is\+\_\+array}}$<$ T $>$\+::value, T $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator\texorpdfstring{$\vert$}{|}} (const TVariant \&variant, const T \&default\+Value)
+\item 
+\Hypertarget{struct_variant_operators_ab25586f6eb03d87189a64db38e29c074}\label{struct_variant_operators_ab25586f6eb03d87189a64db38e29c074} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries operator\texorpdfstring{$\vert$}{|}} (const TVariant \&variant, const char \texorpdfstring{$\ast$}{*}default\+Value)
+\item 
+\Hypertarget{struct_variant_operators_ad99846975c88ad49f7e40a861764eed3}\label{struct_variant_operators_ad99846975c88ad49f7e40a861764eed3} 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{struct_is_variant}{Is\+Variant}}$<$ T $>$\+::value, \mbox{\hyperlink{class_json_variant_const}{Json\+Variant\+Const}} $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator\texorpdfstring{$\vert$}{|}} (const TVariant \&variant, T default\+Value)
+\item 
+\Hypertarget{struct_variant_operators_adc7d0258d5bbf5b70e423cac7e8093ad}\label{struct_variant_operators_adc7d0258d5bbf5b70e423cac7e8093ad} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator==} (T \texorpdfstring{$\ast$}{*}lhs, TVariant rhs)
+\item 
+\Hypertarget{struct_variant_operators_ab84bb00dbe2bc19b04f50432568786ec}\label{struct_variant_operators_ab84bb00dbe2bc19b04f50432568786ec} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator==} (const T \&lhs, TVariant rhs)
+\item 
+\Hypertarget{struct_variant_operators_aaade4f94c8b70cdd9b76214b928513d8}\label{struct_variant_operators_aaade4f94c8b70cdd9b76214b928513d8} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator==} (TVariant lhs, T \texorpdfstring{$\ast$}{*}rhs)
+\item 
+\Hypertarget{struct_variant_operators_ad7e7e494843e09034430d9436167a68e}\label{struct_variant_operators_ad7e7e494843e09034430d9436167a68e} 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$!\mbox{\hyperlink{classis__base__of}{is\+\_\+base\+\_\+of}}$<$ \mbox{\hyperlink{struct_variant_operator_tag}{Variant\+Operator\+Tag}}, T $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator==} (TVariant lhs, const T \&rhs)
+\item 
+\Hypertarget{struct_variant_operators_a4156bb9541d54ad2d6ea2945a5c3e96e}\label{struct_variant_operators_a4156bb9541d54ad2d6ea2945a5c3e96e} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator!=} (T \texorpdfstring{$\ast$}{*}lhs, TVariant rhs)
+\item 
+\Hypertarget{struct_variant_operators_a131181fc4c9493ca665c5c6f926b4350}\label{struct_variant_operators_a131181fc4c9493ca665c5c6f926b4350} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator!=} (const T \&lhs, TVariant rhs)
+\item 
+\Hypertarget{struct_variant_operators_a8a1cdbab21d1ef1f46ea4a02cf49aa93}\label{struct_variant_operators_a8a1cdbab21d1ef1f46ea4a02cf49aa93} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator!=} (TVariant lhs, T \texorpdfstring{$\ast$}{*}rhs)
+\item 
+\Hypertarget{struct_variant_operators_a1fb985efbfa1f9886cc41bc634b85005}\label{struct_variant_operators_a1fb985efbfa1f9886cc41bc634b85005} 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$!\mbox{\hyperlink{classis__base__of}{is\+\_\+base\+\_\+of}}$<$ \mbox{\hyperlink{struct_variant_operator_tag}{Variant\+Operator\+Tag}}, T $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator!=} (TVariant lhs, const T \&rhs)
+\item 
+\Hypertarget{struct_variant_operators_a31e65becf80d4608d866c597520a861a}\label{struct_variant_operators_a31e65becf80d4608d866c597520a861a} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator$<$} (T \texorpdfstring{$\ast$}{*}lhs, TVariant rhs)
+\item 
+\Hypertarget{struct_variant_operators_a648cc42060d6a5740e987113aa28d0ee}\label{struct_variant_operators_a648cc42060d6a5740e987113aa28d0ee} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator$<$} (const T \&lhs, TVariant rhs)
+\item 
+\Hypertarget{struct_variant_operators_a2398c4459d16f8c463e4f88e58aa6007}\label{struct_variant_operators_a2398c4459d16f8c463e4f88e58aa6007} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator$<$} (TVariant lhs, T \texorpdfstring{$\ast$}{*}rhs)
+\item 
+\Hypertarget{struct_variant_operators_a30aee43487a4fbe9e6d32a6c887b028f}\label{struct_variant_operators_a30aee43487a4fbe9e6d32a6c887b028f} 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$!\mbox{\hyperlink{classis__base__of}{is\+\_\+base\+\_\+of}}$<$ \mbox{\hyperlink{struct_variant_operator_tag}{Variant\+Operator\+Tag}}, T $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator$<$} (TVariant lhs, const T \&rhs)
+\item 
+\Hypertarget{struct_variant_operators_a5b5cb458a14aab6595184ae592ef9200}\label{struct_variant_operators_a5b5cb458a14aab6595184ae592ef9200} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator$<$=} (T \texorpdfstring{$\ast$}{*}lhs, TVariant rhs)
+\item 
+\Hypertarget{struct_variant_operators_ae25e9248215166e1bb50954306d41123}\label{struct_variant_operators_ae25e9248215166e1bb50954306d41123} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator$<$=} (const T \&lhs, TVariant rhs)
+\item 
+\Hypertarget{struct_variant_operators_aaa33c9bd584ff5aee25b4cb60846dbb0}\label{struct_variant_operators_aaa33c9bd584ff5aee25b4cb60846dbb0} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator$<$=} (TVariant lhs, T \texorpdfstring{$\ast$}{*}rhs)
+\item 
+\Hypertarget{struct_variant_operators_a35d2c6d20ce95bb24b3b1a2ab7c4a08b}\label{struct_variant_operators_a35d2c6d20ce95bb24b3b1a2ab7c4a08b} 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$!\mbox{\hyperlink{classis__base__of}{is\+\_\+base\+\_\+of}}$<$ \mbox{\hyperlink{struct_variant_operator_tag}{Variant\+Operator\+Tag}}, T $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator$<$=} (TVariant lhs, const T \&rhs)
+\item 
+\Hypertarget{struct_variant_operators_a4d818c0328309042bc4aba3edbff61a8}\label{struct_variant_operators_a4d818c0328309042bc4aba3edbff61a8} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator$>$} (T \texorpdfstring{$\ast$}{*}lhs, TVariant rhs)
+\item 
+\Hypertarget{struct_variant_operators_a1447eea8e7201e4a6c6b2b226714fcc1}\label{struct_variant_operators_a1447eea8e7201e4a6c6b2b226714fcc1} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator$>$} (const T \&lhs, TVariant rhs)
+\item 
+\Hypertarget{struct_variant_operators_afb99397ac715cec8f41ffb6dee25827a}\label{struct_variant_operators_afb99397ac715cec8f41ffb6dee25827a} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator$>$} (TVariant lhs, T \texorpdfstring{$\ast$}{*}rhs)
+\item 
+\Hypertarget{struct_variant_operators_a8346c624f2cc6a9bed8f4fdbffff1047}\label{struct_variant_operators_a8346c624f2cc6a9bed8f4fdbffff1047} 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$!\mbox{\hyperlink{classis__base__of}{is\+\_\+base\+\_\+of}}$<$ \mbox{\hyperlink{struct_variant_operator_tag}{Variant\+Operator\+Tag}}, T $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator$>$} (TVariant lhs, const T \&rhs)
+\item 
+\Hypertarget{struct_variant_operators_ac06a7f9d1c3b4d256aa35e24f9a45804}\label{struct_variant_operators_ac06a7f9d1c3b4d256aa35e24f9a45804} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator$>$=} (T \texorpdfstring{$\ast$}{*}lhs, TVariant rhs)
+\item 
+\Hypertarget{struct_variant_operators_a35d8d80a76269137007b4b1ec7abc0a9}\label{struct_variant_operators_a35d8d80a76269137007b4b1ec7abc0a9} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator$>$=} (const T \&lhs, TVariant rhs)
+\item 
+\Hypertarget{struct_variant_operators_a61ad822b377433ee139d0d5c03e58b0f}\label{struct_variant_operators_a61ad822b377433ee139d0d5c03e58b0f} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries operator$>$=} (TVariant lhs, T \texorpdfstring{$\ast$}{*}rhs)
+\item 
+\Hypertarget{struct_variant_operators_a2fcf513a8fc9b649caf078082e60cb01}\label{struct_variant_operators_a2fcf513a8fc9b649caf078082e60cb01} 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$!\mbox{\hyperlink{classis__base__of}{is\+\_\+base\+\_\+of}}$<$ \mbox{\hyperlink{struct_variant_operator_tag}{Variant\+Operator\+Tag}}, T $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator$>$=} (TVariant lhs, const T \&rhs)
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Arduino\+Json/src/\+Arduino\+Json/\+Variant/Variant\+Operators.\+hpp\end{DoxyCompactItemize}

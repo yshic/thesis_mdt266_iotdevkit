@@ -1,0 +1,62 @@
+\doxysection{Latch.\+hpp}
+\hypertarget{_latch_8hpp_source}{}\label{_latch_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Json/Latch.hpp@{lib/ArduinoJson/src/ArduinoJson/Json/Latch.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/assert.hpp>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TReader>}
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }Latch\ \{}
+\DoxyCodeLine{00013\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ Latch(TReader\ reader)\ :\ reader\_(reader),\ loaded\_(\textcolor{keyword}{false})\ \{}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_DEBUG}}
+\DoxyCodeLine{00016\ \ \ \ \ ended\_\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00018\ \ \ \}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \textcolor{keywordtype}{void}\ clear()\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ loaded\_\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00022\ \ \ \}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \textcolor{keywordtype}{int}\ last()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordflow}{return}\ current\_;}
+\DoxyCodeLine{00026\ \ \ \}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ FORCE\_INLINE\ \textcolor{keywordtype}{char}\ current()\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordflow}{if}\ (!loaded\_)\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ load();}
+\DoxyCodeLine{00031\ \ \ \ \ \}}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordflow}{return}\ current\_;}
+\DoxyCodeLine{00033\ \ \ \}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00036\ \ \ \textcolor{keywordtype}{void}\ load()\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ ARDUINOJSON\_ASSERT(!ended\_);}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{int}\ c\ =\ reader\_.read();}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_DEBUG}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{if}\ (c\ <=\ 0)}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ ended\_\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00043\ \ \ \ \ current\_\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{char}\textcolor{keyword}{>}(c\ >\ 0\ ?\ c\ :\ 0);}
+\DoxyCodeLine{00044\ \ \ \ \ loaded\_\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00045\ \ \ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ TReader\ reader\_;}
+\DoxyCodeLine{00048\ \ \ \textcolor{keywordtype}{char}\ current\_;\ \ \textcolor{comment}{//\ NOLINT(clang-\/analyzer-\/optin.cplusplus.UninitializedObject)}}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Not\ initialized\ in\ constructor\ (+10\ bytes\ on\ AVR)}}
+\DoxyCodeLine{00050\ \ \ \textcolor{keywordtype}{bool}\ loaded\_;}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_DEBUG}}
+\DoxyCodeLine{00052\ \ \ \textcolor{keywordtype}{bool}\ ended\_;}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00054\ \};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

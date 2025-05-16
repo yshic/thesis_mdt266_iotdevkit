@@ -1,0 +1,49 @@
+\doxysection{LCD\+\_\+\+Constants.\+h}
+\hypertarget{_l_c_d___constants_8h_source}{}\label{_l_c_d___constants_8h_source}\index{lib/LCD\_I2C/src/LCD\_Constants.h@{lib/LCD\_I2C/src/LCD\_Constants.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#ifndef\ \_LCD\_CONSTANTS\_H\_}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#define\ \_LCD\_CONSTANTS\_H\_}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ Clear\ Display}}
+\DoxyCodeLine{00010\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ HD44780\_CLEAR\_DISPLAY\{0b00000001\};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ Return\ Home\ 1.52\ ms}}
+\DoxyCodeLine{00013\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_CURSOR\_HOME\{0b00000010\};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ Entry\ Mode\ Set\ 37\ µs}}
+\DoxyCodeLine{00016\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_ENTRY\_MODE\_SET\{0b00000100\};}
+\DoxyCodeLine{00017\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_ACCOMPANIES\_DISPLAY\_SHIFT\{0b00000001\};}
+\DoxyCodeLine{00018\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_ENTRY\_SHIFTINCREMENT\{0b00000010\};}
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ constexpr\ uint8\_t\ HD44780\_ENTRY\_SHIFTDECREMENT\ \ \ \ \{0b00000000\};}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ Display\ ON/OFF\ control\ 37\ µs}}
+\DoxyCodeLine{00022\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_DISPLAY\_CONTROL\{0b00001000\};}
+\DoxyCodeLine{00023\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_BLINK\_ON\{0b00000001\};}
+\DoxyCodeLine{00024\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_CURSOR\_ON\{0b00000010\};}
+\DoxyCodeLine{00025\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_DISPLAY\_ON\{0b00000100\};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{comment}{//\ Cursor\ or\ Display\ Shift\ 37\ µs}}
+\DoxyCodeLine{00028\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_CURSOR\_OR\_DISPLAY\_SHIFT\{0b00010000\};}
+\DoxyCodeLine{00029\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_SHIFT\_RIGHT\{0b00000100\};}
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ constexpr\ uint8\_t\ HD44780\_SHIFT\_LEFT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \{0b00000000\};}}
+\DoxyCodeLine{00031\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_DISPLAY\_SHIFT\{0b00001000\};}
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ constexpr\ uint8\_t\ HD44780\_CURSOR\_MOVE\ \ \ \ \ \ \ \ \ \ \ \ \ \{0b00000000\};}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ Function\ Set\ 37\ µs}}
+\DoxyCodeLine{00035\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_FUNCTION\_SET\{0b00100000\};}
+\DoxyCodeLine{00036\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_5x10\_DOTS\{0b00000100\};}
+\DoxyCodeLine{00037\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_5x8\_DOTS\{0b00000000\};}
+\DoxyCodeLine{00038\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_2\_LINE\{0b00001000\};}
+\DoxyCodeLine{00039\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_1\_LINE\{0b00000000\};}
+\DoxyCodeLine{00040\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_8\_BIT\_MODE\{0b00010000\};}
+\DoxyCodeLine{00041\ \textcolor{keyword}{constexpr}\ uint8\_t\ HD44780\_4\_BIT\_MODE\{0b00000000\};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ HD44780\_SET\_CGRAM\_ADDR\{0b01000000\};}
+\DoxyCodeLine{00044\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{int}\ HD44780\_SET\_DDRRAM\_ADDR\{0b10000000\};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

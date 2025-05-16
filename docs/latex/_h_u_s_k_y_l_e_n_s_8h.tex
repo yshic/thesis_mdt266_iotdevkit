@@ -1,0 +1,143 @@
+\doxysection{lib/\+HUSKYLENS/\+HUSKYLENS.h File Reference}
+\hypertarget{_h_u_s_k_y_l_e_n_s_8h}{}\label{_h_u_s_k_y_l_e_n_s_8h}\index{lib/HUSKYLENS/HUSKYLENS.h@{lib/HUSKYLENS/HUSKYLENS.h}}
+
+
+\doxylink{class_h_u_s_k_y_l_e_n_s}{HUSKYLENS} -\/ An Easy-\/to-\/use AI Machine Vision Sensor ~\newline
+ Header file for \doxylink{class_h_u_s_k_y_l_e_n_s}{HUSKYLENS}.  
+
+
+{\ttfamily \#include "{}Arduino.\+h"{}}\newline
+{\ttfamily \#include "{}Husky\+Lens\+Protocol\+Core.\+h"{}}\newline
+{\ttfamily \#include "{}Wire.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_protocol_custom_name_header__t}{Protocol\+Custom\+Name\+Header\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{struct_protocol_received_knowledges__t}{Protocol\+Received\+Knowledges\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{struct_protocol_custom_text__t}{Protocol\+Custom\+Text\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{struct_protocol_firmware_version__t}{Protocol\+Firmware\+Version\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{struct_protocol__t}{Protocol\+\_\+t}}
+\item 
+class \mbox{\hyperlink{class_h_u_s_k_y_l_e_n_s}{HUSKYLENS}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{_h_u_s_k_y_l_e_n_s_8h_a966a54c23c02a14a8dba091d4281d443}\label{_h_u_s_k_y_l_e_n_s_8h_a966a54c23c02a14a8dba091d4281d443} 
+\#define {\bfseries HUSKYLENS\+\_\+\+FIRMWARE\+\_\+\+VERSION}~"{}0.\+4.\+1"{}
+\item 
+\#define \mbox{\hyperlink{_h_u_s_k_y_l_e_n_s_8h_aad1e12cb14951b2c8fb8853902527118}{PROTOCOL\+\_\+\+CREATE}}(function,  \mbox{\hyperlink{structconditional}{type}},  command)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{_h_u_s_k_y_l_e_n_s_8h_a3304b218c303c3b8941f9c659d7b55d2}\label{_h_u_s_k_y_l_e_n_s_8h_a3304b218c303c3b8941f9c659d7b55d2} 
+typedef \mbox{\hyperlink{struct_protocol__t}{Protocol\+\_\+t}} {\bfseries HUSKYLENSResult}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{_h_u_s_k_y_l_e_n_s_8h_ae6c53fbb1ee3ef882a31aeb89fa94f22}\label{_h_u_s_k_y_l_e_n_s_8h_ae6c53fbb1ee3ef882a31aeb89fa94f22} 
+enum {\bfseries protocol\+Command} \{ \newline
+{\bfseries COMMAND\+\_\+\+REQUEST} = 0x20
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+BLOCKS}
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+ARROWS}
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+LEARNED}
+, \newline
+{\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+BLOCKS\+\_\+\+LEARNED}
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+ARROWS\+\_\+\+LEARNED}
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+BY\+\_\+\+ID}
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+BLOCKS\+\_\+\+BY\+\_\+\+ID}
+, \newline
+{\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+ARROWS\+\_\+\+BY\+\_\+\+ID}
+, {\bfseries COMMAND\+\_\+\+RETURN\+\_\+\+INFO}
+, {\bfseries COMMAND\+\_\+\+RETURN\+\_\+\+BLOCK}
+, {\bfseries COMMAND\+\_\+\+RETURN\+\_\+\+ARROW}
+, \newline
+{\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+KNOCK}
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+ALGORITHM}
+, {\bfseries COMMAND\+\_\+\+RETURN\+\_\+\+OK}
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+CUSTOMNAMES}
+, \newline
+{\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+PHOTO}
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+SEND\+\_\+\+PHOTO}
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+SEND\+\_\+\+KNOWLEDGES}
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+RECEIVE\+\_\+\+KNOWLEDGES}
+, \newline
+{\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+CUSTOM\+\_\+\+TEXT}
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+CLEAR\+\_\+\+TEXT}
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+LEARN}
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+FORGET}
+, \newline
+{\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+SEND\+\_\+\+SCREENSHOT}
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+SAVE\+\_\+\+SCREENSHOT}
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+LOAD\+\_\+\+AI\+\_\+\+FRAME\+\_\+\+FROM\+\_\+\+USB}
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+IS\+\_\+\+PRO}
+, \newline
+{\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+FIRMWARE\+\_\+\+VERSION} = 0x3C
+, {\bfseries COMMAND\+\_\+\+REQUEST\+\_\+\+SENSOR}
+ \}
+\item 
+\Hypertarget{_h_u_s_k_y_l_e_n_s_8h_a95ce0f22cd36da42ad337d90e4ffbc94}\label{_h_u_s_k_y_l_e_n_s_8h_a95ce0f22cd36da42ad337d90e4ffbc94} 
+enum {\bfseries protocol\+Algorithm} \{ \newline
+{\bfseries ALGORITHM\+\_\+\+FACE\+\_\+\+RECOGNITION}
+, {\bfseries ALGORITHM\+\_\+\+OBJECT\+\_\+\+TRACKING}
+, {\bfseries ALGORITHM\+\_\+\+OBJECT\+\_\+\+RECOGNITION}
+, {\bfseries ALGORITHM\+\_\+\+LINE\+\_\+\+TRACKING}
+, \newline
+{\bfseries ALGORITHM\+\_\+\+COLOR\+\_\+\+RECOGNITION}
+, {\bfseries ALGORITHM\+\_\+\+TAG\+\_\+\+RECOGNITION}
+, {\bfseries ALGORITHM\+\_\+\+OBJECT\+\_\+\+CLASSIFICATION}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{class_h_u_s_k_y_l_e_n_s}{HUSKYLENS} -\/ An Easy-\/to-\/use AI Machine Vision Sensor ~\newline
+ Header file for \doxylink{class_h_u_s_k_y_l_e_n_s}{HUSKYLENS}. 
+
+\begin{DoxyCopyright}{Copyright}
+\href{http://www.dfrobot.com}{\texttt{ DFRobot}}, 2016 
+
+GNU Lesser General Public License
+\end{DoxyCopyright}
+\begin{DoxyAuthor}{Author}
+\href{Angelo.qiao@dfrobot.com}{\texttt{ Angelo}} 
+
+\href{robert@dfrobot.com}{\texttt{ Robert}} 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+V1.\+0.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2020-\/08-\/03 
+\end{DoxyDate}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_h_u_s_k_y_l_e_n_s_8h_aad1e12cb14951b2c8fb8853902527118}\index{HUSKYLENS.h@{HUSKYLENS.h}!PROTOCOL\_CREATE@{PROTOCOL\_CREATE}}
+\index{PROTOCOL\_CREATE@{PROTOCOL\_CREATE}!HUSKYLENS.h@{HUSKYLENS.h}}
+\doxysubsubsection{\texorpdfstring{PROTOCOL\_CREATE}{PROTOCOL\_CREATE}}
+{\footnotesize\ttfamily \label{_h_u_s_k_y_l_e_n_s_8h_aad1e12cb14951b2c8fb8853902527118} 
+\#define PROTOCOL\+\_\+\+CREATE(\begin{DoxyParamCaption}\item[{}]{function}{, }\item[{}]{\mbox{\hyperlink{structconditional}{type}}}{, }\item[{}]{command}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ protocolWrite\#\#function(\mbox{\hyperlink{struct_protocol__t}{Protocol\_t}}\ \&protocol)\ \{\ protocolWrite\#\#\mbox{\hyperlink{structconditional}{type}}(protocol,\ command);\ \}\ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ protocolWrite\#\#function()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \mbox{\hyperlink{struct_protocol__t}{Protocol\_t}}\ protocol;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ protocolWrite\#\#\mbox{\hyperlink{structconditional}{type}}(protocol,\ command);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ protocolRead\#\#function(Protocol\_t\ \&protocol)\ \{\ \textcolor{keywordflow}{return}\ protocolRead\#\#type(protocol,\ command);\ \}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ protocolRead\#\#function()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ Protocol\_t\ protocol;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{return}\ protocolRead\#\#type(protocol,\ command);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}}
+
+\end{DoxyCode}

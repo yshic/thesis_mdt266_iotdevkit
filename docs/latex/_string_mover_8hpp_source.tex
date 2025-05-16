@@ -1,0 +1,54 @@
+\doxysection{String\+Mover.\+hpp}
+\hypertarget{_string_mover_8hpp_source}{}\label{_string_mover_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/StringStorage/StringMover.hpp@{lib/ArduinoJson/src/ArduinoJson/StringStorage/StringMover.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Namespace.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Strings/JsonString.hpp>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }StringMover\ \{}
+\DoxyCodeLine{00013\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ StringMover(\textcolor{keywordtype}{char}*\ ptr)\ :\ writePtr\_(ptr)\ \{\}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \textcolor{keywordtype}{void}\ startString()\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ startPtr\_\ =\ writePtr\_;}
+\DoxyCodeLine{00018\ \ \ \}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ FORCE\_INLINE\ \mbox{\hyperlink{class_json_string}{JsonString}}\ save()\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{class_json_string}{JsonString}}\ s\ =\ str();}
+\DoxyCodeLine{00022\ \ \ \ \ writePtr\_++;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordflow}{return}\ s;}
+\DoxyCodeLine{00024\ \ \ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \textcolor{keywordtype}{void}\ append(\textcolor{keywordtype}{char}\ c)\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ *writePtr\_++\ =\ c;}
+\DoxyCodeLine{00028\ \ \ \}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \textcolor{keywordtype}{bool}\ isValid()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00032\ \ \ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \mbox{\hyperlink{class_json_string}{JsonString}}\ str()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00035\ \ \ \ \ writePtr\_[0]\ =\ 0;\ \ \textcolor{comment}{//\ terminator}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_json_string}{JsonString}}(startPtr\_,\ size(),\ JsonString::Linked);}
+\DoxyCodeLine{00037\ \ \ \}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \textcolor{keywordtype}{size\_t}\ size()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{return}\ size\_t(writePtr\_\ -\/\ startPtr\_);}
+\DoxyCodeLine{00041\ \ \ \}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00044\ \ \ \textcolor{keywordtype}{char}*\ writePtr\_;}
+\DoxyCodeLine{00045\ \ \ \textcolor{keywordtype}{char}*\ startPtr\_;}
+\DoxyCodeLine{00046\ \};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

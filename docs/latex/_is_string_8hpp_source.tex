@@ -1,0 +1,26 @@
+\doxysection{Is\+String.\+hpp}
+\hypertarget{_is_string_8hpp_source}{}\label{_is_string_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Strings/IsString.hpp@{lib/ArduinoJson/src/ArduinoJson/Strings/IsString.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/type\_traits.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Strings/StringAdapter.hpp>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ Enable\ =\ \textcolor{keywordtype}{void}>}
+\DoxyCodeLine{00013\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_is_string}{IsString}}\ :\ false\_type\ \{\};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00016\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_is_string}{IsString}}<}
+\DoxyCodeLine{00017\ \ \ \ \ T,\ typename\ \mbox{\hyperlink{structmake__void}{make\_void}}<typename\ \mbox{\hyperlink{struct_string_adapter}{StringAdapter}}<T>::AdaptedString>\mbox{\hyperlink{structconditional}{::type}}>}
+\DoxyCodeLine{00018\ \ \ \ \ :\ true\_type\ \{\};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

@@ -1,0 +1,141 @@
+\doxysection{convert\+Number.\+hpp}
+\hypertarget{convert_number_8hpp_source}{}\label{convert_number_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Numbers/convertNumber.hpp@{lib/ArduinoJson/src/ArduinoJson/Numbers/convertNumber.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#if\ defined(\_\_clang\_\_)}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#\ \ pragma\ clang\ diagnostic\ push}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#\ \ pragma\ clang\ diagnostic\ ignored\ "{}-\/Wconversion"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#elif\ defined(\_\_GNUC\_\_)}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#\ \ pragma\ GCC\ diagnostic\ push}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#\ \ pragma\ GCC\ diagnostic\ ignored\ "{}-\/Wconversion"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Numbers/FloatTraits.hpp>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Numbers/JsonFloat.hpp>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/limits.hpp>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/type\_traits.hpp>}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{comment}{//\ uint32\ -\/>\ int32}}
+\DoxyCodeLine{00023\ \textcolor{comment}{//\ uint64\ -\/>\ int32}}
+\DoxyCodeLine{00024\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TOut,\ \textcolor{keyword}{typename}\ TIn>}
+\DoxyCodeLine{00025\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<is\_integral<TIn>::value}}\ \&\&\ is\_unsigned<TIn>::value\ \&\&}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is\_integral<TOut>::value\ \&\&\ \textcolor{keyword}{sizeof}(TOut)\ <=\ \textcolor{keyword}{sizeof}(TIn),}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00028\ canConvertNumber(TIn\ value)\ \{}
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordflow}{return}\ value\ <=\ TIn(\mbox{\hyperlink{structnumeric__limits}{numeric\_limits<TOut>::highest}}());}
+\DoxyCodeLine{00030\ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ uint32\ -\/>\ int64}}
+\DoxyCodeLine{00033\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TOut,\ \textcolor{keyword}{typename}\ TIn>}
+\DoxyCodeLine{00034\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<is\_integral<TIn>::value}}\ \&\&\ is\_unsigned<TIn>::value\ \&\&}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is\_integral<TOut>::value\ \&\&\ \textcolor{keyword}{sizeof}(TIn)\ <\ \textcolor{keyword}{sizeof}(TOut),}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00037\ canConvertNumber(TIn)\ \{}
+\DoxyCodeLine{00038\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00039\ \}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{comment}{//\ uint32\ -\/>\ float}}
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ int32\ -\/>\ float}}
+\DoxyCodeLine{00043\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TOut,\ \textcolor{keyword}{typename}\ TIn>}
+\DoxyCodeLine{00044\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<is\_integral<TIn>::value}}\ \&\&\ is\_floating\_point<TOut>::value,}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00046\ canConvertNumber(TIn)\ \{}
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00048\ \}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{comment}{//\ int64\ -\/>\ int32}}
+\DoxyCodeLine{00051\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TOut,\ \textcolor{keyword}{typename}\ TIn>}
+\DoxyCodeLine{00052\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<is\_integral<TIn>::value}}\ \&\&\ is\_signed<TIn>::value\ \&\&}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is\_integral<TOut>::value\ \&\&\ is\_signed<TOut>::value\ \&\&}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(TOut)\ <\ \textcolor{keyword}{sizeof}(TIn),}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00056\ canConvertNumber(TIn\ value)\ \{}
+\DoxyCodeLine{00057\ \ \ \textcolor{keywordflow}{return}\ value\ >=\ TIn(\mbox{\hyperlink{structnumeric__limits}{numeric\_limits<TOut>::lowest}}())\ \&\&}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ value\ <=\ TIn(\mbox{\hyperlink{structnumeric__limits}{numeric\_limits<TOut>::highest}}());}
+\DoxyCodeLine{00059\ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{comment}{//\ int32\ -\/>\ int32}}
+\DoxyCodeLine{00062\ \textcolor{comment}{//\ int32\ -\/>\ int64}}
+\DoxyCodeLine{00063\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TOut,\ \textcolor{keyword}{typename}\ TIn>}
+\DoxyCodeLine{00064\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<is\_integral<TIn>::value}}\ \&\&\ is\_signed<TIn>::value\ \&\&}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is\_integral<TOut>::value\ \&\&\ is\_signed<TOut>::value\ \&\&}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(TIn)\ <=\ \textcolor{keyword}{sizeof}(TOut),}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00068\ canConvertNumber(TIn)\ \{}
+\DoxyCodeLine{00069\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00070\ \}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{comment}{//\ int32\ -\/>\ uint32}}
+\DoxyCodeLine{00073\ \textcolor{comment}{//\ int32\ -\/>\ uint64}}
+\DoxyCodeLine{00074\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TOut,\ \textcolor{keyword}{typename}\ TIn>}
+\DoxyCodeLine{00075\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<is\_integral<TIn>::value}}\ \&\&\ is\_signed<TIn>::value\ \&\&}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is\_integral<TOut>::value\ \&\&\ is\_unsigned<TOut>::value\ \&\&}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(TOut)\ >=\ \textcolor{keyword}{sizeof}(TIn),}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00079\ canConvertNumber(TIn\ value)\ \{}
+\DoxyCodeLine{00080\ \ \ \textcolor{keywordflow}{if}\ (value\ <\ 0)}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00082\ \ \ \textcolor{keywordflow}{return}\ TOut(value)\ <=\ \mbox{\hyperlink{structnumeric__limits}{numeric\_limits<TOut>::highest}}();}
+\DoxyCodeLine{00083\ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \textcolor{comment}{//\ int32\ -\/>\ uint16}}
+\DoxyCodeLine{00086\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TOut,\ \textcolor{keyword}{typename}\ TIn>}
+\DoxyCodeLine{00087\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<is\_integral<TIn>::value}}\ \&\&\ is\_signed<TIn>::value\ \&\&}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is\_integral<TOut>::value\ \&\&\ is\_unsigned<TOut>::value\ \&\&}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(TOut)\ <\ \textcolor{keyword}{sizeof}(TIn),}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00091\ canConvertNumber(TIn\ value)\ \{}
+\DoxyCodeLine{00092\ \ \ \textcolor{keywordflow}{if}\ (value\ <\ 0)}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00094\ \ \ \textcolor{keywordflow}{return}\ value\ <=\ TIn(\mbox{\hyperlink{structnumeric__limits}{numeric\_limits<TOut>::highest}}());}
+\DoxyCodeLine{00095\ \}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \textcolor{comment}{//\ float32\ -\/>\ int16}}
+\DoxyCodeLine{00098\ \textcolor{comment}{//\ float64\ -\/>\ int32}}
+\DoxyCodeLine{00099\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TOut,\ \textcolor{keyword}{typename}\ TIn>}
+\DoxyCodeLine{00100\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<is\_floating\_point<TIn>::value}}\ \&\&\ is\_integral<TOut>::value\ \&\&}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(TOut)\ <\ \textcolor{keyword}{sizeof}(TIn),}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00103\ canConvertNumber(TIn\ value)\ \{}
+\DoxyCodeLine{00104\ \ \ \textcolor{keywordflow}{return}\ value\ >=\ \mbox{\hyperlink{structnumeric__limits}{numeric\_limits<TOut>::lowest}}()\ \&\&}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ value\ <=\ numeric\_limits<TOut>::highest();}
+\DoxyCodeLine{00106\ \}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{comment}{//\ float32\ -\/>\ int32}}
+\DoxyCodeLine{00109\ \textcolor{comment}{//\ float32\ -\/>\ uint32}}
+\DoxyCodeLine{00110\ \textcolor{comment}{//\ float32\ -\/>\ int64}}
+\DoxyCodeLine{00111\ \textcolor{comment}{//\ float32\ -\/>\ uint64}}
+\DoxyCodeLine{00112\ \textcolor{comment}{//\ float64\ -\/>\ int64}}
+\DoxyCodeLine{00113\ \textcolor{comment}{//\ float64\ -\/>\ uint64}}
+\DoxyCodeLine{00114\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TOut,\ \textcolor{keyword}{typename}\ TIn>}
+\DoxyCodeLine{00115\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<is\_floating\_point<TIn>::value}}\ \&\&\ is\_integral<TOut>::value\ \&\&}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(TOut)\ >=\ \textcolor{keyword}{sizeof}(TIn),}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00118\ canConvertNumber(TIn\ value)\ \{}
+\DoxyCodeLine{00119\ \ \ \textcolor{comment}{//\ Avoid\ error\ "{}9.22337e+18\ is\ outside\ the\ range\ of\ representable\ values\ of}}
+\DoxyCodeLine{00120\ \ \ \textcolor{comment}{//\ type\ 'long'"{}}}
+\DoxyCodeLine{00121\ \ \ \textcolor{keywordflow}{return}\ value\ >=\ \mbox{\hyperlink{structnumeric__limits}{numeric\_limits<TOut>::lowest}}()\ \&\&}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ value\ <=\ FloatTraits<TIn>::template\ highest\_for<TOut>();}
+\DoxyCodeLine{00123\ \}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TOut,\ \textcolor{keyword}{typename}\ TIn>}
+\DoxyCodeLine{00126\ TOut\ convertNumber(TIn\ value)\ \{}
+\DoxyCodeLine{00127\ \ \ \textcolor{keywordflow}{return}\ canConvertNumber<TOut>(value)\ ?\ TOut(value)\ :\ 0;}
+\DoxyCodeLine{00128\ \}}
+\DoxyCodeLine{00129\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \textcolor{preprocessor}{\#if\ defined(\_\_clang\_\_)}}
+\DoxyCodeLine{00132\ \textcolor{preprocessor}{\#\ \ pragma\ clang\ diagnostic\ pop}}
+\DoxyCodeLine{00133\ \textcolor{preprocessor}{\#elif\ defined(\_\_GNUC\_\_)}}
+\DoxyCodeLine{00134\ \textcolor{preprocessor}{\#\ \ pragma\ GCC\ diagnostic\ pop}}
+\DoxyCodeLine{00135\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

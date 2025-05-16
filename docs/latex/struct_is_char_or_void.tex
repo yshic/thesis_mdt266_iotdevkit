@@ -1,0 +1,35 @@
+\doxysection{Is\+Char\+Or\+Void\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{struct_is_char_or_void}{}\label{struct_is_char_or_void}\index{IsCharOrVoid$<$ T $>$@{IsCharOrVoid$<$ T $>$}}
+Inheritance diagram for Is\+Char\+Or\+Void\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{struct_is_char_or_void}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const bool \mbox{\hyperlink{struct_is_char_or_void_ad3568f32324de4f1670c3d86b9a2c83a}{value}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_is_char_or_void_ad3568f32324de4f1670c3d86b9a2c83a}\index{IsCharOrVoid$<$ T $>$@{IsCharOrVoid$<$ T $>$}!value@{value}}
+\index{value@{value}!IsCharOrVoid$<$ T $>$@{IsCharOrVoid$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily \label{struct_is_char_or_void_ad3568f32324de4f1670c3d86b9a2c83a} 
+template$<$typename T$>$ \\
+const bool \mbox{\hyperlink{struct_is_char_or_void}{Is\+Char\+Or\+Void}}$<$ T $>$\+::value\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \ \ is\_same<T,\ void>::value\ ||\ is\_same<T,\ char>::value\ ||}
+\DoxyCodeLine{\ \ \ \ \ \ is\_same<T,\ unsigned\ char>::value\ ||\ is\_same<T,\ signed\ char>::value}
+
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Arduino\+Json/src/\+Arduino\+Json/\+Deserialization/\+Readers/Ram\+Reader.\+hpp\end{DoxyCompactItemize}

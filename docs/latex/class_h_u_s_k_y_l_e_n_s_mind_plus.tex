@@ -1,0 +1,204 @@
+\doxysection{HUSKYLENSMind\+Plus Class Reference}
+\hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus}{}\label{class_h_u_s_k_y_l_e_n_s_mind_plus}\index{HUSKYLENSMindPlus@{HUSKYLENSMindPlus}}
+Inheritance diagram for HUSKYLENSMind\+Plus\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_h_u_s_k_y_l_e_n_s_mind_plus}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_a3c01c596a3f61dcc911981b59f6553e0}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_a3c01c596a3f61dcc911981b59f6553e0} 
+void {\bfseries begin\+I2\+CUntil\+Success} ()
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_ab49c68649eb1bcc09085d4d7504f4227}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_ab49c68649eb1bcc09085d4d7504f4227} 
+void {\bfseries begin\+Software\+Serial\+Until\+Success} (int RXPin, int TXPin)
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_a1be55816851b05f1f357d75528373119}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_a1be55816851b05f1f357d75528373119} 
+bool {\bfseries write\+Algorithm} (protocol\+Algorithm algorithm\+Type)
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_a151ecb0678ddbb27fbce74208228e395}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_a151ecb0678ddbb27fbce74208228e395} 
+bool {\bfseries request} ()
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_ae89308707101a1aaaab7eae847a3e0c6}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_ae89308707101a1aaaab7eae847a3e0c6} 
+bool {\bfseries is\+Appear} (int ID, HUSKYLENSResult\+Type \mbox{\hyperlink{structconditional}{type}})
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_ac284bff823482cd7eccd9cc41e87365b}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_ac284bff823482cd7eccd9cc41e87365b} 
+\mbox{\hyperlink{struct_h_u_s_k_y_l_e_n_s_block_info__t}{HUSKYLENSBlock\+Info}} {\bfseries read\+Block\+Parameter} (int ID, int index=1)
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_a76769ef9923b393d4e33f494f973b5c1}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_a76769ef9923b393d4e33f494f973b5c1} 
+\mbox{\hyperlink{struct_h_u_s_k_y_l_e_n_s_arrow_info__t}{HUSKYLENSArrow\+Info}} {\bfseries read\+Arrow\+Parameter} (int ID, int index=1)
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_a6aad89e46a0729d62c74a7daa389a7a8}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_a6aad89e46a0729d62c74a7daa389a7a8} 
+bool {\bfseries is\+Appear\+Direct} (HUSKYLENSResult\+Type \mbox{\hyperlink{structconditional}{type}})
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_a3c9800aa42beac6e7a569d4484765ec4}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_a3c9800aa42beac6e7a569d4484765ec4} 
+\mbox{\hyperlink{struct_h_u_s_k_y_l_e_n_s_block_direct_info__t}{HUSKYLENSBlock\+Direct\+Info}} {\bfseries read\+Block\+Center\+Parameter\+Direct} ()
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_a59134f4a7446363c9ab171cb268d6699}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_a59134f4a7446363c9ab171cb268d6699} 
+\mbox{\hyperlink{struct_h_u_s_k_y_l_e_n_s_arrow_direct_info__t}{HUSKYLENSArrow\+Direct\+Info}} {\bfseries read\+Arrow\+Center\+Parameter\+Direct} ()
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_a9f73c24db779128fc3e5760e1f21ed64}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_a9f73c24db779128fc3e5760e1f21ed64} 
+float {\bfseries read\+Learned\+IDCount} ()
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_ac019d8fb6b666f7489e90a28029a1e14}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_ac019d8fb6b666f7489e90a28029a1e14} 
+float {\bfseries read\+Count\+Learned} (HUSKYLENSResult\+Type \mbox{\hyperlink{structconditional}{type}})
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_a384d188d656048dc1a54f28a048ed5d4}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_a384d188d656048dc1a54f28a048ed5d4} 
+float {\bfseries read\+IDLearned} (int index, HUSKYLENSResult\+Type \mbox{\hyperlink{structconditional}{type}})
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_af667babb6ca52834f28af9d8e97dea22}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_af667babb6ca52834f28af9d8e97dea22} 
+float {\bfseries read\+Count} (HUSKYLENSResult\+Type \mbox{\hyperlink{structconditional}{type}})
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_ab29a7f9d7ceb03a2ac32efdae59805a1}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_ab29a7f9d7ceb03a2ac32efdae59805a1} 
+\mbox{\hyperlink{struct_h_u_s_k_y_l_e_n_s_block_direct_info__t}{HUSKYLENSBlock\+Direct\+Info}} {\bfseries read\+Block\+Parameter\+Direct} (int index)
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_ac41bc5e73bc99f390f56a9ff33d328e1}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_ac41bc5e73bc99f390f56a9ff33d328e1} 
+\mbox{\hyperlink{struct_h_u_s_k_y_l_e_n_s_arrow_direct_info__t}{HUSKYLENSArrow\+Direct\+Info}} {\bfseries read\+Arrow\+Parameter\+Direct} (int index)
+\item 
+\Hypertarget{class_h_u_s_k_y_l_e_n_s_mind_plus_a81b90032007beb192267a6e25d7977d3}\label{class_h_u_s_k_y_l_e_n_s_mind_plus_a81b90032007beb192267a6e25d7977d3} 
+float {\bfseries read\+Count} (int ID, HUSKYLENSResult\+Type \mbox{\hyperlink{structconditional}{type}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_h_u_s_k_y_l_e_n_s}{HUSKYLENS}}}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries begin} (Stream \&stream\+Input)
+\item 
+bool {\bfseries begin} (Two\+Wire \&stream\+Input)
+\item 
+void {\bfseries set\+Time\+Out\+Duration} (unsigned long time\+Out\+Duration\+Input)
+\item 
+bool {\bfseries request} ()
+\item 
+bool {\bfseries request} (int16\+\_\+t ID)
+\item 
+bool {\bfseries request\+Blocks} ()
+\item 
+bool {\bfseries request\+Blocks} (int16\+\_\+t ID)
+\item 
+bool {\bfseries request\+Arrows} ()
+\item 
+bool {\bfseries request\+Arrows} (int16\+\_\+t ID)
+\item 
+bool {\bfseries request\+Learned} ()
+\item 
+bool {\bfseries request\+Blocks\+Learned} ()
+\item 
+bool {\bfseries request\+Arrows\+Learned} ()
+\item 
+int {\bfseries available} ()
+\item 
+void {\bfseries read} ()
+\item 
+\mbox{\hyperlink{struct_protocol__t}{HUSKYLENSResult}} {\bfseries get\+Result} ()
+\item 
+void {\bfseries set\+Camera\+Status} (bool state)
+\item 
+bool {\bfseries get\+Camera\+Status} ()
+\item 
+bool {\bfseries is\+Learned} ()
+\item 
+bool {\bfseries is\+Learned} (int ID)
+\item 
+int16\+\_\+t {\bfseries frame\+Number} ()
+\item 
+int16\+\_\+t {\bfseries count\+Learned\+IDs} ()
+\item 
+int16\+\_\+t {\bfseries count} ()
+\item 
+int16\+\_\+t {\bfseries count} (int16\+\_\+t ID)
+\item 
+int16\+\_\+t {\bfseries count\+Blocks} ()
+\item 
+int16\+\_\+t {\bfseries count\+Blocks} (int16\+\_\+t ID)
+\item 
+int16\+\_\+t {\bfseries count\+Arrows} ()
+\item 
+int16\+\_\+t {\bfseries count\+Arrows} (int16\+\_\+t ID)
+\item 
+int16\+\_\+t {\bfseries count\+Learned} ()
+\item 
+int16\+\_\+t {\bfseries count\+Blocks\+Learned} ()
+\item 
+int16\+\_\+t {\bfseries count\+Arrows\+Learned} ()
+\item 
+\mbox{\hyperlink{struct_protocol__t}{HUSKYLENSResult}} {\bfseries get} (int16\+\_\+t index)
+\item 
+\mbox{\hyperlink{struct_protocol__t}{HUSKYLENSResult}} {\bfseries get} (int16\+\_\+t ID, int16\+\_\+t index)
+\item 
+\mbox{\hyperlink{struct_protocol__t}{HUSKYLENSResult}} {\bfseries get\+Block} (int16\+\_\+t index)
+\item 
+\mbox{\hyperlink{struct_protocol__t}{HUSKYLENSResult}} {\bfseries get\+Block} (int16\+\_\+t ID, int16\+\_\+t index)
+\item 
+\mbox{\hyperlink{struct_protocol__t}{HUSKYLENSResult}} {\bfseries get\+Arrow} (int16\+\_\+t index)
+\item 
+\mbox{\hyperlink{struct_protocol__t}{HUSKYLENSResult}} {\bfseries get\+Arrow} (int16\+\_\+t ID, int16\+\_\+t index)
+\item 
+\mbox{\hyperlink{struct_protocol__t}{HUSKYLENSResult}} {\bfseries get\+Learned} (int16\+\_\+t index)
+\item 
+\mbox{\hyperlink{struct_protocol__t}{HUSKYLENSResult}} {\bfseries get\+Block\+Learned} (int16\+\_\+t index)
+\item 
+\mbox{\hyperlink{struct_protocol__t}{HUSKYLENSResult}} {\bfseries get\+Arrow\+Learned} (int16\+\_\+t index)
+\item 
+bool {\bfseries write\+Algorithm} (protocol\+Algorithm algorithm\+Type)
+\item 
+bool {\bfseries write\+Learn} (int ID)
+\item 
+bool {\bfseries write\+Forget} ()
+\item 
+bool {\bfseries write\+Sensor} (int sensor0, int sensor1, int sensor2)
+\item 
+bool {\bfseries set\+Custom\+Name} (String name, uint8\+\_\+t id)
+\item 
+bool {\bfseries save\+Picture\+To\+SDCard} ()
+\item 
+bool {\bfseries save\+Model\+To\+SDCard} (int file\+Num)
+\item 
+bool {\bfseries load\+Model\+From\+SDCard} (int file\+Num)
+\item 
+bool {\bfseries clear\+Custom\+Text} ()
+\item 
+bool {\bfseries custom\+Text} (String text, uint16\+\_\+t x, uint8\+\_\+t y)
+\item 
+bool {\bfseries save\+Screenshot\+To\+SDCard} ()
+\item 
+bool {\bfseries is\+Pro} ()
+\item 
+bool {\bfseries check\+Firmware\+Version} ()
+\item 
+bool {\bfseries write\+Firmware\+Version} (String version)
+\item 
+void {\bfseries protocol\+Write\+Command} (\mbox{\hyperlink{struct_protocol__t}{Protocol\+\_\+t}} \&protocol, uint8\+\_\+t command)
+\item 
+bool {\bfseries protocol\+Read\+Command} (\mbox{\hyperlink{struct_protocol__t}{Protocol\+\_\+t}} \&protocol, uint8\+\_\+t command)
+\item 
+void {\bfseries protocol\+Write\+Five\+Int16} (\mbox{\hyperlink{struct_protocol__t}{Protocol\+\_\+t}} \&protocol, uint8\+\_\+t command)
+\item 
+bool {\bfseries protocol\+Read\+Five\+Int16} (\mbox{\hyperlink{struct_protocol__t}{Protocol\+\_\+t}} \&protocol, uint8\+\_\+t command)
+\item 
+void {\bfseries protocol\+Write\+One\+Int16} (\mbox{\hyperlink{struct_protocol__t}{Protocol\+\_\+t}} \&protocol, uint8\+\_\+t command)
+\item 
+bool {\bfseries protocol\+Read\+One\+Int16} (\mbox{\hyperlink{struct_protocol__t}{Protocol\+\_\+t}} \&protocol, uint8\+\_\+t command)
+\item 
+bool {\bfseries protocol\+Read\+Custom\+Name\+Header} (\mbox{\hyperlink{struct_protocol__t}{Protocol\+\_\+t}} \&protocol, uint8\+\_\+t command)
+\item 
+void {\bfseries protocol\+Write\+Custom\+Name\+Header} (\mbox{\hyperlink{struct_protocol__t}{Protocol\+\_\+t}} \&protocol, uint8\+\_\+t command)
+\item 
+bool {\bfseries protocol\+Read\+Received\+Knowledges} (\mbox{\hyperlink{struct_protocol__t}{Protocol\+\_\+t}} \&protocol, uint8\+\_\+t command)
+\item 
+bool {\bfseries protocol\+Write\+Received\+Knowledges} (\mbox{\hyperlink{struct_protocol__t}{Protocol\+\_\+t}} \&protocol, uint8\+\_\+t command)
+\item 
+bool {\bfseries protocol\+Read\+Custom\+Text\+Recv} (\mbox{\hyperlink{struct_protocol__t}{Protocol\+\_\+t}} \&protocol, uint8\+\_\+t command)
+\item 
+bool {\bfseries protocol\+Write\+Custom\+Text\+Recv} (\mbox{\hyperlink{struct_protocol__t}{Protocol\+\_\+t}} \&protocol, uint8\+\_\+t command)
+\item 
+bool {\bfseries protocol\+Read\+Firmware\+Version} (\mbox{\hyperlink{struct_protocol__t}{Protocol\+\_\+t}} \&protocol, uint8\+\_\+t command)
+\item 
+bool {\bfseries protocol\+Write\+Firmware\+Version} (\mbox{\hyperlink{struct_protocol__t}{Protocol\+\_\+t}} \&protocol, uint8\+\_\+t command)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+HUSKYLENS/HUSKYLENSMind\+Plus.\+h\end{DoxyCompactItemize}

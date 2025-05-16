@@ -1,0 +1,103 @@
+\doxysection{lib/utility/src/utility.h File Reference}
+\hypertarget{utility_8h}{}\label{utility_8h}\index{lib/utility/src/utility.h@{lib/utility/src/utility.h}}
+
+
+Header file for Utility library. This library provides various utility functions for multiple purposes.  
+
+
+{\ttfamily \#include "{}WProgram.\+h"{}}\newline
+{\ttfamily \#include "{}Wire.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{utility_8h_a8fae21c12475addf28c404a0e1c5eab3}\label{utility_8h_a8fae21c12475addf28c404a0e1c5eab3} 
+void {\bfseries scan\+I2\+CDevices} (void)
+\begin{DoxyCompactList}\small\item\em Scan for I2C devices and print the addresses to Serial. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{utility_8h_a732bb003220387dc7af9c2751c1b2465}{crc8}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}data, int len)
+\begin{DoxyCompactList}\small\item\em Calculates CRC-\/8 checksum for the given data using SHT40\textquotesingle{}s polynomial. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{utility_8h_ae035ab017746978f2bc4555ec5c8b86d}{compare\+Version}} (String v1, String v2)
+\begin{DoxyCompactList}\small\item\em Compares two firmware version strings. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header file for Utility library. This library provides various utility functions for multiple purposes. 
+
+@license This library is released under the MIT License. \begin{DoxyVersion}{Version}
+0.\+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2024-\/11-\/01 
+\end{DoxyDate}
+\begin{DoxyAuthor}{Author}
+Tuan Nguyen
+\end{DoxyAuthor}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{utility_8h_ae035ab017746978f2bc4555ec5c8b86d}\index{utility.h@{utility.h}!compareVersion@{compareVersion}}
+\index{compareVersion@{compareVersion}!utility.h@{utility.h}}
+\doxysubsubsection{\texorpdfstring{compareVersion()}{compareVersion()}}
+{\footnotesize\ttfamily \label{utility_8h_ae035ab017746978f2bc4555ec5c8b86d} 
+int compare\+Version (\begin{DoxyParamCaption}\item[{String}]{v1}{, }\item[{String}]{v2}{}\end{DoxyParamCaption})}
+
+
+
+Compares two firmware version strings. 
+
+This function compares two version strings (e.\+g., "{}1.\+0"{}, "{}0.\+9.\+3"{}, "{}2"{}) by parsing up to three levels of semantic versioning\+: major, minor, and patch. Missing segments are treated as zero, allowing flexible comparison of version formats like "{}0.\+1"{}, "{}0.\+1.\+0"{}, or "{}1"{}.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em v1} & The current firmware version (as a {\ttfamily String}). \\
+\hline
+\mbox{\texttt{ in}}  & {\em v2} & The incoming/target firmware version (as a {\ttfamily String}).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Version strings should be in numeric dot-\/separated format. Non-\/numeric parts are ignored. For example, "{}1.\+0a"{} would parse as "{}1.\+0.\+0"{}. Only the first three segments are considered.
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily -\/1} if {\ttfamily v1} is lower than {\ttfamily v2}
+\item {\ttfamily 0} if both versions are equal
+\item {\ttfamily 1} if {\ttfamily v1} is greater than {\ttfamily v2} 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{utility_8h_a732bb003220387dc7af9c2751c1b2465}\index{utility.h@{utility.h}!crc8@{crc8}}
+\index{crc8@{crc8}!utility.h@{utility.h}}
+\doxysubsubsection{\texorpdfstring{crc8()}{crc8()}}
+{\footnotesize\ttfamily \label{utility_8h_a732bb003220387dc7af9c2751c1b2465} 
+uint8\+\_\+t crc8 (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{int}]{len}{}\end{DoxyParamCaption})}
+
+
+
+Calculates CRC-\/8 checksum for the given data using SHT40\textquotesingle{}s polynomial. 
+
+This function computes an 8-\/bit CRC checksum using the polynomial defined in the SHT40 datasheet. It is used to verify data integrity when reading from the SHT40 sensor.
+
+The CRC-\/8 parameters are\+:
+\begin{DoxyItemize}
+\item Initialization value\+: 0x\+FF
+\item Polynomial\+: 0x31 (x⁸ + x⁵ + x⁴ + 1)
+\item No final XOR (0x00)
+\end{DoxyItemize}
+
+Example from datasheet\+: For data bytes \{0x\+BE, 0x\+EF\}, the CRC result is 0x92.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em data} & Pointer to the input data buffer. \\
+\hline
+\mbox{\texttt{ in}}  & {\em len} & Length of the data buffer in bytes.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Ensure that {\ttfamily data} points to a valid memory location of at least {\ttfamily len} bytes. This function does not perform bounds checking.
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item CRC-\/8 checksum as an 8-\/bit unsigned integer. 
+\end{DoxyItemize}
+\end{DoxyReturn}

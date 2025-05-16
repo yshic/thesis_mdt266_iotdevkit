@@ -1,0 +1,106 @@
+\doxysection{PIDLoop.\+h}
+\hypertarget{_h_u_s_k_y_l_e_n_s___l_i_n_e___t_r_a_c_k_i_n_g_2_p_i_d_loop_8h_source}{}\label{_h_u_s_k_y_l_e_n_s___l_i_n_e___t_r_a_c_k_i_n_g_2_p_i_d_loop_8h_source}\index{lib/HUSKYLENS/examples/HUSKYLENS\_LINE\_TRACKING/PIDLoop.h@{lib/HUSKYLENS/examples/HUSKYLENS\_LINE\_TRACKING/PIDLoop.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ begin\ license\ header}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ Pixy\ CMUcam5\ or\ "{}Pixy"{}\ for\ short}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ All\ Pixy\ source\ code\ is\ provided\ under\ the\ terms\ of\ the}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ GNU\ General\ Public\ License\ v2\ (http://www.gnu.org/licenses/gpl-\/2.0.html).}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ Those\ wishing\ to\ use\ Pixy\ source\ code,\ software\ and/or}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ technologies\ under\ different\ licensing\ terms\ should\ contact\ us\ at}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ cmucam@cs.cmu.edu.\ Such\ licensing\ terms\ are\ available\ for}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ all\ portions\ of\ the\ Pixy\ codebase\ presented\ here.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ end\ license\ header}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ PID\_MAX\_INTEGRAL\ \ \ \ \ \ \ \ \ 2000}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ ZUMO\_BASE\_DEADBAND\ \ \ \ \ \ \ 20}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ RC-\/servo\ values}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ PIXY\_RCS\_MIN\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ PIXY\_RCS\_MAX\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1000L}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ PIXY\_RCS\_CENTER\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((PIXY\_RCS\_MAX\_POS-\/PIXY\_RCS\_MIN\_POS)/2)}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{class\ }PIDLoop}
+\DoxyCodeLine{00026\ \{}
+\DoxyCodeLine{00027\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ PIDLoop(int32\_t\ pgain,\ int32\_t\ igain,\ int32\_t\ dgain,\ \textcolor{keywordtype}{bool}\ servo)}
+\DoxyCodeLine{00029\ \ \ \{}
+\DoxyCodeLine{00030\ \ \ \ \ m\_pgain\ =\ pgain;}
+\DoxyCodeLine{00031\ \ \ \ \ m\_igain\ =\ igain;}
+\DoxyCodeLine{00032\ \ \ \ \ m\_dgain\ =\ dgain;}
+\DoxyCodeLine{00033\ \ \ \ \ m\_servo\ =\ servo;}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ reset();}
+\DoxyCodeLine{00036\ \ \ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \textcolor{keywordtype}{void}\ reset()}
+\DoxyCodeLine{00039\ \ \ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_servo)}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ m\_command\ =\ PIXY\_RCS\_CENTER\_POS;}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ m\_command\ =\ 0;}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ m\_integral\ =\ 0;}
+\DoxyCodeLine{00046\ \ \ \ \ m\_prevError\ =\ 0x80000000L;}
+\DoxyCodeLine{00047\ \ \ \}\ \ }
+\DoxyCodeLine{00048\ \ \ }
+\DoxyCodeLine{00049\ \ \ \textcolor{keywordtype}{void}\ update(int32\_t\ error)}
+\DoxyCodeLine{00050\ \ \ \{}
+\DoxyCodeLine{00051\ \ \ \ \ int32\_t\ pid;}
+\DoxyCodeLine{00052\ \ \ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_prevError!=0x80000000L)}
+\DoxyCodeLine{00054\ \ \ \ \ \{\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \textcolor{comment}{//\ integrate\ integral}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ m\_integral\ +=\ error;}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \textcolor{comment}{//\ bound\ the\ integral}}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_integral>PID\_MAX\_INTEGRAL)}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ m\_integral\ =\ PID\_MAX\_INTEGRAL;}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (m\_integral<-\/PID\_MAX\_INTEGRAL)}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ m\_integral\ =\ -\/PID\_MAX\_INTEGRAL;}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \textcolor{comment}{//\ calculate\ PID\ term}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ pid\ =\ (error*m\_pgain\ +\ ((m\_integral*m\_igain)>>4)\ +\ (error\ -\/\ m\_prevError)*m\_dgain)>>10;}
+\DoxyCodeLine{00065\ \ \ \ \ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_servo)}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ m\_command\ +=\ pid;\ \textcolor{comment}{//\ since\ servo\ is\ a\ position\ device,\ we\ integrate\ the\ pid\ term}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_command>PIXY\_RCS\_MAX\_POS)\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ m\_command\ =\ PIXY\_RCS\_MAX\_POS;\ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (m\_command<PIXY\_RCS\_MIN\_POS)\ }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ m\_command\ =\ PIXY\_RCS\_MIN\_POS;}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Deal\ with\ Zumo\ base\ deadband}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pid>0)}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ pid\ +=\ ZUMO\_BASE\_DEADBAND;}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (pid<0)}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ pid\ -\/=\ ZUMO\_BASE\_DEADBAND;}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ m\_command\ =\ pid;\ \textcolor{comment}{//\ Zumo\ base\ is\ velocity\ device,\ use\ the\ pid\ term\ directly\ \ }}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00083\ \ \ \ \ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{comment}{//\ retain\ the\ previous\ error\ val\ so\ we\ can\ calc\ the\ derivative}}
+\DoxyCodeLine{00086\ \ \ \ \ m\_prevError\ =\ error;\ }
+\DoxyCodeLine{00087\ \ \ \}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ int32\_t\ m\_command;\ }
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{keyword}{private}:\ }
+\DoxyCodeLine{00092\ \ \ int32\_t\ m\_pgain;}
+\DoxyCodeLine{00093\ \ \ int32\_t\ m\_igain;}
+\DoxyCodeLine{00094\ \ \ int32\_t\ m\_dgain;}
+\DoxyCodeLine{00095\ \ \ }
+\DoxyCodeLine{00096\ \ \ int32\_t\ m\_prevError;}
+\DoxyCodeLine{00097\ \ \ int32\_t\ m\_integral;}
+\DoxyCodeLine{00098\ \ \ \textcolor{keywordtype}{bool}\ m\_servo;}
+\DoxyCodeLine{00099\ \};}
+\DoxyCodeLine{00100\ }
+
+\end{DoxyCode}

@@ -1,0 +1,70 @@
+\doxysection{dht20.\+h}
+\hypertarget{dht20_8h_source}{}\label{dht20_8h_source}\index{lib/dht20/src/dht20.h@{lib/dht20/src/dht20.h}}
+\mbox{\hyperlink{dht20_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{/*\ Define\ to\ prevent\ recursive\ inclusion\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#ifndef\ DHT20\_H}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\ \ \#define\ DHT20\_H}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \textcolor{comment}{/*\ Includes\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\ \ \#if\ ARDUINO\ >=\ 100}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\ \ \ \ \#include\ "{}Arduino.h"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\ \ \#else}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\ \ \ \ \#include\ "{}WProgram.h"{}}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\ \ \#endif}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \textcolor{comment}{/*\ Public\ defines\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\ \ \#define\ DHT20\_LIB\_VERSION\ \ \ \ \ \ \ (F("{}0.1.0"{}))}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\ \ \#define\ DHT20\_I2C\_ADDR\ \ \ \ \ \ \ \ \ \ 0x38}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\ \ \#define\ DHT20\_HUMIDITY\_INDEX\ \ \ \ 0}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\ \ \#define\ DHT20\_TEMPERATURE\_INDEX\ 1}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{comment}{/*\ Public\ enumerate/structure\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00031\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{00032\ \{}
+\DoxyCodeLine{00033\ \ \ DHT20\_OK\ =\ 0,\ \ \ \ \ \ \ \textcolor{comment}{/*\ No\ error\ */}}
+\DoxyCodeLine{00034\ \ \ DHT20\_ERR,\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Generic\ error\ */}}
+\DoxyCodeLine{00035\ \ \ DHT20\_ERR\_INIT,\ \ \ \ \ \textcolor{comment}{/*\ Initialization\ error\ */}}
+\DoxyCodeLine{00036\ \ \ DHT20\_ERR\_RESET,\ \ \ \ \textcolor{comment}{/*\ Reset\ error\ */}}
+\DoxyCodeLine{00037\ \ \ DHT20\_TIMEOUT,\ \ \ \ \ \ \textcolor{comment}{/*\ Timeout\ error*/}}
+\DoxyCodeLine{00038\ \ \ DHT20\_ERR\_I2C\_READ,\ \textcolor{comment}{/*\ I2C\ Read\ error\ */}}
+\DoxyCodeLine{00039\ \ \ DHT20\_ERR\_I2C\_WRITE\ \textcolor{comment}{/*\ I2C\ Write\ error\ */}}
+\DoxyCodeLine{00040\ \}\ dht20\_error\_t;}
+\DoxyCodeLine{00041\ \textcolor{comment}{/*\ Public\ macros\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{comment}{/*\ Public\ variables\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{comment}{/*\ Class\ Declaration\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+\DoxyCodeLine{00046\ \textcolor{keyword}{class\ }DHT20}
+\DoxyCodeLine{00047\ \{}
+\DoxyCodeLine{00048\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00049\ \ \ DHT20();}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00065\ \ \ dht20\_error\_t\ \mbox{\hyperlink{class_d_h_t20_a6fd2c9066864ddbc8f2ea5cb1026147b}{begin}}();}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00085\ \ \ dht20\_error\_t\ \mbox{\hyperlink{class_d_h_t20_acfd9286ea22e44a6d0b94497a8f7ed2c}{readTempAndHumidity}}();}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00095\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_d_h_t20_a3b4aa6dc2faac1e170773edc429d26cc}{getHumidity}}();}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00105\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_d_h_t20_ac62b81dcc477a8f47c797849c5cf27f2}{getTemperature}}();}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00108\ \ \ \textcolor{keywordtype}{float}\ sensorValue[2];}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00135\ \ \ dht20\_error\_t\ readTargetData(uint32\_t\ *data);}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00153\ \ \ \textcolor{keywordtype}{int}\ readStatus();}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00174\ \ \ \textcolor{keywordtype}{int}\ reset();}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00190\ \ \ \textcolor{keywordtype}{bool}\ \_resetRegister(uint8\_t\ reg);}
+\DoxyCodeLine{00191\ \};}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ DHT20\_H}}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \textcolor{comment}{/*\ End\ of\ file\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ */}}
+
+\end{DoxyCode}

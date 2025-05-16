@@ -1,0 +1,79 @@
+\doxysection{Float\+Traits\texorpdfstring{$<$}{<} T, 4 \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{struct_float_traits_3_01_t_00_014_01_4}{}\label{struct_float_traits_3_01_t_00_014_01_4}\index{FloatTraits$<$ T, 4 $>$@{FloatTraits$<$ T, 4 $>$}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_float_traits_3_01_t_00_014_01_4_a929cd4c02d55d888e0552c454282d497}\label{struct_float_traits_3_01_t_00_014_01_4_a929cd4c02d55d888e0552c454282d497} 
+typedef uint32\+\_\+t {\bfseries mantissa\+\_\+type}
+\item 
+\Hypertarget{struct_float_traits_3_01_t_00_014_01_4_a2f551af5edea4f3115c02e11dd5d0eb4}\label{struct_float_traits_3_01_t_00_014_01_4_a2f551af5edea4f3115c02e11dd5d0eb4} 
+typedef int8\+\_\+t {\bfseries exponent\+\_\+type}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_float_traits_3_01_t_00_014_01_4_a4e613b9a94c920d54fc9bc0897c26b20}\label{struct_float_traits_3_01_t_00_014_01_4_a4e613b9a94c920d54fc9bc0897c26b20} 
+static \mbox{\hyperlink{classpgm__ptr}{pgm\+\_\+ptr}}$<$ T $>$ {\bfseries positive\+Binary\+Powers\+Of\+Ten} ()
+\item 
+\Hypertarget{struct_float_traits_3_01_t_00_014_01_4_aee0dd1e91758b75028f1be3ccc5e2290}\label{struct_float_traits_3_01_t_00_014_01_4_aee0dd1e91758b75028f1be3ccc5e2290} 
+static \mbox{\hyperlink{classpgm__ptr}{pgm\+\_\+ptr}}$<$ T $>$ {\bfseries negative\+Binary\+Powers\+Of\+Ten} ()
+\item 
+\Hypertarget{struct_float_traits_3_01_t_00_014_01_4_ab1ce0176cedea83962e2171cb4fba699}\label{struct_float_traits_3_01_t_00_014_01_4_ab1ce0176cedea83962e2171cb4fba699} 
+static T {\bfseries forge} (uint32\+\_\+t bits)
+\item 
+\Hypertarget{struct_float_traits_3_01_t_00_014_01_4_af01d9e31ed0f52988dcaebcfb9eb1564}\label{struct_float_traits_3_01_t_00_014_01_4_af01d9e31ed0f52988dcaebcfb9eb1564} 
+static T {\bfseries nan} ()
+\item 
+\Hypertarget{struct_float_traits_3_01_t_00_014_01_4_a6139a21722499edbb611ba7e1c04c7f4}\label{struct_float_traits_3_01_t_00_014_01_4_a6139a21722499edbb611ba7e1c04c7f4} 
+static T {\bfseries inf} ()
+\item 
+\Hypertarget{struct_float_traits_3_01_t_00_014_01_4_ade0810b3cb1ee6f8e00248ddaca34bad}\label{struct_float_traits_3_01_t_00_014_01_4_ade0810b3cb1ee6f8e00248ddaca34bad} 
+static T {\bfseries highest} ()
+\item 
+\Hypertarget{struct_float_traits_3_01_t_00_014_01_4_a589e7731948a10f392d017de23cf5a9c}\label{struct_float_traits_3_01_t_00_014_01_4_a589e7731948a10f392d017de23cf5a9c} 
+{\footnotesize template$<$typename TOut$>$ }\\static T {\bfseries highest\+\_\+for} (typename \mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{structis__integral}{is\+\_\+integral}}$<$ TOut $>$\+::value \&\&\mbox{\hyperlink{structis__signed}{is\+\_\+signed}}$<$ TOut $>$\+::value \&\&sizeof(TOut)==4, signed $>$\mbox{\hyperlink{structconditional}{\+::type}} \texorpdfstring{$\ast$}{*}=0)
+\item 
+\Hypertarget{struct_float_traits_3_01_t_00_014_01_4_a8514504528d9f9457964a01d3a6b2ee2}\label{struct_float_traits_3_01_t_00_014_01_4_a8514504528d9f9457964a01d3a6b2ee2} 
+{\footnotesize template$<$typename TOut$>$ }\\static T {\bfseries highest\+\_\+for} (typename \mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{structis__integral}{is\+\_\+integral}}$<$ TOut $>$\+::value \&\&\mbox{\hyperlink{structis__unsigned}{is\+\_\+unsigned}}$<$ TOut $>$\+::value \&\&sizeof(TOut)==4, unsigned $>$\mbox{\hyperlink{structconditional}{\+::type}} \texorpdfstring{$\ast$}{*}=0)
+\item 
+\Hypertarget{struct_float_traits_3_01_t_00_014_01_4_a2bc95290dc84e6b98169b08c77863db1}\label{struct_float_traits_3_01_t_00_014_01_4_a2bc95290dc84e6b98169b08c77863db1} 
+{\footnotesize template$<$typename TOut$>$ }\\static T {\bfseries highest\+\_\+for} (typename \mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{structis__integral}{is\+\_\+integral}}$<$ TOut $>$\+::value \&\&\mbox{\hyperlink{structis__signed}{is\+\_\+signed}}$<$ TOut $>$\+::value \&\&sizeof(TOut)==8, signed $>$\mbox{\hyperlink{structconditional}{\+::type}} \texorpdfstring{$\ast$}{*}=0)
+\item 
+\Hypertarget{struct_float_traits_3_01_t_00_014_01_4_ae41ef5459c1c6ebe8a0c8e29de59256d}\label{struct_float_traits_3_01_t_00_014_01_4_ae41ef5459c1c6ebe8a0c8e29de59256d} 
+{\footnotesize template$<$typename TOut$>$ }\\static T {\bfseries highest\+\_\+for} (typename \mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{structis__integral}{is\+\_\+integral}}$<$ TOut $>$\+::value \&\&\mbox{\hyperlink{structis__unsigned}{is\+\_\+unsigned}}$<$ TOut $>$\+::value \&\&sizeof(TOut)==8, unsigned $>$\mbox{\hyperlink{structconditional}{\+::type}} \texorpdfstring{$\ast$}{*}=0)
+\item 
+\Hypertarget{struct_float_traits_3_01_t_00_014_01_4_abf637881f3c9cca753ab35e46851ecad}\label{struct_float_traits_3_01_t_00_014_01_4_abf637881f3c9cca753ab35e46851ecad} 
+static T {\bfseries lowest} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_float_traits_3_01_t_00_014_01_4_afe995d51d97c76f7825db3145a0a2146}\label{struct_float_traits_3_01_t_00_014_01_4_afe995d51d97c76f7825db3145a0a2146} 
+static const short {\bfseries mantissa\+\_\+bits} = 23
+\item 
+static const mantissa\+\_\+type \mbox{\hyperlink{struct_float_traits_3_01_t_00_014_01_4_afd7d7f38d7a20393fdd06499a79686e5}{mantissa\+\_\+max}}
+\item 
+\Hypertarget{struct_float_traits_3_01_t_00_014_01_4_ac8f7046f95454e8c0c34813fb5be52ff}\label{struct_float_traits_3_01_t_00_014_01_4_ac8f7046f95454e8c0c34813fb5be52ff} 
+static const exponent\+\_\+type {\bfseries exponent\+\_\+max} = 38
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_float_traits_3_01_t_00_014_01_4_afd7d7f38d7a20393fdd06499a79686e5}\index{FloatTraits$<$ T, 4 $>$@{FloatTraits$<$ T, 4 $>$}!mantissa\_max@{mantissa\_max}}
+\index{mantissa\_max@{mantissa\_max}!FloatTraits$<$ T, 4 $>$@{FloatTraits$<$ T, 4 $>$}}
+\doxysubsubsection{\texorpdfstring{mantissa\_max}{mantissa\_max}}
+{\footnotesize\ttfamily \label{struct_float_traits_3_01_t_00_014_01_4_afd7d7f38d7a20393fdd06499a79686e5} 
+template$<$typename T$>$ \\
+const mantissa\+\_\+type \mbox{\hyperlink{struct_float_traits}{Float\+Traits}}$<$ T, 4 $>$\+::mantissa\+\_\+max\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \ \ (mantissa\_type(1)\ <<\ mantissa\_bits)\ -\/\ 1}
+
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Arduino\+Json/src/\+Arduino\+Json/\+Numbers/Float\+Traits.\+hpp\end{DoxyCompactItemize}

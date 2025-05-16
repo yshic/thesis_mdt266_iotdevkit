@@ -1,0 +1,35 @@
+\doxysection{preprocessor.\+hpp}
+\hypertarget{preprocessor_8hpp_source}{}\label{preprocessor_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Polyfills/preprocessor.hpp@{lib/ArduinoJson/src/ArduinoJson/Polyfills/preprocessor.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_CONCAT\_(A,\ B)\ A\#\#B}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_CONCAT2(A,\ B)\ ARDUINOJSON\_CONCAT\_(A,\ B)}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_CONCAT4(A,\ B,\ C,\ D)\ \(\backslash\)}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\ \ ARDUINOJSON\_CONCAT2(ARDUINOJSON\_CONCAT2(A,\ B),\ ARDUINOJSON\_CONCAT2(C,\ D))}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_0000()\ A}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_0001()\ B}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_0010()\ C}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_0011()\ D}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_0100()\ E}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_0101()\ F}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_0110()\ G}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_0111()\ H}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_1000()\ I}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_1001()\ J}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_1010()\ K}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_1011()\ L}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_1100()\ M}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_1101()\ N}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_1110()\ O}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_1111()\ P}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA\_(A,\ B,\ C,\ D)\ ARDUINOJSON\_BIN2ALPHA\_\#\#A\#\#B\#\#C\#\#D()}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ ARDUINOJSON\_BIN2ALPHA(A,\ B,\ C,\ D)\ ARDUINOJSON\_BIN2ALPHA\_(A,\ B,\ C,\ D)}}
+
+\end{DoxyCode}

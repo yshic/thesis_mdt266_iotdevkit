@@ -1,0 +1,591 @@
+\doxysection{Msg\+Pack\+Deserializer.\+hpp}
+\hypertarget{_msg_pack_deserializer_8hpp_source}{}\label{_msg_pack_deserializer_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/MsgPack/MsgPackDeserializer.hpp@{lib/ArduinoJson/src/ArduinoJson/MsgPack/MsgPackDeserializer.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Deserialization/deserialize.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Memory/MemoryPool.hpp>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <ArduinoJson/MsgPack/endianess.hpp>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <ArduinoJson/MsgPack/ieee754.hpp>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/type\_traits.hpp>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Variant/VariantData.hpp>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TReader,\ \textcolor{keyword}{typename}\ TStringStorage>}
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }MsgPackDeserializer\ \{}
+\DoxyCodeLine{00018\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ MsgPackDeserializer(\mbox{\hyperlink{class_memory_pool}{MemoryPool}}*\ pool,\ TReader\ reader,}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TStringStorage\ stringStorage)}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ :\ pool\_(pool),}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ reader\_(reader),}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ stringStorage\_(stringStorage),}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ foundSomething\_(\textcolor{keyword}{false})\ \{\}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TFilter>}
+\DoxyCodeLine{00027\ \ \ \mbox{\hyperlink{class_deserialization_error}{DeserializationError}}\ parse(\mbox{\hyperlink{class_variant_data}{VariantData}}\&\ variant,\ TFilter\ filter,}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_deserialization_option_1_1_nesting_limit}{DeserializationOption::NestingLimit}}\ nestingLimit)\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00030\ \ \ \ \ err\ =\ parseVariant(\&variant,\ filter,\ nestingLimit);}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordflow}{return}\ foundSomething\_\ ?\ err\ :\ DeserializationError::EmptyInput;}
+\DoxyCodeLine{00032\ \ \ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00035\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TFilter>}
+\DoxyCodeLine{00036\ \ \ DeserializationError::Code\ parseVariant(}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \mbox{\hyperlink{class_variant_data}{VariantData}}*\ variant,\ TFilter\ filter,}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \mbox{\hyperlink{class_deserialization_option_1_1_nesting_limit}{DeserializationOption::NestingLimit}}\ nestingLimit)\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ uint8\_t\ code\ =\ 0;\ \ \textcolor{comment}{//\ TODO:\ why\ do\ we\ need\ to\ initialize\ this\ variable?}}
+\DoxyCodeLine{00042\ \ \ \ \ err\ =\ readByte(code);}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ foundSomething\_\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{bool}\ allowValue\ =\ filter.allowValue();}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \textcolor{comment}{//\ callers\ pass\ a\ null\ pointer\ only\ when\ value\ must\ be\ ignored}}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ ARDUINOJSON\_ASSERT(variant\ !=\ 0);}
+\DoxyCodeLine{00053\ \ \ \ \ \}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordflow}{switch}\ (code)\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xc0:}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ already\ null}}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::Ok;}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xc1:}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::InvalidInput;}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xc2:}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ variant-\/>setBoolean(\textcolor{keyword}{false});}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::Ok;}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xc3:}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ variant-\/>setBoolean(\textcolor{keyword}{true});}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::Ok;}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xc4:\ \ \textcolor{comment}{//\ bin\ 8\ (not\ supported)}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipString<uint8\_t>();}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xc5:\ \ \textcolor{comment}{//\ bin\ 16\ (not\ supported)}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipString<uint16\_t>();}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xc6:\ \ \textcolor{comment}{//\ bin\ 32\ (not\ supported)}}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipString<uint32\_t>();}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xc7:\ \ \textcolor{comment}{//\ ext\ 8\ (not\ supported)}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipExt<uint8\_t>();}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xc8:\ \ \textcolor{comment}{//\ ext\ 16\ (not\ supported)}}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipExt<uint16\_t>();}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xc9:\ \ \textcolor{comment}{//\ ext\ 32\ (not\ supported)}}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipExt<uint32\_t>();}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xca:}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readFloat<float>(variant);}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(4);}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xcb:}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readDouble<double>(variant);}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(8);}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xcc:}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readInteger<uint8\_t>(variant);}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(1);}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xcd:}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readInteger<uint16\_t>(variant);}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(2);}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xce:}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readInteger<uint32\_t>(variant);}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(4);}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xcf:}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_USE\_LONG\_LONG}}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readInteger<uint64\_t>(variant);}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(8);}
+\DoxyCodeLine{00127\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(8);\ \ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{00129\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xd0:}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readInteger<int8\_t>(variant);}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(1);}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xd1:}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readInteger<int16\_t>(variant);}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(2);}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xd2:}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readInteger<int32\_t>(variant);}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(4);}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xd3:}
+\DoxyCodeLine{00150\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_USE\_LONG\_LONG}}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readInteger<int64\_t>(variant);}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(8);\ \ \textcolor{comment}{//\ not\ supported}}
+\DoxyCodeLine{00155\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(8);}
+\DoxyCodeLine{00157\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xd4:\ \ \textcolor{comment}{//\ fixext\ 1\ (not\ supported)}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(2);}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xd5:\ \ \textcolor{comment}{//\ fixext\ 2\ (not\ supported)}}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(3);}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xd6:\ \ \textcolor{comment}{//\ fixext\ 4\ (not\ supported)}}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(5);}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xd7:\ \ \textcolor{comment}{//\ fixext\ 8\ (not\ supported)}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(9);}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xd8:\ \ \textcolor{comment}{//\ fixext\ 16\ (not\ supported)}}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(17);}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xd9:}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readString<uint8\_t>(variant);}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipString<uint8\_t>();}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xda:}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readString<uint16\_t>(variant);}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipString<uint16\_t>();}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xdb:}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readString<uint32\_t>(variant);}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipString<uint32\_t>();}
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xdc:}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readArray<uint16\_t>(variant,\ filter,\ nestingLimit);}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xdd:}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readArray<uint32\_t>(variant,\ filter,\ nestingLimit);}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xde:}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readObject<uint16\_t>(variant,\ filter,\ nestingLimit);}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xdf:}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readObject<uint32\_t>(variant,\ filter,\ nestingLimit);}
+\DoxyCodeLine{00203\ \ \ \ \ \}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keywordflow}{switch}\ (code\ \&\ 0xf0)\ \{}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x80:}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readObject(variant,\ code\ \&\ 0x0F,\ filter,\ nestingLimit);}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0x90:}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readArray(variant,\ code\ \&\ 0x0F,\ filter,\ nestingLimit);}
+\DoxyCodeLine{00211\ \ \ \ \ \}}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordflow}{if}\ ((code\ \&\ 0xe0)\ ==\ 0xa0)\ \{}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readString(variant,\ code\ \&\ 0x1f);}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(code\ \&\ 0x1f);}
+\DoxyCodeLine{00218\ \ \ \ \ \}}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{keywordflow}{if}\ (allowValue)}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ variant-\/>setInteger(\textcolor{keyword}{static\_cast<}int8\_t\textcolor{keyword}{>}(code));}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::Ok;}
+\DoxyCodeLine{00224\ \ \ \}}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \ \ DeserializationError::Code\ readByte(uint8\_t\&\ value)\ \{}
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keywordtype}{int}\ c\ =\ reader\_.read();}
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keywordflow}{if}\ (c\ <\ 0)}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::IncompleteInput;}
+\DoxyCodeLine{00230\ \ \ \ \ value\ =\ \textcolor{keyword}{static\_cast<}uint8\_t\textcolor{keyword}{>}(c);}
+\DoxyCodeLine{00231\ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::Ok;}
+\DoxyCodeLine{00232\ \ \ \}}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00234\ \ \ DeserializationError::Code\ readBytes(uint8\_t*\ p,\ \textcolor{keywordtype}{size\_t}\ n)\ \{}
+\DoxyCodeLine{00235\ \ \ \ \ \textcolor{keywordflow}{if}\ (reader\_.readBytes(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(p),\ n)\ ==\ n)}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::Ok;}
+\DoxyCodeLine{00237\ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::IncompleteInput;}
+\DoxyCodeLine{00238\ \ \ \}}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00241\ \ \ DeserializationError::Code\ readBytes(T\&\ value)\ \{}
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keywordflow}{return}\ readBytes(\textcolor{keyword}{reinterpret\_cast<}uint8\_t*\textcolor{keyword}{>}(\&value),\ \textcolor{keyword}{sizeof}(value));}
+\DoxyCodeLine{00243\ \ \ \}}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \ \ DeserializationError::Code\ skipBytes(\textcolor{keywordtype}{size\_t}\ n)\ \{}
+\DoxyCodeLine{00246\ \ \ \ \ \textcolor{keywordflow}{for}\ (;\ n;\ -\/-\/n)\ \{}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (reader\_.read()\ <\ 0)}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::IncompleteInput;}
+\DoxyCodeLine{00249\ \ \ \ \ \}}
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::Ok;}
+\DoxyCodeLine{00251\ \ \ \}}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00253\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00254\ \ \ DeserializationError::Code\ readInteger(T\&\ value)\ \{}
+\DoxyCodeLine{00255\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00257\ \ \ \ \ err\ =\ readBytes(value);}
+\DoxyCodeLine{00258\ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ \ \ \ \ fixEndianess(value);}
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00263\ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::Ok;}
+\DoxyCodeLine{00264\ \ \ \}}
+\DoxyCodeLine{00265\ }
+\DoxyCodeLine{00266\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00267\ \ \ DeserializationError::Code\ readInteger(\mbox{\hyperlink{class_variant_data}{VariantData}}*\ variant)\ \{}
+\DoxyCodeLine{00268\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00269\ \ \ \ \ T\ value;}
+\DoxyCodeLine{00270\ }
+\DoxyCodeLine{00271\ \ \ \ \ err\ =\ readInteger(value);}
+\DoxyCodeLine{00272\ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00275\ \ \ \ \ variant-\/>setInteger(value);}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00277\ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::Ok;}
+\DoxyCodeLine{00278\ \ \ \}}
+\DoxyCodeLine{00279\ }
+\DoxyCodeLine{00280\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00281\ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if}}<\textcolor{keyword}{sizeof}(T)\ ==\ 4,\ DeserializationError::Code>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00282\ \ \ readFloat(\mbox{\hyperlink{class_variant_data}{VariantData}}*\ variant)\ \{}
+\DoxyCodeLine{00283\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00284\ \ \ \ \ T\ value;}
+\DoxyCodeLine{00285\ }
+\DoxyCodeLine{00286\ \ \ \ \ err\ =\ readBytes(value);}
+\DoxyCodeLine{00287\ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00289\ }
+\DoxyCodeLine{00290\ \ \ \ \ fixEndianess(value);}
+\DoxyCodeLine{00291\ \ \ \ \ variant-\/>setFloat(value);}
+\DoxyCodeLine{00292\ }
+\DoxyCodeLine{00293\ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::Ok;}
+\DoxyCodeLine{00294\ \ \ \}}
+\DoxyCodeLine{00295\ }
+\DoxyCodeLine{00296\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00297\ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if}}<\textcolor{keyword}{sizeof}(T)\ ==\ 8,\ DeserializationError::Code>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00298\ \ \ readDouble(\mbox{\hyperlink{class_variant_data}{VariantData}}*\ variant)\ \{}
+\DoxyCodeLine{00299\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00300\ \ \ \ \ T\ value;}
+\DoxyCodeLine{00301\ }
+\DoxyCodeLine{00302\ \ \ \ \ err\ =\ readBytes(value);}
+\DoxyCodeLine{00303\ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00306\ \ \ \ \ fixEndianess(value);}
+\DoxyCodeLine{00307\ \ \ \ \ variant-\/>setFloat(value);}
+\DoxyCodeLine{00308\ }
+\DoxyCodeLine{00309\ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::Ok;}
+\DoxyCodeLine{00310\ \ \ \}}
+\DoxyCodeLine{00311\ }
+\DoxyCodeLine{00312\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00313\ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if}}<\textcolor{keyword}{sizeof}(T)\ ==\ 4,\ DeserializationError::Code>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00314\ \ \ readDouble(\mbox{\hyperlink{class_variant_data}{VariantData}}*\ variant)\ \{}
+\DoxyCodeLine{00315\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00316\ \ \ \ \ uint8\_t\ i[8];\ \ \textcolor{comment}{//\ input\ is\ 8\ bytes}}
+\DoxyCodeLine{00317\ \ \ \ \ T\ value;\ \ \ \ \ \ \ \textcolor{comment}{//\ output\ is\ 4\ bytes}}
+\DoxyCodeLine{00318\ \ \ \ \ uint8\_t*\ o\ =\ \textcolor{keyword}{reinterpret\_cast<}uint8\_t*\textcolor{keyword}{>}(\&value);}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \ \ \ \ err\ =\ readBytes(i,\ 8);}
+\DoxyCodeLine{00321\ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00323\ }
+\DoxyCodeLine{00324\ \ \ \ \ doubleToFloat(i,\ o);}
+\DoxyCodeLine{00325\ \ \ \ \ fixEndianess(value);}
+\DoxyCodeLine{00326\ \ \ \ \ variant-\/>setFloat(value);}
+\DoxyCodeLine{00327\ }
+\DoxyCodeLine{00328\ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::Ok;}
+\DoxyCodeLine{00329\ \ \ \}}
+\DoxyCodeLine{00330\ }
+\DoxyCodeLine{00331\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00332\ \ \ DeserializationError::Code\ readString(\mbox{\hyperlink{class_variant_data}{VariantData}}*\ variant)\ \{}
+\DoxyCodeLine{00333\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00334\ \ \ \ \ T\ size;}
+\DoxyCodeLine{00335\ }
+\DoxyCodeLine{00336\ \ \ \ \ err\ =\ readInteger(size);}
+\DoxyCodeLine{00337\ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00339\ }
+\DoxyCodeLine{00340\ \ \ \ \ \textcolor{keywordflow}{return}\ readString(variant,\ size);}
+\DoxyCodeLine{00341\ \ \ \}}
+\DoxyCodeLine{00342\ }
+\DoxyCodeLine{00343\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00344\ \ \ DeserializationError::Code\ readString()\ \{}
+\DoxyCodeLine{00345\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00346\ \ \ \ \ T\ size;}
+\DoxyCodeLine{00347\ }
+\DoxyCodeLine{00348\ \ \ \ \ err\ =\ readInteger(size);}
+\DoxyCodeLine{00349\ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00351\ }
+\DoxyCodeLine{00352\ \ \ \ \ \textcolor{keywordflow}{return}\ readString(size);}
+\DoxyCodeLine{00353\ \ \ \}}
+\DoxyCodeLine{00354\ }
+\DoxyCodeLine{00355\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00356\ \ \ DeserializationError::Code\ skipString()\ \{}
+\DoxyCodeLine{00357\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00358\ \ \ \ \ T\ size;}
+\DoxyCodeLine{00359\ }
+\DoxyCodeLine{00360\ \ \ \ \ err\ =\ readInteger(size);}
+\DoxyCodeLine{00361\ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00363\ }
+\DoxyCodeLine{00364\ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(size);}
+\DoxyCodeLine{00365\ \ \ \}}
+\DoxyCodeLine{00366\ }
+\DoxyCodeLine{00367\ \ \ DeserializationError::Code\ readString(\mbox{\hyperlink{class_variant_data}{VariantData}}*\ variant,\ \textcolor{keywordtype}{size\_t}\ n)\ \{}
+\DoxyCodeLine{00368\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00369\ }
+\DoxyCodeLine{00370\ \ \ \ \ err\ =\ readString(n);}
+\DoxyCodeLine{00371\ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00373\ }
+\DoxyCodeLine{00374\ \ \ \ \ variant-\/>setString(stringStorage\_.save());}
+\DoxyCodeLine{00375\ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::Ok;}
+\DoxyCodeLine{00376\ \ \ \}}
+\DoxyCodeLine{00377\ }
+\DoxyCodeLine{00378\ \ \ DeserializationError::Code\ readString(\textcolor{keywordtype}{size\_t}\ n)\ \{}
+\DoxyCodeLine{00379\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00380\ }
+\DoxyCodeLine{00381\ \ \ \ \ stringStorage\_.startString();}
+\DoxyCodeLine{00382\ \ \ \ \ \textcolor{keywordflow}{for}\ (;\ n;\ -\/-\/n)\ \{}
+\DoxyCodeLine{00383\ \ \ \ \ \ \ uint8\_t\ c;}
+\DoxyCodeLine{00384\ }
+\DoxyCodeLine{00385\ \ \ \ \ \ \ err\ =\ readBytes(c);}
+\DoxyCodeLine{00386\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00387\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00388\ }
+\DoxyCodeLine{00389\ \ \ \ \ \ \ stringStorage\_.append(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{char}\textcolor{keyword}{>}(c));}
+\DoxyCodeLine{00390\ \ \ \ \ \}}
+\DoxyCodeLine{00391\ }
+\DoxyCodeLine{00392\ \ \ \ \ \textcolor{keywordflow}{if}\ (!stringStorage\_.isValid())}
+\DoxyCodeLine{00393\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::NoMemory;}
+\DoxyCodeLine{00394\ }
+\DoxyCodeLine{00395\ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::Ok;}
+\DoxyCodeLine{00396\ \ \ \}}
+\DoxyCodeLine{00397\ }
+\DoxyCodeLine{00398\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TSize,\ \textcolor{keyword}{typename}\ TFilter>}
+\DoxyCodeLine{00399\ \ \ DeserializationError::Code\ readArray(}
+\DoxyCodeLine{00400\ \ \ \ \ \ \ \mbox{\hyperlink{class_variant_data}{VariantData}}*\ variant,\ TFilter\ filter,}
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \mbox{\hyperlink{class_deserialization_option_1_1_nesting_limit}{DeserializationOption::NestingLimit}}\ nestingLimit)\ \{}
+\DoxyCodeLine{00402\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00403\ \ \ \ \ TSize\ size;}
+\DoxyCodeLine{00404\ }
+\DoxyCodeLine{00405\ \ \ \ \ err\ =\ readInteger(size);}
+\DoxyCodeLine{00406\ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00407\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00408\ }
+\DoxyCodeLine{00409\ \ \ \ \ \textcolor{keywordflow}{return}\ readArray(variant,\ size,\ filter,\ nestingLimit);}
+\DoxyCodeLine{00410\ \ \ \}}
+\DoxyCodeLine{00411\ }
+\DoxyCodeLine{00412\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TFilter>}
+\DoxyCodeLine{00413\ \ \ DeserializationError::Code\ readArray(}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \mbox{\hyperlink{class_variant_data}{VariantData}}*\ variant,\ \textcolor{keywordtype}{size\_t}\ n,\ TFilter\ filter,}
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \mbox{\hyperlink{class_deserialization_option_1_1_nesting_limit}{DeserializationOption::NestingLimit}}\ nestingLimit)\ \{}
+\DoxyCodeLine{00416\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00417\ }
+\DoxyCodeLine{00418\ \ \ \ \ \textcolor{keywordflow}{if}\ (nestingLimit.reached())}
+\DoxyCodeLine{00419\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::TooDeep;}
+\DoxyCodeLine{00420\ }
+\DoxyCodeLine{00421\ \ \ \ \ \textcolor{keywordtype}{bool}\ allowArray\ =\ filter.allowArray();}
+\DoxyCodeLine{00422\ }
+\DoxyCodeLine{00423\ \ \ \ \ \mbox{\hyperlink{class_collection_data}{CollectionData}}*\ array;}
+\DoxyCodeLine{00424\ \ \ \ \ \textcolor{keywordflow}{if}\ (allowArray)\ \{}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ ARDUINOJSON\_ASSERT(variant\ !=\ 0);}
+\DoxyCodeLine{00426\ \ \ \ \ \ \ array\ =\ \&variant-\/>toArray();}
+\DoxyCodeLine{00427\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ array\ =\ 0;}
+\DoxyCodeLine{00429\ \ \ \ \ \}}
+\DoxyCodeLine{00430\ }
+\DoxyCodeLine{00431\ \ \ \ \ TFilter\ memberFilter\ =\ filter[0U];}
+\DoxyCodeLine{00432\ }
+\DoxyCodeLine{00433\ \ \ \ \ \textcolor{keywordflow}{for}\ (;\ n;\ -\/-\/n)\ \{}
+\DoxyCodeLine{00434\ \ \ \ \ \ \ \mbox{\hyperlink{class_variant_data}{VariantData}}*\ value;}
+\DoxyCodeLine{00435\ }
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (memberFilter.allow())\ \{}
+\DoxyCodeLine{00437\ \ \ \ \ \ \ \ \ ARDUINOJSON\_ASSERT(array\ !=\ 0);}
+\DoxyCodeLine{00438\ \ \ \ \ \ \ \ \ value\ =\ array-\/>addElement(pool\_);}
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!value)}
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::NoMemory;}
+\DoxyCodeLine{00441\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ value\ =\ 0;}
+\DoxyCodeLine{00443\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00444\ }
+\DoxyCodeLine{00445\ \ \ \ \ \ \ err\ =\ parseVariant(value,\ memberFilter,\ nestingLimit.decrement());}
+\DoxyCodeLine{00446\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00448\ \ \ \ \ \}}
+\DoxyCodeLine{00449\ }
+\DoxyCodeLine{00450\ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::Ok;}
+\DoxyCodeLine{00451\ \ \ \}}
+\DoxyCodeLine{00452\ }
+\DoxyCodeLine{00453\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TSize,\ \textcolor{keyword}{typename}\ TFilter>}
+\DoxyCodeLine{00454\ \ \ DeserializationError::Code\ readObject(}
+\DoxyCodeLine{00455\ \ \ \ \ \ \ \mbox{\hyperlink{class_variant_data}{VariantData}}*\ variant,\ TFilter\ filter,}
+\DoxyCodeLine{00456\ \ \ \ \ \ \ \mbox{\hyperlink{class_deserialization_option_1_1_nesting_limit}{DeserializationOption::NestingLimit}}\ nestingLimit)\ \{}
+\DoxyCodeLine{00457\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00458\ \ \ \ \ TSize\ size;}
+\DoxyCodeLine{00459\ }
+\DoxyCodeLine{00460\ \ \ \ \ err\ =\ readInteger(size);}
+\DoxyCodeLine{00461\ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00462\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00463\ }
+\DoxyCodeLine{00464\ \ \ \ \ \textcolor{keywordflow}{return}\ readObject(variant,\ size,\ filter,\ nestingLimit);}
+\DoxyCodeLine{00465\ \ \ \}}
+\DoxyCodeLine{00466\ }
+\DoxyCodeLine{00467\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TFilter>}
+\DoxyCodeLine{00468\ \ \ DeserializationError::Code\ readObject(}
+\DoxyCodeLine{00469\ \ \ \ \ \ \ \mbox{\hyperlink{class_variant_data}{VariantData}}*\ variant,\ \textcolor{keywordtype}{size\_t}\ n,\ TFilter\ filter,}
+\DoxyCodeLine{00470\ \ \ \ \ \ \ \mbox{\hyperlink{class_deserialization_option_1_1_nesting_limit}{DeserializationOption::NestingLimit}}\ nestingLimit)\ \{}
+\DoxyCodeLine{00471\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00472\ }
+\DoxyCodeLine{00473\ \ \ \ \ \textcolor{keywordflow}{if}\ (nestingLimit.reached())}
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::TooDeep;}
+\DoxyCodeLine{00475\ }
+\DoxyCodeLine{00476\ \ \ \ \ \mbox{\hyperlink{class_collection_data}{CollectionData}}*\ object;}
+\DoxyCodeLine{00477\ \ \ \ \ \textcolor{keywordflow}{if}\ (filter.allowObject())\ \{}
+\DoxyCodeLine{00478\ \ \ \ \ \ \ ARDUINOJSON\_ASSERT(variant\ !=\ 0);}
+\DoxyCodeLine{00479\ \ \ \ \ \ \ \textcolor{keywordtype}{object}\ =\ \&variant-\/>toObject();}
+\DoxyCodeLine{00480\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00481\ \ \ \ \ \ \ \textcolor{keywordtype}{object}\ =\ 0;}
+\DoxyCodeLine{00482\ \ \ \ \ \}}
+\DoxyCodeLine{00483\ }
+\DoxyCodeLine{00484\ \ \ \ \ \textcolor{keywordflow}{for}\ (;\ n;\ -\/-\/n)\ \{}
+\DoxyCodeLine{00485\ \ \ \ \ \ \ err\ =\ readKey();}
+\DoxyCodeLine{00486\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00487\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00488\ }
+\DoxyCodeLine{00489\ \ \ \ \ \ \ \mbox{\hyperlink{class_json_string}{JsonString}}\ key\ =\ stringStorage\_.str();}
+\DoxyCodeLine{00490\ \ \ \ \ \ \ TFilter\ memberFilter\ =\ filter[key.c\_str()];}
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \mbox{\hyperlink{class_variant_data}{VariantData}}*\ member;}
+\DoxyCodeLine{00492\ }
+\DoxyCodeLine{00493\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (memberFilter.allow())\ \{}
+\DoxyCodeLine{00494\ \ \ \ \ \ \ \ \ ARDUINOJSON\_ASSERT(\textcolor{keywordtype}{object}\ !=\ 0);}
+\DoxyCodeLine{00495\ }
+\DoxyCodeLine{00496\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Save\ key\ in\ memory\ pool.}}
+\DoxyCodeLine{00497\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ This\ MUST\ be\ done\ before\ adding\ the\ slot.}}
+\DoxyCodeLine{00498\ \ \ \ \ \ \ \ \ key\ =\ stringStorage\_.save();}
+\DoxyCodeLine{00499\ }
+\DoxyCodeLine{00500\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_variant_slot}{VariantSlot}}*\ slot\ =\ \textcolor{keywordtype}{object}-\/>addSlot(pool\_);}
+\DoxyCodeLine{00501\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!slot)}
+\DoxyCodeLine{00502\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::NoMemory;}
+\DoxyCodeLine{00503\ }
+\DoxyCodeLine{00504\ \ \ \ \ \ \ \ \ slot-\/>setKey(key);}
+\DoxyCodeLine{00505\ }
+\DoxyCodeLine{00506\ \ \ \ \ \ \ \ \ member\ =\ slot-\/>data();}
+\DoxyCodeLine{00507\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00508\ \ \ \ \ \ \ \ \ member\ =\ 0;}
+\DoxyCodeLine{00509\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00510\ }
+\DoxyCodeLine{00511\ \ \ \ \ \ \ err\ =\ parseVariant(member,\ memberFilter,\ nestingLimit.decrement());}
+\DoxyCodeLine{00512\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00513\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00514\ \ \ \ \ \}}
+\DoxyCodeLine{00515\ }
+\DoxyCodeLine{00516\ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::Ok;}
+\DoxyCodeLine{00517\ \ \ \}}
+\DoxyCodeLine{00518\ }
+\DoxyCodeLine{00519\ \ \ DeserializationError::Code\ readKey()\ \{}
+\DoxyCodeLine{00520\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00521\ \ \ \ \ uint8\_t\ code;}
+\DoxyCodeLine{00522\ }
+\DoxyCodeLine{00523\ \ \ \ \ err\ =\ readByte(code);}
+\DoxyCodeLine{00524\ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00525\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00526\ }
+\DoxyCodeLine{00527\ \ \ \ \ \textcolor{keywordflow}{if}\ ((code\ \&\ 0xe0)\ ==\ 0xa0)}
+\DoxyCodeLine{00528\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readString(code\ \&\ 0x1f);}
+\DoxyCodeLine{00529\ }
+\DoxyCodeLine{00530\ \ \ \ \ \textcolor{keywordflow}{switch}\ (code)\ \{}
+\DoxyCodeLine{00531\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xd9:}
+\DoxyCodeLine{00532\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readString<uint8\_t>();}
+\DoxyCodeLine{00533\ }
+\DoxyCodeLine{00534\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xda:}
+\DoxyCodeLine{00535\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readString<uint16\_t>();}
+\DoxyCodeLine{00536\ }
+\DoxyCodeLine{00537\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0xdb:}
+\DoxyCodeLine{00538\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ readString<uint32\_t>();}
+\DoxyCodeLine{00539\ }
+\DoxyCodeLine{00540\ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00541\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ DeserializationError::InvalidInput;}
+\DoxyCodeLine{00542\ \ \ \ \ \}}
+\DoxyCodeLine{00543\ \ \ \}}
+\DoxyCodeLine{00544\ }
+\DoxyCodeLine{00545\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00546\ \ \ DeserializationError::Code\ skipExt()\ \{}
+\DoxyCodeLine{00547\ \ \ \ \ DeserializationError::Code\ err;}
+\DoxyCodeLine{00548\ \ \ \ \ T\ size;}
+\DoxyCodeLine{00549\ }
+\DoxyCodeLine{00550\ \ \ \ \ err\ =\ readInteger(size);}
+\DoxyCodeLine{00551\ \ \ \ \ \textcolor{keywordflow}{if}\ (err)}
+\DoxyCodeLine{00552\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ err;}
+\DoxyCodeLine{00553\ }
+\DoxyCodeLine{00554\ \ \ \ \ \textcolor{keywordflow}{return}\ skipBytes(size\ +\ 1U);}
+\DoxyCodeLine{00555\ \ \ \}}
+\DoxyCodeLine{00556\ }
+\DoxyCodeLine{00557\ \ \ \mbox{\hyperlink{class_memory_pool}{MemoryPool}}*\ pool\_;}
+\DoxyCodeLine{00558\ \ \ TReader\ reader\_;}
+\DoxyCodeLine{00559\ \ \ TStringStorage\ stringStorage\_;}
+\DoxyCodeLine{00560\ \ \ \textcolor{keywordtype}{bool}\ foundSomething\_;}
+\DoxyCodeLine{00561\ \};}
+\DoxyCodeLine{00562\ }
+\DoxyCodeLine{00563\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00564\ }
+\DoxyCodeLine{00565\ ARDUINOJSON\_BEGIN\_PUBLIC\_NAMESPACE}
+\DoxyCodeLine{00566\ }
+\DoxyCodeLine{00567\ \textcolor{comment}{//\ Parses\ a\ MessagePack\ input\ and\ puts\ the\ result\ in\ a\ JsonDocument.}}
+\DoxyCodeLine{00568\ \textcolor{comment}{//\ https://arduinojson.org/v6/api/msgpack/deserializemsgpack/}}
+\DoxyCodeLine{00569\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00570\ \mbox{\hyperlink{class_deserialization_error}{DeserializationError}}\ deserializeMsgPack(\mbox{\hyperlink{class_json_document}{JsonDocument}}\&\ doc,\ Args\&\&...\ args)\ \{}
+\DoxyCodeLine{00571\ \ \ \textcolor{keyword}{using\ namespace\ }detail;}
+\DoxyCodeLine{00572\ \ \ \textcolor{keywordflow}{return}\ deserialize<MsgPackDeserializer>(doc,\ detail::forward<Args>(args)...);}
+\DoxyCodeLine{00573\ \}}
+\DoxyCodeLine{00574\ }
+\DoxyCodeLine{00575\ \textcolor{comment}{//\ Parses\ a\ MessagePack\ input\ and\ puts\ the\ result\ in\ a\ JsonDocument.}}
+\DoxyCodeLine{00576\ \textcolor{comment}{//\ https://arduinojson.org/v6/api/msgpack/deserializemsgpack/}}
+\DoxyCodeLine{00577\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TChar,\ \textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00578\ \mbox{\hyperlink{class_deserialization_error}{DeserializationError}}\ deserializeMsgPack(\mbox{\hyperlink{class_json_document}{JsonDocument}}\&\ doc,\ TChar*\ input,}
+\DoxyCodeLine{00579\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Args\&\&...\ args)\ \{}
+\DoxyCodeLine{00580\ \ \ \textcolor{keyword}{using\ namespace\ }detail;}
+\DoxyCodeLine{00581\ \ \ \textcolor{keywordflow}{return}\ deserialize<MsgPackDeserializer>(doc,\ input,}
+\DoxyCodeLine{00582\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ detail::forward<Args>(args)...);}
+\DoxyCodeLine{00583\ \}}
+\DoxyCodeLine{00584\ }
+\DoxyCodeLine{00585\ ARDUINOJSON\_END\_PUBLIC\_NAMESPACE}
+
+\end{DoxyCode}

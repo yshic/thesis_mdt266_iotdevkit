@@ -1,0 +1,136 @@
+\doxysection{Relay Class Reference}
+\hypertarget{class_relay}{}\label{class_relay}\index{Relay@{Relay}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_relay_adad23a5505a37c21a4c3353a65ff51c3}{Relay}} (int pin)
+\begin{DoxyCompactList}\small\item\em Constructor for the \doxylink{class_relay}{Relay} class. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_relay_a674ccf47e38920324b76e85654dce550}{on}} ()
+\begin{DoxyCompactList}\small\item\em Turns the relay on. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_relay_a06078d488d6b12acf83f88e0d78e1737}{off}} ()
+\begin{DoxyCompactList}\small\item\em Turns the relay off. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_relay_ad37d4481c9c5b74f0033564e916f4915}{toggle}} ()
+\begin{DoxyCompactList}\small\item\em Toggles the relay state. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_relay_ab9eb34f1f5cf765bdd01427d1bed15cc}{get\+Status}} ()
+\begin{DoxyCompactList}\small\item\em Gets the current status of the relay. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_relay_adad23a5505a37c21a4c3353a65ff51c3}\index{Relay@{Relay}!Relay@{Relay}}
+\index{Relay@{Relay}!Relay@{Relay}}
+\doxysubsubsection{\texorpdfstring{Relay()}{Relay()}}
+{\footnotesize\ttfamily \label{class_relay_adad23a5505a37c21a4c3353a65ff51c3} 
+Relay\+::\+Relay (\begin{DoxyParamCaption}\item[{int}]{pin}{}\end{DoxyParamCaption})}
+
+
+
+Constructor for the \doxylink{class_relay}{Relay} class. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pin} & Pin number connected to the relay.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Sets the relay pin to OUTPUT mode and initializes the relay status to false.
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_relay_ab9eb34f1f5cf765bdd01427d1bed15cc}\index{Relay@{Relay}!getStatus@{getStatus}}
+\index{getStatus@{getStatus}!Relay@{Relay}}
+\doxysubsubsection{\texorpdfstring{getStatus()}{getStatus()}}
+{\footnotesize\ttfamily \label{class_relay_ab9eb34f1f5cf765bdd01427d1bed15cc} 
+bool Relay\+::get\+Status (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the current status of the relay. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Returns the current status of the relay (true for on, false for off).
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item true\+: \doxylink{class_relay}{Relay} is on
+\item false\+: \doxylink{class_relay}{Relay} is off 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_relay_a06078d488d6b12acf83f88e0d78e1737}\index{Relay@{Relay}!off@{off}}
+\index{off@{off}!Relay@{Relay}}
+\doxysubsubsection{\texorpdfstring{off()}{off()}}
+{\footnotesize\ttfamily \label{class_relay_a06078d488d6b12acf83f88e0d78e1737} 
+void Relay\+::off (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Turns the relay off. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Sets the relay status to false and writes LOW to the relay pin.
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\Hypertarget{class_relay_a674ccf47e38920324b76e85654dce550}\index{Relay@{Relay}!on@{on}}
+\index{on@{on}!Relay@{Relay}}
+\doxysubsubsection{\texorpdfstring{on()}{on()}}
+{\footnotesize\ttfamily \label{class_relay_a674ccf47e38920324b76e85654dce550} 
+void Relay\+::on (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Turns the relay on. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Sets the relay status to true and writes HIGH to the relay pin.
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\Hypertarget{class_relay_ad37d4481c9c5b74f0033564e916f4915}\index{Relay@{Relay}!toggle@{toggle}}
+\index{toggle@{toggle}!Relay@{Relay}}
+\doxysubsubsection{\texorpdfstring{toggle()}{toggle()}}
+{\footnotesize\ttfamily \label{class_relay_ad37d4481c9c5b74f0033564e916f4915} 
+void Relay\+::toggle (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Toggles the relay state. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Checks the current status and toggles the relay state accordingly.
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/relay/src/\mbox{\hyperlink{relay_8h}{relay.\+h}}\item 
+lib/relay/src/\mbox{\hyperlink{relay_8cpp}{relay.\+cpp}}\end{DoxyCompactItemize}

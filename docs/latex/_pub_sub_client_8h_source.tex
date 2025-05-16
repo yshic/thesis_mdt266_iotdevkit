@@ -1,0 +1,190 @@
+\doxysection{Pub\+Sub\+Client.\+h}
+\hypertarget{_pub_sub_client_8h_source}{}\label{_pub_sub_client_8h_source}\index{lib/PubSubClient/PubSubClient.h@{lib/PubSubClient/PubSubClient.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ PubSubClient.h\ -\/\ A\ simple\ client\ for\ MQTT.}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ Nick\ O'Leary}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ http://knolleary.net}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ PubSubClient\_h}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ PubSubClient\_h}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}IPAddress.h"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}Client.h"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}Stream.h"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ MQTT\_VERSION\_3\_1\ \ \ \ \ \ 3}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ MQTT\_VERSION\_3\_1\_1\ \ \ \ 4}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ MQTT\_VERSION\ :\ Pick\ the\ version}}
+\DoxyCodeLine{00019\ \textcolor{comment}{//\#define\ MQTT\_VERSION\ MQTT\_VERSION\_3\_1}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#ifndef\ MQTT\_VERSION}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ MQTT\_VERSION\ MQTT\_VERSION\_3\_1\_1}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{comment}{//\ MQTT\_MAX\_PACKET\_SIZE\ :\ Maximum\ packet\ size.\ Override\ with\ setBufferSize().}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#ifndef\ MQTT\_MAX\_PACKET\_SIZE}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ MQTT\_MAX\_PACKET\_SIZE\ 256}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ MQTT\_KEEPALIVE\ :\ keepAlive\ interval\ in\ Seconds.\ Override\ with\ setKeepAlive()}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ MQTT\_KEEPALIVE}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ MQTT\_KEEPALIVE\ 15}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ MQTT\_SOCKET\_TIMEOUT:\ socket\ timeout\ interval\ in\ Seconds.\ Override\ with\ setSocketTimeout()}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#ifndef\ MQTT\_SOCKET\_TIMEOUT}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ MQTT\_SOCKET\_TIMEOUT\ 15}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{comment}{//\ MQTT\_MAX\_TRANSFER\_SIZE\ :\ limit\ how\ much\ data\ is\ passed\ to\ the\ network\ client}}
+\DoxyCodeLine{00040\ \textcolor{comment}{//\ \ in\ each\ write\ call.\ Needed\ for\ the\ Arduino\ Wifi\ Shield.\ Leave\ undefined\ to}}
+\DoxyCodeLine{00041\ \textcolor{comment}{//\ \ pass\ the\ entire\ MQTT\ packet\ in\ each\ write\ call.}}
+\DoxyCodeLine{00042\ \textcolor{comment}{//\#define\ MQTT\_MAX\_TRANSFER\_SIZE\ 80}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{comment}{//\ Possible\ values\ for\ client.state()}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ MQTT\_CONNECTION\_TIMEOUT\ \ \ \ \ -\/4}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ MQTT\_CONNECTION\_LOST\ \ \ \ \ \ \ \ -\/3}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#define\ MQTT\_CONNECT\_FAILED\ \ \ \ \ \ \ \ \ -\/2}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ MQTT\_DISCONNECTED\ \ \ \ \ \ \ \ \ \ \ -\/1}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ MQTT\_CONNECTED\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#define\ MQTT\_CONNECT\_BAD\_PROTOCOL\ \ \ \ 1}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#define\ MQTT\_CONNECT\_BAD\_CLIENT\_ID\ \ \ 2}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#define\ MQTT\_CONNECT\_UNAVAILABLE\ \ \ \ \ 3}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#define\ MQTT\_CONNECT\_BAD\_CREDENTIALS\ 4}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ MQTT\_CONNECT\_UNAUTHORIZED\ \ \ \ 5}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ MQTTCONNECT\ \ \ \ \ 1\ <<\ 4\ \ }\textcolor{comment}{//\ Client\ request\ to\ connect\ to\ Server}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#define\ MQTTCONNACK\ \ \ \ \ 2\ <<\ 4\ \ }\textcolor{comment}{//\ Connect\ Acknowledgment}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#define\ MQTTPUBLISH\ \ \ \ \ 3\ <<\ 4\ \ }\textcolor{comment}{//\ Publish\ message}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#define\ MQTTPUBACK\ \ \ \ \ \ 4\ <<\ 4\ \ }\textcolor{comment}{//\ Publish\ Acknowledgment}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#define\ MQTTPUBREC\ \ \ \ \ \ 5\ <<\ 4\ \ }\textcolor{comment}{//\ Publish\ Received\ (assured\ delivery\ part\ 1)}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#define\ MQTTPUBREL\ \ \ \ \ \ 6\ <<\ 4\ \ }\textcolor{comment}{//\ Publish\ Release\ (assured\ delivery\ part\ 2)}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ MQTTPUBCOMP\ \ \ \ \ 7\ <<\ 4\ \ }\textcolor{comment}{//\ Publish\ Complete\ (assured\ delivery\ part\ 3)}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#define\ MQTTSUBSCRIBE\ \ \ 8\ <<\ 4\ \ }\textcolor{comment}{//\ Client\ Subscribe\ request}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#define\ MQTTSUBACK\ \ \ \ \ \ 9\ <<\ 4\ \ }\textcolor{comment}{//\ Subscribe\ Acknowledgment}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#define\ MQTTUNSUBSCRIBE\ 10\ <<\ 4\ }\textcolor{comment}{//\ Client\ Unsubscribe\ request}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ MQTTUNSUBACK\ \ \ \ 11\ <<\ 4\ }\textcolor{comment}{//\ Unsubscribe\ Acknowledgment}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#define\ MQTTPINGREQ\ \ \ \ \ 12\ <<\ 4\ }\textcolor{comment}{//\ PING\ Request}}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#define\ MQTTPINGRESP\ \ \ \ 13\ <<\ 4\ }\textcolor{comment}{//\ PING\ Response}}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#define\ MQTTDISCONNECT\ \ 14\ <<\ 4\ }\textcolor{comment}{//\ Client\ is\ Disconnecting}}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#define\ MQTTReserved\ \ \ \ 15\ <<\ 4\ }\textcolor{comment}{//\ Reserved}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#define\ MQTTQOS0\ \ \ \ \ \ \ \ (0\ <<\ 1)}}
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\#define\ MQTTQOS1\ \ \ \ \ \ \ \ (1\ <<\ 1)}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#define\ MQTTQOS2\ \ \ \ \ \ \ \ (2\ <<\ 1)}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{comment}{//\ Maximum\ size\ of\ fixed\ header\ and\ variable\ length\ size\ header}}
+\DoxyCodeLine{00077\ \textcolor{preprocessor}{\#define\ MQTT\_MAX\_HEADER\_SIZE\ 5}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\#if\ defined(ESP8266)\ ||\ defined(ESP32)}}
+\DoxyCodeLine{00080\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\#define\ MQTT\_CALLBACK\_SIGNATURE\ std::function<void(char*,\ uint8\_t*,\ unsigned\ int)>\ callback}}
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\#define\ MQTT\_CALLBACK\_SIGNATURE\ void\ (*callback)(char*,\ uint8\_t*,\ unsigned\ int)}}
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\#define\ CHECK\_STRING\_LENGTH(l,s)\ if\ (l+2+strnlen(s,\ this-\/>bufferSize)\ >\ this-\/>bufferSize)\ \{\_client-\/>stop();return\ false;\}}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \textcolor{keyword}{class\ }PubSubClient\ :\ \textcolor{keyword}{public}\ Print\ \{}
+\DoxyCodeLine{00089\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00090\ \ \ \ Client*\ \_client;}
+\DoxyCodeLine{00091\ \ \ \ uint8\_t*\ buffer;}
+\DoxyCodeLine{00092\ \ \ \ uint16\_t\ bufferSize;}
+\DoxyCodeLine{00093\ \ \ \ uint16\_t\ keepAlive;}
+\DoxyCodeLine{00094\ \ \ \ uint16\_t\ socketTimeout;}
+\DoxyCodeLine{00095\ \ \ \ uint16\_t\ nextMsgId;}
+\DoxyCodeLine{00096\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ lastOutActivity;}
+\DoxyCodeLine{00097\ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ lastInActivity;}
+\DoxyCodeLine{00098\ \ \ \ \textcolor{keywordtype}{bool}\ pingOutstanding;}
+\DoxyCodeLine{00099\ \ \ \ MQTT\_CALLBACK\_SIGNATURE;}
+\DoxyCodeLine{00100\ \ \ \ uint32\_t\ readPacket(uint8\_t*);}
+\DoxyCodeLine{00101\ \ \ \ \textcolor{keywordtype}{boolean}\ readByte(uint8\_t\ *\ result);}
+\DoxyCodeLine{00102\ \ \ \ \textcolor{keywordtype}{boolean}\ readByte(uint8\_t\ *\ result,\ uint16\_t\ *\ index);}
+\DoxyCodeLine{00103\ \ \ \ \textcolor{keywordtype}{boolean}\ write(uint8\_t\ header,\ uint8\_t*\ buf,\ uint16\_t\ length);}
+\DoxyCodeLine{00104\ \ \ \ uint16\_t\ writeString(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \textcolor{keywordtype}{string},\ uint8\_t*\ buf,\ uint16\_t\ pos);}
+\DoxyCodeLine{00105\ \ \ \ \textcolor{comment}{//\ Build\ up\ the\ header\ ready\ to\ send}}
+\DoxyCodeLine{00106\ \ \ \ \textcolor{comment}{//\ Returns\ the\ size\ of\ the\ header}}
+\DoxyCodeLine{00107\ \ \ \ \textcolor{comment}{//\ Note:\ the\ header\ is\ built\ at\ the\ end\ of\ the\ first\ MQTT\_MAX\_HEADER\_SIZE\ bytes,\ so\ will\ start}}
+\DoxyCodeLine{00108\ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ (MQTT\_MAX\_HEADER\_SIZE\ -\/\ <returned\ size>)\ bytes\ into\ the\ buffer}}
+\DoxyCodeLine{00109\ \ \ \ \textcolor{keywordtype}{size\_t}\ buildHeader(uint8\_t\ header,\ uint8\_t*\ buf,\ uint16\_t\ length);}
+\DoxyCodeLine{00110\ \ \ \ IPAddress\ ip;}
+\DoxyCodeLine{00111\ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ domain;}
+\DoxyCodeLine{00112\ \ \ \ uint16\_t\ port;}
+\DoxyCodeLine{00113\ \ \ \ Stream*\ stream;}
+\DoxyCodeLine{00114\ \ \ \ \textcolor{keywordtype}{int}\ \_state;}
+\DoxyCodeLine{00115\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00116\ \ \ \ PubSubClient();}
+\DoxyCodeLine{00117\ \ \ \ PubSubClient(Client\&\ client);}
+\DoxyCodeLine{00118\ \ \ \ PubSubClient(IPAddress,\ uint16\_t,\ Client\&\ client);}
+\DoxyCodeLine{00119\ \ \ \ PubSubClient(IPAddress,\ uint16\_t,\ Client\&\ client,\ Stream\&);}
+\DoxyCodeLine{00120\ \ \ \ PubSubClient(IPAddress,\ uint16\_t,\ MQTT\_CALLBACK\_SIGNATURE,Client\&\ client);}
+\DoxyCodeLine{00121\ \ \ \ PubSubClient(IPAddress,\ uint16\_t,\ MQTT\_CALLBACK\_SIGNATURE,Client\&\ client,\ Stream\&);}
+\DoxyCodeLine{00122\ \ \ \ PubSubClient(uint8\_t\ *,\ uint16\_t,\ Client\&\ client);}
+\DoxyCodeLine{00123\ \ \ \ PubSubClient(uint8\_t\ *,\ uint16\_t,\ Client\&\ client,\ Stream\&);}
+\DoxyCodeLine{00124\ \ \ \ PubSubClient(uint8\_t\ *,\ uint16\_t,\ MQTT\_CALLBACK\_SIGNATURE,Client\&\ client);}
+\DoxyCodeLine{00125\ \ \ \ PubSubClient(uint8\_t\ *,\ uint16\_t,\ MQTT\_CALLBACK\_SIGNATURE,Client\&\ client,\ Stream\&);}
+\DoxyCodeLine{00126\ \ \ \ PubSubClient(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*,\ uint16\_t,\ Client\&\ client);}
+\DoxyCodeLine{00127\ \ \ \ PubSubClient(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*,\ uint16\_t,\ Client\&\ client,\ Stream\&);}
+\DoxyCodeLine{00128\ \ \ \ PubSubClient(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*,\ uint16\_t,\ MQTT\_CALLBACK\_SIGNATURE,Client\&\ client);}
+\DoxyCodeLine{00129\ \ \ \ PubSubClient(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*,\ uint16\_t,\ MQTT\_CALLBACK\_SIGNATURE,Client\&\ client,\ Stream\&);}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \ \ \ \string~PubSubClient();}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ PubSubClient\&\ setServer(IPAddress\ ip,\ uint16\_t\ port);}
+\DoxyCodeLine{00134\ \ \ \ PubSubClient\&\ setServer(uint8\_t\ *\ ip,\ uint16\_t\ port);}
+\DoxyCodeLine{00135\ \ \ \ PubSubClient\&\ setServer(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ domain,\ uint16\_t\ port);}
+\DoxyCodeLine{00136\ \ \ \ PubSubClient\&\ setCallback(MQTT\_CALLBACK\_SIGNATURE);}
+\DoxyCodeLine{00137\ \ \ \ PubSubClient\&\ setClient(Client\&\ client);}
+\DoxyCodeLine{00138\ \ \ \ PubSubClient\&\ setStream(Stream\&\ stream);}
+\DoxyCodeLine{00139\ \ \ \ PubSubClient\&\ setKeepAlive(uint16\_t\ keepAlive);}
+\DoxyCodeLine{00140\ \ \ \ PubSubClient\&\ setSocketTimeout(uint16\_t\ timeout);}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \textcolor{keywordtype}{boolean}\ setBufferSize(uint16\_t\ size);}
+\DoxyCodeLine{00143\ \ \ \ uint16\_t\ getBufferSize();}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \textcolor{keywordtype}{boolean}\ connect(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \textcolor{keywordtype}{id});}
+\DoxyCodeLine{00146\ \ \ \ \textcolor{keywordtype}{boolean}\ connect(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ user,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ pass);}
+\DoxyCodeLine{00147\ \ \ \ \textcolor{keywordtype}{boolean}\ connect(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ willTopic,\ uint8\_t\ willQos,\ \textcolor{keywordtype}{boolean}\ willRetain,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ willMessage);}
+\DoxyCodeLine{00148\ \ \ \ \textcolor{keywordtype}{boolean}\ connect(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ user,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ pass,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ willTopic,\ uint8\_t\ willQos,\ \textcolor{keywordtype}{boolean}\ willRetain,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ willMessage);}
+\DoxyCodeLine{00149\ \ \ \ \textcolor{keywordtype}{boolean}\ connect(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \textcolor{keywordtype}{id},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ user,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ pass,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ willTopic,\ uint8\_t\ willQos,\ \textcolor{keywordtype}{boolean}\ willRetain,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ willMessage,\ \textcolor{keywordtype}{boolean}\ cleanSession);}
+\DoxyCodeLine{00150\ \ \ \ \textcolor{keywordtype}{void}\ disconnect();}
+\DoxyCodeLine{00151\ \ \ \ \textcolor{keywordtype}{boolean}\ publish(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ topic,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ payload);}
+\DoxyCodeLine{00152\ \ \ \ \textcolor{keywordtype}{boolean}\ publish(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ topic,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ payload,\ \textcolor{keywordtype}{boolean}\ retained);}
+\DoxyCodeLine{00153\ \ \ \ \textcolor{keywordtype}{boolean}\ publish(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ topic,\ \textcolor{keyword}{const}\ uint8\_t\ *\ payload,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ plength);}
+\DoxyCodeLine{00154\ \ \ \ \textcolor{keywordtype}{boolean}\ publish(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ topic,\ \textcolor{keyword}{const}\ uint8\_t\ *\ payload,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ plength,\ \textcolor{keywordtype}{boolean}\ retained);}
+\DoxyCodeLine{00155\ \ \ \ \textcolor{keywordtype}{boolean}\ publish\_P(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ topic,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ payload,\ \textcolor{keywordtype}{boolean}\ retained);}
+\DoxyCodeLine{00156\ \ \ \ \textcolor{keywordtype}{boolean}\ publish\_P(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ topic,\ \textcolor{keyword}{const}\ uint8\_t\ *\ payload,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ plength,\ \textcolor{keywordtype}{boolean}\ retained);}
+\DoxyCodeLine{00157\ \ \ \ \textcolor{comment}{//\ Start\ to\ publish\ a\ message.}}
+\DoxyCodeLine{00158\ \ \ \ \textcolor{comment}{//\ This\ API:}}
+\DoxyCodeLine{00159\ \ \ \ \textcolor{comment}{//\ \ \ beginPublish(...)}}
+\DoxyCodeLine{00160\ \ \ \ \textcolor{comment}{//\ \ \ one\ or\ more\ calls\ to\ write(...)}}
+\DoxyCodeLine{00161\ \ \ \ \textcolor{comment}{//\ \ \ endPublish()}}
+\DoxyCodeLine{00162\ \ \ \ \textcolor{comment}{//\ Allows\ for\ arbitrarily\ large\ payloads\ to\ be\ sent\ without\ them\ having\ to\ be\ copied\ into}}
+\DoxyCodeLine{00163\ \ \ \ \textcolor{comment}{//\ a\ new\ buffer\ and\ held\ in\ memory\ at\ one\ time}}
+\DoxyCodeLine{00164\ \ \ \ \textcolor{comment}{//\ Returns\ 1\ if\ the\ message\ was\ started\ successfully,\ 0\ if\ there\ was\ an\ error}}
+\DoxyCodeLine{00165\ \ \ \ \textcolor{keywordtype}{boolean}\ beginPublish(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ topic,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ plength,\ \textcolor{keywordtype}{boolean}\ retained);}
+\DoxyCodeLine{00166\ \ \ \ \textcolor{comment}{//\ Finish\ off\ this\ publish\ message\ (started\ with\ beginPublish)}}
+\DoxyCodeLine{00167\ \ \ \ \textcolor{comment}{//\ Returns\ 1\ if\ the\ packet\ was\ sent\ successfully,\ 0\ if\ there\ was\ an\ error}}
+\DoxyCodeLine{00168\ \ \ \ \textcolor{keywordtype}{int}\ endPublish();}
+\DoxyCodeLine{00169\ \ \ \ \textcolor{comment}{//\ Write\ a\ single\ byte\ of\ payload\ (only\ to\ be\ used\ with\ beginPublish/endPublish)}}
+\DoxyCodeLine{00170\ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{size\_t}\ write(uint8\_t);}
+\DoxyCodeLine{00171\ \ \ \ \textcolor{comment}{//\ Write\ size\ bytes\ from\ buffer\ into\ the\ payload\ (only\ to\ be\ used\ with\ beginPublish/endPublish)}}
+\DoxyCodeLine{00172\ \ \ \ \textcolor{comment}{//\ Returns\ the\ number\ of\ bytes\ written}}
+\DoxyCodeLine{00173\ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{size\_t}\ write(\textcolor{keyword}{const}\ uint8\_t\ *buffer,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00174\ \ \ \ \textcolor{keywordtype}{boolean}\ subscribe(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ topic);}
+\DoxyCodeLine{00175\ \ \ \ \textcolor{keywordtype}{boolean}\ subscribe(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ topic,\ uint8\_t\ qos);}
+\DoxyCodeLine{00176\ \ \ \ \textcolor{keywordtype}{boolean}\ unsubscribe(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ topic);}
+\DoxyCodeLine{00177\ \ \ \ \textcolor{keywordtype}{boolean}\ loop();}
+\DoxyCodeLine{00178\ \ \ \ \textcolor{keywordtype}{boolean}\ connected();}
+\DoxyCodeLine{00179\ \ \ \ \textcolor{keywordtype}{int}\ state();}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \};}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

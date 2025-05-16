@@ -1,0 +1,175 @@
+\doxysection{SHT4X Class Reference}
+\hypertarget{class_s_h_t4_x}{}\label{class_s_h_t4_x}\index{SHT4X@{SHT4X}}
+
+
+Class for interfacing with the \doxylink{class_s_h_t4_x}{SHT4X} temperature and humidity sensor.  
+
+
+
+
+{\ttfamily \#include $<$sht4x.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+sht4x\+\_\+error\+\_\+t \mbox{\hyperlink{class_s_h_t4_x_a8e85778bec0e7b9d4bf8add2490778f3}{begin}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the \doxylink{class_s_h_t4_x}{SHT4X} sensor. \end{DoxyCompactList}\item 
+sht4x\+\_\+error\+\_\+t \mbox{\hyperlink{class_s_h_t4_x_a6b98f00ab94cb56a4472e08b468424c5}{update}} (void)
+\begin{DoxyCompactList}\small\item\em Updates sensor readings from the \doxylink{class_s_h_t4_x}{SHT4X}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_h_t4_x_ac21af46180b62c199abbc6a9f63b02b0}{set\+Precision}} (sht4x\+\_\+precision\+\_\+t prec)
+\begin{DoxyCompactList}\small\item\em Sets the measurement precision of the \doxylink{class_s_h_t4_x}{SHT4X} sensor. \end{DoxyCompactList}\item 
+sht4x\+\_\+precision\+\_\+t \mbox{\hyperlink{class_s_h_t4_x_a8d2a3954c9aa4fbba99c9fb8d8d7bd99}{get\+Precision}} (void)
+\begin{DoxyCompactList}\small\item\em Gets the current measurement precision setting. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_s_h_t4_x_a9664390bcd963ba9317a5abffa4ed570}{set\+Heater}} (\mbox{\hyperlink{sht4x_8h_a09de64040ffde758f50561c5d85e3b7d}{sht4x\+\_\+heater\+\_\+t}} heat)
+\begin{DoxyCompactList}\small\item\em Sets the heater mode of the \doxylink{class_s_h_t4_x}{SHT4X} sensor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{sht4x_8h_a09de64040ffde758f50561c5d85e3b7d}{sht4x\+\_\+heater\+\_\+t}} \mbox{\hyperlink{class_s_h_t4_x_a6f65e80033a02d9fb1857b32ddf2502c}{get\+Heater}} (void)
+\begin{DoxyCompactList}\small\item\em Gets the current heater mode of the \doxylink{class_s_h_t4_x}{SHT4X} sensor. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_s_h_t4_x_a81aad791972516038e41fd8e02008da9}{get\+Temperature}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves the last measured temperature. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_s_h_t4_x_afbbdcb2d7a4e690fb59f06462d9a1ccf}{get\+Humidity}} ()
+\begin{DoxyCompactList}\small\item\em Retrieves the last measured humidity. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class for interfacing with the \doxylink{class_s_h_t4_x}{SHT4X} temperature and humidity sensor. 
+
+The \doxylink{class_s_h_t4_x}{SHT4X} class provides methods to initialize, configure, and retrieve temperature and humidity data from the \doxylink{class_s_h_t4_x}{SHT4X} sensor over an I2C interface. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_s_h_t4_x_a8e85778bec0e7b9d4bf8add2490778f3}\index{SHT4X@{SHT4X}!begin@{begin}}
+\index{begin@{begin}!SHT4X@{SHT4X}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily \label{class_s_h_t4_x_a8e85778bec0e7b9d4bf8add2490778f3} 
+sht4x\+\_\+error\+\_\+t SHT4\+X\+::begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the \doxylink{class_s_h_t4_x}{SHT4X} sensor. 
+
+This function checks if the \doxylink{class_s_h_t4_x}{SHT4X} sensor is available on the I2C bus and returns an appropriate status.
+
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily SHT4\+X\+\_\+\+OK}\+: Sensor detected and initialized successfully.
+\item {\ttfamily SHT4\+X\+\_\+\+ERR\+\_\+\+I2C}\+: Sensor not found or I2C communication error. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_s_h_t4_x_a6f65e80033a02d9fb1857b32ddf2502c}\index{SHT4X@{SHT4X}!getHeater@{getHeater}}
+\index{getHeater@{getHeater}!SHT4X@{SHT4X}}
+\doxysubsubsection{\texorpdfstring{getHeater()}{getHeater()}}
+{\footnotesize\ttfamily \label{class_s_h_t4_x_a6f65e80033a02d9fb1857b32ddf2502c} 
+\mbox{\hyperlink{sht4x_8h_a09de64040ffde758f50561c5d85e3b7d}{sht4x\+\_\+heater\+\_\+t}} SHT4\+X\+::get\+Heater (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the current heater mode of the \doxylink{class_s_h_t4_x}{SHT4X} sensor. 
+
+\begin{DoxyReturn}{Returns}
+The current heater mode setting. 
+\end{DoxyReturn}
+\Hypertarget{class_s_h_t4_x_afbbdcb2d7a4e690fb59f06462d9a1ccf}\index{SHT4X@{SHT4X}!getHumidity@{getHumidity}}
+\index{getHumidity@{getHumidity}!SHT4X@{SHT4X}}
+\doxysubsubsection{\texorpdfstring{getHumidity()}{getHumidity()}}
+{\footnotesize\ttfamily \label{class_s_h_t4_x_afbbdcb2d7a4e690fb59f06462d9a1ccf} 
+float SHT4\+X\+::get\+Humidity (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Retrieves the last measured humidity. 
+
+This function returns the most recently updated relative humidity reading.
+
+\begin{DoxyReturn}{Returns}
+The relative humidity percentage (RH). 
+\end{DoxyReturn}
+\Hypertarget{class_s_h_t4_x_a8d2a3954c9aa4fbba99c9fb8d8d7bd99}\index{SHT4X@{SHT4X}!getPrecision@{getPrecision}}
+\index{getPrecision@{getPrecision}!SHT4X@{SHT4X}}
+\doxysubsubsection{\texorpdfstring{getPrecision()}{getPrecision()}}
+{\footnotesize\ttfamily \label{class_s_h_t4_x_a8d2a3954c9aa4fbba99c9fb8d8d7bd99} 
+sht4x\+\_\+precision\+\_\+t SHT4\+X\+::get\+Precision (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Gets the current measurement precision setting. 
+
+\begin{DoxyReturn}{Returns}
+The current precision setting of the sensor. 
+\end{DoxyReturn}
+\Hypertarget{class_s_h_t4_x_a81aad791972516038e41fd8e02008da9}\index{SHT4X@{SHT4X}!getTemperature@{getTemperature}}
+\index{getTemperature@{getTemperature}!SHT4X@{SHT4X}}
+\doxysubsubsection{\texorpdfstring{getTemperature()}{getTemperature()}}
+{\footnotesize\ttfamily \label{class_s_h_t4_x_a81aad791972516038e41fd8e02008da9} 
+float SHT4\+X\+::get\+Temperature (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Retrieves the last measured temperature. 
+
+This function returns the most recently updated temperature reading.
+
+\begin{DoxyReturn}{Returns}
+The temperature in degrees Celsius. 
+\end{DoxyReturn}
+\Hypertarget{class_s_h_t4_x_a9664390bcd963ba9317a5abffa4ed570}\index{SHT4X@{SHT4X}!setHeater@{setHeater}}
+\index{setHeater@{setHeater}!SHT4X@{SHT4X}}
+\doxysubsubsection{\texorpdfstring{setHeater()}{setHeater()}}
+{\footnotesize\ttfamily \label{class_s_h_t4_x_a9664390bcd963ba9317a5abffa4ed570} 
+void SHT4\+X\+::set\+Heater (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sht4x_8h_a09de64040ffde758f50561c5d85e3b7d}{sht4x\+\_\+heater\+\_\+t}}}]{heat}{}\end{DoxyParamCaption})}
+
+
+
+Sets the heater mode of the \doxylink{class_s_h_t4_x}{SHT4X} sensor. 
+
+This function enables or disables the built-\/in heater and adjusts its power level.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em heat} & Desired heater mode. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_s_h_t4_x_ac21af46180b62c199abbc6a9f63b02b0}\index{SHT4X@{SHT4X}!setPrecision@{setPrecision}}
+\index{setPrecision@{setPrecision}!SHT4X@{SHT4X}}
+\doxysubsubsection{\texorpdfstring{setPrecision()}{setPrecision()}}
+{\footnotesize\ttfamily \label{class_s_h_t4_x_ac21af46180b62c199abbc6a9f63b02b0} 
+void SHT4\+X\+::set\+Precision (\begin{DoxyParamCaption}\item[{sht4x\+\_\+precision\+\_\+t}]{prec}{}\end{DoxyParamCaption})}
+
+
+
+Sets the measurement precision of the \doxylink{class_s_h_t4_x}{SHT4X} sensor. 
+
+This function allows changing the precision level of the sensor\textquotesingle{}s measurements.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em prec} & Desired precision setting. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_s_h_t4_x_a6b98f00ab94cb56a4472e08b468424c5}\index{SHT4X@{SHT4X}!update@{update}}
+\index{update@{update}!SHT4X@{SHT4X}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily \label{class_s_h_t4_x_a6b98f00ab94cb56a4472e08b468424c5} 
+sht4x\+\_\+error\+\_\+t SHT4\+X\+::update (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Updates sensor readings from the \doxylink{class_s_h_t4_x}{SHT4X}. 
+
+This function sends a measurement command to the \doxylink{class_s_h_t4_x}{SHT4X} sensor, waits for the required conversion time, reads the data, verifies the checksum, and updates temperature and humidity values.
+
+\begin{DoxyAttention}{Attention}
+Ensure that the sensor is correctly connected to the I2C bus and that appropriate delays are provided for accurate readings.
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily SHT4\+X\+\_\+\+OK}\+: Measurement successful.
+\item {\ttfamily SHT4\+X\+\_\+\+ERR\+\_\+\+CHECKSUM}\+: Data corruption detected due to checksum mismatch. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/sht4x/src/\mbox{\hyperlink{sht4x_8h}{sht4x.\+h}}\item 
+lib/sht4x/src/\mbox{\hyperlink{sht4x_8cpp}{sht4x.\+cpp}}\end{DoxyCompactItemize}

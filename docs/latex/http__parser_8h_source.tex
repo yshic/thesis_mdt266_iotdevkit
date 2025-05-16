@@ -1,0 +1,102 @@
+\doxysection{http\+\_\+parser.\+h}
+\hypertarget{http__parser_8h_source}{}\label{http__parser_8h_source}\index{lib/ArduinoHttpClient/utility/URLParser/http\_parser.h@{lib/ArduinoHttpClient/utility/URLParser/http\_parser.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*\ Copyright\ Joyent,\ Inc.\ and\ other\ Node\ contributors.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ deal\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ rights\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ sell\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ all\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ FROM,\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ IN\ THE\ SOFTWARE.}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#ifndef\ http\_parser\_h}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ http\_parser\_h}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00025\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{comment}{/*\ Also\ update\ SONAME\ in\ the\ Makefile\ whenever\ you\ change\ these.\ */}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ HTTP\_PARSER\_VERSION\_MAJOR\ 2}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ HTTP\_PARSER\_VERSION\_MINOR\ 7}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ HTTP\_PARSER\_VERSION\_PATCH\ 1}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{comment}{/*\ Compile\ with\ -\/DHTTP\_PARSER\_STRICT=0\ to\ make\ less\ checks,\ but\ run}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ *\ faster}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#ifndef\ HTTP\_PARSER\_STRICT}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#\ define\ HTTP\_PARSER\_STRICT\ 1}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{enum}\ http\_parser\_url\_fields}
+\DoxyCodeLine{00044\ \ \ \{\ UF\_SCHEMA\ \ \ \ \ \ \ \ \ \ \ =\ 0}
+\DoxyCodeLine{00045\ \ \ ,\ UF\_HOST\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 1}
+\DoxyCodeLine{00046\ \ \ ,\ UF\_PORT\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 2}
+\DoxyCodeLine{00047\ \ \ ,\ UF\_PATH\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 3}
+\DoxyCodeLine{00048\ \ \ ,\ UF\_QUERY\ \ \ \ \ \ \ \ \ \ \ \ =\ 4}
+\DoxyCodeLine{00049\ \ \ ,\ UF\_FRAGMENT\ \ \ \ \ \ \ \ \ =\ 5}
+\DoxyCodeLine{00050\ \ \ ,\ UF\_USERINFO\ \ \ \ \ \ \ \ \ =\ 6}
+\DoxyCodeLine{00051\ \ \ ,\ UF\_MAX\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 7}
+\DoxyCodeLine{00052\ \ \ \};}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{comment}{/*\ Result\ structure\ for\ http\_parser\_parse\_url().}}
+\DoxyCodeLine{00056\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00057\ \textcolor{comment}{\ *\ Callers\ should\ index\ into\ field\_data[]\ with\ UF\_*\ values\ iff\ field\_set}}
+\DoxyCodeLine{00058\ \textcolor{comment}{\ *\ has\ the\ relevant\ (1\ <<\ UF\_*)\ bit\ set.\ As\ a\ courtesy\ to\ clients\ (and}}
+\DoxyCodeLine{00059\ \textcolor{comment}{\ *\ because\ we\ probably\ have\ padding\ left\ over),\ we\ convert\ any\ port\ to}}
+\DoxyCodeLine{00060\ \textcolor{comment}{\ *\ a\ uint16\_t.}}
+\DoxyCodeLine{00061\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00062\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structhttp__parser__url}{http\_parser\_url}}\ \{}
+\DoxyCodeLine{00063\ \ \ uint16\_t\ field\_set;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Bitmask\ of\ (1\ <<\ UF\_*)\ values\ */}}
+\DoxyCodeLine{00064\ \ \ uint16\_t\ port;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Converted\ UF\_PORT\ string\ */}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00067\ \ \ \ \ uint16\_t\ off;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Offset\ into\ buffer\ in\ which\ field\ starts\ */}}
+\DoxyCodeLine{00068\ \ \ \ \ uint16\_t\ len;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Length\ of\ run\ in\ buffer\ */}}
+\DoxyCodeLine{00069\ \ \ \}\ field\_data[UF\_MAX];}
+\DoxyCodeLine{00070\ \};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{comment}{/*\ Returns\ the\ library\ version.\ Bits\ 16-\/23\ contain\ the\ major\ version\ number,}}
+\DoxyCodeLine{00074\ \textcolor{comment}{\ *\ bits\ 8-\/15\ the\ minor\ version\ number\ and\ bits\ 0-\/7\ the\ patch\ level.}}
+\DoxyCodeLine{00075\ \textcolor{comment}{\ *\ Usage\ example:}}
+\DoxyCodeLine{00076\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00077\ \textcolor{comment}{\ *\ \ \ unsigned\ long\ version\ =\ http\_parser\_version();}}
+\DoxyCodeLine{00078\ \textcolor{comment}{\ *\ \ \ unsigned\ major\ =\ (version\ >>\ 16)\ \&\ 255;}}
+\DoxyCodeLine{00079\ \textcolor{comment}{\ *\ \ \ unsigned\ minor\ =\ (version\ >>\ 8)\ \&\ 255;}}
+\DoxyCodeLine{00080\ \textcolor{comment}{\ *\ \ \ unsigned\ patch\ =\ version\ \&\ 255;}}
+\DoxyCodeLine{00081\ \textcolor{comment}{\ *\ \ \ printf("{}http\_parser\ v\%u.\%u.\%u\(\backslash\)n"{},\ major,\ minor,\ patch);}}
+\DoxyCodeLine{00082\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00083\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ http\_parser\_version(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \textcolor{comment}{/*\ Initialize\ all\ http\_parser\_url\ members\ to\ 0\ */}}
+\DoxyCodeLine{00086\ \textcolor{keywordtype}{void}\ http\_parser\_url\_init(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structhttp__parser__url}{http\_parser\_url}}\ *u);}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \textcolor{comment}{/*\ Parse\ a\ URL;\ return\ nonzero\ on\ failure\ */}}
+\DoxyCodeLine{00089\ \textcolor{keywordtype}{int}\ http\_parser\_parse\_url(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *buf,\ uint32\_t\ buflen,}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ is\_connect,}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct}\ \mbox{\hyperlink{structhttp__parser__url}{http\_parser\_url}}\ *u);}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00094\ \}}
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00096\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

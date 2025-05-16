@@ -1,0 +1,330 @@
+\doxysection{lib/bsp/bsp\+\_\+i2c.cpp File Reference}
+\hypertarget{bsp__i2c_8cpp}{}\label{bsp__i2c_8cpp}\index{lib/bsp/bsp\_i2c.cpp@{lib/bsp/bsp\_i2c.cpp}}
+
+
+Source file for bsp\+\_\+i2c.  
+
+
+{\ttfamily \#include "{}bsp\+\_\+i2c.\+h"{}}\newline
+{\ttfamily \#include "{}config.\+h"{}}\newline
+{\ttfamily \#include $<$Wire.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{bsp__i2c_8cpp_a4b4d163033723fee1c983f99bd8d2861}\label{bsp__i2c_8cpp_a4b4d163033723fee1c983f99bd8d2861} 
+bsp\+\_\+i2c\+\_\+error\+\_\+t {\bfseries bsp\+I2\+CBegin} ()
+\item 
+\Hypertarget{bsp__i2c_8cpp_ab434829a1761a2b03362658218b03da1}\label{bsp__i2c_8cpp_ab434829a1761a2b03362658218b03da1} 
+bsp\+\_\+i2c\+\_\+error\+\_\+t {\bfseries bsp\+I2\+CBegin} (uint8\+\_\+t address)
+\item 
+\Hypertarget{bsp__i2c_8cpp_ae83e63b33815dd89044a69afe454d55e}\label{bsp__i2c_8cpp_ae83e63b33815dd89044a69afe454d55e} 
+bsp\+\_\+i2c\+\_\+error\+\_\+t {\bfseries bsp\+I2\+CBegin\+Transmission} (uint16\+\_\+t address)
+\item 
+\Hypertarget{bsp__i2c_8cpp_a3da6eebd848529a33b69e3d73ee0e523}\label{bsp__i2c_8cpp_a3da6eebd848529a33b69e3d73ee0e523} 
+bsp\+\_\+i2c\+\_\+error\+\_\+t {\bfseries bsp\+I2\+CBegin\+Transmission} (uint8\+\_\+t address)
+\item 
+\Hypertarget{bsp__i2c_8cpp_acdc186021d6567a22584adb9373329ed}\label{bsp__i2c_8cpp_acdc186021d6567a22584adb9373329ed} 
+bsp\+\_\+i2c\+\_\+error\+\_\+t {\bfseries bsp\+I2\+CBegin\+Transmission} (int address)
+\item 
+\Hypertarget{bsp__i2c_8cpp_a1c2c4c03d89b44dcd7a6112d83310640}\label{bsp__i2c_8cpp_a1c2c4c03d89b44dcd7a6112d83310640} 
+uint8\+\_\+t {\bfseries bsp\+I2\+CEnd\+Transmission} (bool send\+Stop)
+\item 
+\Hypertarget{bsp__i2c_8cpp_a4c0219faaa13d68f206b2e43db544705}\label{bsp__i2c_8cpp_a4c0219faaa13d68f206b2e43db544705} 
+uint8\+\_\+t {\bfseries bsp\+I2\+CEnd\+Transmission} (void)
+\item 
+\Hypertarget{bsp__i2c_8cpp_ae526d36f61bf096d8a1f6d6d820dad05}\label{bsp__i2c_8cpp_ae526d36f61bf096d8a1f6d6d820dad05} 
+size\+\_\+t {\bfseries bsp\+I2\+CRequest\+From} (uint16\+\_\+t address, size\+\_\+t size, bool send\+Stop)
+\item 
+\Hypertarget{bsp__i2c_8cpp_ac981b7ec4869fba98f27f4e6e0089c80}\label{bsp__i2c_8cpp_ac981b7ec4869fba98f27f4e6e0089c80} 
+uint8\+\_\+t {\bfseries bsp\+I2\+CRequest\+From} (uint16\+\_\+t address, uint8\+\_\+t size, bool send\+Stop)
+\item 
+\Hypertarget{bsp__i2c_8cpp_a15cad080c8941c0c2a201483033b4de1}\label{bsp__i2c_8cpp_a15cad080c8941c0c2a201483033b4de1} 
+uint8\+\_\+t {\bfseries bsp\+I2\+CRequest\+From} (uint16\+\_\+t address, uint8\+\_\+t size, uint8\+\_\+t send\+Stop)
+\item 
+\Hypertarget{bsp__i2c_8cpp_a52192456261cbe85b591f5616dec26f9}\label{bsp__i2c_8cpp_a52192456261cbe85b591f5616dec26f9} 
+size\+\_\+t {\bfseries bsp\+I2\+CRequest\+From} (uint8\+\_\+t address, size\+\_\+t len, bool stop\+Bit)
+\item 
+\Hypertarget{bsp__i2c_8cpp_a8671b871daa1044684a9124f3fdd314c}\label{bsp__i2c_8cpp_a8671b871daa1044684a9124f3fdd314c} 
+uint8\+\_\+t {\bfseries bsp\+I2\+CRequest\+From} (uint16\+\_\+t address, uint8\+\_\+t size)
+\item 
+\Hypertarget{bsp__i2c_8cpp_af4e60536c9759774640210e4ff2d4b5b}\label{bsp__i2c_8cpp_af4e60536c9759774640210e4ff2d4b5b} 
+uint8\+\_\+t {\bfseries bsp\+I2\+CRequest\+From} (uint8\+\_\+t address, uint8\+\_\+t size, uint8\+\_\+t send\+Stop)
+\item 
+\Hypertarget{bsp__i2c_8cpp_a2a5eb297cb36bc3a98c6a3c80a12780e}\label{bsp__i2c_8cpp_a2a5eb297cb36bc3a98c6a3c80a12780e} 
+uint8\+\_\+t {\bfseries bsp\+I2\+CRequest\+From} (uint8\+\_\+t address, uint8\+\_\+t size)
+\item 
+\Hypertarget{bsp__i2c_8cpp_a5498bcfd5d6a49b40d30aae3e1b89b42}\label{bsp__i2c_8cpp_a5498bcfd5d6a49b40d30aae3e1b89b42} 
+uint8\+\_\+t {\bfseries bsp\+I2\+CRequest\+From} (int address, int size, int send\+Stop)
+\item 
+\Hypertarget{bsp__i2c_8cpp_afbcc1741fc6e22aa25f3d5ec36fb2228}\label{bsp__i2c_8cpp_afbcc1741fc6e22aa25f3d5ec36fb2228} 
+uint8\+\_\+t {\bfseries bsp\+I2\+CRequest\+From} (int address, int size)
+\item 
+\Hypertarget{bsp__i2c_8cpp_aee0096731ce62e0b4c7a95f57f880e35}\label{bsp__i2c_8cpp_aee0096731ce62e0b4c7a95f57f880e35} 
+size\+\_\+t {\bfseries bsp\+I2\+CWrite} (uint8\+\_\+t data)
+\item 
+\Hypertarget{bsp__i2c_8cpp_a4a420687f639f66ad8ada18efa391226}\label{bsp__i2c_8cpp_a4a420687f639f66ad8ada18efa391226} 
+size\+\_\+t {\bfseries bsp\+I2\+CWrite} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}data, size\+\_\+t quantity)
+\item 
+\Hypertarget{bsp__i2c_8cpp_af58fb882ae51cda816e6bd72ea107575}\label{bsp__i2c_8cpp_af58fb882ae51cda816e6bd72ea107575} 
+int {\bfseries bsp\+I2\+CAvailable} (void)
+\item 
+\Hypertarget{bsp__i2c_8cpp_a6c0e7a766512688b491b975c8235d5a6}\label{bsp__i2c_8cpp_a6c0e7a766512688b491b975c8235d5a6} 
+int {\bfseries bsp\+I2\+CRead} (void)
+\item 
+\Hypertarget{bsp__i2c_8cpp_ac0bbc36506d28cdb0a2ec20a6393a784}\label{bsp__i2c_8cpp_ac0bbc36506d28cdb0a2ec20a6393a784} 
+int {\bfseries bsp\+I2\+CPeek} (void)
+\item 
+\Hypertarget{bsp__i2c_8cpp_aa683c4156ea03ac0836a009229affe54}\label{bsp__i2c_8cpp_aa683c4156ea03ac0836a009229affe54} 
+bsp\+\_\+i2c\+\_\+error\+\_\+t {\bfseries bsp\+I2\+CFlush} (void)
+\item 
+bsp\+\_\+i2c\+\_\+error\+\_\+t \mbox{\hyperlink{bsp__i2c_8cpp_a7cd81829f88f85d45cff03b0fe91c83a}{bsp\+I2\+CRead\+Byte}} (int address, uint8\+\_\+t reg, uint8\+\_\+t \&byte)
+\begin{DoxyCompactList}\small\item\em Reads a single byte using I2C from a register. \end{DoxyCompactList}\item 
+bsp\+\_\+i2c\+\_\+error\+\_\+t \mbox{\hyperlink{bsp__i2c_8cpp_a408cb7690a6aec304eb774ba016922f0}{bsp\+I2\+CRead\+Byte}} (int address, uint8\+\_\+t \&byte)
+\begin{DoxyCompactList}\small\item\em Reads a single byte using I2C. \end{DoxyCompactList}\item 
+bsp\+\_\+i2c\+\_\+error\+\_\+t \mbox{\hyperlink{bsp__i2c_8cpp_a78cbdf9442b29147d38e4e23eaa0013e}{bsp\+I2\+CRead\+Bytes}} (int address, uint8\+\_\+t reg, uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, uint32\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Reads multiple bytes using I2C from a register. \end{DoxyCompactList}\item 
+bsp\+\_\+i2c\+\_\+error\+\_\+t \mbox{\hyperlink{bsp__i2c_8cpp_aa53bbb56cc38bd91b8d31efaa1824ae4}{bsp\+I2\+CRead\+Bytes}} (int address, uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, uint32\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Reads multiple bytes using I2C. \end{DoxyCompactList}\item 
+bsp\+\_\+i2c\+\_\+error\+\_\+t \mbox{\hyperlink{bsp__i2c_8cpp_a14000fc85c5999b783fcf2f826f27f78}{bsp\+I2\+CWrite\+Byte}} (int address, uint8\+\_\+t reg, uint8\+\_\+t byte)
+\begin{DoxyCompactList}\small\item\em Writes a single byte to a register using I2C. \end{DoxyCompactList}\item 
+bsp\+\_\+i2c\+\_\+error\+\_\+t \mbox{\hyperlink{bsp__i2c_8cpp_a6fa08d56ba5abcaf8827af4c3164f5b7}{bsp\+I2\+CWrite\+Bytes}} (int address, uint8\+\_\+t reg, uint8\+\_\+t \texorpdfstring{$\ast$}{*}bytes, uint32\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em Writes multiple bytes to a register using I2C. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{bsp__i2c_8cpp_acc6322b83a6e34f4b9d486caaf87308c}{bsp\+I2\+CExist}} (uint8\+\_\+t address)
+\begin{DoxyCompactList}\small\item\em Checks if an I2C device is present on the bus. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Source file for bsp\+\_\+i2c. 
+
+@license This project is released under the MIT License. \begin{DoxyVersion}{Version}
+0.\+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2024-\/12-\/31 
+\end{DoxyDate}
+\begin{DoxyAuthor}{Author}
+Tuan Nguyen
+\end{DoxyAuthor}
+
+
+\begin{DoxyNote}{Note}
+None 
+\end{DoxyNote}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{bsp__i2c_8cpp_acc6322b83a6e34f4b9d486caaf87308c}\index{bsp\_i2c.cpp@{bsp\_i2c.cpp}!bspI2CExist@{bspI2CExist}}
+\index{bspI2CExist@{bspI2CExist}!bsp\_i2c.cpp@{bsp\_i2c.cpp}}
+\doxysubsubsection{\texorpdfstring{bspI2CExist()}{bspI2CExist()}}
+{\footnotesize\ttfamily \label{bsp__i2c_8cpp_acc6322b83a6e34f4b9d486caaf87308c} 
+bool bsp\+I2\+CExist (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{address}{}\end{DoxyParamCaption})}
+
+
+
+Checks if an I2C device is present on the bus. 
+
+This function verifies the presence of an I2C device by initiating a transmission and checking for an acknowledgment.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em address} & Device\textquotesingle{}s I2C address.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Ensure that the I2C bus is initialized before calling this function.
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily true}\+: Device is present.
+\item {\ttfamily false}\+: Device is not responding. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{bsp__i2c_8cpp_a408cb7690a6aec304eb774ba016922f0}\index{bsp\_i2c.cpp@{bsp\_i2c.cpp}!bspI2CReadByte@{bspI2CReadByte}}
+\index{bspI2CReadByte@{bspI2CReadByte}!bsp\_i2c.cpp@{bsp\_i2c.cpp}}
+\doxysubsubsection{\texorpdfstring{bspI2CReadByte()}{bspI2CReadByte()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{bsp__i2c_8cpp_a408cb7690a6aec304eb774ba016922f0} 
+bsp\+\_\+i2c\+\_\+error\+\_\+t bsp\+I2\+CRead\+Byte (\begin{DoxyParamCaption}\item[{int}]{address}{, }\item[{uint8\+\_\+t \&}]{byte}{}\end{DoxyParamCaption})}
+
+
+
+Reads a single byte using I2C. 
+
+This function request a single byte over the I2C interface and stores it in the provided reference variable.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em address} & Device\textquotesingle{}s I2C address \\
+\hline
+\mbox{\texttt{ out}}  & {\em byte} & Reference to a variable where the read byte will be stored.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Ensure that the device is correctly connected and that I2C communication is functioning. The function includes a loop with retries and delays to handle cases where the byte is not immediately available.
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily BSP\+\_\+\+I2\+C\+\_\+\+OK} \+: Success
+\item {\ttfamily BSP\+\_\+\+I2\+C\+\_\+\+ERR\+\_\+\+READ}\+: Error reading from the I2C bus. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{bsp__i2c_8cpp_a7cd81829f88f85d45cff03b0fe91c83a}\index{bsp\_i2c.cpp@{bsp\_i2c.cpp}!bspI2CReadByte@{bspI2CReadByte}}
+\index{bspI2CReadByte@{bspI2CReadByte}!bsp\_i2c.cpp@{bsp\_i2c.cpp}}
+\doxysubsubsection{\texorpdfstring{bspI2CReadByte()}{bspI2CReadByte()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{bsp__i2c_8cpp_a7cd81829f88f85d45cff03b0fe91c83a} 
+bsp\+\_\+i2c\+\_\+error\+\_\+t bsp\+I2\+CRead\+Byte (\begin{DoxyParamCaption}\item[{int}]{address}{, }\item[{uint8\+\_\+t}]{reg}{, }\item[{uint8\+\_\+t \&}]{byte}{}\end{DoxyParamCaption})}
+
+
+
+Reads a single byte using I2C from a register. 
+
+This function read a single byte over the I2C interface from a register and stores it in the provided reference variable.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em address} & Device\textquotesingle{}s I2C address \\
+\hline
+\mbox{\texttt{ in}}  & {\em reg} & The register to read from \\
+\hline
+\mbox{\texttt{ out}}  & {\em byte} & Reference to a variable where the read byte will be stored.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Ensure that the device is correctly connected and that I2C communication is functioning. The function includes a loop with retries and delays to handle cases where the byte is not immediately available.
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily BSP\+\_\+\+I2\+C\+\_\+\+OK} \+: Success
+\item {\ttfamily BSP\+\_\+\+I2\+C\+\_\+\+ERR\+\_\+\+READ}\+: Error reading from the I2C bus. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{bsp__i2c_8cpp_aa53bbb56cc38bd91b8d31efaa1824ae4}\index{bsp\_i2c.cpp@{bsp\_i2c.cpp}!bspI2CReadBytes@{bspI2CReadBytes}}
+\index{bspI2CReadBytes@{bspI2CReadBytes}!bsp\_i2c.cpp@{bsp\_i2c.cpp}}
+\doxysubsubsection{\texorpdfstring{bspI2CReadBytes()}{bspI2CReadBytes()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{bsp__i2c_8cpp_aa53bbb56cc38bd91b8d31efaa1824ae4} 
+bsp\+\_\+i2c\+\_\+error\+\_\+t bsp\+I2\+CRead\+Bytes (\begin{DoxyParamCaption}\item[{int}]{address}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{bytes}{, }\item[{uint32\+\_\+t}]{len}{}\end{DoxyParamCaption})}
+
+
+
+Reads multiple bytes using I2C. 
+
+This function requests multiple bytes over the I2C interface and stores them in the provided buffer.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em address} & Device\textquotesingle{}s I2C address \\
+\hline
+\mbox{\texttt{ out}}  & {\em bytes} & Pointer to a buffer where the read bytes will be stored. \\
+\hline
+\mbox{\texttt{ in}}  & {\em len} & The number of bytes to read.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Ensure that the sensor is correctly connected and that I2C communication is functioning. The function includes a loop with retries and delays to handle cases where the bytes are not immediately available.
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily BSP\+\_\+\+I2\+C\+\_\+\+OK}\+: Success
+\item {\ttfamily BSP\+\_\+\+I2\+C\+\_\+\+ERR\+\_\+\+READ}\+: Error reading from the I2C bus. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{bsp__i2c_8cpp_a78cbdf9442b29147d38e4e23eaa0013e}\index{bsp\_i2c.cpp@{bsp\_i2c.cpp}!bspI2CReadBytes@{bspI2CReadBytes}}
+\index{bspI2CReadBytes@{bspI2CReadBytes}!bsp\_i2c.cpp@{bsp\_i2c.cpp}}
+\doxysubsubsection{\texorpdfstring{bspI2CReadBytes()}{bspI2CReadBytes()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{bsp__i2c_8cpp_a78cbdf9442b29147d38e4e23eaa0013e} 
+bsp\+\_\+i2c\+\_\+error\+\_\+t bsp\+I2\+CRead\+Bytes (\begin{DoxyParamCaption}\item[{int}]{address}{, }\item[{uint8\+\_\+t}]{reg}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{bytes}{, }\item[{uint32\+\_\+t}]{len}{}\end{DoxyParamCaption})}
+
+
+
+Reads multiple bytes using I2C from a register. 
+
+This function requests multiple bytes over the I2C interface from a register and stores them in the provided buffer.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em address} & Device\textquotesingle{}s I2C address \\
+\hline
+\mbox{\texttt{ in}}  & {\em reg} & The register to read from \\
+\hline
+\mbox{\texttt{ out}}  & {\em bytes} & Pointer to a buffer where the read bytes will be stored. \\
+\hline
+\mbox{\texttt{ in}}  & {\em len} & The number of bytes to read.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Ensure that the sensor is correctly connected and that I2C communication is functioning. The function includes a loop with retries and delays to handle cases where the bytes are not immediately available.
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily BSP\+\_\+\+I2\+C\+\_\+\+OK}\+: Success
+\item {\ttfamily BSP\+\_\+\+I2\+C\+\_\+\+ERR\+\_\+\+READ}\+: Error reading from the I2C bus. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{bsp__i2c_8cpp_a14000fc85c5999b783fcf2f826f27f78}\index{bsp\_i2c.cpp@{bsp\_i2c.cpp}!bspI2CWriteByte@{bspI2CWriteByte}}
+\index{bspI2CWriteByte@{bspI2CWriteByte}!bsp\_i2c.cpp@{bsp\_i2c.cpp}}
+\doxysubsubsection{\texorpdfstring{bspI2CWriteByte()}{bspI2CWriteByte()}}
+{\footnotesize\ttfamily \label{bsp__i2c_8cpp_a14000fc85c5999b783fcf2f826f27f78} 
+bsp\+\_\+i2c\+\_\+error\+\_\+t bsp\+I2\+CWrite\+Byte (\begin{DoxyParamCaption}\item[{int}]{address}{, }\item[{uint8\+\_\+t}]{reg}{, }\item[{uint8\+\_\+t}]{byte}{}\end{DoxyParamCaption})}
+
+
+
+Writes a single byte to a register using I2C. 
+
+This function writes a single byte to a register over the I2C interface.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em address} & Device\textquotesingle{}s I2C address \\
+\hline
+\mbox{\texttt{ in}}  & {\em reg} & The register to read from \\
+\hline
+\mbox{\texttt{ in}}  & {\em byte} & The byte to write.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Ensure that the sensor is correctly connected and that I2C communication is functioning.
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily BSP\+\_\+\+I2\+C\+\_\+\+OK}\+: Success
+\item {\ttfamily BSP\+\_\+\+I2\+C\+\_\+\+ERR\+\_\+\+WRITE}\+: Error writing to the I2C bus. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{bsp__i2c_8cpp_a6fa08d56ba5abcaf8827af4c3164f5b7}\index{bsp\_i2c.cpp@{bsp\_i2c.cpp}!bspI2CWriteBytes@{bspI2CWriteBytes}}
+\index{bspI2CWriteBytes@{bspI2CWriteBytes}!bsp\_i2c.cpp@{bsp\_i2c.cpp}}
+\doxysubsubsection{\texorpdfstring{bspI2CWriteBytes()}{bspI2CWriteBytes()}}
+{\footnotesize\ttfamily \label{bsp__i2c_8cpp_a6fa08d56ba5abcaf8827af4c3164f5b7} 
+bsp\+\_\+i2c\+\_\+error\+\_\+t bsp\+I2\+CWrite\+Bytes (\begin{DoxyParamCaption}\item[{int}]{address}{, }\item[{uint8\+\_\+t}]{reg}{, }\item[{uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{bytes}{, }\item[{uint32\+\_\+t}]{len}{}\end{DoxyParamCaption})}
+
+
+
+Writes multiple bytes to a register using I2C. 
+
+This function writes multiple bytes to a register over the I2C interface.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em address} & Device\textquotesingle{}s I2C address \\
+\hline
+\mbox{\texttt{ in}}  & {\em reg} & The register to read from \\
+\hline
+\mbox{\texttt{ in}}  & {\em bytes} & Pointer to a buffer containing the bytes to write. \\
+\hline
+\mbox{\texttt{ in}}  & {\em len} & The number of bytes to write.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Ensure that the sensor is correctly connected and that I2C communication is functioning.
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily BSP\+\_\+\+I2\+C\+\_\+\+OK}\+: Success
+\item {\ttfamily BSP\+\_\+\+I2\+C\+\_\+\+ERR\+\_\+\+WRITE}\+: Error writing to the I2C bus. 
+\end{DoxyItemize}
+\end{DoxyReturn}

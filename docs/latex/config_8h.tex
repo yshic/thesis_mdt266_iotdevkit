@@ -1,0 +1,46 @@
+\doxysection{lib/config/src/config.h File Reference}
+\hypertarget{config_8h}{}\label{config_8h}\index{lib/config/src/config.h@{lib/config/src/config.h}}
+
+
+Header file for Global configuration.  
+
+
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{config_8h_a180fcde6221857b98a4c07c2b65fd115}\label{config_8h_a180fcde6221857b98a4c07c2b65fd115} 
+\#define {\bfseries USE\+\_\+\+FREERTOS}
+\item 
+\#define \mbox{\hyperlink{config_8h_ac5a2126b0fffc034a25862fa0b3200b2}{DELAY}}(ms)
+\item 
+\Hypertarget{config_8h_ad5aeca1a1a793c8ba18f85cbac89e768}\label{config_8h_ad5aeca1a1a793c8ba18f85cbac89e768} 
+\#define {\bfseries DEBUG\+\_\+\+PRINT}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header file for Global configuration. 
+
+\begin{DoxyVersion}{Version}
+0.\+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2025-\/03-\/05 
+\end{DoxyDate}
+\begin{DoxyAuthor}{Author}
+Tuan Nguyen
+\end{DoxyAuthor}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{config_8h_ac5a2126b0fffc034a25862fa0b3200b2}\index{config.h@{config.h}!DELAY@{DELAY}}
+\index{DELAY@{DELAY}!config.h@{config.h}}
+\doxysubsubsection{\texorpdfstring{DELAY}{DELAY}}
+{\footnotesize\ttfamily \label{config_8h_ac5a2126b0fffc034a25862fa0b3200b2} 
+\#define DELAY(\begin{DoxyParamCaption}\item[{}]{ms}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{vTaskDelay(ms\ /\ portTICK\_PERIOD\_MS)}
+
+\end{DoxyCode}

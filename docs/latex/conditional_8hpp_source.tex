@@ -1,0 +1,27 @@
+\doxysection{conditional.\+hpp}
+\hypertarget{conditional_8hpp_source}{}\label{conditional_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Polyfills/type\_traits/conditional.hpp@{lib/ArduinoJson/src/ArduinoJson/Polyfills/type\_traits/conditional.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Namespace.hpp>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{bool}\ Condition,\ \textcolor{keyword}{class}\ TrueType,\ \textcolor{keyword}{class}\ FalseType>}
+\DoxyCodeLine{00012\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structconditional}{conditional}}\ \{}
+\DoxyCodeLine{00013\ \ \ \textcolor{keyword}{typedef}\ TrueType\ type;}
+\DoxyCodeLine{00014\ \};}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ TrueType,\ \textcolor{keyword}{class}\ FalseType>}
+\DoxyCodeLine{00017\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structconditional}{conditional}}<false,\ TrueType,\ FalseType>\ \{}
+\DoxyCodeLine{00018\ \ \ \textcolor{keyword}{typedef}\ FalseType\ type;}
+\DoxyCodeLine{00019\ \};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

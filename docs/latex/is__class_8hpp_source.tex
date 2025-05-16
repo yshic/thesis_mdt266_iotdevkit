@@ -1,0 +1,29 @@
+\doxysection{is\+\_\+class.\+hpp}
+\hypertarget{is__class_8hpp_source}{}\label{is__class_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Polyfills/type\_traits/is\_class.hpp@{lib/ArduinoJson/src/ArduinoJson/Polyfills/type\_traits/is\_class.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}declval.hpp"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00012\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structis__class}{is\_class}}\ \{}
+\DoxyCodeLine{00013\ \ \textcolor{keyword}{protected}:\ \ \textcolor{comment}{//\ <-\/\ to\ avoid\ GCC's\ "{}all\ member\ functions\ in\ class\ are\ private"{}}}
+\DoxyCodeLine{00014\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ U>}
+\DoxyCodeLine{00015\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ probe(\textcolor{keywordtype}{void}\ (U::*)(\textcolor{keywordtype}{void}));}
+\DoxyCodeLine{00016\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}>}
+\DoxyCodeLine{00017\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{char}\ probe(...);}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ value\ =\ \textcolor{keyword}{sizeof}(probe<T>(0))\ ==\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{00021\ \};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

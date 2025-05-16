@@ -1,0 +1,58 @@
+\doxysection{Arduino\+Json.\+hpp}
+\hypertarget{_arduino_json_8hpp_source}{}\label{_arduino_json_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson.hpp@{lib/ArduinoJson/src/ArduinoJson.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#if\ \_\_cplusplus\ <\ 201103L\ \&\&\ (!defined(\_MSC\_VER)\ ||\ \_MSC\_VER\ <\ 1910)}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#\ \ error\ ArduinoJson\ requires\ C++11\ or\ newer.\ Configure\ your\ compiler\ for\ C++11\ or\ downgrade\ ArduinoJson\ to\ 6.20.}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Configuration.hpp"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ Include\ Arduino.h\ before\ stdlib.h\ to\ avoid\ conflict\ with\ atexit()}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ https://github.com/bblanchon/ArduinoJson/pull/1693\#issuecomment-\/1001060240}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#if\ ARDUINOJSON\_ENABLE\_ARDUINO\_STRING\ ||\ ARDUINOJSON\_ENABLE\_ARDUINO\_STREAM\ ||\ \(\backslash\)}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\ \ \ \ ARDUINOJSON\_ENABLE\_ARDUINO\_PRINT\ ||\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\ \ \ \ (ARDUINOJSON\_ENABLE\_PROGMEM\ \&\&\ defined(ARDUINO))}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#\ \ include\ <Arduino.h>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#if\ !ARDUINOJSON\_DEBUG}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#\ \ ifdef\ \_\_clang\_\_}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#\ \ \ \ pragma\ clang\ system\_header}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#\ \ elif\ defined\ \_\_GNUC\_\_}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#\ \ \ \ pragma\ GCC\ system\_header}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Array/JsonArray.hpp"{}}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Object/JsonObject.hpp"{}}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Variant/JsonVariantConst.hpp"{}}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Document/DynamicJsonDocument.hpp"{}}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Document/StaticJsonDocument.hpp"{}}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Array/ElementProxy.hpp"{}}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Array/JsonArrayImpl.hpp"{}}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Array/Utilities.hpp"{}}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Collection/CollectionImpl.hpp"{}}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Object/JsonObjectImpl.hpp"{}}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Object/MemberProxy.hpp"{}}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Variant/ConverterImpl.hpp"{}}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Variant/VariantCompare.hpp"{}}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Variant/VariantImpl.hpp"{}}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Json/JsonDeserializer.hpp"{}}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Json/JsonSerializer.hpp"{}}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/Json/PrettyJsonSerializer.hpp"{}}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/MsgPack/MsgPackDeserializer.hpp"{}}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/MsgPack/MsgPackSerializer.hpp"{}}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#include\ "{}ArduinoJson/compatibility.hpp"{}}}
+
+\end{DoxyCode}

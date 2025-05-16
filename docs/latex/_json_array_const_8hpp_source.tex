@@ -1,0 +1,141 @@
+\doxysection{Json\+Array\+Const.\+hpp}
+\hypertarget{_json_array_const_8hpp_source}{}\label{_json_array_const_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Array/JsonArrayConst.hpp@{lib/ArduinoJson/src/ArduinoJson/Array/JsonArrayConst.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Array/JsonArrayIterator.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Variant/VariantAttorney.hpp>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Variant/VariantData.hpp>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ ARDUINOJSON\_BEGIN\_PUBLIC\_NAMESPACE}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_json_object}{JsonObject}};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ A\ read-\/only\ reference\ to\ an\ array\ in\ a\ JsonDocument}}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ https://arduinojson.org/v6/api/jsonarrayconst/}}
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }JsonArrayConst\ :\ \textcolor{keyword}{public}\ detail::VariantOperators<JsonArrayConst>\ \{}
+\DoxyCodeLine{00018\ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }JsonArray;}
+\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }detail::VariantAttorney;}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ \ \ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{class_json_array_const_iterator}{JsonArrayConstIterator}}\ iterator;}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \textcolor{comment}{//\ Returns\ an\ iterator\ to\ the\ first\ element\ of\ the\ array.}}
+\DoxyCodeLine{00025\ \ \ \textcolor{comment}{//\ https://arduinojson.org/v6/api/jsonarrayconst/begin/}}
+\DoxyCodeLine{00026\ \ \ FORCE\_INLINE\ iterator\ begin()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{if}\ (!data\_)}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ iterator();}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordflow}{return}\ iterator(data\_-\/>head());}
+\DoxyCodeLine{00030\ \ \ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \textcolor{comment}{//\ Returns\ an\ iterator\ to\ the\ element\ following\ the\ last\ element\ of\ the\ array.}}
+\DoxyCodeLine{00033\ \ \ \textcolor{comment}{//\ https://arduinojson.org/v6/api/jsonarrayconst/end/}}
+\DoxyCodeLine{00034\ \ \ FORCE\_INLINE\ iterator\ end()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{return}\ iterator();}
+\DoxyCodeLine{00036\ \ \ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \textcolor{comment}{//\ Creates\ an\ unbound\ reference.}}
+\DoxyCodeLine{00039\ \ \ FORCE\_INLINE\ JsonArrayConst()\ :\ data\_(0)\ \{\}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \textcolor{comment}{//\ INTERNAL\ USE\ ONLY}}
+\DoxyCodeLine{00042\ \ \ FORCE\_INLINE\ JsonArrayConst(\textcolor{keyword}{const}\ detail::CollectionData*\ data)}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ :\ data\_(data)\ \{\}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \textcolor{comment}{//\ Compares\ the\ content\ of\ two\ arrays.}}
+\DoxyCodeLine{00046\ \ \ \textcolor{comment}{//\ Returns\ true\ if\ the\ two\ arrays\ are\ equal.}}
+\DoxyCodeLine{00047\ \ \ FORCE\_INLINE\ \textcolor{keywordtype}{bool}\ operator==(JsonArrayConst\ rhs)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{if}\ (data\_\ ==\ rhs.data\_)}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{if}\ (!data\_\ ||\ !rhs.data\_)}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ iterator\ it1\ =\ begin();}
+\DoxyCodeLine{00054\ \ \ \ \ iterator\ it2\ =\ rhs.begin();}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{for}\ (;;)\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ end1\ =\ it1\ ==\ end();}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ end2\ =\ it2\ ==\ rhs.end();}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (end1\ \&\&\ end2)}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (end1\ ||\ end2)}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*it1\ !=\ *it2)}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ ++it1;}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ ++it2;}
+\DoxyCodeLine{00067\ \ \ \ \ \}}
+\DoxyCodeLine{00068\ \ \ \}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \textcolor{comment}{//\ Returns\ the\ element\ at\ the\ specified\ index.}}
+\DoxyCodeLine{00071\ \ \ \textcolor{comment}{//\ https://arduinojson.org/v6/api/jsonarrayconst/subscript/}}
+\DoxyCodeLine{00072\ \ \ FORCE\_INLINE\ \mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}\ operator[](\textcolor{keywordtype}{size\_t}\ index)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}(data\_\ ?\ data\_-\/>getElement(index)\ :\ 0);}
+\DoxyCodeLine{00074\ \ \ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \textcolor{keyword}{operator}\ \mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}(collectionToVariant(data\_));}
+\DoxyCodeLine{00078\ \ \ \}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \textcolor{comment}{//\ Returns\ true\ if\ the\ reference\ is\ unbound.}}
+\DoxyCodeLine{00081\ \ \ \textcolor{comment}{//\ https://arduinojson.org/v6/api/jsonarrayconst/isnull/}}
+\DoxyCodeLine{00082\ \ \ FORCE\_INLINE\ \textcolor{keywordtype}{bool}\ isNull()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{return}\ data\_\ ==\ 0;}
+\DoxyCodeLine{00084\ \ \ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \textcolor{comment}{//\ Returns\ true\ if\ the\ reference\ is\ bound.}}
+\DoxyCodeLine{00087\ \ \ \textcolor{comment}{//\ https://arduinojson.org/v6/api/jsonarrayconst/isnull/}}
+\DoxyCodeLine{00088\ \ \ FORCE\_INLINE\ \textcolor{keyword}{operator}\ bool()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordflow}{return}\ data\_\ !=\ 0;}
+\DoxyCodeLine{00090\ \ \ \}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \textcolor{comment}{//\ Returns\ the\ number\ of\ bytes\ occupied\ by\ the\ array.}}
+\DoxyCodeLine{00093\ \ \ \textcolor{comment}{//\ https://arduinojson.org/v6/api/jsonarrayconst/memoryusage/}}
+\DoxyCodeLine{00094\ \ \ FORCE\_INLINE\ \textcolor{keywordtype}{size\_t}\ memoryUsage()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordflow}{return}\ data\_\ ?\ data\_-\/>memoryUsage()\ :\ 0;}
+\DoxyCodeLine{00096\ \ \ \}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \textcolor{comment}{//\ Returns\ the\ depth\ (nesting\ level)\ of\ the\ array.}}
+\DoxyCodeLine{00099\ \ \ \textcolor{comment}{//\ https://arduinojson.org/v6/api/jsonarrayconst/nesting/}}
+\DoxyCodeLine{00100\ \ \ FORCE\_INLINE\ \textcolor{keywordtype}{size\_t}\ nesting()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordflow}{return}\ variantNesting(collectionToVariant(data\_));}
+\DoxyCodeLine{00102\ \ \ \}}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \textcolor{comment}{//\ Returns\ the\ number\ of\ elements\ in\ the\ array.}}
+\DoxyCodeLine{00105\ \ \ \textcolor{comment}{//\ https://arduinojson.org/v6/api/jsonarrayconst/size/}}
+\DoxyCodeLine{00106\ \ \ FORCE\_INLINE\ \textcolor{keywordtype}{size\_t}\ size()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordflow}{return}\ data\_\ ?\ data\_-\/>size()\ :\ 0;}
+\DoxyCodeLine{00108\ \ \ \}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00111\ \ \ \textcolor{keyword}{const}\ detail::VariantData*\ getData()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordflow}{return}\ collectionToVariant(data\_);}
+\DoxyCodeLine{00113\ \ \ \}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \textcolor{keyword}{const}\ detail::CollectionData*\ data\_;}
+\DoxyCodeLine{00116\ \};}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00119\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_converter}{Converter}}<\mbox{\hyperlink{class_json_array_const}{JsonArrayConst}}>\ :\ \textcolor{keyword}{private}\ detail::VariantAttorney\ \{}
+\DoxyCodeLine{00120\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ toJson(\mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}\ src,\ \mbox{\hyperlink{class_json_variant}{JsonVariant}}\ dst)\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ variantCopyFrom(getData(dst),\ getData(src),\ getPool(dst));}
+\DoxyCodeLine{00122\ \ \ \}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{class_json_array_const}{JsonArrayConst}}\ fromJson(\mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}\ src)\ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keyword}{auto}\ data\ =\ getData(src);}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordflow}{return}\ data\ ?\ data-\/>asArray()\ :\ 0;}
+\DoxyCodeLine{00127\ \ \ \}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ checkJson(\mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}\ src)\ \{}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keyword}{auto}\ data\ =\ getData(src);}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordflow}{return}\ data\ \&\&\ data-\/>isArray();}
+\DoxyCodeLine{00132\ \ \ \}}
+\DoxyCodeLine{00133\ \};}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ ARDUINOJSON\_END\_PUBLIC\_NAMESPACE}
+
+\end{DoxyCode}

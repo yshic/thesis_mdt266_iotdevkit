@@ -1,0 +1,126 @@
+\doxysection{arithmetic\+Compare.\+hpp}
+\hypertarget{arithmetic_compare_8hpp_source}{}\label{arithmetic_compare_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Numbers/arithmeticCompare.hpp@{lib/ArduinoJson/src/ArduinoJson/Numbers/arithmeticCompare.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Numbers/JsonInteger.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/type\_traits.hpp>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{enum}\ CompareResult\ \{}
+\DoxyCodeLine{00013\ \ \ COMPARE\_RESULT\_DIFFER\ =\ 0,}
+\DoxyCodeLine{00014\ \ \ COMPARE\_RESULT\_EQUAL\ =\ 1,}
+\DoxyCodeLine{00015\ \ \ COMPARE\_RESULT\_GREATER\ =\ 2,}
+\DoxyCodeLine{00016\ \ \ COMPARE\_RESULT\_LESS\ =\ 4,}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ COMPARE\_RESULT\_GREATER\_OR\_EQUAL\ =\ 3,}
+\DoxyCodeLine{00019\ \ \ COMPARE\_RESULT\_LESS\_OR\_EQUAL\ =\ 5}
+\DoxyCodeLine{00020\ \};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00023\ CompareResult\ arithmeticCompare(\textcolor{keyword}{const}\ T\&\ lhs,\ \textcolor{keyword}{const}\ T\&\ rhs)\ \{}
+\DoxyCodeLine{00024\ \ \ \textcolor{keywordflow}{if}\ (lhs\ <\ rhs)}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordflow}{return}\ COMPARE\_RESULT\_LESS;}
+\DoxyCodeLine{00026\ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (lhs\ >\ rhs)}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{return}\ COMPARE\_RESULT\_GREATER;}
+\DoxyCodeLine{00028\ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordflow}{return}\ COMPARE\_RESULT\_EQUAL;}
+\DoxyCodeLine{00030\ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T1,\ \textcolor{keyword}{typename}\ T2>}
+\DoxyCodeLine{00033\ CompareResult\ arithmeticCompare(}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{const}\ T1\&\ lhs,\ \textcolor{keyword}{const}\ T2\&\ rhs,}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if}}<is\_integral<T1>::value\ \&\&\ is\_integral<T2>::value\ \&\&}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(T1)\ <\ \textcolor{keyword}{sizeof}(T2)>\mbox{\hyperlink{structconditional}{::type}}*\ =\ 0)\ \{}
+\DoxyCodeLine{00037\ \ \ \textcolor{keywordflow}{return}\ arithmeticCompare<T2>(\textcolor{keyword}{static\_cast<}T2\textcolor{keyword}{>}(lhs),\ rhs);}
+\DoxyCodeLine{00038\ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T1,\ \textcolor{keyword}{typename}\ T2>}
+\DoxyCodeLine{00041\ CompareResult\ arithmeticCompare(}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{const}\ T1\&\ lhs,\ \textcolor{keyword}{const}\ T2\&\ rhs,}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if}}<is\_integral<T1>::value\ \&\&\ is\_integral<T2>::value\ \&\&}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(T2)\ <\ \textcolor{keyword}{sizeof}(T1)>\mbox{\hyperlink{structconditional}{::type}}*\ =\ 0)\ \{}
+\DoxyCodeLine{00045\ \ \ \textcolor{keywordflow}{return}\ arithmeticCompare<T1>(lhs,\ \textcolor{keyword}{static\_cast<}T1\textcolor{keyword}{>}(rhs));}
+\DoxyCodeLine{00046\ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T1,\ \textcolor{keyword}{typename}\ T2>}
+\DoxyCodeLine{00049\ CompareResult\ arithmeticCompare(}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{const}\ T1\&\ lhs,\ \textcolor{keyword}{const}\ T2\&\ rhs,}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if}}<is\_integral<T1>::value\ \&\&\ is\_integral<T2>::value\ \&\&}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is\_signed<T1>::value\ ==\ is\_signed<T2>::value\ \&\&}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(T2)\ ==\ \textcolor{keyword}{sizeof}(T1)>\mbox{\hyperlink{structconditional}{::type}}*\ =\ 0)\ \{}
+\DoxyCodeLine{00054\ \ \ \textcolor{keywordflow}{return}\ arithmeticCompare<T1>(lhs,\ \textcolor{keyword}{static\_cast<}T1\textcolor{keyword}{>}(rhs));}
+\DoxyCodeLine{00055\ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T1,\ \textcolor{keyword}{typename}\ T2>}
+\DoxyCodeLine{00058\ CompareResult\ arithmeticCompare(}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{const}\ T1\&\ lhs,\ \textcolor{keyword}{const}\ T2\&\ rhs,}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if}}<is\_integral<T1>::value\ \&\&\ is\_integral<T2>::value\ \&\&}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is\_unsigned<T1>::value\ \&\&\ is\_signed<T2>::value\ \&\&}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(T2)\ ==\ \textcolor{keyword}{sizeof}(T1)>\mbox{\hyperlink{structconditional}{::type}}*\ =\ 0)\ \{}
+\DoxyCodeLine{00063\ \ \ \textcolor{keywordflow}{if}\ (rhs\ <\ 0)}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{return}\ COMPARE\_RESULT\_GREATER;}
+\DoxyCodeLine{00065\ \ \ \textcolor{keywordflow}{return}\ arithmeticCompare<T1>(lhs,\ \textcolor{keyword}{static\_cast<}T1\textcolor{keyword}{>}(rhs));}
+\DoxyCodeLine{00066\ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T1,\ \textcolor{keyword}{typename}\ T2>}
+\DoxyCodeLine{00069\ CompareResult\ arithmeticCompare(}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{const}\ T1\&\ lhs,\ \textcolor{keyword}{const}\ T2\&\ rhs,}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if}}<is\_integral<T1>::value\ \&\&\ is\_integral<T2>::value\ \&\&}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is\_signed<T1>::value\ \&\&\ is\_unsigned<T2>::value\ \&\&}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(T2)\ ==\ \textcolor{keyword}{sizeof}(T1)>\mbox{\hyperlink{structconditional}{::type}}*\ =\ 0)\ \{}
+\DoxyCodeLine{00074\ \ \ \textcolor{keywordflow}{if}\ (lhs\ <\ 0)}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordflow}{return}\ COMPARE\_RESULT\_LESS;}
+\DoxyCodeLine{00076\ \ \ \textcolor{keywordflow}{return}\ arithmeticCompare<T2>(\textcolor{keyword}{static\_cast<}T2\textcolor{keyword}{>}(lhs),\ rhs);}
+\DoxyCodeLine{00077\ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T1,\ \textcolor{keyword}{typename}\ T2>}
+\DoxyCodeLine{00080\ CompareResult\ arithmeticCompare(}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{const}\ T1\&\ lhs,\ \textcolor{keyword}{const}\ T2\&\ rhs,}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if}}<is\_floating\_point<T1>::value\ ||}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is\_floating\_point<T2>::value>\mbox{\hyperlink{structconditional}{::type}}*\ =\ 0)\ \{}
+\DoxyCodeLine{00084\ \ \ \textcolor{keywordflow}{return}\ arithmeticCompare<double>(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(lhs),}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(rhs));}
+\DoxyCodeLine{00086\ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T2>}
+\DoxyCodeLine{00089\ CompareResult\ arithmeticCompareNegateLeft(}
+\DoxyCodeLine{00090\ \ \ \ \ JsonUInt,\ \textcolor{keyword}{const}\ T2\&,}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if}}<is\_unsigned<T2>::value>\mbox{\hyperlink{structconditional}{::type}}*\ =\ 0)\ \{}
+\DoxyCodeLine{00092\ \ \ \textcolor{keywordflow}{return}\ COMPARE\_RESULT\_LESS;}
+\DoxyCodeLine{00093\ \}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T2>}
+\DoxyCodeLine{00096\ CompareResult\ arithmeticCompareNegateLeft(}
+\DoxyCodeLine{00097\ \ \ \ \ JsonUInt\ lhs,\ \textcolor{keyword}{const}\ T2\&\ rhs,}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if}}<is\_signed<T2>::value>\mbox{\hyperlink{structconditional}{::type}}*\ =\ 0)\ \{}
+\DoxyCodeLine{00099\ \ \ \textcolor{keywordflow}{if}\ (rhs\ >\ 0)}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordflow}{return}\ COMPARE\_RESULT\_LESS;}
+\DoxyCodeLine{00101\ \ \ \textcolor{keywordflow}{return}\ arithmeticCompare(-\/rhs,\ \textcolor{keyword}{static\_cast<}T2\textcolor{keyword}{>}(lhs));}
+\DoxyCodeLine{00102\ \}}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T1>}
+\DoxyCodeLine{00105\ CompareResult\ arithmeticCompareNegateRight(}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{const}\ T1\&,\ JsonUInt,}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if}}<is\_unsigned<T1>::value>\mbox{\hyperlink{structconditional}{::type}}*\ =\ 0)\ \{}
+\DoxyCodeLine{00108\ \ \ \textcolor{keywordflow}{return}\ COMPARE\_RESULT\_GREATER;}
+\DoxyCodeLine{00109\ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T1>}
+\DoxyCodeLine{00112\ CompareResult\ arithmeticCompareNegateRight(}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keyword}{const}\ T1\&\ lhs,\ JsonUInt\ rhs,}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if}}<is\_signed<T1>::value>\mbox{\hyperlink{structconditional}{::type}}*\ =\ 0)\ \{}
+\DoxyCodeLine{00115\ \ \ \textcolor{keywordflow}{if}\ (lhs\ >\ 0)}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordflow}{return}\ COMPARE\_RESULT\_GREATER;}
+\DoxyCodeLine{00117\ \ \ \textcolor{keywordflow}{return}\ arithmeticCompare(\textcolor{keyword}{static\_cast<}T1\textcolor{keyword}{>}(rhs),\ -\/lhs);}
+\DoxyCodeLine{00118\ \}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

@@ -1,0 +1,111 @@
+\doxysection{DHT20 Class Reference}
+\hypertarget{class_d_h_t20}{}\label{class_d_h_t20}\index{DHT20@{DHT20}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+dht20\+\_\+error\+\_\+t \mbox{\hyperlink{class_d_h_t20_a6fd2c9066864ddbc8f2ea5cb1026147b}{begin}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the \doxylink{class_d_h_t20}{DHT20} sensor. \end{DoxyCompactList}\item 
+dht20\+\_\+error\+\_\+t \mbox{\hyperlink{class_d_h_t20_acfd9286ea22e44a6d0b94497a8f7ed2c}{read\+Temp\+And\+Humidity}} ()
+\begin{DoxyCompactList}\small\item\em Reads temperature and humidity data from the \doxylink{class_d_h_t20}{DHT20} sensor. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_d_h_t20_a3b4aa6dc2faac1e170773edc429d26cc}{get\+Humidity}} ()
+\begin{DoxyCompactList}\small\item\em Get humidity data from the \doxylink{class_d_h_t20}{DHT20} sensor. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_d_h_t20_ac62b81dcc477a8f47c797849c5cf27f2}{get\+Temperature}} ()
+\begin{DoxyCompactList}\small\item\em Get temperature data from the \doxylink{class_d_h_t20}{DHT20} sensor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_d_h_t20_a6fd2c9066864ddbc8f2ea5cb1026147b}\index{DHT20@{DHT20}!begin@{begin}}
+\index{begin@{begin}!DHT20@{DHT20}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily \label{class_d_h_t20_a6fd2c9066864ddbc8f2ea5cb1026147b} 
+dht20\+\_\+error\+\_\+t DHT20\+::begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the \doxylink{class_d_h_t20}{DHT20} sensor. 
+
+This function initializes the \doxylink{class_d_h_t20}{DHT20} sensor by waiting for a brief period after power-\/on and then resetting the sensor.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Ensure that the sensor is correctly connected and powered on before calling this function. This function includes a 100ms delay to allow the sensor to stabilize after power-\/on.
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily DHT20\+\_\+\+OK}\+: Initialization success. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_d_h_t20_a3b4aa6dc2faac1e170773edc429d26cc}\index{DHT20@{DHT20}!getHumidity@{getHumidity}}
+\index{getHumidity@{getHumidity}!DHT20@{DHT20}}
+\doxysubsubsection{\texorpdfstring{getHumidity()}{getHumidity()}}
+{\footnotesize\ttfamily \label{class_d_h_t20_a3b4aa6dc2faac1e170773edc429d26cc} 
+float DHT20\+::get\+Humidity (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get humidity data from the \doxylink{class_d_h_t20}{DHT20} sensor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int The humidity data 
+\end{DoxyReturn}
+\Hypertarget{class_d_h_t20_ac62b81dcc477a8f47c797849c5cf27f2}\index{DHT20@{DHT20}!getTemperature@{getTemperature}}
+\index{getTemperature@{getTemperature}!DHT20@{DHT20}}
+\doxysubsubsection{\texorpdfstring{getTemperature()}{getTemperature()}}
+{\footnotesize\ttfamily \label{class_d_h_t20_ac62b81dcc477a8f47c797849c5cf27f2} 
+float DHT20\+::get\+Temperature (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get temperature data from the \doxylink{class_d_h_t20}{DHT20} sensor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int The temperature data 
+\end{DoxyReturn}
+\Hypertarget{class_d_h_t20_acfd9286ea22e44a6d0b94497a8f7ed2c}\index{DHT20@{DHT20}!readTempAndHumidity@{readTempAndHumidity}}
+\index{readTempAndHumidity@{readTempAndHumidity}!DHT20@{DHT20}}
+\doxysubsubsection{\texorpdfstring{readTempAndHumidity()}{readTempAndHumidity()}}
+{\footnotesize\ttfamily \label{class_d_h_t20_acfd9286ea22e44a6d0b94497a8f7ed2c} 
+dht20\+\_\+error\+\_\+t DHT20\+::read\+Temp\+And\+Humidity (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Reads temperature and humidity data from the \doxylink{class_d_h_t20}{DHT20} sensor. 
+
+This function attempts to read temperature and humidity data from the \doxylink{class_d_h_t20}{DHT20} sensor. It retries the operation multiple times if the sensor is not ready or data is not available. The raw sensor values are then converted to floating-\/point temperature and humidity values.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Ensure that the sensor is correctly connected and that I2C communication is functioning. This function may block for short periods while waiting for the sensor to be ready and for data to be available.
+\end{DoxyAttention}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item {\ttfamily DHT20\+\_\+\+OK}\+: Success
+\item {\ttfamily DHT20\+\_\+\+TIMEOUT}\+: Timeout, the sensor is not ready or data is not available after multiple attempts. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/dht20/src/\mbox{\hyperlink{dht20_8h}{dht20.\+h}}\item 
+lib/dht20/src/\mbox{\hyperlink{dht20_8cpp}{dht20.\+cpp}}\end{DoxyCompactItemize}

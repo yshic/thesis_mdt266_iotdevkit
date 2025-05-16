@@ -1,0 +1,120 @@
+\doxysection{Utilities.\+hpp}
+\hypertarget{_utilities_8hpp_source}{}\label{_utilities_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Array/Utilities.hpp@{lib/ArduinoJson/src/ArduinoJson/Array/Utilities.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Array/JsonArray.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Document/JsonDocument.hpp>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ ARDUINOJSON\_BEGIN\_PUBLIC\_NAMESPACE}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ Copies\ a\ value\ to\ a\ JsonVariant.}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ This\ is\ a\ degenerated\ form\ of\ copyArray()\ to\ stop\ the\ recursion.}}
+\DoxyCodeLine{00014\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00015\ \textcolor{keyword}{inline}\ \textcolor{keyword}{typename}\ detail::enable\_if<!detail::is\_array<T>::value,\ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00016\ copyArray(\textcolor{keyword}{const}\ T\&\ src,\ \mbox{\hyperlink{class_json_variant}{JsonVariant}}\ dst)\ \{}
+\DoxyCodeLine{00017\ \ \ \textcolor{keywordflow}{return}\ dst.set(src);}
+\DoxyCodeLine{00018\ \}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ Copies\ values\ from\ an\ array\ to\ a\ JsonArray\ or\ a\ JsonVariant.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ https://arduinojson.org/v6/api/misc/copyarray/}}
+\DoxyCodeLine{00022\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keywordtype}{size\_t}\ N,\ \textcolor{keyword}{typename}\ TDestination>}
+\DoxyCodeLine{00023\ \textcolor{keyword}{inline}\ \textcolor{keyword}{typename}\ detail::enable\_if<}
+\DoxyCodeLine{00024\ \ \ \ \ !detail::is\_base\_of<JsonDocument,\ TDestination>::value,\ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00025\ copyArray(T\ (\&src)[N],\ \textcolor{keyword}{const}\ TDestination\&\ dst)\ \{}
+\DoxyCodeLine{00026\ \ \ \textcolor{keywordflow}{return}\ copyArray(src,\ N,\ dst);}
+\DoxyCodeLine{00027\ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ Copies\ values\ from\ an\ array\ to\ a\ JsonArray\ or\ a\ JsonVariant.}}
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ https://arduinojson.org/v6/api/misc/copyarray/}}
+\DoxyCodeLine{00031\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ TDestination>}
+\DoxyCodeLine{00032\ \textcolor{keyword}{inline}\ \textcolor{keyword}{typename}\ detail::enable\_if<}
+\DoxyCodeLine{00033\ \ \ \ \ !detail::is\_base\_of<JsonDocument,\ TDestination>::value,\ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00034\ copyArray(\textcolor{keyword}{const}\ T*\ src,\ \textcolor{keywordtype}{size\_t}\ len,\ \textcolor{keyword}{const}\ TDestination\&\ dst)\ \{}
+\DoxyCodeLine{00035\ \ \ \textcolor{keywordtype}{bool}\ ok\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00036\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ len;\ i++)\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ ok\ \&=\ copyArray(src[i],\ dst.add());}
+\DoxyCodeLine{00038\ \ \ \}}
+\DoxyCodeLine{00039\ \ \ \textcolor{keywordflow}{return}\ ok;}
+\DoxyCodeLine{00040\ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ Copies\ a\ string\ to\ a\ JsonVariant.}}
+\DoxyCodeLine{00043\ \textcolor{comment}{//\ This\ is\ a\ degenerated\ form\ of\ copyArray()\ to\ handle\ strings.}}
+\DoxyCodeLine{00044\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDestination>}
+\DoxyCodeLine{00045\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ copyArray(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ src,\ \textcolor{keywordtype}{size\_t},\ \textcolor{keyword}{const}\ TDestination\&\ dst)\ \{}
+\DoxyCodeLine{00046\ \ \ \textcolor{keywordflow}{return}\ dst.set(src);}
+\DoxyCodeLine{00047\ \}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{comment}{//\ Copies\ values\ from\ an\ array\ to\ a\ JsonDocument.}}
+\DoxyCodeLine{00050\ \textcolor{comment}{//\ https://arduinojson.org/v6/api/misc/copyarray/}}
+\DoxyCodeLine{00051\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00052\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ copyArray(\textcolor{keyword}{const}\ T\&\ src,\ \mbox{\hyperlink{class_json_document}{JsonDocument}}\&\ dst)\ \{}
+\DoxyCodeLine{00053\ \ \ \textcolor{keywordflow}{return}\ copyArray(src,\ dst.to<\mbox{\hyperlink{class_json_array}{JsonArray}}>());}
+\DoxyCodeLine{00054\ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{comment}{//\ Copies\ an\ array\ to\ a\ JsonDocument.}}
+\DoxyCodeLine{00057\ \textcolor{comment}{//\ https://arduinojson.org/v6/api/misc/copyarray/}}
+\DoxyCodeLine{00058\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00059\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ copyArray(\textcolor{keyword}{const}\ T*\ src,\ \textcolor{keywordtype}{size\_t}\ len,\ \mbox{\hyperlink{class_json_document}{JsonDocument}}\&\ dst)\ \{}
+\DoxyCodeLine{00060\ \ \ \textcolor{keywordflow}{return}\ copyArray(src,\ len,\ dst.to<\mbox{\hyperlink{class_json_array}{JsonArray}}>());}
+\DoxyCodeLine{00061\ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{comment}{//\ Copies\ a\ value\ from\ a\ JsonVariant.}}
+\DoxyCodeLine{00064\ \textcolor{comment}{//\ This\ is\ a\ degenerated\ form\ of\ copyArray()\ to\ stop\ the\ recursion.}}
+\DoxyCodeLine{00065\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00066\ \textcolor{keyword}{inline}\ \textcolor{keyword}{typename}\ detail::enable\_if<!detail::is\_array<T>::value,\ \textcolor{keywordtype}{size\_t}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00067\ copyArray(\mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}\ src,\ T\&\ dst)\ \{}
+\DoxyCodeLine{00068\ \ \ dst\ =\ src.as<T>();}
+\DoxyCodeLine{00069\ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00070\ \}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{comment}{//\ Copies\ values\ from\ a\ JsonArray\ or\ JsonVariant\ to\ an\ array.}}
+\DoxyCodeLine{00073\ \textcolor{comment}{//\ https://arduinojson.org/v6/api/misc/copyarray/}}
+\DoxyCodeLine{00074\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keywordtype}{size\_t}\ N>}
+\DoxyCodeLine{00075\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ copyArray(\mbox{\hyperlink{class_json_array_const}{JsonArrayConst}}\ src,\ T\ (\&dst)[N])\ \{}
+\DoxyCodeLine{00076\ \ \ \textcolor{keywordflow}{return}\ copyArray(src,\ dst,\ N);}
+\DoxyCodeLine{00077\ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \textcolor{comment}{//\ Copies\ values\ from\ a\ JsonArray\ or\ JsonVariant\ to\ an\ array.}}
+\DoxyCodeLine{00080\ \textcolor{comment}{//\ https://arduinojson.org/v6/api/misc/copyarray/}}
+\DoxyCodeLine{00081\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00082\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ copyArray(\mbox{\hyperlink{class_json_array_const}{JsonArrayConst}}\ src,\ T*\ dst,\ \textcolor{keywordtype}{size\_t}\ len)\ \{}
+\DoxyCodeLine{00083\ \ \ \textcolor{keywordtype}{size\_t}\ i\ =\ 0;}
+\DoxyCodeLine{00084\ \ \ \textcolor{keywordflow}{for}\ (JsonArrayConst::iterator\ it\ =\ src.begin();\ it\ !=\ src.end()\ \&\&\ i\ <\ len;}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ ++it)}
+\DoxyCodeLine{00086\ \ \ \ \ copyArray(*it,\ dst[i++]);}
+\DoxyCodeLine{00087\ \ \ \textcolor{keywordflow}{return}\ i;}
+\DoxyCodeLine{00088\ \}}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \textcolor{comment}{//\ Copies\ a\ string\ from\ a\ JsonVariant.}}
+\DoxyCodeLine{00091\ \textcolor{comment}{//\ This\ is\ a\ degenerated\ form\ of\ copyArray()\ to\ handle\ strings.}}
+\DoxyCodeLine{00092\ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{size\_t}\ N>}
+\DoxyCodeLine{00093\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{size\_t}\ copyArray(\mbox{\hyperlink{class_json_variant_const}{JsonVariantConst}}\ src,\ \textcolor{keywordtype}{char}\ (\&dst)[N])\ \{}
+\DoxyCodeLine{00094\ \ \ \mbox{\hyperlink{class_json_string}{JsonString}}\ s\ =\ src;}
+\DoxyCodeLine{00095\ \ \ \textcolor{keywordtype}{size\_t}\ len\ =\ N\ -\/\ 1;}
+\DoxyCodeLine{00096\ \ \ \textcolor{keywordflow}{if}\ (len\ >\ s.size())}
+\DoxyCodeLine{00097\ \ \ \ \ len\ =\ s.size();}
+\DoxyCodeLine{00098\ \ \ memcpy(dst,\ s.c\_str(),\ len);}
+\DoxyCodeLine{00099\ \ \ dst[len]\ =\ 0;}
+\DoxyCodeLine{00100\ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00101\ \}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \textcolor{comment}{//\ Copies\ values\ from\ a\ JsonDocument\ to\ an\ array.}}
+\DoxyCodeLine{00104\ \textcolor{comment}{//\ https://arduinojson.org/v6/api/misc/copyarray/}}
+\DoxyCodeLine{00105\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TSource,\ \textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00106\ \textcolor{keyword}{inline}\ \textcolor{keyword}{typename}\ detail::enable\_if<}
+\DoxyCodeLine{00107\ \ \ \ \ detail::is\_array<T>::value\ \&\&}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ detail::is\_base\_of<JsonDocument,\ TSource>::value,}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{size\_t}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00110\ copyArray(\textcolor{keyword}{const}\ TSource\&\ src,\ T\&\ dst)\ \{}
+\DoxyCodeLine{00111\ \ \ \textcolor{keywordflow}{return}\ copyArray(src.template\ as<JsonArrayConst>(),\ dst);}
+\DoxyCodeLine{00112\ \}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ ARDUINOJSON\_END\_PUBLIC\_NAMESPACE}
+
+\end{DoxyCode}

@@ -1,0 +1,77 @@
+\doxysection{Web\+Socket\+Client.\+h}
+\hypertarget{_web_socket_client_8h_source}{}\label{_web_socket_client_8h_source}\index{lib/ArduinoHttpClient/WebSocketClient.h@{lib/ArduinoHttpClient/WebSocketClient.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ (c)\ Copyright\ Arduino.\ 2016}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Released\ under\ Apache\ License,\ version\ 2.0}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#ifndef\ WebSocketClient\_h}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#define\ WebSocketClient\_h}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}HttpClient.h"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ WS\_TX\_BUFFER\_SIZE}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\ \ \#define\ WS\_TX\_BUFFER\_SIZE\ 128}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ TYPE\_CONTINUATION\ \ \ \ \ =\ 0x0;}
+\DoxyCodeLine{00016\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ TYPE\_TEXT\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x1;}
+\DoxyCodeLine{00017\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ TYPE\_BINARY\ \ \ \ \ \ \ \ \ \ \ =\ 0x2;}
+\DoxyCodeLine{00018\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ TYPE\_CONNECTION\_CLOSE\ =\ 0x8;}
+\DoxyCodeLine{00019\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ TYPE\_PING\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0x9;}
+\DoxyCodeLine{00020\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ TYPE\_PONG\ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0xa;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }WebSocketClient\ :\ \textcolor{keyword}{public}\ HttpClient}
+\DoxyCodeLine{00023\ \{}
+\DoxyCodeLine{00024\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ \ \ WebSocketClient(Client\&\ aClient,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ aServerName,\ uint16\_t\ aServerPort\ =\ HttpClient::kHttpPort);}
+\DoxyCodeLine{00026\ \ \ \ \ WebSocketClient(Client\&\ aClient,\ \textcolor{keyword}{const}\ String\&\ aServerName,\ uint16\_t\ aServerPort\ =\ HttpClient::kHttpPort);}
+\DoxyCodeLine{00027\ \ \ \ \ WebSocketClient(Client\&\ aClient,\ \textcolor{keyword}{const}\ IPAddress\&\ aServerAddress,\ uint16\_t\ aServerPort\ =\ HttpClient::kHttpPort);}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_web_socket_client_a5ad90332484442e76d2bf5a96101c6e2}{begin}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ aPath\ =\ \textcolor{stringliteral}{"{}/"{}});}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_web_socket_client_a5ad90332484442e76d2bf5a96101c6e2}{begin}}(\textcolor{keyword}{const}\ String\&\ aPath);}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_web_socket_client_abcb2421a827ad726a78d32730395c445}{beginMessage}}(\textcolor{keywordtype}{int}\ aType);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_web_socket_client_a0c759d104dfeb98f26d13893bbc5674b}{endMessage}}();}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_web_socket_client_a9d0321c102d2612a2e3a9ad0b8684dd9}{parseMessage}}();}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_web_socket_client_a1e70a9603064456d9c418d841c262985}{messageType}}();}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_web_socket_client_a60dd6c3de4a82450bba897094216eb73}{isFinal}}();}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00068\ \ \ \ \ String\ \mbox{\hyperlink{class_web_socket_client_a7948fdb8e293bbd2bbdd0758ec5e4dfa}{readString}}();}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_web_socket_client_acb00365b65fb29ced9506b6bc87008d0}{ping}}();}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{comment}{//\ Inherited\ from\ Print}}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{size\_t}\ write(uint8\_t\ aByte);}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{size\_t}\ write(\textcolor{keyword}{const}\ uint8\_t\ *aBuffer,\ \textcolor{keywordtype}{size\_t}\ aSize);}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//\ Inherited\ from\ Stream}}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ available();}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_web_socket_client_adfbbbff32d9c8b22b1ad887e39289e96}{read}}();}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_web_socket_client_adfbbbff32d9c8b22b1ad887e39289e96}{read}}(uint8\_t\ *buf,\ \textcolor{keywordtype}{size\_t}\ size);}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ peek();}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{void}\ flushRx();}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{bool}\ iTxStarted;}
+\DoxyCodeLine{00092\ \ \ \ \ uint8\_t\ iTxMessageType;}
+\DoxyCodeLine{00093\ \ \ \ \ uint8\_t\ iTxBuffer[WS\_TX\_BUFFER\_SIZE];}
+\DoxyCodeLine{00094\ \ \ \ \ uint64\_t\ iTxSize;}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ uint8\_t\ iRxOpCode;}
+\DoxyCodeLine{00097\ \ \ \ \ uint64\_t\ iRxSize;}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{bool}\ iRxMasked;}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{int}\ iRxMaskIndex;}
+\DoxyCodeLine{00100\ \ \ \ \ uint8\_t\ iRxMaskKey[4];}
+\DoxyCodeLine{00101\ \};}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,38 @@
+\doxysection{attributes.\+hpp}
+\hypertarget{attributes_8hpp_source}{}\label{attributes_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Polyfills/attributes.hpp@{lib/ArduinoJson/src/ArduinoJson/Polyfills/attributes.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifdef\ \_MSC\_VER\ \ }\textcolor{comment}{//\ Visual\ Studio}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#\ \ define\ FORCE\_INLINE\ \ }\textcolor{comment}{//\ \_\_forceinline\ causes\ C4714\ when\ returning\ std::string}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#\ \ define\ NO\_INLINE\ \_\_declspec(noinline)}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#elif\ defined(\_\_GNUC\_\_)\ \ }\textcolor{comment}{//\ GCC\ or\ Clang}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#\ \ define\ FORCE\_INLINE\ \_\_attribute\_\_((always\_inline))}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#\ \ define\ NO\_INLINE\ \_\_attribute\_\_((noinline))}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#else\ \ }\textcolor{comment}{//\ Other\ compilers}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#\ \ define\ FORCE\_INLINE}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#\ \ define\ NO\_INLINE}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#if\ defined(\_\_has\_attribute)}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#\ \ if\ \_\_has\_attribute(no\_sanitize)}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#\ \ \ \ define\ ARDUINOJSON\_NO\_SANITIZE(check)\ \_\_attribute\_\_((no\_sanitize(check)))}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#\ \ else}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#\ \ \ \ define\ ARDUINOJSON\_NO\_SANITIZE(check)}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#\ \ define\ ARDUINOJSON\_NO\_SANITIZE(check)}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

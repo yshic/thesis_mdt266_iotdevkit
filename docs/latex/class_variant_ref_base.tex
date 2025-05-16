@@ -1,0 +1,157 @@
+\doxysection{Variant\+Ref\+Base\texorpdfstring{$<$}{<} TDerived \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{class_variant_ref_base}{}\label{class_variant_ref_base}\index{VariantRefBase$<$ TDerived $>$@{VariantRefBase$<$ TDerived $>$}}
+Inheritance diagram for Variant\+Ref\+Base\texorpdfstring{$<$}{<} TDerived \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_variant_ref_base}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_variant_ref_base_a34570bd4a11bc058020c54d6d4458f14}\label{class_variant_ref_base_a34570bd4a11bc058020c54d6d4458f14} 
+FORCE\+\_\+\+INLINE void {\bfseries clear} () const
+\item 
+\Hypertarget{class_variant_ref_base_a3447c5c3b33cfc3e6a1ea1ac454c0a8f}\label{class_variant_ref_base_a3447c5c3b33cfc3e6a1ea1ac454c0a8f} 
+FORCE\+\_\+\+INLINE bool {\bfseries is\+Null} () const
+\item 
+\Hypertarget{class_variant_ref_base_aa96fa22a0908e08fd948219ff8a44175}\label{class_variant_ref_base_aa96fa22a0908e08fd948219ff8a44175} 
+FORCE\+\_\+\+INLINE bool {\bfseries is\+Unbound} () const
+\item 
+\Hypertarget{class_variant_ref_base_ae79007ba4ec49c9ebbdd584e0474f22a}\label{class_variant_ref_base_ae79007ba4ec49c9ebbdd584e0474f22a} 
+{\footnotesize template$<$typename T$>$ }\\FORCE\+\_\+\+INLINE \mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$!\mbox{\hyperlink{struct_converter_needs_writeable_ref}{Converter\+Needs\+Writeable\+Ref}}$<$ T $>$\+::value, T $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries as} () const
+\item 
+\Hypertarget{class_variant_ref_base_acde5d160d839bfc8c577e508cb4156e5}\label{class_variant_ref_base_acde5d160d839bfc8c577e508cb4156e5} 
+{\footnotesize template$<$typename T$>$ }\\FORCE\+\_\+\+INLINE \mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{struct_converter_needs_writeable_ref}{Converter\+Needs\+Writeable\+Ref}}$<$ T $>$\+::value, T $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries as} () const
+\item 
+\Hypertarget{class_variant_ref_base_a1851dcd0b4e5752e3aefac5f4b85aab8}\label{class_variant_ref_base_a1851dcd0b4e5752e3aefac5f4b85aab8} 
+{\footnotesize template$<$typename T, typename = typename enable\+\_\+if$<$!is\+\_\+same$<$\+T, TDerived$>$\+::value$>$\+::type$>$ }\\FORCE\+\_\+\+INLINE {\bfseries operator T} () const
+\item 
+\Hypertarget{class_variant_ref_base_a3635eb259aaaa3dbfe2f2f0d36a7e963}\label{class_variant_ref_base_a3635eb259aaaa3dbfe2f2f0d36a7e963} 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{structis__same}{is\+\_\+same}}$<$ T, \mbox{\hyperlink{class_json_array}{Json\+Array}} $>$\+::value, \mbox{\hyperlink{class_json_array}{Json\+Array}} $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries to} () const
+\item 
+\Hypertarget{class_variant_ref_base_a4c0ddce4d50927958470e0f35239f483}\label{class_variant_ref_base_a4c0ddce4d50927958470e0f35239f483} 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{structis__same}{is\+\_\+same}}$<$ T, \mbox{\hyperlink{class_json_object}{Json\+Object}} $>$\+::value, \mbox{\hyperlink{class_json_object}{Json\+Object}} $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries to} () const
+\item 
+\Hypertarget{class_variant_ref_base_a3635eb259aaaa3dbfe2f2f0d36a7e963}\label{class_variant_ref_base_a3635eb259aaaa3dbfe2f2f0d36a7e963} 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{structis__same}{is\+\_\+same}}$<$ T, \mbox{\hyperlink{class_json_variant}{Json\+Variant}} $>$\+::value, \mbox{\hyperlink{class_json_variant}{Json\+Variant}} $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries to} () const
+\item 
+\Hypertarget{class_variant_ref_base_ad5479cf4e80c56ce4a055372f1f3667c}\label{class_variant_ref_base_ad5479cf4e80c56ce4a055372f1f3667c} 
+{\footnotesize template$<$typename T$>$ }\\FORCE\+\_\+\+INLINE \mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{struct_converter_needs_writeable_ref}{Converter\+Needs\+Writeable\+Ref}}$<$ T $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries is} () const
+\item 
+\Hypertarget{class_variant_ref_base_a030c410012f66974bbfea2fc1446ce9e}\label{class_variant_ref_base_a030c410012f66974bbfea2fc1446ce9e} 
+{\footnotesize template$<$typename T$>$ }\\FORCE\+\_\+\+INLINE \mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$!\mbox{\hyperlink{struct_converter_needs_writeable_ref}{Converter\+Needs\+Writeable\+Ref}}$<$ T $>$\+::value \&\&!\mbox{\hyperlink{structis__same}{is\+\_\+same}}$<$ T, char \texorpdfstring{$\ast$}{*} $>$\+::value \&\&!\mbox{\hyperlink{structis__same}{is\+\_\+same}}$<$ T, char $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries is} () const
+\item 
+\Hypertarget{class_variant_ref_base_a047fc09635128b593f8e51fb2ab6e3cf}\label{class_variant_ref_base_a047fc09635128b593f8e51fb2ab6e3cf} 
+FORCE\+\_\+\+INLINE void {\bfseries shallow\+Copy} (Arduino\+Json\+::\+Json\+Variant\+Const target)
+\item 
+\Hypertarget{class_variant_ref_base_a02f0f9b570a16c39c97878cd7825e0c1}\label{class_variant_ref_base_a02f0f9b570a16c39c97878cd7825e0c1} 
+{\footnotesize template$<$typename T$>$ }\\FORCE\+\_\+\+INLINE bool {\bfseries set} (const T \&value) const
+\item 
+\Hypertarget{class_variant_ref_base_a41127b0e0dc6026b9f11413eaaad8354}\label{class_variant_ref_base_a41127b0e0dc6026b9f11413eaaad8354} 
+{\footnotesize template$<$typename T$>$ }\\FORCE\+\_\+\+INLINE bool {\bfseries set} (T \texorpdfstring{$\ast$}{*}value) const
+\item 
+\Hypertarget{class_variant_ref_base_ad80bcae1fb743074d89f27c171617e0d}\label{class_variant_ref_base_ad80bcae1fb743074d89f27c171617e0d} 
+FORCE\+\_\+\+INLINE size\+\_\+t {\bfseries size} () const
+\item 
+\Hypertarget{class_variant_ref_base_a380663c8bc3f115e62c02c7e85d1cc7a}\label{class_variant_ref_base_a380663c8bc3f115e62c02c7e85d1cc7a} 
+FORCE\+\_\+\+INLINE size\+\_\+t {\bfseries memory\+Usage} () const
+\item 
+\Hypertarget{class_variant_ref_base_ac541491c97f201bd17ef77be5310f44f}\label{class_variant_ref_base_ac541491c97f201bd17ef77be5310f44f} 
+FORCE\+\_\+\+INLINE size\+\_\+t {\bfseries nesting} () const
+\item 
+\Hypertarget{class_variant_ref_base_abe14b177b7d7168d0cdbba53e71b1ec2}\label{class_variant_ref_base_abe14b177b7d7168d0cdbba53e71b1ec2} 
+FORCE\+\_\+\+INLINE \mbox{\hyperlink{class_json_variant}{Json\+Variant}} {\bfseries add} () const
+\item 
+\Hypertarget{class_variant_ref_base_acc6257e03f08ca776a9105f82f572474}\label{class_variant_ref_base_acc6257e03f08ca776a9105f82f572474} 
+{\footnotesize template$<$typename T$>$ }\\FORCE\+\_\+\+INLINE bool {\bfseries add} (const T \&value) const
+\item 
+\Hypertarget{class_variant_ref_base_a68f6c82045f79f82cf56f5466245923f}\label{class_variant_ref_base_a68f6c82045f79f82cf56f5466245923f} 
+{\footnotesize template$<$typename T$>$ }\\FORCE\+\_\+\+INLINE bool {\bfseries add} (T \texorpdfstring{$\ast$}{*}value) const
+\item 
+\Hypertarget{class_variant_ref_base_a20f760365d551eb7c9337de0ada2abf0}\label{class_variant_ref_base_a20f760365d551eb7c9337de0ada2abf0} 
+FORCE\+\_\+\+INLINE void {\bfseries remove} (size\+\_\+t index) const
+\item 
+\Hypertarget{class_variant_ref_base_a908e9dc230a9aa601c5949057ba5f807}\label{class_variant_ref_base_a908e9dc230a9aa601c5949057ba5f807} 
+{\footnotesize template$<$typename TChar$>$ }\\FORCE\+\_\+\+INLINE \mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{struct_is_string}{Is\+String}}$<$ TChar \texorpdfstring{$\ast$}{*} $>$\+::value $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries remove} (TChar \texorpdfstring{$\ast$}{*}key) const
+\item 
+\Hypertarget{class_variant_ref_base_ab08bdf9846c199f53591a6c20386b309}\label{class_variant_ref_base_ab08bdf9846c199f53591a6c20386b309} 
+{\footnotesize template$<$typename TString$>$ }\\FORCE\+\_\+\+INLINE \mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{struct_is_string}{Is\+String}}$<$ TString $>$\+::value $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries remove} (const TString \&key) const
+\item 
+\Hypertarget{class_variant_ref_base_a8b5a4fc30547ee44bf0e494ab379c007}\label{class_variant_ref_base_a8b5a4fc30547ee44bf0e494ab379c007} 
+FORCE\+\_\+\+INLINE \mbox{\hyperlink{class_json_array}{Json\+Array}} {\bfseries create\+Nested\+Array} () const
+\item 
+\Hypertarget{class_variant_ref_base_a3157ac16680e20dd243a557cdcead8ec}\label{class_variant_ref_base_a3157ac16680e20dd243a557cdcead8ec} 
+FORCE\+\_\+\+INLINE \mbox{\hyperlink{class_json_object}{Json\+Object}} {\bfseries create\+Nested\+Object} () const
+\item 
+\Hypertarget{class_variant_ref_base_ad82440d0f35a802319024ba40caf186b}\label{class_variant_ref_base_ad82440d0f35a802319024ba40caf186b} 
+FORCE\+\_\+\+INLINE \mbox{\hyperlink{class_element_proxy}{Element\+Proxy}}$<$ TDerived $>$ {\bfseries operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t index) const
+\item 
+\Hypertarget{class_variant_ref_base_ad5fd46ad15d47fdcd10af696bed81e1a}\label{class_variant_ref_base_ad5fd46ad15d47fdcd10af696bed81e1a} 
+{\footnotesize template$<$typename TString$>$ }\\FORCE\+\_\+\+INLINE \mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{struct_is_string}{Is\+String}}$<$ TString $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries contains\+Key} (const TString \&key) const
+\item 
+\Hypertarget{class_variant_ref_base_afb6b198b96fa15fb63b87771c66966b4}\label{class_variant_ref_base_afb6b198b96fa15fb63b87771c66966b4} 
+{\footnotesize template$<$typename TChar$>$ }\\FORCE\+\_\+\+INLINE \mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{struct_is_string}{Is\+String}}$<$ TChar \texorpdfstring{$\ast$}{*} $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries contains\+Key} (TChar \texorpdfstring{$\ast$}{*}key) const
+\item 
+\Hypertarget{class_variant_ref_base_a3d18acb45ac16ab02169331558b91dad}\label{class_variant_ref_base_a3d18acb45ac16ab02169331558b91dad} 
+{\footnotesize template$<$typename TString$>$ }\\FORCE\+\_\+\+INLINE \mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{struct_is_string}{Is\+String}}$<$ TString $>$\+::value, \mbox{\hyperlink{class_member_proxy}{Member\+Proxy}}$<$ TDerived, TString $>$ $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator\mbox{[}$\,$\mbox{]}} (const TString \&key) const
+\item 
+\Hypertarget{class_variant_ref_base_aded02fc56a775f5fcd0324c99810132d}\label{class_variant_ref_base_aded02fc56a775f5fcd0324c99810132d} 
+{\footnotesize template$<$typename TChar$>$ }\\FORCE\+\_\+\+INLINE \mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{struct_is_string}{Is\+String}}$<$ TChar \texorpdfstring{$\ast$}{*} $>$\+::value, \mbox{\hyperlink{class_member_proxy}{Member\+Proxy}}$<$ TDerived, TChar \texorpdfstring{$\ast$}{*} $>$ $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator\mbox{[}$\,$\mbox{]}} (TChar \texorpdfstring{$\ast$}{*}key) const
+\item 
+\Hypertarget{class_variant_ref_base_aa332c8f0df81ef9c1ec45cd72e9b08e5}\label{class_variant_ref_base_aa332c8f0df81ef9c1ec45cd72e9b08e5} 
+{\footnotesize template$<$typename TString$>$ }\\FORCE\+\_\+\+INLINE \mbox{\hyperlink{class_json_array}{Json\+Array}} {\bfseries create\+Nested\+Array} (const TString \&key) const
+\item 
+\Hypertarget{class_variant_ref_base_a14b9e86c6dde017d2a1b6fc534424bb7}\label{class_variant_ref_base_a14b9e86c6dde017d2a1b6fc534424bb7} 
+{\footnotesize template$<$typename TChar$>$ }\\FORCE\+\_\+\+INLINE \mbox{\hyperlink{class_json_array}{Json\+Array}} {\bfseries create\+Nested\+Array} (TChar \texorpdfstring{$\ast$}{*}key) const
+\item 
+\Hypertarget{class_variant_ref_base_a962e91ed57c8ce5384ca7d6d92daa14a}\label{class_variant_ref_base_a962e91ed57c8ce5384ca7d6d92daa14a} 
+{\footnotesize template$<$typename TString$>$ }\\\mbox{\hyperlink{class_json_object}{Json\+Object}} {\bfseries create\+Nested\+Object} (const TString \&key) const
+\item 
+\Hypertarget{class_variant_ref_base_a7b7598ad36aa1e921936f220865d64b2}\label{class_variant_ref_base_a7b7598ad36aa1e921936f220865d64b2} 
+{\footnotesize template$<$typename TChar$>$ }\\\mbox{\hyperlink{class_json_object}{Json\+Object}} {\bfseries create\+Nested\+Object} (TChar \texorpdfstring{$\ast$}{*}key) const
+\item 
+\Hypertarget{class_variant_ref_base_ad81ab3b49d1a96f2e98ea35e4872609f}\label{class_variant_ref_base_ad81ab3b49d1a96f2e98ea35e4872609f} 
+{\footnotesize template$<$typename TString$>$ }\\ARDUINOJSON\+\_\+\+END\+\_\+\+PUBLIC\+\_\+\+NAMESPACE ARDUINOJSON\+\_\+\+BEGIN\+\_\+\+PRIVATE\+\_\+\+NAMESPACE \mbox{\hyperlink{class_json_array}{Json\+Array}} {\bfseries create\+Nested\+Array} (const TString \&key) const
+\item 
+\Hypertarget{class_variant_ref_base_af92505813419eeb7f20df62780ca1f83}\label{class_variant_ref_base_af92505813419eeb7f20df62780ca1f83} 
+{\footnotesize template$<$typename TChar$>$ }\\\mbox{\hyperlink{class_json_array}{Json\+Array}} {\bfseries create\+Nested\+Array} (TChar \texorpdfstring{$\ast$}{*}key) const
+\item 
+\Hypertarget{class_variant_ref_base_a0b177fc70d0f10485c099ca4dd4a6782}\label{class_variant_ref_base_a0b177fc70d0f10485c099ca4dd4a6782} 
+{\footnotesize template$<$typename TString$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{struct_is_string}{Is\+String}}$<$ TString $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries contains\+Key} (const TString \&key) const
+\item 
+\Hypertarget{class_variant_ref_base_a81d061d32ddd976ca7bbbe8e3fdb63cc}\label{class_variant_ref_base_a81d061d32ddd976ca7bbbe8e3fdb63cc} 
+{\footnotesize template$<$typename TChar$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{struct_is_string}{Is\+String}}$<$ TChar \texorpdfstring{$\ast$}{*} $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries contains\+Key} (TChar \texorpdfstring{$\ast$}{*}key) const
+\item 
+\Hypertarget{class_variant_ref_base_a0f2d84c89bec48f337f7d6f31c7e53da}\label{class_variant_ref_base_a0f2d84c89bec48f337f7d6f31c7e53da} 
+{\footnotesize template$<$typename TString$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{struct_is_string}{Is\+String}}$<$ TString \texorpdfstring{$\ast$}{*} $>$\+::value, \mbox{\hyperlink{class_member_proxy}{Member\+Proxy}}$<$ TDerived, TString \texorpdfstring{$\ast$}{*} $>$ $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator\mbox{[}$\,$\mbox{]}} (TString \texorpdfstring{$\ast$}{*}key) const
+\item 
+\Hypertarget{class_variant_ref_base_a74b8ec2fce71b64ff8c2fbcb4547280f}\label{class_variant_ref_base_a74b8ec2fce71b64ff8c2fbcb4547280f} 
+{\footnotesize template$<$typename TString$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{struct_is_string}{Is\+String}}$<$ TString $>$\+::value, \mbox{\hyperlink{class_member_proxy}{Member\+Proxy}}$<$ TDerived, TString $>$ $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries operator\mbox{[}$\,$\mbox{]}} (const TString \&key) const
+\item 
+\Hypertarget{class_variant_ref_base_af7c643f93f85f1cc38d440ba360e8a72}\label{class_variant_ref_base_af7c643f93f85f1cc38d440ba360e8a72} 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{struct_converter_needs_writeable_ref}{Converter\+Needs\+Writeable\+Ref}}$<$ T $>$\+::value, T $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries as} () const
+\item 
+\Hypertarget{class_variant_ref_base_a4f67f48defd8135ec855a2eceae2664b}\label{class_variant_ref_base_a4f67f48defd8135ec855a2eceae2664b} 
+{\footnotesize template$<$typename T$>$ }\\\mbox{\hyperlink{structenable__if}{enable\+\_\+if}}$<$ \mbox{\hyperlink{struct_converter_needs_writeable_ref}{Converter\+Needs\+Writeable\+Ref}}$<$ T $>$\+::value, bool $>$\mbox{\hyperlink{structconditional}{\+::type}} {\bfseries is} () const
+\item 
+\Hypertarget{class_variant_ref_base_a999bbd39360966769da334d5aa8c6a06}\label{class_variant_ref_base_a999bbd39360966769da334d5aa8c6a06} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries set} (const T \&value) const
+\item 
+\Hypertarget{class_variant_ref_base_a13051488056db0c6d1b8c46ffce06968}\label{class_variant_ref_base_a13051488056db0c6d1b8c46ffce06968} 
+{\footnotesize template$<$typename T$>$ }\\bool {\bfseries set} (T \texorpdfstring{$\ast$}{*}value) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_variant_ref_base_abd7287a435c7b673974e9cf6c0fd3178}\label{class_variant_ref_base_abd7287a435c7b673974e9cf6c0fd3178} 
+class {\bfseries Variant\+Attorney}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Arduino\+Json/src/\+Arduino\+Json/\+Variant/Variant\+Ref\+Base.\+hpp\item 
+lib/\+Arduino\+Json/src/\+Arduino\+Json/\+Array/Json\+Array\+Impl.\+hpp\item 
+lib/\+Arduino\+Json/src/\+Arduino\+Json/\+Object/Json\+Object\+Impl.\+hpp\item 
+lib/\+Arduino\+Json/src/\+Arduino\+Json/\+Variant/Variant\+Impl.\+hpp\end{DoxyCompactItemize}

@@ -1,0 +1,189 @@
+\doxysection{Variant\+Impl.\+hpp}
+\hypertarget{_variant_impl_8hpp_source}{}\label{_variant_impl_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Variant/VariantImpl.hpp@{lib/ArduinoJson/src/ArduinoJson/Variant/VariantImpl.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Array/JsonArray.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Configuration.hpp>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Numbers/convertNumber.hpp>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Numbers/parseNumber.hpp>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Object/JsonObject.hpp>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Variant/JsonVariant.hpp>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <string.h>}\ \ \textcolor{comment}{//\ for\ strcmp}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00019\ \textcolor{keyword}{inline}\ T\ VariantData::asIntegral()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00020\ \ \ \textcolor{keywordflow}{switch}\ (type())\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_BOOLEAN:}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ content\_.asBoolean;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_UNSIGNED\_INTEGER:}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ convertNumber<T>(content\_.asUnsignedInteger);}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_SIGNED\_INTEGER:}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ convertNumber<T>(content\_.asSignedInteger);}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_LINKED\_STRING:}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_OWNED\_STRING:}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ parseNumber<T>(content\_.asString.data);}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_FLOAT:}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ convertNumber<T>(content\_.asFloat);}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00034\ \ \ \}}
+\DoxyCodeLine{00035\ \}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ VariantData::asBoolean()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00038\ \ \ \textcolor{keywordflow}{switch}\ (type())\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_BOOLEAN:}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ content\_.asBoolean;}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_SIGNED\_INTEGER:}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_UNSIGNED\_INTEGER:}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ content\_.asUnsignedInteger\ !=\ 0;}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_FLOAT:}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ content\_.asFloat\ !=\ 0;}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_NULL:}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00050\ \ \ \}}
+\DoxyCodeLine{00051\ \}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{comment}{//\ T\ =\ float/double}}
+\DoxyCodeLine{00054\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00055\ \textcolor{keyword}{inline}\ T\ VariantData::asFloat()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00056\ \ \ \textcolor{keywordflow}{switch}\ (type())\ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_BOOLEAN:}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(content\_.asBoolean);}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_UNSIGNED\_INTEGER:}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(content\_.asUnsignedInteger);}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_SIGNED\_INTEGER:}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(content\_.asSignedInteger);}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_LINKED\_STRING:}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_OWNED\_STRING:}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ parseNumber<T>(content\_.asString.data);}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_FLOAT:}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(content\_.asFloat);}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00070\ \ \ \}}
+\DoxyCodeLine{00071\ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_json_string}{JsonString}}\ VariantData::asString()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00074\ \ \ \textcolor{keywordflow}{switch}\ (type())\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_LINKED\_STRING:}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ JsonString(content\_.asString.data,\ content\_.asString.size,}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ JsonString::Linked);}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_OWNED\_STRING:}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ JsonString(content\_.asString.data,\ content\_.asString.size,}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ JsonString::Copied);}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ JsonString();}
+\DoxyCodeLine{00083\ \ \ \}}
+\DoxyCodeLine{00084\ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ VariantData::copyFrom(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_variant_data}{VariantData}}\&\ src,\ \mbox{\hyperlink{class_memory_pool}{MemoryPool}}*\ pool)\ \{}
+\DoxyCodeLine{00087\ \ \ \textcolor{keywordflow}{switch}\ (src.type())\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_ARRAY:}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ toArray().copyFrom(src.content\_.asCollection,\ pool);}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_OBJECT:}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ toObject().copyFrom(src.content\_.asCollection,\ pool);}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_OWNED\_STRING:\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ JsonString\ value\ =\ src.asString();}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ setString(adaptString(value),\ pool);}
+\DoxyCodeLine{00095\ \ \ \ \ \}}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordflow}{case}\ VALUE\_IS\_OWNED\_RAW:}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ storeOwnedRaw(}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ serialized(src.content\_.asString.data,\ src.content\_.asString.size),}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ pool);}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ setType(src.type());}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ content\_\ =\ src.content\_;}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00104\ \ \ \}}
+\DoxyCodeLine{00105\ \}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00108\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_json_variant}{JsonVariant}}\ VariantRefBase<TDerived>::add()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00109\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_json_variant}{JsonVariant}}(getPool(),}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ variantAddElement(getOrCreateData(),\ getPool()));}
+\DoxyCodeLine{00111\ \}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00114\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00115\ \textcolor{keyword}{inline}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<ConverterNeedsWriteableRef<T>::value}},\ T>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00116\ VariantRefBase<TDerived>::as()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00117\ \ \ \textcolor{keywordflow}{return}\ Converter<T>::fromJson(getVariant());}
+\DoxyCodeLine{00118\ \}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00121\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_json_variant}{JsonVariant}}\ VariantRefBase<TDerived>::getVariant()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00122\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_json_variant}{JsonVariant}}(getPool(),\ getData());}
+\DoxyCodeLine{00123\ \}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00126\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{class_json_variant}{JsonVariant}}\ VariantRefBase<TDerived>::getOrCreateVariant()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00127\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_json_variant}{JsonVariant}}(getPool(),\ getOrCreateData());}
+\DoxyCodeLine{00128\ \}}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00131\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00132\ \textcolor{keyword}{inline}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<ConverterNeedsWriteableRef<T>::value}},\ \textcolor{keywordtype}{bool}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00133\ VariantRefBase<TDerived>::is()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00134\ \ \ \textcolor{keywordflow}{return}\ Converter<T>::checkJson(getVariant());}
+\DoxyCodeLine{00135\ \}}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00138\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00139\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ VariantRefBase<TDerived>::set(\textcolor{keyword}{const}\ T\&\ value)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00140\ \ \ \mbox{\hyperlink{struct_converter}{Converter<typename\ detail::remove\_cv<T>::type}}>::toJson(value,}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ getOrCreateVariant());}
+\DoxyCodeLine{00142\ \ \ \mbox{\hyperlink{class_memory_pool}{MemoryPool}}*\ pool\ =\ getPool();}
+\DoxyCodeLine{00143\ \ \ \textcolor{keywordflow}{return}\ pool\ \&\&\ !pool-\/>overflowed();}
+\DoxyCodeLine{00144\ \}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00147\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00148\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ VariantRefBase<TDerived>::set(T*\ value)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00149\ \ \ Converter<T*>::toJson(value,\ getOrCreateVariant());}
+\DoxyCodeLine{00150\ \ \ \mbox{\hyperlink{class_memory_pool}{MemoryPool}}*\ pool\ =\ getPool();}
+\DoxyCodeLine{00151\ \ \ \textcolor{keywordflow}{return}\ pool\ \&\&\ !pool-\/>overflowed();}
+\DoxyCodeLine{00152\ \}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00155\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00156\ \textcolor{keyword}{inline}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<is\_same<T,\ JsonArray>::value}},\ \mbox{\hyperlink{class_json_array}{JsonArray}}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00157\ VariantRefBase<TDerived>::to()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00158\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_json_array}{JsonArray}}(getPool(),\ variantToArray(getOrCreateData()));}
+\DoxyCodeLine{00159\ \}}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00161\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00162\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00163\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<is\_same<T,\ JsonObject>::value}},\ \mbox{\hyperlink{class_json_object}{JsonObject}}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00164\ VariantRefBase<TDerived>::to()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00165\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_json_object}{JsonObject}}(getPool(),\ variantToObject(getOrCreateData()));}
+\DoxyCodeLine{00166\ \}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00169\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00170\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<is\_same<T,\ JsonVariant>::value}},\ \mbox{\hyperlink{class_json_variant}{JsonVariant}}>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00171\ VariantRefBase<TDerived>::to()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00172\ \ \ \textcolor{keyword}{auto}\ data\ =\ getOrCreateData();}
+\DoxyCodeLine{00173\ \ \ variantSetNull(data);}
+\DoxyCodeLine{00174\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_json_variant}{JsonVariant}}(getPool(),\ data);}
+\DoxyCodeLine{00175\ \}}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00177\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TDerived>}
+\DoxyCodeLine{00178\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ convertToJson(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_variant_ref_base}{VariantRefBase<TDerived>}}\&\ src,}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_json_variant}{JsonVariant}}\ dst)\ \{}
+\DoxyCodeLine{00180\ \ \ dst.set(src.template\ as<JsonVariantConst>());}
+\DoxyCodeLine{00181\ \}}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

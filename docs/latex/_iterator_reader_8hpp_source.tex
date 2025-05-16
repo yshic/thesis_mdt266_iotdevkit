@@ -1,0 +1,51 @@
+\doxysection{Iterator\+Reader.\+hpp}
+\hypertarget{_iterator_reader_8hpp_source}{}\label{_iterator_reader_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Deserialization/Readers/IteratorReader.hpp@{lib/ArduinoJson/src/ArduinoJson/Deserialization/Readers/IteratorReader.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TIterator>}
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }IteratorReader\ \{}
+\DoxyCodeLine{00011\ \ \ TIterator\ ptr\_,\ end\_;}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \textcolor{keyword}{explicit}\ IteratorReader(TIterator\ begin,\ TIterator\ end)}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ :\ ptr\_(begin),\ end\_(end)\ \{\}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \textcolor{keywordtype}{int}\ read()\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordflow}{if}\ (ptr\_\ <\ end\_)}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\textcolor{keyword}{>}(*ptr\_++);}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00022\ \ \ \}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \textcolor{keywordtype}{size\_t}\ readBytes(\textcolor{keywordtype}{char}*\ buffer,\ \textcolor{keywordtype}{size\_t}\ length)\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ i\ =\ 0;}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordflow}{while}\ (i\ <\ length\ \&\&\ ptr\_\ <\ end\_)}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ buffer[i++]\ =\ *ptr\_++;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordflow}{return}\ i;}
+\DoxyCodeLine{00029\ \ \ \}}
+\DoxyCodeLine{00030\ \};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00033\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvoid__}{void\_}}\ \{}
+\DoxyCodeLine{00034\ \ \ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{void}\ type;}
+\DoxyCodeLine{00035\ \};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TSource>}
+\DoxyCodeLine{00038\ \textcolor{keyword}{struct\ }Reader<TSource,\ typename\ \mbox{\hyperlink{structvoid__}{void\_}}<typename\ TSource::const\_iterator>\mbox{\hyperlink{structconditional}{::type}}>}
+\DoxyCodeLine{00039\ \ \ \ \ :\ IteratorReader<typename\ TSource::const\_iterator>\ \{}
+\DoxyCodeLine{00040\ \ \ \textcolor{keyword}{explicit}\ Reader(\textcolor{keyword}{const}\ TSource\&\ source)}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ :\ IteratorReader<typename\ TSource::const\_iterator>(source.begin(),}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ source.end())\ \{\}}
+\DoxyCodeLine{00043\ \};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

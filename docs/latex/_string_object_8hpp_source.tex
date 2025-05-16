@@ -1,0 +1,57 @@
+\doxysection{String\+Object.\+hpp}
+\hypertarget{_string_object_8hpp_source}{}\label{_string_object_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Strings/Adapters/StringObject.hpp@{lib/ArduinoJson/src/ArduinoJson/Strings/Adapters/StringObject.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Strings/Adapters/RamString.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Strings/StringAdapter.hpp>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Strings/StringTraits.hpp>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00014\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_string_adapter}{StringAdapter}}<}
+\DoxyCodeLine{00015\ \ \ \ \ T,}
+\DoxyCodeLine{00016\ \ \ \ \ typename\ \mbox{\hyperlink{structenable__if}{enable\_if}}<}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{structstring__traits}{string\_traits}}<T>::has\_cstr\ ||\ \mbox{\hyperlink{structstring__traits}{string\_traits}}<T>::has\_data)\ \&\&}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ (string\_traits<T>::has\_length\ ||\ string\_traits<T>::has\_size)>\mbox{\hyperlink{structconditional}{::type}}>\ \{}
+\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{class_sized_ram_string}{SizedRamString}}\ AdaptedString;}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \textcolor{keyword}{static}\ AdaptedString\ adapt(\textcolor{keyword}{const}\ T\&\ s)\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordflow}{return}\ AdaptedString(get\_data(s),\ get\_size(s));}
+\DoxyCodeLine{00023\ \ \ \}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00026\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ U>}
+\DoxyCodeLine{00027\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<string\_traits<U>::has\_size}},\ \textcolor{keywordtype}{size\_t}>\mbox{\hyperlink{structconditional}{::type}}\ get\_size(}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \textcolor{keyword}{const}\ U\&\ s)\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordflow}{return}\ s.size();}
+\DoxyCodeLine{00030\ \ \ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ U>}
+\DoxyCodeLine{00033\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<!string\_traits<U>::has\_size}},\ \textcolor{keywordtype}{size\_t}>\mbox{\hyperlink{structconditional}{::type}}\ get\_size(}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \textcolor{keyword}{const}\ U\&\ s)\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{return}\ s.length();}
+\DoxyCodeLine{00036\ \ \ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ U>}
+\DoxyCodeLine{00039\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<string\_traits<U>::has\_data}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00040\ \ \ get\_data(\textcolor{keyword}{const}\ U\&\ s)\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordflow}{return}\ s.data();}
+\DoxyCodeLine{00042\ \ \ \}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ U>}
+\DoxyCodeLine{00045\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structenable__if}{enable\_if<!string\_traits<U>::has\_data}},\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*>\mbox{\hyperlink{structconditional}{::type}}}
+\DoxyCodeLine{00046\ \ \ get\_data(\textcolor{keyword}{const}\ U\&\ s)\ \{}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordflow}{return}\ s.c\_str();}
+\DoxyCodeLine{00048\ \ \ \}}
+\DoxyCodeLine{00049\ \};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

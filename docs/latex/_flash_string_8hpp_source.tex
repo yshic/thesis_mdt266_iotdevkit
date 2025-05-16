@@ -1,0 +1,95 @@
+\doxysection{Flash\+String.\+hpp}
+\hypertarget{_flash_string_8hpp_source}{}\label{_flash_string_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Strings/Adapters/FlashString.hpp@{lib/ArduinoJson/src/ArduinoJson/Strings/Adapters/FlashString.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Polyfills/pgmspace.hpp>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Strings/StringAdapter.hpp>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }FlashString\ \{}
+\DoxyCodeLine{00013\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ typeSortKey\ =\ 1;}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ FlashString(\textcolor{keyword}{const}\ \_\_FlashStringHelper*\ str,\ \textcolor{keywordtype}{size\_t}\ sz)}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ :\ str\_(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(str)),\ size\_(sz)\ \{\}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \textcolor{keywordtype}{bool}\ isNull()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordflow}{return}\ !str\_;}
+\DoxyCodeLine{00021\ \ \ \}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \textcolor{keywordtype}{char}\ operator[](\textcolor{keywordtype}{size\_t}\ i)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00024\ \ \ \ \ ARDUINOJSON\_ASSERT(str\_\ !=\ 0);}
+\DoxyCodeLine{00025\ \ \ \ \ ARDUINOJSON\_ASSERT(i\ <=\ size\_);}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{char}\textcolor{keyword}{>}(pgm\_read\_byte(str\_\ +\ i));}
+\DoxyCodeLine{00027\ \ \ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordtype}{size\_t}\ size()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordflow}{return}\ size\_;}
+\DoxyCodeLine{00031\ \ \ \}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{bool}\ stringEquals(FlashString\ a,\ \mbox{\hyperlink{class_sized_ram_string}{SizedRamString}}\ b)\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ ARDUINOJSON\_ASSERT(a.typeSortKey\ <\ b.typeSortKey);}
+\DoxyCodeLine{00035\ \ \ \ \ ARDUINOJSON\_ASSERT(!a.isNull());}
+\DoxyCodeLine{00036\ \ \ \ \ ARDUINOJSON\_ASSERT(!b.isNull());}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordflow}{if}\ (a.size()\ !=\ b.size())}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00039\ \ \ \ \ return\ ::memcmp\_P(b.data(),\ a.str\_,\ a.size\_)\ ==\ 0;}
+\DoxyCodeLine{00040\ \ \ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{int}\ stringCompare(FlashString\ a,\ \mbox{\hyperlink{class_sized_ram_string}{SizedRamString}}\ b)\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ ARDUINOJSON\_ASSERT(a.typeSortKey\ <\ b.typeSortKey);}
+\DoxyCodeLine{00044\ \ \ \ \ ARDUINOJSON\_ASSERT(!a.isNull());}
+\DoxyCodeLine{00045\ \ \ \ \ ARDUINOJSON\_ASSERT(!b.isNull());}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ minsize\ =\ a.size()\ <\ b.size()\ ?\ a.size()\ :\ b.size();}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{int}\ res\ =\ ::memcmp\_P(b.data(),\ a.str\_,\ minsize);}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{if}\ (res)}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/res;}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{if}\ (a.size()\ <\ b.size())}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{if}\ (a.size()\ >\ b.size())}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00055\ \ \ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{void}\ stringGetChars(FlashString\ s,\ \textcolor{keywordtype}{char}*\ p,\ \textcolor{keywordtype}{size\_t}\ n)\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ ARDUINOJSON\_ASSERT(s.size()\ <=\ n);}
+\DoxyCodeLine{00059\ \ \ \ \ ::memcpy\_P(p,\ s.str\_,\ n);}
+\DoxyCodeLine{00060\ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \mbox{\hyperlink{struct_string_storage_policy_1_1_copy}{StringStoragePolicy::Copy}}\ storagePolicy()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{struct_string_storage_policy_1_1_copy}{StringStoragePolicy::Copy}}();}
+\DoxyCodeLine{00064\ \ \ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00067\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ str\_;}
+\DoxyCodeLine{00068\ \ \ \textcolor{keywordtype}{size\_t}\ size\_;}
+\DoxyCodeLine{00069\ \};}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00072\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_string_adapter}{StringAdapter}}<const\ \_\_FlashStringHelper*,\ \textcolor{keywordtype}{void}>\ \{}
+\DoxyCodeLine{00073\ \ \ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{class_flash_string}{FlashString}}\ AdaptedString;}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \textcolor{keyword}{static}\ AdaptedString\ adapt(\textcolor{keyword}{const}\ \_\_FlashStringHelper*\ s)\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordflow}{return}\ AdaptedString(s,\ s\ ?\ strlen\_P(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(s))\ :\ 0);}
+\DoxyCodeLine{00077\ \ \ \}}
+\DoxyCodeLine{00078\ \};}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00081\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_sized_string_adapter}{SizedStringAdapter}}<const\ \_\_FlashStringHelper*,\ \textcolor{keywordtype}{void}>\ \{}
+\DoxyCodeLine{00082\ \ \ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{class_flash_string}{FlashString}}\ AdaptedString;}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \textcolor{keyword}{static}\ AdaptedString\ adapt(\textcolor{keyword}{const}\ \_\_FlashStringHelper*\ s,\ \textcolor{keywordtype}{size\_t}\ n)\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordflow}{return}\ AdaptedString(s,\ n);}
+\DoxyCodeLine{00086\ \ \ \}}
+\DoxyCodeLine{00087\ \};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

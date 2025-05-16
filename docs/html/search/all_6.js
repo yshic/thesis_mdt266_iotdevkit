@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['get_0',['get',['../class_http_client.html#a92d8027a76943ec459df5085fd8d37a8',1,'HttpClient']]],
+  ['getaveragereading_1',['getAverageReading',['../class_light_sensor.html#af31fbe6b1894a1a460097a78f6306363',1,'LightSensor::getAverageReading()'],['../class_soil_moisture.html#af736d5983965759ed7f60edb415961f7',1,'SoilMoisture::getAverageReading()']]],
+  ['getfanspeed_2',['getFanSpeed',['../class_mini_fan.html#acd11ce4dd5b89102348c87a8afb90bdf',1,'MiniFan']]],
+  ['getfanspeedpercentage_3',['getFanSpeedPercentage',['../class_mini_fan.html#af570dbaf005299ce1f1da220bdb49eee',1,'MiniFan']]],
+  ['getheater_4',['getHeater',['../class_s_h_t4_x.html#a6f65e80033a02d9fb1857b32ddf2502c',1,'SHT4X']]],
+  ['gethumidity_5',['getHumidity',['../class_d_h_t20.html#a3b4aa6dc2faac1e170773edc429d26cc',1,'DHT20::getHumidity()'],['../class_s_h_t4_x.html#afbbdcb2d7a4e690fb59f06462d9a1ccf',1,'SHT4X::getHumidity()']]],
+  ['getlastmotiontime_6',['getLastMotionTime',['../class_p_i_r_sensor.html#a687203f6ca25ca3eb572bbc47a83f735',1,'PIRSensor']]],
+  ['getledstate_7',['getLedState',['../class_unit4_relay.html#a6b48921c7a0836ea7e36d5994c5e0a7e',1,'Unit4Relay']]],
+  ['getlightvalue_8',['getLightValue',['../class_light_sensor.html#a8e5f8fc679864dd9e7dd7e71e926a613',1,'LightSensor']]],
+  ['getlightvaluepercentage_9',['getLightValuePercentage',['../class_light_sensor.html#a751212ac84d8b0541fbcdc35478f733e',1,'LightSensor']]],
+  ['getmoisture_10',['getMoisture',['../class_soil_moisture.html#ab4a3beaa095bffdc280796ce194d3902',1,'SoilMoisture']]],
+  ['getmoisturepercentage_11',['getMoisturePercentage',['../class_soil_moisture.html#af363e82e2ef868de6820705a49b6cd7e',1,'SoilMoisture']]],
+  ['getoutputvalue_12',['getOutputValue',['../class_usb_switch.html#aa2353b8a438a13ed68c42548853e64f8',1,'UsbSwitch']]],
+  ['getoutputvaluepercentage_13',['getOutputValuePercentage',['../class_usb_switch.html#acadaf4d0e4e6b952099011820bd57d16',1,'UsbSwitch']]],
+  ['getprecision_14',['getPrecision',['../class_s_h_t4_x.html#a8d2a3954c9aa4fbba99c9fb8d8d7bd99',1,'SHT4X']]],
+  ['getrelaystate_15',['getRelayState',['../class_unit4_relay.html#ad1d85b5a5002356b938ce463c0821029',1,'Unit4Relay']]],
+  ['getstatus_16',['getStatus',['../class_p_i_r_sensor.html#ad67ad2e67e2c366496a3433dac4f8ae5',1,'PIRSensor::getStatus()'],['../class_relay.html#ab9eb34f1f5cf765bdd01427d1bed15cc',1,'Relay::getStatus()'],['../class_usb_switch.html#a9610f9b91027ad99d84ad9dcef8b3be4',1,'UsbSwitch::getStatus()']]],
+  ['gettemperature_17',['getTemperature',['../class_d_h_t20.html#ac62b81dcc477a8f47c797849c5cf27f2',1,'DHT20::getTemperature()'],['../class_s_h_t4_x.html#a81aad791972516038e41fd8e02008da9',1,'SHT4X::getTemperature()']]]
+];

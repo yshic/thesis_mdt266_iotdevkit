@@ -1,0 +1,56 @@
+\doxysection{BMP280 Class Reference}
+\hypertarget{class_b_m_p280}{}\label{class_b_m_p280}\index{BMP280@{BMP280}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_b_m_p280_a7f793755576e8d937f97984ee8b42b07}\label{class_b_m_p280_a7f793755576e8d937f97984ee8b42b07} 
+bmp280\+\_\+error\+\_\+t {\bfseries begin} ()
+\item 
+\Hypertarget{class_b_m_p280_a7c52cbbec998984b6d63e2162a0ed436}\label{class_b_m_p280_a7c52cbbec998984b6d63e2162a0ed436} 
+bmp280\+\_\+error\+\_\+t {\bfseries update} ()
+\item 
+\Hypertarget{class_b_m_p280_af0273f65cd8c3b4e3ee472668a0a8d6f}\label{class_b_m_p280_af0273f65cd8c3b4e3ee472668a0a8d6f} 
+bmp280\+\_\+error\+\_\+t {\bfseries reset} (void)
+\item 
+\Hypertarget{class_b_m_p280_a4cfab33bfc50e210fdbcf2fc7bd9481a}\label{class_b_m_p280_a4cfab33bfc50e210fdbcf2fc7bd9481a} 
+uint8\+\_\+t {\bfseries get\+Status} (void)
+\item 
+\Hypertarget{class_b_m_p280_a945a1f5234d942ac1cd36b5146947e20}\label{class_b_m_p280_a945a1f5234d942ac1cd36b5146947e20} 
+bmp280\+\_\+error\+\_\+t {\bfseries read\+Pressure} ()
+\item 
+\Hypertarget{class_b_m_p280_a4c27cecd6619562435b63c81a0295bae}\label{class_b_m_p280_a4c27cecd6619562435b63c81a0295bae} 
+bmp280\+\_\+error\+\_\+t {\bfseries read\+Temperature} ()
+\item 
+\Hypertarget{class_b_m_p280_ad9d68ec2a3c74dd8ce6b1684cc1df79d}\label{class_b_m_p280_ad9d68ec2a3c74dd8ce6b1684cc1df79d} 
+bmp280\+\_\+error\+\_\+t {\bfseries read\+Altitude} ()
+\item 
+\Hypertarget{class_b_m_p280_aeb4fc3f2a91697a23d9605dac27e8e14}\label{class_b_m_p280_aeb4fc3f2a91697a23d9605dac27e8e14} 
+float {\bfseries get\+Pressure} ()
+\item 
+\Hypertarget{class_b_m_p280_af6ec438906352f7f4b0e46d03d7baa98}\label{class_b_m_p280_af6ec438906352f7f4b0e46d03d7baa98} 
+float {\bfseries get\+Temperature} ()
+\item 
+\Hypertarget{class_b_m_p280_a693c846424c06654370222da04dcb51e}\label{class_b_m_p280_a693c846424c06654370222da04dcb51e} 
+float {\bfseries get\+Altitude} ()
+\item 
+\Hypertarget{class_b_m_p280_aae63fd7ecb6c61963d77e5b256611ba6}\label{class_b_m_p280_aae63fd7ecb6c61963d77e5b256611ba6} 
+float {\bfseries sea\+Level\+For\+Altitude} (float altitude, float atmospheric)
+\item 
+\Hypertarget{class_b_m_p280_a093ed9047d79ba87c18909b87887723f}\label{class_b_m_p280_a093ed9047d79ba87c18909b87887723f} 
+void {\bfseries set\+Sea\+Level\+Pressure} (float pressure)
+\item 
+\Hypertarget{class_b_m_p280_a7cb008e675a64b08b165ab966a0c48d0}\label{class_b_m_p280_a7cb008e675a64b08b165ab966a0c48d0} 
+float {\bfseries water\+Boiling\+Point} (float pressure)
+\item 
+\Hypertarget{class_b_m_p280_ad05bced9afce99daf98d6d99918276f4}\label{class_b_m_p280_ad05bced9afce99daf98d6d99918276f4} 
+bool {\bfseries take\+Forced\+Measurement} ()
+\item 
+\Hypertarget{class_b_m_p280_a67efaace84ab36fad15df3ea7f983fe4}\label{class_b_m_p280_a67efaace84ab36fad15df3ea7f983fe4} 
+bmp280\+\_\+error\+\_\+t {\bfseries set\+Sampling} (\mbox{\hyperlink{bmp280_8h_a591c10d85466fc2af5058a2af914635e}{bmp280\+\_\+mode\+\_\+t}} mode=\mbox{\hyperlink{bmp280_8h_a591c10d85466fc2af5058a2af914635eaf81b467c1f5e20f847402b03925c0d12}{MODE\+\_\+\+NORMAL}}, \mbox{\hyperlink{bmp280_8h_a078433df125db1cdc92e431b12af6782}{bmp280\+\_\+sampling\+\_\+t}} temp\+Sampling=\mbox{\hyperlink{bmp280_8h_a078433df125db1cdc92e431b12af6782a63019740da87827ac6c2c7b3f090d2cb}{SAMPLING\+\_\+\+X16}}, \mbox{\hyperlink{bmp280_8h_a078433df125db1cdc92e431b12af6782}{bmp280\+\_\+sampling\+\_\+t}} press\+Sampling=\mbox{\hyperlink{bmp280_8h_a078433df125db1cdc92e431b12af6782a63019740da87827ac6c2c7b3f090d2cb}{SAMPLING\+\_\+\+X16}}, \mbox{\hyperlink{bmp280_8h_a4aec235c8a52e06c89ce2584fd158b4f}{bmp280\+\_\+filter\+\_\+t}} filter=FILTER\+\_\+\+OFF, \mbox{\hyperlink{bmp280_8h_a92fb7b99381876de84fd0d74d11b3feb}{bmp280\+\_\+standby\+\_\+duration\+\_\+t}} duration=STANDBY\+\_\+\+MS\+\_\+1)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/bmp280/src/\mbox{\hyperlink{bmp280_8h}{bmp280.\+h}}\item 
+lib/bmp280/src/bmp280.\+cpp\end{DoxyCompactItemize}

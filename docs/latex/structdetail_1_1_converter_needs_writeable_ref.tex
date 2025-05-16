@@ -1,0 +1,37 @@
+\doxysection{detail\+::Converter\+Needs\+Writeable\+Ref\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structdetail_1_1_converter_needs_writeable_ref}{}\label{structdetail_1_1_converter_needs_writeable_ref}\index{detail::ConverterNeedsWriteableRef$<$ T $>$@{detail::ConverterNeedsWriteableRef$<$ T $>$}}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const bool \mbox{\hyperlink{structdetail_1_1_converter_needs_writeable_ref_a75cb62e5978820d9b93e270569bf0589}{value}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structdetail_1_1_converter_needs_writeable_ref_a070c9d2ba28edee4d5c290690500953e}\label{structdetail_1_1_converter_needs_writeable_ref_a070c9d2ba28edee4d5c290690500953e} 
+static int {\bfseries probe} (T(\texorpdfstring{$\ast$}{*}f)(Arduino\+Json\+::\+Json\+Variant))
+\item 
+\Hypertarget{structdetail_1_1_converter_needs_writeable_ref_a2cd75f567c6fca0f3aef895516d3086f}\label{structdetail_1_1_converter_needs_writeable_ref_a2cd75f567c6fca0f3aef895516d3086f} 
+static char {\bfseries probe} (T(\texorpdfstring{$\ast$}{*}f)(Arduino\+Json\+::\+Json\+Variant\+Const))
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structdetail_1_1_converter_needs_writeable_ref_a75cb62e5978820d9b93e270569bf0589}\index{detail::ConverterNeedsWriteableRef$<$ T $>$@{detail::ConverterNeedsWriteableRef$<$ T $>$}!value@{value}}
+\index{value@{value}!detail::ConverterNeedsWriteableRef$<$ T $>$@{detail::ConverterNeedsWriteableRef$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily \label{structdetail_1_1_converter_needs_writeable_ref_a75cb62e5978820d9b93e270569bf0589} 
+template$<$typename T$>$ \\
+const bool \mbox{\hyperlink{structdetail_1_1_converter_needs_writeable_ref}{detail\+::\+Converter\+Needs\+Writeable\+Ref}}$<$ T $>$\+::value\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{sizeof}(probe(Converter<T>::fromJson))\ ==\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int})}
+
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Arduino\+Json/src/\+Arduino\+Json/\+Variant/Converter\+Impl.\+hpp\end{DoxyCompactItemize}

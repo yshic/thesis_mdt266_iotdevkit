@@ -1,0 +1,92 @@
+\doxysection{button.\+h}
+\hypertarget{button_8h_source}{}\label{button_8h_source}\index{lib/button/src/button.h@{lib/button/src/button.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ BUTTON\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ BUTTON\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Arduino.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ Define\ error\ codes\ for\ button\ operations}}
+\DoxyCodeLine{00007\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{00008\ \{}
+\DoxyCodeLine{00009\ \ \ BUTTON\_OK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ 0,}
+\DoxyCodeLine{00010\ \ \ BUTTON\_ERR\_INVALID\_PARAM\ =\ 1,}
+\DoxyCodeLine{00011\ \ \ BUTTON\_ERR\_UNINITIALIZED\ =\ 2,}
+\DoxyCodeLine{00012\ \}\ button\_handler\_error\_t;}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ Callback\ function\ type}}
+\DoxyCodeLine{00015\ \textcolor{keyword}{typedef}\ void\ (*ButtonCallback)(void);}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_button_handler_a4b213df8be2f5d90299e60b6a90c26c8}{ButtonHandler}}}
+\DoxyCodeLine{00035\ \{}
+\DoxyCodeLine{00036\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00048\ \ \ \mbox{\hyperlink{class_button_handler_a4b213df8be2f5d90299e60b6a90c26c8}{ButtonHandler}}(\textcolor{keywordtype}{int}\ pin,\ \textcolor{keywordtype}{bool}\ isActiveLow\ =\ \textcolor{keyword}{true},\ \textcolor{keywordtype}{bool}\ usePullup\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00059\ \ \ button\_handler\_error\_t\ \mbox{\hyperlink{class_button_handler_ad154bc08e128ee48b1f5add4c928298b}{setDebounceDuration}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ ms);}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00070\ \ \ button\_handler\_error\_t\ \mbox{\hyperlink{class_button_handler_ab5e0cbc1ab74e1cfb9ab7f4417584a39}{setDoubleClickInterval}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ ms);}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00081\ \ \ button\_handler\_error\_t\ \mbox{\hyperlink{class_button_handler_a772346688081ec9304bfbaf9920f49d9}{setHoldDuration}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ ms);}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00092\ \ \ button\_handler\_error\_t\ \mbox{\hyperlink{class_button_handler_ab12ba9a377ff3dd9ddd09b3770549a2c}{attachSingleClickCallback}}(ButtonCallback\ callback);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00103\ \ \ button\_handler\_error\_t\ \mbox{\hyperlink{class_button_handler_a7aa52c3f4139e23569529d30958091cc}{attachDoubleClickCallback}}(ButtonCallback\ callback);}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00114\ \ \ button\_handler\_error\_t\ \mbox{\hyperlink{class_button_handler_aca1da4b0a47414a3221902947867bee0}{attachHoldStartCallback}}(ButtonCallback\ callback);}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00125\ \ \ button\_handler\_error\_t\ \mbox{\hyperlink{class_button_handler_a5eaf04c0e2facda78d57a5642b6cf502}{attachHoldReleaseCallback}}(ButtonCallback\ callback);}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00130\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_button_handler_aaed9117143aa1674a71aa012e558d4e8}{update}}();}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00133\ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ buttonPin;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pin\ connected\ to\ the\ button.}}
+\DoxyCodeLine{00134\ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ activeLow;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ True\ if\ button\ is\ active\ low.}}
+\DoxyCodeLine{00135\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ debounceDuration;\ \ \ \ \textcolor{comment}{//\ Debounce\ duration\ in\ milliseconds.}}
+\DoxyCodeLine{00136\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ doubleClickInterval;\ \textcolor{comment}{//\ Maximum\ interval\ for\ double\ click.}}
+\DoxyCodeLine{00137\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ holdDuration;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Duration\ to\ trigger\ hold\ event.}}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ ButtonCallback\ singleClickCallback;\ \textcolor{comment}{//\ Single-\/click\ callback\ function.}}
+\DoxyCodeLine{00140\ \ \ ButtonCallback\ doubleClickCallback;\ \textcolor{comment}{//\ Double-\/click\ callback\ function.}}
+\DoxyCodeLine{00141\ \ \ ButtonCallback\ holdStartCallback;\ \ \ \textcolor{comment}{//\ Hold-\/start\ callback\ function.}}
+\DoxyCodeLine{00142\ \ \ ButtonCallback\ holdReleaseCallback;\ \textcolor{comment}{//\ Hold-\/release\ callback\ function.}}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ lastButtonState;\ \ \textcolor{comment}{//\ Last\ known\ button\ state.}}
+\DoxyCodeLine{00145\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ lastDebounceTime;\ \textcolor{comment}{//\ Last\ time\ button\ state\ changed.}}
+\DoxyCodeLine{00146\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ lastClickTime;\ \ \ \ \textcolor{comment}{//\ Time\ of\ the\ last\ button\ release.}}
+\DoxyCodeLine{00147\ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ isHolding;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ True\ if\ button\ is\ currently\ held.}}
+\DoxyCodeLine{00148\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ holdStartTime;\ \ \ \ \textcolor{comment}{//\ Start\ time\ of\ the\ hold\ action.}}
+\DoxyCodeLine{00149\ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ clickCount;\ \ \ \ \ \ \ \textcolor{comment}{//\ Count\ of\ consecutive\ clicks.}}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{00152\ \ \ \{}
+\DoxyCodeLine{00153\ \ \ \ \ STATE\_IDLE,}
+\DoxyCodeLine{00154\ \ \ \ \ STATE\_BUTTON\_DOWN,}
+\DoxyCodeLine{00155\ \ \ \ \ STATE\_WAIT\_FOR\_SECOND\_CLICK,}
+\DoxyCodeLine{00156\ \ \ \ \ STATE\_HOLDING,}
+\DoxyCodeLine{00157\ \ \ \ \ STATE\_HOLD\_RELEASE}
+\DoxyCodeLine{00158\ \ \ \}\ ButtonState;}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \ \ ButtonState\ currentState;\ \textcolor{comment}{//\ Current\ state\ of\ the\ FSM}}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \ \ \textcolor{comment}{//\ Additional\ helper\ variables}}
+\DoxyCodeLine{00163\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ stateStartTime;\ \textcolor{comment}{//\ Time\ when\ the\ state\ started}}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ hasElapsed(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ start,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ duration)}
+\DoxyCodeLine{00166\ \ \ \{}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keywordflow}{return}\ (millis()\ -\/\ start)\ >=\ duration;}
+\DoxyCodeLine{00168\ \ \ \}}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00170\ \ \ \textcolor{comment}{//\ Reset\ FSM\ state}}
+\DoxyCodeLine{00171\ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ resetFSM()}
+\DoxyCodeLine{00172\ \ \ \{}
+\DoxyCodeLine{00173\ \ \ \ \ currentState\ \ \ =\ STATE\_IDLE;}
+\DoxyCodeLine{00174\ \ \ \ \ stateStartTime\ =\ 0;}
+\DoxyCodeLine{00175\ \ \ \ \ clickCount\ \ \ \ \ =\ 0;}
+\DoxyCodeLine{00176\ \ \ \ \ isHolding\ \ \ \ \ \ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00177\ \ \ \}}
+\DoxyCodeLine{00178\ \};}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ BUTTON\_H}}
+
+\end{DoxyCode}

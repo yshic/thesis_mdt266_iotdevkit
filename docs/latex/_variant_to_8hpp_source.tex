@@ -1,0 +1,40 @@
+\doxysection{Variant\+To.\+hpp}
+\hypertarget{_variant_to_8hpp_source}{}\label{_variant_to_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Variant/VariantTo.hpp@{lib/ArduinoJson/src/ArduinoJson/Variant/VariantTo.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <ArduinoJson/Namespace.hpp>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ ARDUINOJSON\_BEGIN\_PUBLIC\_NAMESPACE}
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_json_array}{JsonArray}};}
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_json_object}{JsonObject}};}
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_json_variant}{JsonVariant}};}
+\DoxyCodeLine{00013\ ARDUINOJSON\_END\_PUBLIC\_NAMESPACE}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ A\ metafunction\ that\ returns\ the\ type\ of\ the\ value\ returned\ by}}
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ JsonVariant::to<T>()}}
+\DoxyCodeLine{00018\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_variant_to}{VariantTo}}\ \{\};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00022\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_variant_to}{VariantTo}}<\mbox{\hyperlink{class_json_array}{JsonArray}}>\ \{}
+\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{class_json_array}{JsonArray}}\ type;}
+\DoxyCodeLine{00024\ \};}
+\DoxyCodeLine{00025\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00026\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_variant_to}{VariantTo}}<\mbox{\hyperlink{class_json_object}{JsonObject}}>\ \{}
+\DoxyCodeLine{00027\ \ \ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{class_json_object}{JsonObject}}\ type;}
+\DoxyCodeLine{00028\ \};}
+\DoxyCodeLine{00029\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00030\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_variant_to}{VariantTo}}<\mbox{\hyperlink{class_json_variant}{JsonVariant}}>\ \{}
+\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{class_json_variant}{JsonVariant}}\ type;}
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

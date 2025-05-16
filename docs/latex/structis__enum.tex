@@ -1,0 +1,29 @@
+\doxysection{is\+\_\+enum\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structis__enum}{}\label{structis__enum}\index{is\_enum$<$ T $>$@{is\_enum$<$ T $>$}}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const bool \mbox{\hyperlink{structis__enum_aecdd48955dfb72b90880aafdec94e2db}{value}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structis__enum_aecdd48955dfb72b90880aafdec94e2db}\index{is\_enum$<$ T $>$@{is\_enum$<$ T $>$}!value@{value}}
+\index{value@{value}!is\_enum$<$ T $>$@{is\_enum$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily \label{structis__enum_aecdd48955dfb72b90880aafdec94e2db} 
+template$<$typename T$>$ \\
+const bool \mbox{\hyperlink{structis__enum}{is\+\_\+enum}}$<$ T $>$\+::value\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ is\_convertible<T,\ int>::value\ \&\&}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ !is\_class<T>::value\ \&\&\ !is\_integral<T>::value\ \&\&}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ !is\_floating\_point<T>::value}
+
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/\+Arduino\+Json/src/\+Arduino\+Json/\+Polyfills/type\+\_\+traits/is\+\_\+enum.\+hpp\end{DoxyCompactItemize}

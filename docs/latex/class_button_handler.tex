@@ -1,0 +1,240 @@
+\doxysection{Button\+Handler Class Reference}
+\hypertarget{class_button_handler}{}\label{class_button_handler}\index{ButtonHandler@{ButtonHandler}}
+
+
+Handles button presses, managing debouncing, click detection, and hold events.  
+
+
+
+
+{\ttfamily \#include $<$button.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_button_handler_a4b213df8be2f5d90299e60b6a90c26c8}{Button\+Handler}} (int pin, bool is\+Active\+Low=true, bool use\+Pullup=true)
+\begin{DoxyCompactList}\small\item\em Initialize the \doxylink{class_button_handler}{Button\+Handler} instance. \end{DoxyCompactList}\item 
+button\+\_\+handler\+\_\+error\+\_\+t \mbox{\hyperlink{class_button_handler_ad154bc08e128ee48b1f5add4c928298b}{set\+Debounce\+Duration}} (unsigned int ms)
+\begin{DoxyCompactList}\small\item\em Set debounce duration in milliseconds. \end{DoxyCompactList}\item 
+button\+\_\+handler\+\_\+error\+\_\+t \mbox{\hyperlink{class_button_handler_ab5e0cbc1ab74e1cfb9ab7f4417584a39}{set\+Double\+Click\+Interval}} (unsigned int ms)
+\begin{DoxyCompactList}\small\item\em Set double-\/click maximum interval in milliseconds. \end{DoxyCompactList}\item 
+button\+\_\+handler\+\_\+error\+\_\+t \mbox{\hyperlink{class_button_handler_a772346688081ec9304bfbaf9920f49d9}{set\+Hold\+Duration}} (unsigned int ms)
+\begin{DoxyCompactList}\small\item\em Set hold duration in milliseconds for triggering hold events. \end{DoxyCompactList}\item 
+button\+\_\+handler\+\_\+error\+\_\+t \mbox{\hyperlink{class_button_handler_ab12ba9a377ff3dd9ddd09b3770549a2c}{attach\+Single\+Click\+Callback}} (Button\+Callback callback)
+\begin{DoxyCompactList}\small\item\em Attach a callback for single-\/click events. \end{DoxyCompactList}\item 
+button\+\_\+handler\+\_\+error\+\_\+t \mbox{\hyperlink{class_button_handler_a7aa52c3f4139e23569529d30958091cc}{attach\+Double\+Click\+Callback}} (Button\+Callback callback)
+\begin{DoxyCompactList}\small\item\em Attach a callback for double-\/click events. \end{DoxyCompactList}\item 
+button\+\_\+handler\+\_\+error\+\_\+t \mbox{\hyperlink{class_button_handler_aca1da4b0a47414a3221902947867bee0}{attach\+Hold\+Start\+Callback}} (Button\+Callback callback)
+\begin{DoxyCompactList}\small\item\em Attach a callback for hold start events. \end{DoxyCompactList}\item 
+button\+\_\+handler\+\_\+error\+\_\+t \mbox{\hyperlink{class_button_handler_a5eaf04c0e2facda78d57a5642b6cf502}{attach\+Hold\+Release\+Callback}} (Button\+Callback callback)
+\begin{DoxyCompactList}\small\item\em Attach a callback for hold release events. \end{DoxyCompactList}\item 
+\Hypertarget{class_button_handler_aaed9117143aa1674a71aa012e558d4e8}\label{class_button_handler_aaed9117143aa1674a71aa012e558d4e8} 
+void {\bfseries update} ()
+\begin{DoxyCompactList}\small\item\em Periodically process the button state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Handles button presses, managing debouncing, click detection, and hold events. 
+
+This class provides functionality for\+:
+
+
+\begin{DoxyItemize}
+\item Debouncing button inputs to avoid unintended multiple presses.
+\item Detecting single-\/click, double-\/click, and hold events.
+\item Managing callback functions for different button interactions.
+\item Utilizing a finite state machine (FSM) for event handling.
+\end{DoxyItemize}
+
+The class allows users to configure various parameters such as debounce duration, double-\/click intervals, and hold duration. It continuously updates button states and triggers appropriate event callbacks as defined. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_button_handler_a4b213df8be2f5d90299e60b6a90c26c8}\index{ButtonHandler@{ButtonHandler}!ButtonHandler@{ButtonHandler}}
+\index{ButtonHandler@{ButtonHandler}!ButtonHandler@{ButtonHandler}}
+\doxysubsubsection{\texorpdfstring{ButtonHandler()}{ButtonHandler()}}
+{\footnotesize\ttfamily \label{class_button_handler_a4b213df8be2f5d90299e60b6a90c26c8} 
+Button\+Handler\+::\+Button\+Handler (\begin{DoxyParamCaption}\item[{int}]{pin}{, }\item[{bool}]{is\+Active\+Low}{ = {\ttfamily true}, }\item[{bool}]{use\+Pullup}{ = {\ttfamily true}}\end{DoxyParamCaption})}
+
+
+
+Initialize the \doxylink{class_button_handler}{Button\+Handler} instance. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pin} & Digital pin connected to the button. \\
+\hline
+\mbox{\texttt{ in}}  & {\em is\+Active\+Low} & True if the button\textquotesingle{}s active state is LOW. \\
+\hline
+\mbox{\texttt{ in}}  & {\em use\+Pullup} & True to enable internal pull-\/up resistor.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item BUTTON\+\_\+\+OK\+: Initialization successful.
+\item BUTTON\+\_\+\+ERR\+\_\+\+INVALID\+\_\+\+PARAM\+: Invalid pin number. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_button_handler_a7aa52c3f4139e23569529d30958091cc}\index{ButtonHandler@{ButtonHandler}!attachDoubleClickCallback@{attachDoubleClickCallback}}
+\index{attachDoubleClickCallback@{attachDoubleClickCallback}!ButtonHandler@{ButtonHandler}}
+\doxysubsubsection{\texorpdfstring{attachDoubleClickCallback()}{attachDoubleClickCallback()}}
+{\footnotesize\ttfamily \label{class_button_handler_a7aa52c3f4139e23569529d30958091cc} 
+button\+\_\+handler\+\_\+error\+\_\+t Button\+Handler\+::attach\+Double\+Click\+Callback (\begin{DoxyParamCaption}\item[{Button\+Callback}]{callback}{}\end{DoxyParamCaption})}
+
+
+
+Attach a callback for double-\/click events. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em callback} & Function to be called on double click.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item BUTTON\+\_\+\+OK\+: Callback attached successfully.
+\item BUTTON\+\_\+\+ERR\+\_\+\+UNINITIALIZED\+: Button not initialized. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_button_handler_a5eaf04c0e2facda78d57a5642b6cf502}\index{ButtonHandler@{ButtonHandler}!attachHoldReleaseCallback@{attachHoldReleaseCallback}}
+\index{attachHoldReleaseCallback@{attachHoldReleaseCallback}!ButtonHandler@{ButtonHandler}}
+\doxysubsubsection{\texorpdfstring{attachHoldReleaseCallback()}{attachHoldReleaseCallback()}}
+{\footnotesize\ttfamily \label{class_button_handler_a5eaf04c0e2facda78d57a5642b6cf502} 
+button\+\_\+handler\+\_\+error\+\_\+t Button\+Handler\+::attach\+Hold\+Release\+Callback (\begin{DoxyParamCaption}\item[{Button\+Callback}]{callback}{}\end{DoxyParamCaption})}
+
+
+
+Attach a callback for hold release events. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em callback} & Function to be called when hold is released.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item BUTTON\+\_\+\+OK\+: Callback attached successfully.
+\item BUTTON\+\_\+\+ERR\+\_\+\+UNINITIALIZED\+: Button not initialized. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_button_handler_aca1da4b0a47414a3221902947867bee0}\index{ButtonHandler@{ButtonHandler}!attachHoldStartCallback@{attachHoldStartCallback}}
+\index{attachHoldStartCallback@{attachHoldStartCallback}!ButtonHandler@{ButtonHandler}}
+\doxysubsubsection{\texorpdfstring{attachHoldStartCallback()}{attachHoldStartCallback()}}
+{\footnotesize\ttfamily \label{class_button_handler_aca1da4b0a47414a3221902947867bee0} 
+button\+\_\+handler\+\_\+error\+\_\+t Button\+Handler\+::attach\+Hold\+Start\+Callback (\begin{DoxyParamCaption}\item[{Button\+Callback}]{callback}{}\end{DoxyParamCaption})}
+
+
+
+Attach a callback for hold start events. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em callback} & Function to be called when a hold starts.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item BUTTON\+\_\+\+OK\+: Callback attached successfully.
+\item BUTTON\+\_\+\+ERR\+\_\+\+UNINITIALIZED\+: Button not initialized. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_button_handler_ab12ba9a377ff3dd9ddd09b3770549a2c}\index{ButtonHandler@{ButtonHandler}!attachSingleClickCallback@{attachSingleClickCallback}}
+\index{attachSingleClickCallback@{attachSingleClickCallback}!ButtonHandler@{ButtonHandler}}
+\doxysubsubsection{\texorpdfstring{attachSingleClickCallback()}{attachSingleClickCallback()}}
+{\footnotesize\ttfamily \label{class_button_handler_ab12ba9a377ff3dd9ddd09b3770549a2c} 
+button\+\_\+handler\+\_\+error\+\_\+t Button\+Handler\+::attach\+Single\+Click\+Callback (\begin{DoxyParamCaption}\item[{Button\+Callback}]{callback}{}\end{DoxyParamCaption})}
+
+
+
+Attach a callback for single-\/click events. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em callback} & Function to be called on single click.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item BUTTON\+\_\+\+OK\+: Callback attached successfully.
+\item BUTTON\+\_\+\+ERR\+\_\+\+UNINITIALIZED\+: Button not initialized. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_button_handler_ad154bc08e128ee48b1f5add4c928298b}\index{ButtonHandler@{ButtonHandler}!setDebounceDuration@{setDebounceDuration}}
+\index{setDebounceDuration@{setDebounceDuration}!ButtonHandler@{ButtonHandler}}
+\doxysubsubsection{\texorpdfstring{setDebounceDuration()}{setDebounceDuration()}}
+{\footnotesize\ttfamily \label{class_button_handler_ad154bc08e128ee48b1f5add4c928298b} 
+button\+\_\+handler\+\_\+error\+\_\+t Button\+Handler\+::set\+Debounce\+Duration (\begin{DoxyParamCaption}\item[{unsigned int}]{ms}{}\end{DoxyParamCaption})}
+
+
+
+Set debounce duration in milliseconds. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em ms} & Debounce duration.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item BUTTON\+\_\+\+OK\+: Parameter set successfully.
+\item BUTTON\+\_\+\+ERR\+\_\+\+INVALID\+\_\+\+PARAM\+: Invalid duration value. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_button_handler_ab5e0cbc1ab74e1cfb9ab7f4417584a39}\index{ButtonHandler@{ButtonHandler}!setDoubleClickInterval@{setDoubleClickInterval}}
+\index{setDoubleClickInterval@{setDoubleClickInterval}!ButtonHandler@{ButtonHandler}}
+\doxysubsubsection{\texorpdfstring{setDoubleClickInterval()}{setDoubleClickInterval()}}
+{\footnotesize\ttfamily \label{class_button_handler_ab5e0cbc1ab74e1cfb9ab7f4417584a39} 
+button\+\_\+handler\+\_\+error\+\_\+t Button\+Handler\+::set\+Double\+Click\+Interval (\begin{DoxyParamCaption}\item[{unsigned int}]{ms}{}\end{DoxyParamCaption})}
+
+
+
+Set double-\/click maximum interval in milliseconds. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em ms} & Maximum time between clicks.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item BUTTON\+\_\+\+OK\+: Parameter set successfully.
+\item BUTTON\+\_\+\+ERR\+\_\+\+INVALID\+\_\+\+PARAM\+: Invalid duration value. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\Hypertarget{class_button_handler_a772346688081ec9304bfbaf9920f49d9}\index{ButtonHandler@{ButtonHandler}!setHoldDuration@{setHoldDuration}}
+\index{setHoldDuration@{setHoldDuration}!ButtonHandler@{ButtonHandler}}
+\doxysubsubsection{\texorpdfstring{setHoldDuration()}{setHoldDuration()}}
+{\footnotesize\ttfamily \label{class_button_handler_a772346688081ec9304bfbaf9920f49d9} 
+button\+\_\+handler\+\_\+error\+\_\+t Button\+Handler\+::set\+Hold\+Duration (\begin{DoxyParamCaption}\item[{unsigned int}]{ms}{}\end{DoxyParamCaption})}
+
+
+
+Set hold duration in milliseconds for triggering hold events. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em ms} & Hold duration.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyItemize}
+\item BUTTON\+\_\+\+OK\+: Parameter set successfully.
+\item BUTTON\+\_\+\+ERR\+\_\+\+INVALID\+\_\+\+PARAM\+: Invalid duration value. 
+\end{DoxyItemize}
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/button/src/button.\+h\item 
+lib/button/src/button.\+cpp\end{DoxyCompactItemize}

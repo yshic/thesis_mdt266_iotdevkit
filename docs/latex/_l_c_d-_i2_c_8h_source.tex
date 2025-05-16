@@ -1,0 +1,123 @@
+\doxysection{LCD-\/\+I2C.h}
+\hypertarget{_l_c_d-_i2_c_8h_source}{}\label{_l_c_d-_i2_c_8h_source}\index{lib/LCD\_I2C/src/LCD-\/I2C.h@{lib/LCD\_I2C/src/LCD-\/I2C.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_LCD\_I2C\_H\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_LCD\_I2C\_H\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Arduino.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}Wire.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ This\ struct\ helps\ us\ constructing\ the\ I2C\ output\ based\ on\ data\ and\ control\ outputs.}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ Because\ the\ LCD\ is\ set\ to\ 4-\/bit\ mode,\ 4\ bits\ of\ the\ I2C\ output\ are\ for\ the\ control\ outputs}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ while\ the\ other\ 4\ bits\ are\ for\ the\ 8\ bits\ of\ data\ which\ are\ send\ in\ parts\ using\ the\ enable\ output.}}
+\DoxyCodeLine{00011\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ \#define\ DEBUG\_PRINT\_SCREEN\_STATE}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_output_state}{OutputState}}}
+\DoxyCodeLine{00015\ \{}
+\DoxyCodeLine{00016\ \ \ \textcolor{comment}{//\ Select\ register}}
+\DoxyCodeLine{00017\ \ \ \textcolor{comment}{//\ 0:\ instruction\ register}}
+\DoxyCodeLine{00018\ \ \ \textcolor{comment}{//\ 1:\ data\ register}}
+\DoxyCodeLine{00019\ \ \ uint8\_t\ rs\ =\ 0;}
+\DoxyCodeLine{00020\ \ \ \textcolor{comment}{//\ select\ read\ or\ write}}
+\DoxyCodeLine{00021\ \ \ uint8\_t\ rw\ =\ 0;}
+\DoxyCodeLine{00022\ \ \ \textcolor{comment}{//\ Enable:\ starts\ data\ read\ or\ write}}
+\DoxyCodeLine{00023\ \ \ uint8\_t\ en\ =\ 0;}
+\DoxyCodeLine{00024\ \ \ \textcolor{comment}{//\ LED\ status}}
+\DoxyCodeLine{00025\ \ \ uint8\_t\ led\ \ =\ 0;}
+\DoxyCodeLine{00026\ \ \ uint8\_t\ data\ =\ 0;}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ uint8\_t\ GetLowData()}
+\DoxyCodeLine{00029\ \ \ \{}
+\DoxyCodeLine{00030\ \ \ \ \ uint8\_t\ buffer\ =\ rs;}
+\DoxyCodeLine{00031\ \ \ \ \ buffer\ |=\ rw\ <<\ 1;}
+\DoxyCodeLine{00032\ \ \ \ \ buffer\ |=\ en\ <<\ 2;}
+\DoxyCodeLine{00033\ \ \ \ \ buffer\ |=\ led\ <<\ 3;}
+\DoxyCodeLine{00034\ \ \ \ \ buffer\ |=\ (data\ \&\ 0x0F)\ <<\ 4;}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{return}\ buffer;}
+\DoxyCodeLine{00036\ \ \ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ uint8\_t\ GetHighData()}
+\DoxyCodeLine{00039\ \ \ \{}
+\DoxyCodeLine{00040\ \ \ \ \ uint8\_t\ buffer\ =\ rs;}
+\DoxyCodeLine{00041\ \ \ \ \ buffer\ |=\ rw\ <<\ 1;}
+\DoxyCodeLine{00042\ \ \ \ \ buffer\ |=\ en\ <<\ 2;}
+\DoxyCodeLine{00043\ \ \ \ \ buffer\ |=\ led\ <<\ 3;}
+\DoxyCodeLine{00044\ \ \ \ \ buffer\ |=\ (data\ \&\ 0xF0);}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordflow}{return}\ buffer;}
+\DoxyCodeLine{00046\ \ \ \}}
+\DoxyCodeLine{00047\ \};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{00050\ \{}
+\DoxyCodeLine{00051\ \ \ \textcolor{comment}{//\ LCD\_SCREEN\_DHT20\ =\ 0,}}
+\DoxyCodeLine{00052\ \ \ LCD\_SCREEN\_DOOR\ =\ 0,}
+\DoxyCodeLine{00053\ \ \ LCD\_SCREEN\_SHT4X,}
+\DoxyCodeLine{00054\ \ \ LCD\_SCREEN\_BMP280,}
+\DoxyCodeLine{00055\ \ \ LCD\_SCREEN\_LIGHT,}
+\DoxyCodeLine{00056\ \ \ \textcolor{comment}{//\ LCD\_SCREEN\_ULTRASONIC,}}
+\DoxyCodeLine{00057\ \ \ \textcolor{comment}{//\ LCD\_SCREEN\_MOISTURE,}}
+\DoxyCodeLine{00058\ \ \ LCD\_SCREEN\_PIR,}
+\DoxyCodeLine{00059\ \ \ LCD\_SCREEN\_MINIFAN,}
+\DoxyCodeLine{00060\ \ \ LCD\_SCREEN\_CAMERA\_FACE\_DETECTED,}
+\DoxyCodeLine{00061\ \ \ LCD\_SCREEN\_CAMERA\_NONE,}
+\DoxyCodeLine{00062\ \ \ LCD\_SCREEN\_COUNT\ \textcolor{comment}{//\ Total\ number\ of\ states}}
+\DoxyCodeLine{00063\ \}\ lcd\_screen\_state\_t;}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{keyword}{class\ }LCD\_I2C\ :\ \textcolor{keyword}{public}\ Print}
+\DoxyCodeLine{00066\ \{}
+\DoxyCodeLine{00067\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00068\ \ \ LCD\_I2C(uint8\_t\ address,\ uint8\_t\ columns\ =\ 16,\ uint8\_t\ rows\ =\ 2)}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ :\ \_address(address),\ \_columnMax(-\/-\/columns),\ \_rowMax(-\/-\/rows)}
+\DoxyCodeLine{00070\ \ \ \{}
+\DoxyCodeLine{00071\ \ \ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_c_d___i2_c_aa5cb738174b216d2b06b7b11849ee61d}{begin}}(TwoWire\ *wire);}
+\DoxyCodeLine{00074\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_c_d___i2_c_a5262240ccbb83ec6f37522b8d9322bd7}{backlight}}();}
+\DoxyCodeLine{00075\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_l_c_d___i2_c_a4f0d21551d40edb54ac1b942bef76d6c}{backlightOff}}();}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_a777466d894f6ec2b770ed2d210791488}{clear}}();}
+\DoxyCodeLine{00078\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_af64793f4fed5a850a998619d277248fa}{home}}();}
+\DoxyCodeLine{00079\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_a62a262300317053d98481750e588f12e}{leftToRight}}();}
+\DoxyCodeLine{00080\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_a477dc9c04b7b0f010fcf5288be9f4050}{rightToLeft}}();}
+\DoxyCodeLine{00081\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_a5564c2b6fdb35ba40d7b99399e9ad100}{autoscroll}}();}
+\DoxyCodeLine{00082\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_ad0431cb8cd92563eaae80d73f6cb6d9b}{autoscrollOff}}();}
+\DoxyCodeLine{00083\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_a9ecc6249b017a867ba83c0b37dbb4d1b}{display}}();}
+\DoxyCodeLine{00084\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_a3d309d59c218c17ce0da39a4b32b3be1}{displayOff}}();}
+\DoxyCodeLine{00085\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_a090e1dc11adac2ecf4b51c33fbe2d16a}{cursor}}();}
+\DoxyCodeLine{00086\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_a9148c308bc60405264acd2caebb42035}{cursorOff}}();}
+\DoxyCodeLine{00087\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_a824106f0d24f9cc3b133330491821390}{blink}}();}
+\DoxyCodeLine{00088\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_a3a77ab88ae1d7655a54f09d2e5159ff9}{blinkOff}}();}
+\DoxyCodeLine{00089\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_a5c77d5a6768b076dfd9a0cd4e54cf7e7}{scrollDisplayLeft}}();}
+\DoxyCodeLine{00090\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_ae12bf5d4ae108dcca9b879f3777df484}{scrollDisplayRight}}();}
+\DoxyCodeLine{00091\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_aae5df230a517491bb6c4d7029199d4af}{createChar}}(uint8\_t\ memory\_location,\ uint8\_t\ charmap[]);}
+\DoxyCodeLine{00092\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_a8852aad8dec8a780d31449fc3fab5056}{setCursor}}(uint8\_t\ column,\ uint8\_t\ row);}
+\DoxyCodeLine{00093\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_l_c_d___i2_c_aaf831006a92860fc2e3e9f79578b2e0b}{writeCharCode}}(uint8\_t\ code);}
+\DoxyCodeLine{00094\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ progressBar(uint8\_t\ row,\ uint8\_t\ progress);}
+\DoxyCodeLine{00095\ \ \ lcd\_screen\_state\_t\ getScreenState();}
+\DoxyCodeLine{00096\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ setScreenState(lcd\_screen\_state\_t\ screenState);}
+\DoxyCodeLine{00097\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ updateScreenState(\textcolor{keywordtype}{bool}\ increment);}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \textcolor{comment}{//\ Method\ used\ by\ the\ Arduino\ class\ "{}Print"{}\ which\ is\ the\ one\ that\ provides\ the\ .print(string)\ method}}
+\DoxyCodeLine{00100\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_l_c_d___i2_c_a6e9c39f455ba8cefb804a0f5a118744e}{write}}(uint8\_t\ character);}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00103\ \ \ TwoWire\ \ \ \ \ \ \ \ \ \ \ *\_wire\{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00104\ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \_address;}
+\DoxyCodeLine{00105\ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \_columnMax;}
+\DoxyCodeLine{00106\ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \_rowMax;}
+\DoxyCodeLine{00107\ \ \ \mbox{\hyperlink{struct_output_state}{OutputState}}\ \ \ \ \ \ \ \ \_output;}
+\DoxyCodeLine{00108\ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \_displayState\ \ =\ 0x00;}
+\DoxyCodeLine{00109\ \ \ uint8\_t\ \ \ \ \ \ \ \ \ \ \ \ \_entryState\ \ \ \ =\ 0x00;}
+\DoxyCodeLine{00110\ \ \ lcd\_screen\_state\_t\ lcdScreenState\ =\ LCD\_SCREEN\_SHT4X;}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \textcolor{keywordtype}{void}\ InitializeLCD();}
+\DoxyCodeLine{00113\ \ \ \textcolor{keywordtype}{void}\ I2C\_Write(uint8\_t\ output);}
+\DoxyCodeLine{00114\ \ \ \textcolor{keywordtype}{void}\ LCD\_Write(uint8\_t\ output,\ \textcolor{keywordtype}{bool}\ initialization\ =\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00115\ \};}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

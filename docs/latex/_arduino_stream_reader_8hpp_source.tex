@@ -1,0 +1,37 @@
+\doxysection{Arduino\+Stream\+Reader.\+hpp}
+\hypertarget{_arduino_stream_reader_8hpp_source}{}\label{_arduino_stream_reader_8hpp_source}\index{lib/ArduinoJson/src/ArduinoJson/Deserialization/Readers/ArduinoStreamReader.hpp@{lib/ArduinoJson/src/ArduinoJson/Deserialization/Readers/ArduinoStreamReader.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ ArduinoJson\ -\/\ https://arduinojson.org}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ ©\ 2014-\/2023,\ Benoit\ BLANCHON}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ MIT\ License}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ ARDUINOJSON\_BEGIN\_PRIVATE\_NAMESPACE}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ TSource>}
+\DoxyCodeLine{00012\ \textcolor{keyword}{struct\ }Reader<TSource,}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ typename\ \mbox{\hyperlink{structenable__if}{enable\_if}}<\mbox{\hyperlink{classis__base__of}{is\_base\_of}}<Stream,\ TSource>::value>\mbox{\hyperlink{structconditional}{::type}}>\ \{}
+\DoxyCodeLine{00014\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ \textcolor{keyword}{explicit}\ Reader(Stream\&\ stream)\ :\ stream\_(\&stream)\ \{\}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \textcolor{keywordtype}{int}\ read()\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{comment}{//\ don't\ use\ stream\_.read()\ as\ it\ ignores\ the\ timeout}}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{char}\ c;}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordflow}{return}\ stream\_-\/>readBytes(\&c,\ 1)\ ?\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\textcolor{keyword}{>}(c)\ :\ -\/1;}
+\DoxyCodeLine{00021\ \ \ \}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \textcolor{keywordtype}{size\_t}\ readBytes(\textcolor{keywordtype}{char}*\ buffer,\ \textcolor{keywordtype}{size\_t}\ length)\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordflow}{return}\ stream\_-\/>readBytes(buffer,\ length);}
+\DoxyCodeLine{00025\ \ \ \}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00028\ \ \ Stream*\ stream\_;}
+\DoxyCodeLine{00029\ \};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ ARDUINOJSON\_END\_PRIVATE\_NAMESPACE}
+
+\end{DoxyCode}

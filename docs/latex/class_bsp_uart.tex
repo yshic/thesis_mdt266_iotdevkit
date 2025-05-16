@@ -1,0 +1,122 @@
+\doxysection{Bsp\+Uart Class Reference}
+\hypertarget{class_bsp_uart}{}\label{class_bsp_uart}\index{BspUart@{BspUart}}
+Inheritance diagram for Bsp\+Uart\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_bsp_uart}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_bsp_uart_a968b764ae384647681cf5e96d3aaee7a}\label{class_bsp_uart_a968b764ae384647681cf5e96d3aaee7a} 
+{\bfseries Bsp\+Uart} (uint8\+\_\+t uart\+\_\+nr)
+\item 
+\Hypertarget{class_bsp_uart_aef7831e4af590c03928e778b7bfec108}\label{class_bsp_uart_aef7831e4af590c03928e778b7bfec108} 
+bool {\bfseries set\+Rx\+Timeout} (uint8\+\_\+t symbols\+\_\+timeout)
+\item 
+\Hypertarget{class_bsp_uart_a1d8cfb3ba02441006133b7c913ccf99d}\label{class_bsp_uart_a1d8cfb3ba02441006133b7c913ccf99d} 
+bool {\bfseries set\+Rx\+FIFOFull} (uint8\+\_\+t fifo\+Bytes)
+\item 
+\Hypertarget{class_bsp_uart_a79a378bfaa5179287451551758afb45a}\label{class_bsp_uart_a79a378bfaa5179287451551758afb45a} 
+bsp\+\_\+uart\+\_\+error\+\_\+t {\bfseries on\+Receive} (On\+Receive\+Cb function, bool only\+On\+Timeout=false)
+\item 
+\Hypertarget{class_bsp_uart_a13d5c9b34f3ce455d45244accf3a3ccc}\label{class_bsp_uart_a13d5c9b34f3ce455d45244accf3a3ccc} 
+bsp\+\_\+uart\+\_\+error\+\_\+t {\bfseries on\+Receive\+Error} (On\+Receive\+Error\+Cb function)
+\item 
+\Hypertarget{class_bsp_uart_a5f2f2aa397e9ad9c3681d85fc7825dac}\label{class_bsp_uart_a5f2f2aa397e9ad9c3681d85fc7825dac} 
+bsp\+\_\+uart\+\_\+error\+\_\+t {\bfseries event\+Queue\+Reset} ()
+\item 
+\Hypertarget{class_bsp_uart_a32feaa93467551e738900cf7ed4d094c}\label{class_bsp_uart_a32feaa93467551e738900cf7ed4d094c} 
+bsp\+\_\+uart\+\_\+error\+\_\+t {\bfseries update\+Baud\+Rate} (unsigned long baud)
+\item 
+\Hypertarget{class_bsp_uart_a4489af711c6fb46f513ec9b77ea7ca40}\label{class_bsp_uart_a4489af711c6fb46f513ec9b77ea7ca40} 
+bsp\+\_\+uart\+\_\+error\+\_\+t {\bfseries begin} (unsigned long baud, uint32\+\_\+t config=SERIAL\+\_\+8\+N1, int8\+\_\+t rx\+Pin=-\/1, int8\+\_\+t tx\+Pin=-\/1, bool invert=false, unsigned long timeout\+\_\+ms=20000\+UL, uint8\+\_\+t rxfifo\+\_\+full\+\_\+thrhd=112)
+\item 
+\Hypertarget{class_bsp_uart_ac531e28cee42c6de8845ebde6b26aff7}\label{class_bsp_uart_ac531e28cee42c6de8845ebde6b26aff7} 
+bsp\+\_\+uart\+\_\+error\+\_\+t {\bfseries end} (void)
+\item 
+\Hypertarget{class_bsp_uart_a1ef709e8adfc06f6d73b3b93a36751d6}\label{class_bsp_uart_a1ef709e8adfc06f6d73b3b93a36751d6} 
+int {\bfseries available} (void) override
+\item 
+\Hypertarget{class_bsp_uart_aae4ca68b99f9e4cd18e08bec3baedaad}\label{class_bsp_uart_aae4ca68b99f9e4cd18e08bec3baedaad} 
+int {\bfseries available\+For\+Write} (void)
+\item 
+\Hypertarget{class_bsp_uart_aa9fbcc01fcb5a069ecc64ac87d27abf8}\label{class_bsp_uart_aa9fbcc01fcb5a069ecc64ac87d27abf8} 
+int {\bfseries peek} (void) override
+\item 
+\Hypertarget{class_bsp_uart_a86076d4fd68ca38e23ca87d8c000306c}\label{class_bsp_uart_a86076d4fd68ca38e23ca87d8c000306c} 
+int {\bfseries read} (void) override
+\item 
+\Hypertarget{class_bsp_uart_abbd79cf9aeaff0c7c08edd3c0779cfe4}\label{class_bsp_uart_abbd79cf9aeaff0c7c08edd3c0779cfe4} 
+size\+\_\+t {\bfseries read} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t size)
+\item 
+\Hypertarget{class_bsp_uart_acab005f6b152497eb676dc9fefe7e834}\label{class_bsp_uart_acab005f6b152497eb676dc9fefe7e834} 
+size\+\_\+t {\bfseries read} (char \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t size)
+\item 
+\Hypertarget{class_bsp_uart_aa6b4e3c35c5902da7e70c059796976c9}\label{class_bsp_uart_aa6b4e3c35c5902da7e70c059796976c9} 
+size\+\_\+t {\bfseries read\+Bytes} (uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t length)
+\item 
+\Hypertarget{class_bsp_uart_ad509c8479c44e9d5afe239e77957e5d3}\label{class_bsp_uart_ad509c8479c44e9d5afe239e77957e5d3} 
+size\+\_\+t {\bfseries read\+Bytes} (char \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t length)
+\item 
+\Hypertarget{class_bsp_uart_a60f8ba782f6b1b8a1007db332e2efd52}\label{class_bsp_uart_a60f8ba782f6b1b8a1007db332e2efd52} 
+void {\bfseries flush} (void) override
+\item 
+\Hypertarget{class_bsp_uart_adcbe4f16f3b8be277d819a9d728554df}\label{class_bsp_uart_adcbe4f16f3b8be277d819a9d728554df} 
+bsp\+\_\+uart\+\_\+error\+\_\+t {\bfseries flush} (bool tx\+Only)
+\item 
+\Hypertarget{class_bsp_uart_a308861a50d52d86428e678d426a3a3b7}\label{class_bsp_uart_a308861a50d52d86428e678d426a3a3b7} 
+size\+\_\+t {\bfseries write} (uint8\+\_\+t)
+\item 
+\Hypertarget{class_bsp_uart_a8c17721fa35546d7580b7778d060d8ae}\label{class_bsp_uart_a8c17721fa35546d7580b7778d060d8ae} 
+size\+\_\+t {\bfseries write} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t size)
+\item 
+\Hypertarget{class_bsp_uart_ab49882133ac02c9431d72662d8c2a4e3}\label{class_bsp_uart_ab49882133ac02c9431d72662d8c2a4e3} 
+size\+\_\+t {\bfseries write} (const char \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t size)
+\item 
+\Hypertarget{class_bsp_uart_a29662bd00eb67e972aa93e5cea8adaf5}\label{class_bsp_uart_a29662bd00eb67e972aa93e5cea8adaf5} 
+size\+\_\+t {\bfseries write} (const char \texorpdfstring{$\ast$}{*}s)
+\item 
+\Hypertarget{class_bsp_uart_ac15da0f999d799f7faf831c61b7f0b62}\label{class_bsp_uart_ac15da0f999d799f7faf831c61b7f0b62} 
+size\+\_\+t {\bfseries write} (unsigned long n)
+\item 
+\Hypertarget{class_bsp_uart_aa4b02fb5f3d652ff80f50dcd01e93440}\label{class_bsp_uart_aa4b02fb5f3d652ff80f50dcd01e93440} 
+size\+\_\+t {\bfseries write} (long n)
+\item 
+\Hypertarget{class_bsp_uart_a71453e9d5e727c8a32e9b98f9d7a55e1}\label{class_bsp_uart_a71453e9d5e727c8a32e9b98f9d7a55e1} 
+size\+\_\+t {\bfseries write} (unsigned int n)
+\item 
+\Hypertarget{class_bsp_uart_ad7986135a084bcf39ae69dffa4ef8c60}\label{class_bsp_uart_ad7986135a084bcf39ae69dffa4ef8c60} 
+size\+\_\+t {\bfseries write} (int n)
+\item 
+\Hypertarget{class_bsp_uart_a3dbdd25612e7ffb8bcc3ace20f2aeedc}\label{class_bsp_uart_a3dbdd25612e7ffb8bcc3ace20f2aeedc} 
+uint32\+\_\+t {\bfseries baud\+Rate} ()
+\item 
+\Hypertarget{class_bsp_uart_aa8cc09033e164cbd9eee97d7ac2bf946}\label{class_bsp_uart_aa8cc09033e164cbd9eee97d7ac2bf946} 
+bsp\+\_\+uart\+\_\+error\+\_\+t {\bfseries set\+Debug\+Output} (bool)
+\item 
+\Hypertarget{class_bsp_uart_abd5098537c7fe7c09189a349ed7003be}\label{class_bsp_uart_abd5098537c7fe7c09189a349ed7003be} 
+bsp\+\_\+uart\+\_\+error\+\_\+t {\bfseries set\+Rx\+Invert} (bool)
+\item 
+\Hypertarget{class_bsp_uart_aa286e0fa7883cd90cada7e9ddc7f9fe7}\label{class_bsp_uart_aa286e0fa7883cd90cada7e9ddc7f9fe7} 
+bool {\bfseries set\+Pins} (int8\+\_\+t rx\+Pin, int8\+\_\+t tx\+Pin, int8\+\_\+t cts\+Pin=-\/1, int8\+\_\+t rts\+Pin=-\/1)
+\item 
+\Hypertarget{class_bsp_uart_ac140b2dca0b9dfe118771bad1b461d41}\label{class_bsp_uart_ac140b2dca0b9dfe118771bad1b461d41} 
+bool {\bfseries set\+Hw\+Flow\+Ctrl\+Mode} (Serial\+Hw\+Flow\+Ctrl mode=UART\+\_\+\+HW\+\_\+\+FLOWCTRL\+\_\+\+CTS\+\_\+\+RTS, uint8\+\_\+t threshold=64)
+\item 
+\Hypertarget{class_bsp_uart_a14c9fa06f3be18af6beb86258e2e684a}\label{class_bsp_uart_a14c9fa06f3be18af6beb86258e2e684a} 
+bool {\bfseries set\+Mode} (Serial\+Mode mode)
+\item 
+\Hypertarget{class_bsp_uart_a2c7a104109d6839286a0a943ca9f20f8}\label{class_bsp_uart_a2c7a104109d6839286a0a943ca9f20f8} 
+size\+\_\+t {\bfseries set\+Rx\+Buffer\+Size} (size\+\_\+t new\+\_\+size)
+\item 
+\Hypertarget{class_bsp_uart_a0e3cd3d7065deb7af026231d15e34a92}\label{class_bsp_uart_a0e3cd3d7065deb7af026231d15e34a92} 
+size\+\_\+t {\bfseries set\+Tx\+Buffer\+Size} (size\+\_\+t new\+\_\+size)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/bsp/\mbox{\hyperlink{bsp__uart_8h}{bsp\+\_\+uart.\+h}}\item 
+lib/bsp/\mbox{\hyperlink{bsp__uart_8cpp}{bsp\+\_\+uart.\+cpp}}\end{DoxyCompactItemize}
