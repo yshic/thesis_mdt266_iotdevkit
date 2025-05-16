@@ -20,6 +20,7 @@
     #include "WProgram.h"
   #endif
 
+  #include <Preferences.h>
 /* Public defines ----------------------------------------------------- */
 
 /* Public enumerate/structure ----------------------------------------- */
@@ -29,8 +30,9 @@
 /* Public variables --------------------------------------------------- */
 
 /* Funtions Declaration -------------------------------------------------- */
+void handleSave();
+void captivePortalTask(void *pvParameters);
 void wifiTask(void *pvParameters);
-void wmProcessTask(void *pvParameters);
 void wifiSetup();
 
 #endif // WIFI_TASK_H
