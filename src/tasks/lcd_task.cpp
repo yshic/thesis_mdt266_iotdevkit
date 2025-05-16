@@ -23,7 +23,6 @@
 
 /* Private variables -------------------------------------------------- */
 HUSKYLENSResult _result;
-bool            doorState = false;
 /* Task definitions ------------------------------------------- */
 #ifdef LCD_MODULE
 void lcdTask(void *pvParameters)
@@ -49,11 +48,10 @@ void lcdTask(void *pvParameters)
 
   #ifdef SERVO_MODULE
         case LCD_SCREEN_DOOR:
-          doorState = doorServo.getDoorStatus();
           lcd.clear();
           lcd.print("Door Status: ");
           lcd.setCursor(0, 1);
-          if (doorState)
+          if (doorServo.getDoorStatus())
           {
             lcd.print("Opened");
           }
@@ -130,9 +128,10 @@ void lcdTask(void *pvParameters)
         case LCD_SCREEN_MINIFAN:
           lcd.clear();
           lcd.print("Fan Speed: ");
-          lcd.print(miniFan.getFanSpeed());
-          lcd.setCursor(0, 1);
           lcd.print(miniFan.getFanSpeedPercentage());
+          lcd.print("%");
+          lcd.setCursor(0, 1);
+          lcd.print(miniFan.getFanSpeed());
           break;
   #endif
 
