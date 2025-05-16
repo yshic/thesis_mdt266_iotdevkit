@@ -14,6 +14,36 @@ typedef enum
 // Callback function type
 typedef void (*ButtonCallback)(void);
 
+/**
+ * @brief Manages button presses, handling debouncing, click detection, and hold events.
+ *
+ * The `ButtonHandler` class provides functionality for processing button interactions,
+ * including single-click, double-click, and hold events. It utilizes a finite state machine (FSM)
+ * to ensure reliable event detection, minimizing issues related to button bouncing.
+ *
+ * ### Features:
+ *
+ * - Configurable debounce duration for stable input.
+ *
+ * - Detection of single-click, double-click, and hold events.
+ *
+ * - Support for callback functions triggered by button events.
+ *
+ * - Internal state tracking for efficient processing.
+ *
+ * ### Usage:
+ *
+ * After instantiating the class, users should call the `update()` method periodically to process
+ * button states. Callback functions can be attached for various button events to respond dynamically.
+ *
+ * ### Dependencies:
+ *
+ * - Requires connection to a digital input pin.
+ *
+ * - Optional internal pull-up resistor activation.
+ * 
+ * - Callbacks should be defined before use.
+ */
 class ButtonHandler
 {
 public:
