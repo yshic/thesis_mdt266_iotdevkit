@@ -9,6 +9,8 @@
    Because the LCD is set to 4-bit mode, 4 bits of the I2C output are for the control outputs
    while the other 4 bits are for the 8 bits of data which are send in parts using the enable output.
 */
+// #define DEBUG_PRINT_SCREEN_STATE
+
 struct OutputState
 {
   // Select register
