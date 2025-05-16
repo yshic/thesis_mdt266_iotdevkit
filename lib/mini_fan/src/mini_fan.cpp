@@ -40,14 +40,7 @@ void MiniFan::setFanSpeed(int speed)
   _speed[1]      = constrain(percentage, 0, 100);
 
   // Change status of the fan
-  if (_speed > 0)
-  {
-    status = true;
-  }
-  else
-  {
-    status = false;
-  }
+  status = (_speed[0] > 0);
 
   // Spin the fan
   bspGpioAnalogWrite(_pin, _speed[0]);
