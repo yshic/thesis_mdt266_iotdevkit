@@ -16,7 +16,6 @@
 #include <BLEServer.h>
 #include <BLEUtils.h>
 
-#ifndef ENTERPRISE_WIFI
 /* Private defines ---------------------------------------------------- */
 
 /* Private enumerate/structure ---------------------------------------- */
@@ -36,11 +35,11 @@ class SSIDCallback : public BLECharacteristicCallbacks
   void onWrite(BLECharacteristic *characteristic) override
   {
     std::string value = characteristic->getValue();
-    if (value.length() < sizeof(ssid))
+    if (value.length() < sizeof(bleSsid))
     {
-      memset(ssid, 0, sizeof(ssid));
-      memcpy(ssid, value.c_str(), value.length());
-      // ssid[value.length()] = '\0';
+      memset(bleSsid, 0, sizeof(bleSsid));
+      memcpy(bleSsid, value.c_str(), value.length());
+      // bleSsid[value.length()] = '\0';
     }
   }
 };
@@ -50,10 +49,10 @@ class PasswordCallback : public BLECharacteristicCallbacks
   void onWrite(BLECharacteristic *characteristic) override
   {
     std::string value = characteristic->getValue();
-    if (value.length() < sizeof(password))
+    if (value.length() < sizeof(blePassword))
     {
-      memset(password, 0, sizeof(password));
-      memcpy(password, value.c_str(), value.length());
+      memset(blePassword, 0, sizeof(blePassword));
+      memcpy(blePassword, value.c_str(), value.length());
     }
   }
 };
@@ -85,6 +84,5 @@ void bleTask(void *pvParameters)
 }
 
 void bleSetup() { xTaskCreate(bleTask, "BLETask", 4096, NULL, 1, NULL); }
-#endif // ENTERPRISE_WIFI
 
 /* End of file -------------------------------------------------------- */
