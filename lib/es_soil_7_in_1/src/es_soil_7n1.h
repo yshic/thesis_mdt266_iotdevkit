@@ -41,9 +41,46 @@ typedef enum
 /* Public variables --------------------------------------------------- */
 
 /* Class Declaration -------------------------------------------------- */
+
+/**
+ * @brief Manages soil sensor measurements via RS485 Modbus, providing access to pH, moisture, temperature,
+ * conductivity, and nutrient levels.
+ *
+ * The `EsSoil7n1` class facilitates interaction with a 7-in-1 soil sensor over an RS485 Modbus interface.
+ * It supports reading soil parameters including pH, moisture, temperature, conductivity, nitrogen,
+ * phosphorus, and potassium. The class uses Modbus commands to retrieve data and stores converted values for
+ * easy access.
+ *
+ * ### Features:
+ *
+ * - Reads soil pH, moisture, temperature, conductivity, and NPK (nitrogen, phosphorus, potassium) levels.
+ *
+ * - Supports combined readings for efficiency (e.g., temperature and moisture, NPK).
+ *
+ * - Stores sensor values in an internal array for retrieval via getter methods.
+ *
+ * - Provides debug output for raw Modbus responses when enabled.
+ *
+ * ### Usage:
+ *
+ * Instantiate the class and initialize the RS485 serial interface. Call the appropriate `read` methods (e.g.,
+ * `readSoilPh()`, `readSoilNPK()`) to retrieve sensor data, then use getter methods (e.g., `getSoilPh()`) to
+ * access the converted values. Ensure the sensor is powered and connected properly before reading.
+ *
+ * ### Dependencies:
+ *
+ * - Requires an RS485 serial interface (`rs485Serial1`) with Modbus command support.
+ *
+ * - Sensor must be connected to a valid RS485 bus.
+ *
+ * - Optional debug output requires a Serial interface when `DEBUG_PRINT` or
+ * `DEBUG_PRINT_ES_SOIL_RAW_RESPONSE` is defined.
+ */
 class EsSoil7n1
 {
 public:
+  /* Read methods ------------------------------------------------------ */
+
   /**
    * @brief  Reads soil pH value.
    *
@@ -208,12 +245,104 @@ public:
    */
   es_soil_7n1_error_t readSoilNPK();
 
+  /* Getter methods ------------------------------------------------------ */
+
+  /**
+   * @brief Retrieves the soil pH value.
+   *
+   * Returns the previously read soil pH value stored in the internal sensor array,
+   * converted to a floating-point representation.
+   *
+   * @param[in] None
+   *
+   * @attention Requires a prior successful call to `readSoilPh()`.
+   *
+   * @return float The soil pH value.
+   */
   float getSoilPh();
+
+  /**
+   * @brief Retrieves the soil moisture level.
+   *
+   * Returns the previously read soil moisture value stored in the internal sensor array,
+   * converted to a floating-point representation in percentage relative humidity (% RH).
+   *
+   * @param[in] None
+   *
+   * @attention Requires a prior successful call to `readSoilMoisture()` or `readSoilTempAndMoisture()`.
+   *
+   * @return float The soil moisture value in % RH.
+   */
   float getSoilMoisture();
+
+  /**
+   * @brief Retrieves the soil temperature.
+   *
+   * Returns the previously read soil temperature value stored in the internal sensor array,
+   * converted to a floating-point representation in degrees Celsius.
+   *
+   * @param[in] None
+   *
+   * @attention Requires a prior successful call to `readSoilTemperature()` or `readSoilTempAndMoisture()`.
+   *
+   * @return float The soil temperature value in °C.
+   */
   float getSoilTemperature();
+
+  /**
+   * @brief Retrieves the soil conductivity.
+   *
+   * Returns the previously read soil conductivity value stored in the internal sensor array,
+   * represented as a floating-point value in microsiemens per centimeter (µS/cm).
+   *
+   * @param[in] None
+   *
+   * @attention Requires a prior successful call to `readSoilConductivity()`.
+   *
+   * @return float The soil conductivity value in µS/cm.
+   */
   float getSoilConductivity();
+
+  /**
+   * @brief Retrieves the soil nitrogen level.
+   *
+   * Returns the previously read soil nitrogen value stored in the internal sensor array,
+   * represented as a floating-point value in milligrams per kilogram (mg/kg).
+   *
+   * @param[in] None
+   *
+   * @attention Requires a prior successful call to `readSoilNitrogen()` or `readSoilNPK()`.
+   *
+   * @return float The soil nitrogen value in mg/kg.
+   */
   float getSoilNitrogen();
+
+  /**
+   * @brief Retrieves the soil phosphorus level.
+   *
+   * Returns the previously read soil phosphorus value stored in the internal sensor array,
+   * represented as a floating-point value in milligrams per kilogram (mg/kg).
+   *
+   * @param[in] None
+   *
+   * @attention Requires a prior successful call to `readSoilPhosphorus()` or `readSoilNPK()`.
+   *
+   * @return float The soil phosphorus value in mg/kg.
+   */
   float getSoilPhosphorus();
+
+  /**
+   * @brief Retrieves the soil potassium level.
+   *
+   * Returns the previously read soil potassium value stored in the internal sensor array,
+   * represented as a floating-point value in milligrams per kilogram (mg/kg).
+   *
+   * @param[in] None
+   *
+   * @attention Requires a prior successful call to `readSoilPotassium()` or `readSoilNPK()`.
+   *
+   * @return float The soil potassium value in mg/kg.
+   */
   float getSoilPotassium();
 
 private:
