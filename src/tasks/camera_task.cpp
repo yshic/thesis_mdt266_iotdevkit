@@ -30,18 +30,6 @@ void printResult(HUSKYLENSResult result)
   {
     Serial.println(String() + F("Block:xCenter=") + result.xCenter + F(",yCenter=") + result.yCenter +
                    F(",width=") + result.width + F(",height=") + result.height + F(",ID=") + result.ID);
-    if (result.ID == 1)
-    {
-      lcd.setScreenState(LCD_SCREEN_CAMERA_FACE_DETECTED);
-      doorServo.setDoorStatus(true);
-      doorServo.writePos(180);
-      vTaskDelay(pdMS_TO_TICKS(5000));
-    }
-    else
-    {
-      doorServo.setDoorStatus(false);
-      doorServo.writePos(0);
-    }
   }
   else if (result.command == COMMAND_RETURN_ARROW)
   {
@@ -58,6 +46,9 @@ void huskylensTask(void *pvParameters)
 {
   for (;;)
   {
+#ifdef DEBUG_PRINT_RTOS_TIMING
+    unsigned long startTime = micros();
+#endif
     if (huskylens.getCameraStatus())
     {
       if (!huskylens.request())
@@ -88,12 +79,28 @@ void huskylensTask(void *pvParameters)
         {
           huskylens.read();
           HUSKYLENSResult result = huskylens.getResult();
+
+          if (result.ID == 1) // Recognized face
+          {
+            lcd.setScreenState(LCD_SCREEN_CAMERA_FACE_DETECTED);
+            doorServo.setDoorStatus(true);
+            doorServo.writePos(180);
+            vTaskDelay(pdMS_TO_TICKS(5000)); // Delay for going through the door
+          }
 #ifdef DEBUG_PRINT
+
           printResult(result);
 #endif // DEBUG_PRINT
         }
       }
     }
+#ifdef DEBUG_PRINT_RTOS_TIMING
+    unsigned long endTime       = micros();
+    unsigned long executionTime = endTime - startTime;
+    Serial.print("Huskylens Execution Time: ");
+    Serial.print(executionTime);
+    Serial.println(" us");
+#endif
     vTaskDelay(pdMS_TO_TICKS(1000));
   }
 }
