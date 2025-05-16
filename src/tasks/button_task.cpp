@@ -29,6 +29,7 @@ void buttonTask(void *pvParameters)
 {
   for (;;)
   {
+    // Serial.print(bspGpioDigitalRead(BUTTON_PIN));
     button.update();
     vTaskDelay(pdMS_TO_TICKS(DELAY_BUTTON));
   }
@@ -56,7 +57,17 @@ void buttonSetup()
     lcd.updateScreenState(false);
   });
 
-  xTaskCreate(buttonTask, "Button Task", 4096, NULL, 2, NULL);
+  button.attachHoldReleaseCallback([]() {
+  #ifdef DEBUG_BUTTON_CALLBACK
+    Serial.println("Hold Release");
+  #endif // DEBUG_BUTTON_CALLBACK
+    Preferences pref;
+    pref.clearPref("config");
+    delay(1000);
+    esp_restart();
+  });
+
+  xTaskCreate(buttonTask, "Button Task", 8192, NULL, 1, NULL);
 }
 #endif
 /* End of file -------------------------------------------------------- */
