@@ -57,14 +57,14 @@ void PIRSensor::read()
 
 uint8_t PIRSensor::getStatus() { return status; }
 
-int PIRSensor::setDebounceTime(unsigned long debounceTime)
+pir_sensor_error_t PIRSensor::setDebounceTime(unsigned long debounceTime)
 {
   if (debounceTime < 0)
   {
-    return 1; // Error: Invalid debounce time
+    return PIR_SENSOR_ERR; // Error: Invalid debounce time
   }
   _debounceTime = debounceTime;
-  return 0;
+  return PIR_SENSOR_OK;
 }
 
 int PIRSensor::isMotionContinuous(unsigned long duration)
@@ -82,23 +82,23 @@ int PIRSensor::isMotionContinuous(unsigned long duration)
 
 unsigned long PIRSensor::getLastMotionTime() { return _lastMotionTime; }
 
-int PIRSensor::setMotionCallback(void (*callback)())
+pir_sensor_error_t PIRSensor::setMotionCallback(void (*callback)())
 {
   if (!callback)
   {
-    return 1; // Error: Invalid callback function
+    return PIR_SENSOR_ERR; // Error: Invalid callback function
   }
   _motionCallback = callback;
-  return 0;
+  return PIR_SENSOR_OK;
 }
 
-int PIRSensor::disableMotionCallback()
+pir_sensor_error_t PIRSensor::disableMotionCallback()
 {
   _motionCallback = nullptr;
-  return 0;
+  return PIR_SENSOR_OK;
 }
 
-int PIRSensor::setSensitivity(int level)
+pir_sensor_error_t PIRSensor::setSensitivity(int level)
 {
   // Assuming sensitivity can be mapped to debounce time for simplicity
   switch (level)
@@ -113,9 +113,9 @@ int PIRSensor::setSensitivity(int level)
       _debounceTime = 200; // High sensitivity
       break;
     default:
-      return 1; // Error: Invalid sensitivity level
+      return PIR_SENSOR_ERR; // Error: Invalid sensitivity level
   }
-  return 0;
+  return PIR_SENSOR_OK;
 }
 
 int PIRSensor::reset()
@@ -124,7 +124,7 @@ int PIRSensor::reset()
   _lastMotionTime = 0;
   _debounceTime   = 0;
   _motionCallback = nullptr;
-  return 0;
+  return PIR_SENSOR_OK;
 }
 
 /* Private function definitions --------------------------------------- */

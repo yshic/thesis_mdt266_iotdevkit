@@ -41,7 +41,7 @@ typedef void (*ButtonCallback)(void);
  * - Requires connection to a digital input pin.
  *
  * - Optional internal pull-up resistor activation.
- * 
+ *
  * - Callbacks should be defined before use.
  */
 class ButtonHandler
@@ -56,6 +56,7 @@ public:
    *
    * @return
    *  - BUTTON_OK: Initialization successful.
+   *
    *  - BUTTON_ERR_INVALID_PARAM: Invalid pin number.
    */
   ButtonHandler(int pin, bool isActiveLow = true, bool usePullup = true);
@@ -67,6 +68,7 @@ public:
    *
    * @return
    *  - BUTTON_OK: Parameter set successfully.
+   *
    *  - BUTTON_ERR_INVALID_PARAM: Invalid duration value.
    */
   button_handler_error_t setDebounceDuration(unsigned int ms);
@@ -78,6 +80,7 @@ public:
    *
    * @return
    *  - BUTTON_OK: Parameter set successfully.
+   *
    *  - BUTTON_ERR_INVALID_PARAM: Invalid duration value.
    */
   button_handler_error_t setDoubleClickInterval(unsigned int ms);
@@ -89,6 +92,7 @@ public:
    *
    * @return
    *  - BUTTON_OK: Parameter set successfully.
+   *
    *  - BUTTON_ERR_INVALID_PARAM: Invalid duration value.
    */
   button_handler_error_t setHoldDuration(unsigned int ms);
@@ -100,6 +104,7 @@ public:
    *
    * @return
    *  - BUTTON_OK: Callback attached successfully.
+   *
    *  - BUTTON_ERR_UNINITIALIZED: Button not initialized.
    */
   button_handler_error_t attachSingleClickCallback(ButtonCallback callback);
@@ -111,6 +116,7 @@ public:
    *
    * @return
    *  - BUTTON_OK: Callback attached successfully.
+   *
    *  - BUTTON_ERR_UNINITIALIZED: Button not initialized.
    */
   button_handler_error_t attachDoubleClickCallback(ButtonCallback callback);
@@ -122,6 +128,7 @@ public:
    *
    * @return
    *  - BUTTON_OK: Callback attached successfully.
+   *
    *  - BUTTON_ERR_UNINITIALIZED: Button not initialized.
    */
   button_handler_error_t attachHoldStartCallback(ButtonCallback callback);
@@ -133,6 +140,7 @@ public:
    *
    * @return
    *  - BUTTON_OK: Callback attached successfully.
+   *
    *  - BUTTON_ERR_UNINITIALIZED: Button not initialized.
    */
   button_handler_error_t attachHoldReleaseCallback(ButtonCallback callback);

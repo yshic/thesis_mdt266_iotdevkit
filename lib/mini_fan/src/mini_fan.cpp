@@ -70,17 +70,22 @@ void MiniFan::toggleFan()
 {
   if (isFanRunning())
   {
-    bspGpioDigitalWrite(_pin, LOW);
-    _speed[0] = 0;
-    _speed[1] = 0;
+    bspGpioAnalogWrite(_pin, LOW);
+    status = false;
   }
   else
   {
-    bspGpioDigitalWrite(_pin, HIGH);
-    _speed[0] = 255;
-    _speed[1] = 100;
+    // Restore previous speed or default to maximum if unset
+    int targetSpeed = (_speed[0] > 0) ? _speed[0] : 255;
+    bspGpioAnalogWrite(_pin, targetSpeed);
+    // Update percentage if default speed is used
+    if (_speed[0] == 0)
+    {
+      _speed[0] = 255;
+      _speed[1] = 100;
+    }
+    status = true;
   }
-  status = !status;
 }
 
 bool MiniFan::isFanRunning() { return status; }
