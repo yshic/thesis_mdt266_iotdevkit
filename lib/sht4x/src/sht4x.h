@@ -48,6 +48,10 @@
   #define SHT4x_SOFTRESET                0x94 /**< Soft Reset */
 
 /* Public enumerate/structure ----------------------------------------- */
+
+/**
+ * @brief Enum for SHT4X sensor error codes.
+ */
 typedef enum
 {
   SHT4X_OK = 0,      /* No error */
@@ -84,91 +88,146 @@ typedef enum
 /* Class Declaration -------------------------------------------------- */
 
 /**
- * @brief  Class for interfacing with the SHT4X temperature and humidity sensor.
+ * @brief Manages temperature and humidity measurements using the SHT4X sensor.
  *
- * The SHT4X class provides methods to initialize, configure, and retrieve
- * temperature and humidity data from the SHT4X sensor over an I2C interface.
+ * The `SHT4X` class facilitates interaction with the SHT4X temperature and humidity sensor over an I2C
+ * interface. It supports initializing the sensor, configuring measurement precision and heater settings, and
+ * retrieving temperature and humidity data. The class stores sensor values internally for easy access.
+ *
+ * ### Features:
+ *
+ * - Reads temperature and humidity with configurable precision levels.
+ *
+ * - Supports built-in heater control for various power and duration settings.
+ *
+ * - Verifies data integrity with CRC8 checksum validation.
+ *
+ * - Provides access to the latest temperature and humidity readings.
+ *
+ * - Allows configuration of measurement precision and heater modes.
+ *
+ * ### Usage:
+ *
+ * Instantiate the class and call `begin()` to initialize the sensor. Use `update()` to read temperature and
+ * humidity, then retrieve values with `getTemperature()` and `getHumidity()`. Configure precision with
+ * `setPrecision()` and heater settings with `setHeater()` as needed.
+ *
+ * ### Dependencies:
+ *
+ * - Requires an I2C communication library (`bsp_i2c.h` for `bspI2CExist`, `bspI2CWriteByte`,
+ * `bspI2CReadBytes`).
+ *
+ * - Sensor must be connected to a valid I2C bus at address `SHT40_I2C_ADDR_44` (0x44).
+ *
+ * - Depends on `utility.h` for `crc8` function and `config.h` for configuration settings.
  */
 class SHT4X
 {
 public:
   /**
-   * @brief  Initializes the SHT4X sensor.
+   * @brief Initializes the SHT4X sensor.
    *
-   * This function checks if the SHT4X sensor is available on the I2C bus
-   * and returns an appropriate status.
+   * Checks for the presence of the SHT4X sensor on the I2C bus at address 0x44.
+   *
+   * @param[in] None
+   *
+   * @attention Ensure the sensor is powered and connected to the I2C bus before calling.
    *
    * @return
-   *  - `SHT4X_OK`: Sensor detected and initialized successfully.
+   *  - `SHT4X_OK`: Sensor detected and initialized successfully
    *
-   *  - `SHT4X_ERR_I2C`: Sensor not found or I2C communication error.
+   *  - `SHT4X_ERR_I2C`: Sensor not found or I2C communication error
    */
   sht4x_error_t begin();
 
   /**
-   * @brief  Updates sensor readings from the SHT4X.
+   * @brief Updates temperature and humidity readings from the SHT4X sensor.
    *
-   * This function sends a measurement command to the SHT4X sensor,
-   * waits for the required conversion time, reads the data,
-   * verifies the checksum, and updates temperature and humidity values.
+   * Sends a measurement command based on the configured precision and heater settings, waits for the
+   * conversion time, reads the data, verifies the checksum, and updates internal temperature and humidity
+   * values.
    *
-   * @attention Ensure that the sensor is correctly connected to the I2C bus
-   * and that appropriate delays are provided for accurate readings.
+   * @param[in] None
+   *
+   * @attention Ensure the sensor is initialized with `begin()` and properly connected to the I2C bus.
    *
    * @return
-   *  - `SHT4X_OK`: Measurement successful.
+   *  - `SHT4X_OK`: Measurement successful
    *
-   *  - `SHT4X_ERR_CHECKSUM`: Data corruption detected due to checksum mismatch.
+   *  - `SHT4X_ERR_CHECKSUM`: Checksum mismatch indicating data corruption
    */
   sht4x_error_t update(void);
 
   /**
-   * @brief  Sets the measurement precision of the SHT4X sensor.
+   * @brief Sets the measurement precision of the SHT4X sensor.
    *
-   * This function allows changing the precision level of the sensor's measurements.
+   * Configures the sensor to use high, medium, or low precision for measurements, affecting accuracy and
+   * conversion time.
    *
-   * @param[in]     prec Desired precision setting.
+   * @param[in] prec Desired precision setting (`SHT4X_HIGH_PRECISION`, `SHT4X_MED_PRECISION`, or
+   * `SHT4X_LOW_PRECISION`).
+   *
+   * @attention Changes take effect on the next `update()` call.
    */
   void setPrecision(sht4x_precision_t prec);
 
   /**
-   * @brief  Gets the current measurement precision setting.
+   * @brief Retrieves the current measurement precision setting.
    *
-   * @return The current precision setting of the sensor.
+   * Returns the currently configured precision level of the sensor.
+   *
+   * @param[in] None
+   *
+   * @return sht4x_precision_t The current precision setting.
    */
   sht4x_precision_t getPrecision(void);
 
   /**
-   * @brief  Sets the heater mode of the SHT4X sensor.
+   * @brief Sets the heater mode of the SHT4X sensor.
    *
-   * This function enables or disables the built-in heater and adjusts its power level.
+   * Configures the built-in heater to one of several power levels and durations, or disables it.
    *
-   * @param[in]     heat Desired heater mode.
+   * @param[in] heat Desired heater mode (e.g., `SHT4X_NO_HEATER`, `SHT4X_HIGH_HEATER_1S`).
+   *
+   * @attention Heater settings affect power consumption and measurement duration. Changes take effect on the
+   * next `update()` call.
    */
   void setHeater(sht4x_heater_t heat);
 
   /**
-   * @brief  Gets the current heater mode of the SHT4X sensor.
+   * @brief Retrieves the current heater mode setting.
    *
-   * @return The current heater mode setting.
+   * Returns the currently configured heater mode of the sensor.
+   *
+   * @param[in] None
+   *
+   * @return sht4x_heater_t The current heater mode setting.
    */
   sht4x_heater_t getHeater(void);
 
   /**
-   * @brief  Retrieves the last measured temperature.
+   * @brief Retrieves the last measured temperature.
    *
-   * This function returns the most recently updated temperature reading.
+   * Returns the most recent temperature reading stored internally, in degrees Celsius.
    *
-   * @return The temperature in degrees Celsius.
+   * @param[in] None
+   *
+   * @attention Requires a prior successful call to `update()`.
+   *
+   * @return float The temperature in degrees Celsius.
    */
   float getTemperature();
 
   /**
-   * @brief  Retrieves the last measured humidity.
+   * @brief Retrieves the last measured humidity.
    *
-   * This function returns the most recently updated relative humidity reading.
+   * Returns the most recent relative humidity reading stored internally, constrained to 0–100%.
    *
-   * @return The relative humidity percentage (%RH).
+   * @param[in] None
+   *
+   * @attention Requires a prior successful call to `update()`.
+   *
+   * @return float The relative humidity percentage (%RH).
    */
   float getHumidity();
 

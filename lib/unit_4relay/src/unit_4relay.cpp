@@ -142,17 +142,6 @@ int Unit4Relay::getRelayState(uint8_t number)
   return relayState[number];
 }
 
-void Unit4Relay::setRelayState(bool state[4])
-{
-  for (int i = 0; i < UNIT_4RELAY_MAX_RELAYS; i++)
-  {
-    if (state[i])
-    {
-      relayState[i] = state[i];
-    }
-  }
-}
-
 int Unit4Relay::getLedState(uint8_t number)
 {
   if (number >= UNIT_4RELAY_MAX_RELAYS)
@@ -161,6 +150,35 @@ int Unit4Relay::getLedState(uint8_t number)
   }
 
   return ledState[number];
+}
+
+unit_4relay_error_t Unit4Relay::setRelayStates(bool state[4])
+{
+  for (int i = 0; i < UNIT_4RELAY_MAX_RELAYS; i++)
+  {
+    if (state[i])
+    {
+      relayState[i] = state[i];
+    }
+  }
+  return UNIT_4RELAY_OK;
+}
+
+unit_4relay_error_t Unit4Relay::applyRelayState()
+{
+  uint8_t stateByte = 0;
+  for (int i = 0; i < UNIT_4RELAY_MAX_RELAYS; i++)
+  {
+    if (relayState[i])
+    {
+      stateByte |= (0x01 << i);
+    }
+  }
+  if (bspI2CWriteByte(UNIT_4RELAY_I2C_ADDR, UNIT_4RELAY_RELAY_REG, stateByte) != BSP_I2C_OK)
+  {
+    return UNIT_4RELAY_ERR_I2C;
+  }
+  return UNIT_4RELAY_OK;
 }
 /* Private function prototypes ---------------------------------------- */
 

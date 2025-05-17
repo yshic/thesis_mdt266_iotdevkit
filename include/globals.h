@@ -12,14 +12,16 @@
 #ifndef GLOBALS_H
   #define GLOBALS_H
 
-  /* Private defines ---------------------------------------------------- */
-  // DEBUGGING
-  // #define DEBUG_I2C
-  #define DEBUG_BUTTON_CALLBACK
+/* Private defines ---------------------------------------------------- */
+// DEBUGGING
+// #define DEBUG_I2C
+
   #ifndef DEBUG_PRINT
     #define DEBUG_PRINT
   #endif // DEBUG_PRINT
 
+//  #define DEBUG_PRINT_RTOS_TIMING
+  #define DEBUG_BUTTON_CALLBACK
 // Communication
 /* Wireless   --------------------------------------------------------- */
   #ifdef ESP32
@@ -204,12 +206,6 @@ extern UsbSwitch usbSwitch(D7, D6);
   #include "../src/tasks/sensors_task.h"
   #include "../src/tasks/uart_task.h"
   #include "../src/tasks/wifi_task.h"
-
-  // WiFi credentials
-  #ifndef ENTERPRISE_WIFI
-extern char ssid[32];
-extern char password[32];
-  #endif // ENTERPRISE_WIFI
 
 extern bool wifiConnected;
 

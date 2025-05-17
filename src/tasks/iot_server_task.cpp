@@ -37,7 +37,7 @@
 
 // Firmware Title & Version
 constexpr char CURRENT_FIRMWARE_TITLE[]   = "XIAO_SMART_HOME";
-constexpr char CURRENT_FIRMWARE_VERSION[] = "0.7.0";
+constexpr char CURRENT_FIRMWARE_VERSION[] = "0.8.0";
 
 // Maximum amount of retries we attempt to download each firmware chunck over MQTT
 constexpr uint8_t FIRMWARE_FAILURE_RETRIES = 12U;
@@ -100,7 +100,7 @@ constexpr char RELAY1_STATE_ATTR[] = "relay1State";
 constexpr char RELAY2_STATE_ATTR[] = "relay2State";
 constexpr char RELAY3_STATE_ATTR[] = "relay3State";
 constexpr char RELAY4_STATE_ATTR[] = "relay4State";
-constexpr char DOOR_STATE_ATTR[]   = "doorStatus";
+constexpr char DOOR_STATE_ATTR[]   = "doorState";
 constexpr char CAMERA_STATE_ATTR[] = "cameraStatus";
 
 // Flag to handle devices state and values
@@ -114,8 +114,9 @@ volatile bool cameraStatusChanged = false;
 volatile bool ledState       = false;
 volatile int  fanSpeed       = 0;
 volatile bool relaysState[4] = {false};
-volatile bool doorStatus     = false;
+volatile bool doorState      = false;
 volatile bool cameraStatus   = false;
+volatile bool pirStatus      = false;
 
 // Statuses for updating
 bool currentFWSent = false;
@@ -129,12 +130,12 @@ Shared_Attribute_Update<3U, MAX_ATTRIBUTES>             shared_update;
 const std::array<IAPI_Implementation *, 4U> apis = {&ota, &rpc, &attr_request, &shared_update};
 
 // List of shared attributes for subscribing to their updates
-constexpr std::array<const char *, 9U> SHARED_ATTRIBUTES_LIST = {
-FAN_SPEED_ATTR,    FW_TITLE_ATTR,     FW_VERSION_ATTR, RELAY1_STATE_ATTR, RELAY2_STATE_ATTR,
-RELAY3_STATE_ATTR, RELAY4_STATE_ATTR, DOOR_STATE_ATTR, CAMERA_STATE_ATTR};
+constexpr std::array<const char *, 8U> SHARED_ATTRIBUTES_LIST = {
+FAN_SPEED_ATTR,    FW_TITLE_ATTR,     FW_VERSION_ATTR,   RELAY1_STATE_ATTR,
+RELAY2_STATE_ATTR, RELAY3_STATE_ATTR, RELAY4_STATE_ATTR, CAMERA_STATE_ATTR};
 
 // List of client attributes for requesting them (Using to initialize device states)
-constexpr std::array<const char *, 1U> CLIENT_ATTRIBUTES_LIST = {LED_STATE_ATTR};
+constexpr std::array<const char *, 2U> CLIENT_ATTRIBUTES_LIST = {LED_STATE_ATTR, DOOR_STATE_ATTR};
 
 WiFiClient          wifiClient;
 Arduino_MQTT_Client mqttClient(wifiClient);
@@ -212,7 +213,61 @@ void processSetSwitchState(const JsonVariantConst &data, JsonDocument &response)
   ledStateChanged = true;
 }
 
-const std::array<RPC_Callback, 1U> rpcCallbacks = {RPC_Callback{"setLedValue", processSetSwitchState}};
+void processSetDoorState(const JsonVariantConst &data, JsonDocument &response)
+{
+  doorState = data;
+
+#ifdef DEBUG_PRINT
+  Serial.print("Received set door state RPC. New state: ");
+  Serial.println(doorState);
+#endif // DEBUG_PRINT
+
+  // Extract the value
+  bool doorState = data["state"].as<bool>();
+
+#ifdef DEBUG_PRINT
+  Serial.print("Door state change: ");
+  Serial.println(doorState);
+#endif // DEBUG_PRINT
+
+  StaticJsonDocument<1> response_doc;
+  // Returning current state as response
+  response_doc["newState"] = (int) ledState;
+  response.set(response_doc);
+
+  doorStateChanged = true;
+}
+
+void processResetDevice(const JsonVariantConst &data, JsonDocument &response)
+{
+  Serial.println("Received reset RPC. Restarting device...");
+
+  StaticJsonDocument<32> response_doc;
+  response_doc["status"] = "Device is resetting";
+  response.set(response_doc);
+
+  vTaskDelay(pdMS_TO_TICKS(500)); // Short delay to allow response to be sent
+  esp_restart();                  // Reset the device
+}
+
+void processClearCredentials(const JsonVariantConst &data, JsonDocument &response)
+{
+  Serial.println("Received delete RPC. Deleting credentials...");
+
+  Preferences pref;
+  pref.clearPref("config");
+
+  StaticJsonDocument<32> response_doc;
+  response_doc["status"] = "Credentials are being deleted";
+  response.set(response_doc);
+
+  vTaskDelay(pdMS_TO_TICKS(1000)); // Short delay to allow response to be sent
+  esp_restart();                   // Reset the device
+}
+
+const std::array<RPC_Callback, 4U> rpcCallbacks = {
+RPC_Callback{"setLedValue", processSetSwitchState}, RPC_Callback{"setDoorState", processSetDoorState},
+RPC_Callback{"resetDevice", processResetDevice}, RPC_Callback{"deleteCredentials", processClearCredentials}};
 
 /// @brief Shared attribute update callback
 /// @param data New value of shared attributes which is changed
@@ -296,11 +351,11 @@ void processSharedAttributes(const JsonObjectConst &data)
     }
     else if (strcmp(key, DOOR_STATE_ATTR) == 0)
     {
-      doorStatus       = it->value().as<bool>();
+      doorState        = it->value().as<bool>();
       doorStateChanged = true;
 
 #ifdef DEBUG_PRINT
-      Serial.printf("Door state updated: %d \n", doorStatus);
+      Serial.printf("Door state updated: %d \n", doorState);
 #endif // DEBUG_PRINT
     }
 
@@ -336,6 +391,23 @@ void processClientAttributes(const JsonObjectConst &data)
           break;
       }
     }
+
+    else if (strcmp(it->key().c_str(), DOOR_STATE_ATTR) == 0)
+    {
+      doorState = it->value().as<bool>();
+      if (doorState)
+      {
+        doorServo.setDoorStatus(doorState);
+        doorServo.writePos(180);
+        vTaskDelay(pdMS_TO_TICKS(15));
+      }
+      else
+      {
+        doorServo.setDoorStatus(doorState);
+        doorServo.writePos(0);
+        vTaskDelay(pdMS_TO_TICKS(15));
+      }
+    }
   }
 }
 
@@ -363,30 +435,59 @@ attribute_client_request_callback(&processClientAttributes, REQUEST_TIMEOUT_MICR
 
 void iotServerTask(void *pvParameters)
 {
+  Preferences prefs;
+  if (prefs.begin("config", true))
+  {
+    mqttBroker  = prefs.getString("mqttBroker", "");
+    mqttUser    = prefs.getString("mqttUser", "");
+    mqttPass    = prefs.getString("mqttPass", "");
+    deviceToken = prefs.getString("mqttToken", "");
+    prefs.end();
+  }
+  else
+  {
+#ifdef DEBUG_PRINT
+    Serial.println("Failed to open preferences storage");
+#endif
+    mqttBroker  = "";
+    mqttUser    = "";
+    mqttPass    = "";
+    deviceToken = "";
+  }
+
   for (;;)
   {
     if (WiFi.status() == WL_CONNECTED && !tb.connected())
     {
-#ifdef DEBUG_PRINT
-      Serial.print("Connecting to: ");
-      Serial.print(COREIOT_SERVER);
-      Serial.print(" with token ");
-      Serial.println(TOKEN);
-#endif // DEBUG_PRINT
-
-      if (!tb.connect(COREIOT_SERVER, TOKEN, COREIOT_PORT))
+      if (!deviceToken.isEmpty())
       {
 #ifdef DEBUG_PRINT
-        Serial.println("Failed to connect");
+        Serial.print("Connecting to: ");
+        Serial.print(mqttBroker.c_str());
+        Serial.print(" with token ");
+        Serial.println(deviceToken.c_str());
 #endif // DEBUG_PRINT
-        vTaskDelay(pdMS_TO_TICKS(1000));
-        continue;
+        if (!tb.connect(mqttBroker.c_str(), deviceToken.c_str(), COREIOT_PORT))
+        {
+#ifdef DEBUG_PRINT
+          Serial.println("Failed to connect");
+#endif // DEBUG_PRINT
+          vTaskDelay(pdMS_TO_TICKS(1000));
+          continue;
+        }
+        else
+        {
+#ifdef DEBUG_PRINT
+          Serial.println("Connected to IoT server!");
+#endif // DEBUG_PRINT
+        }
       }
       else
       {
 #ifdef DEBUG_PRINT
-        Serial.println("Connected to IoT server!");
+        Serial.println("Device Token is empty");
 #endif // DEBUG_PRINT
+        continue;
       }
 
       // Send WiFi attributes
@@ -432,7 +533,7 @@ void iotServerTask(void *pvParameters)
       if (!attr_request.Client_Attributes_Request(attribute_client_request_callback))
       {
 #ifdef DEBUG_PRINT
-        Serial.println("Failed to request for client attributes (led state)");
+        Serial.println("Failed to request for client attributes");
 #endif // DEBUG_PRINT
         return;
       }
@@ -614,6 +715,7 @@ void updateDevicesStateTask(void *pvParameters)
 {
   for (;;)
   {
+    HUSKYLENSResult result = huskylens.getResult();
     // Update LED
     if (ledStateChanged)
     {
@@ -633,6 +735,29 @@ void updateDevicesStateTask(void *pvParameters)
       }
       tb.sendAttributeData(LED_STATE_ATTR, ledState);
     }
+
+    // Update Door
+#ifdef SERVO_MODULE
+    if (doorStateChanged)
+    {
+      doorStateChanged = false;
+
+      if (doorState)
+      {
+        doorServo.setDoorStatus(doorState);
+        doorServo.writePos(180);
+        vTaskDelay(pdMS_TO_TICKS(15));
+      }
+      else
+      {
+        doorServo.setDoorStatus(doorState);
+        doorServo.writePos(0);
+        vTaskDelay(pdMS_TO_TICKS(15));
+      }
+
+      tb.sendAttributeData(DOOR_STATE_ATTR, doorState);
+    }
+#endif // SERVO_MODULE
 
 // Update Fan
 #ifdef MINI_FAN_MODULE
@@ -660,27 +785,6 @@ void updateDevicesStateTask(void *pvParameters)
     }
 #endif // UNIT_4_RELAY_MODULE
 
-// Update Door
-#ifdef SERVO_MODULE
-    if (doorStateChanged)
-    {
-      doorStateChanged = false;
-
-      if (doorStatus)
-      {
-        doorServo.setDoorStatus(true);
-        doorServo.writePos(180);
-        vTaskDelay(pdMS_TO_TICKS(15));
-      }
-      else
-      {
-        doorServo.setDoorStatus(false);
-        doorServo.writePos(0);
-        vTaskDelay(pdMS_TO_TICKS(15));
-      }
-    }
-#endif // SERVO_MODULE
-
 #ifdef HUSKYLENS_MODULE
     if (cameraStatusChanged)
     {
@@ -697,6 +801,34 @@ void updateDevicesStateTask(void *pvParameters)
         {
           lcd.setScreenState(LCD_SCREEN_SHT4X);
         }
+      }
+    }
+
+    if (cameraStatus)
+    {
+      if (doorState != doorServo.getDoorStatus())
+      {
+        doorState = doorServo.getDoorStatus();
+        tb.sendAttributeData(DOOR_STATE_ATTR, doorState);
+      }
+    }
+    else
+    {
+      if (pirStatus != pirSensor.getStatus())
+      {
+        pirStatus = pirSensor.getStatus();
+        doorState = pirStatus;
+        if (doorState)
+        {
+          doorServo.setDoorStatus(doorState);
+          doorServo.writePos(180);
+        }
+        else
+        {
+          doorServo.setDoorStatus(doorState);
+          doorServo.writePos(0);
+        }
+        tb.sendAttributeData(DOOR_STATE_ATTR, doorState);
       }
     }
 #endif // HUSKYLENS_MODULE

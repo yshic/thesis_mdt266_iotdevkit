@@ -126,26 +126,262 @@ typedef struct
 /* Public variables --------------------------------------------------- */
 
 /* Class Declaration -------------------------------------------------- */
+
+/**
+ * @brief Manages environmental measurements using the BMP280 sensor, providing access to pressure,
+ * temperature, and altitude data.
+ *
+ * The `BMP280` class facilitates interaction with the BMP280 environmental sensor over I2C. It supports
+ * reading pressure, temperature, and altitude, with calibration and configuration options for sampling,
+ * filtering, and operating modes. The class stores converted sensor values for easy access and provides
+ * utility functions for sea level pressure and water boiling point calculations.
+ *
+ * ### Features:
+ *
+ * - Reads pressure, temperature, and altitude with calibration adjustments.
+ *
+ * - Supports configurable oversampling, filtering, and standby durations.
+ *
+ * - Provides forced measurement mode for precise control.
+ *
+ * - Calculates sea level pressure and water boiling point based on measurements.
+ *
+ * - Stores sensor data in an internal array for retrieval via getter methods.
+ *
+ * ### Usage:
+ *
+ * Instantiate the class and call `begin()` to initialize the sensor. Use `update()` to read all measurements
+ * or individual methods like `readPressure()` for specific data. Getter methods (e.g., `getPressure()`)
+ * provide access to the latest values. Configure sampling settings with `setSampling()` for desired
+ * performance.
+ *
+ * ### Dependencies:
+ *
+ * - Requires I2C communication library (`bspI2C` functions).
+ *
+ * - Sensor must be connected to a valid I2C bus at address `BMP280_I2C_ADDR` (0x76).
+ *
+ * - Calibration coefficients must be read successfully during initialization.
+ */
 class BMP280
 {
 public:
+  /**
+   * @brief Initializes the BMP280 sensor.
+   *
+   * Verifies I2C connectivity, reads calibration coefficients, and sets default sampling parameters.
+   *
+   * @param[in] None
+   *
+   * @attention Ensure the sensor is powered and connected to the I2C bus before calling.
+   *
+   * @return
+   *  - `BMP280_OK`: Success
+   *
+   *  - `BMP280_ERR_I2C`: I2C communication failure
+   */
   bmp280_error_t begin();
+
+  /**
+   * @brief Updates all sensor measurements.
+   *
+   * Reads temperature, pressure, and altitude in sequence, storing results in the internal sensor array.
+   *
+   * @param[in] None
+   *
+   * @attention Requires successful initialization via `begin()`.
+   *
+   * @return
+   *  - `BMP280_OK`: Success
+   */
   bmp280_error_t update();
 
+  /**
+   * @brief Resets the BMP280 sensor.
+   *
+   * Sends a soft reset command to the sensor, restoring it to its power-on state.
+   *
+   * @param[in] None
+   *
+   * @attention Requires successful initialization via `begin()`. May disrupt ongoing measurements.
+   *
+   * @return
+   *  - `BMP280_OK`: Success
+   */
   bmp280_error_t reset(void);
-  uint8_t        getStatus(void);
 
+  /**
+   * @brief Reads the current status of the BMP280 sensor.
+   *
+   * Retrieves the sensor's status register to check measurement and image update status.
+   *
+   * @param[in] None
+   *
+   * @attention Requires successful initialization via `begin()`.
+   *
+   * @return uint8_t The status register value.
+   */
+  uint8_t getStatus(void);
+
+  /**
+   * @brief Reads the pressure from the BMP280 sensor.
+   *
+   * Retrieves raw pressure data, applies calibration coefficients, and stores the result in the internal
+   * sensor array.
+   *
+   * @param[in] None
+   *
+   * @attention Requires temperature to be read first to set the `t_fine` variable. Ensure successful
+   * initialization via `begin()`.
+   *
+   * @return
+   *  - `BMP280_OK`: Success
+   *
+   *  - `BMP280_ERR_DIV_ZERO`: Division by zero error during calculation
+   */
   bmp280_error_t readPressure();
-  bmp280_error_t readTemperature();
-  bmp280_error_t readAltitude();
-  float          getPressure();
-  float          getTemperature();
-  float          getAltitude();
-  float          seaLevelForAltitude(float altitude, float atmospheric);
-  void           setSeaLevelPressure(float pressure);
-  float          waterBoilingPoint(float pressure);
-  bool           takeForcedMeasurement();
 
+  /**
+   * @brief Reads the temperature from the BMP280 sensor.
+   *
+   * Retrieves raw temperature data, applies calibration coefficients, and stores the result in the internal
+   * sensor array.
+   *
+   * @param[in] None
+   *
+   * @attention Requires successful initialization via `begin()`.
+   *
+   * @return
+   *  - `BMP280_OK`: Success
+   */
+  bmp280_error_t readTemperature();
+
+  /**
+   * @brief Calculates the altitude based on pressure data.
+   *
+   * Uses the current pressure and sea level pressure to compute altitude, storing the result in the internal
+   * sensor array.
+   *
+   * @param[in] None
+   *
+   * @attention Requires a prior call to `readPressure()` and valid sea level pressure.
+   *
+   * @return
+   *  - `BMP280_OK`: Success
+   */
+  bmp280_error_t readAltitude();
+
+  /**
+   * @brief Retrieves the pressure value.
+   *
+   * Returns the previously read pressure value stored in the internal sensor array, in Pascals.
+   *
+   * @param[in] None
+   *
+   * @attention Requires a prior successful call to `readPressure()` or `update()`.
+   *
+   * @return float The pressure value in Pascals.
+   */
+  float getPressure();
+
+  /**
+   * @brief Retrieves the temperature value.
+   *
+   * Returns the previously read temperature value stored in the internal sensor array, in degrees Celsius.
+   *
+   * @param[in] None
+   *
+   * @attention Requires a prior successful call to `readTemperature()` or `update()`.
+   *
+   * @return float The temperature value in °C.
+   */
+  float getTemperature();
+
+  /**
+   * @brief Retrieves the altitude value.
+   *
+   * Returns the previously calculated altitude value stored in the internal sensor array, in meters.
+   *
+   * @param[in] None
+   *
+   * @attention Requires a prior successful call to `readAltitude()` or `update()`.
+   *
+   * @return float The altitude value in meters.
+   */
+  float getAltitude();
+
+  /**
+   * @brief Calculates sea level pressure for a given altitude and atmospheric pressure.
+   *
+   * Computes the equivalent sea level pressure based on the provided altitude and measured atmospheric
+   * pressure.
+   *
+   * @param[in] altitude The altitude in meters.
+   * @param[in] atmospheric The measured atmospheric pressure in Pascals.
+   *
+   * @attention The provided values should be valid and within reasonable ranges.
+   *
+   * @return float The calculated sea level pressure in hPa.
+   */
+  float seaLevelForAltitude(float altitude, float atmospheric);
+
+  /**
+   * @brief Sets the sea level pressure for altitude calculations.
+   *
+   * Updates the internal sea level pressure value used for altitude computations.
+   *
+   * @param[in] pressure The sea level pressure in hPa.
+   *
+   * @attention The provided pressure should be a valid value (typically around 1013.25 hPa).
+   */
+  void setSeaLevelPressure(float pressure);
+
+  /**
+   * @brief Calculates the water boiling point based on pressure.
+   *
+   * Computes the boiling point of water at the given atmospheric pressure using a logarithmic formula.
+   *
+   * @param[in] pressure The atmospheric pressure in hPa.
+   *
+   * @attention The pressure value should be valid and positive to avoid mathematical errors.
+   *
+   * @return float The boiling point temperature in °C.
+   */
+  float waterBoilingPoint(float pressure);
+
+  /**
+   * @brief Triggers a forced measurement.
+   *
+   * Initiates a single measurement in forced mode and waits for completion.
+   *
+   * @param[in] None
+   *
+   * @attention Only works if the sensor is in forced mode (`MODE_FORCED`). Requires successful initialization
+   * via `begin()`.
+   *
+   * @return
+   *  - `true`: Measurement completed successfully
+   *
+   *  - `false`: Sensor not in forced mode
+   */
+  bool takeForcedMeasurement();
+
+  /**
+   * @brief Configures the sensor’s sampling and operating parameters.
+   *
+   * Sets the operating mode, temperature and pressure oversampling, filter settings, and standby duration.
+   *
+   * @param[in] mode Operating mode (default: `MODE_NORMAL`).
+   * @param[in] tempSampling Temperature oversampling (default: `SAMPLING_X16`).
+   * @param[in] pressSampling Pressure oversampling (default: `SAMPLING_X16`).
+   * @param[in] filter Filter setting (default: `FILTER_OFF`).
+   * @param[in] duration Standby duration in normal mode (default: `STANDBY_MS_1`).
+   *
+   * @attention Requires successful initialization via `begin()`.
+   *
+   * @return
+   *  - `BMP280_OK`: Success
+   */
   bmp280_error_t setSampling(bmp280_mode_t mode = MODE_NORMAL, bmp280_sampling_t tempSampling = SAMPLING_X16,
                              bmp280_sampling_t         pressSampling = SAMPLING_X16,
                              bmp280_filter_t           filter        = FILTER_OFF,

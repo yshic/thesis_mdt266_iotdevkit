@@ -31,6 +31,10 @@
   #define MM_INDEX               1
   #define IN_INDEX               2
 /* Public enumerate/structure ----------------------------------------- */
+
+/**
+ * @brief Enum for ultrasonic sensor error codes.
+ */
 typedef enum
 {
   ULTRASONIC_OK,        /* No error */
@@ -46,10 +50,37 @@ typedef enum
 /* Class Declaration -------------------------------------------------- */
 
 /**
- * @brief Ultrasonic sensor class for measuring distances.
+ * @brief Manages distance measurements using an ultrasonic sensor.
  *
- * This class provides functionality to interact with an ultrasonic sensor, measure the time duration of
- * the echo signal, and calculate distances in different units.
+ * The `Ultrasonic` class provides functionality for measuring distances with an ultrasonic sensor connected
+ * to an Arduino via trigger and echo pins. It supports calculating the echo pulse duration and converting it
+ * to distances in centimeters, millimeters, or inches, with configurable timeout settings.
+ *
+ * ### Features:
+ *
+ * - Measures echo pulse duration for distance calculations.
+ *
+ * - Converts pulse duration to distances in multiple units (cm, mm, inches).
+ *
+ * - Supports configurable timeout for pulse measurements.
+ *
+ * - Stores distance values internally for retrieval.
+ *
+ * - Handles invalid unit inputs gracefully.
+ *
+ * ### Usage:
+ *
+ * Instantiate the class with the appropriate trigger and echo pins and an optional timeout value. Call
+ * `read()` to measure and store the distance in the desired unit, then use `getDistance()` to retrieve the
+ * value. Adjust the timeout with `setTimeout()` if needed for longer or shorter ranges.
+ *
+ * ### Dependencies:
+ *
+ * - Requires an Arduino-compatible board with digital I/O support.
+ *
+ * - Sensor must be connected to valid digital pins (trigger as output, echo as input).
+ *
+ * - Depends on `bsp_gpio.h` for GPIO operations (`bspGpioPinMode`, `bspGpioDigitalWrite`, `bspGpioPulseIn`).
  */
 class Ultrasonic
 {
@@ -89,8 +120,6 @@ public:
    * @param[in]     _triggerPin  The pin number connected to the trigger pin of the ultrasonic sensor.
    * @param[in]     _echoPin     The pin number connected to the echo pin of the ultrasonic sensor.
    * @param[in]     timeOut      The timeout value for the pulse measurement in microseconds.
-   * @param[out]    None
-   * @param[inout]  None
    *
    * @attention  Ensure that the pin numbers passed are correctly connected to the ultrasonic sensor.
    *             The timeout should be set according to the maximum expected distance measurement, default is
@@ -109,8 +138,6 @@ public:
    *                      - 'c': Centimeters
    *                      - 'm': Millimeters
    *                      - 'i': Inches
-   * @param[out]    None
-   * @param[inout]  None
    *
    * @attention  Ensure that the ultrasonic sensor is properly connected and functioning.
    *
@@ -130,8 +157,6 @@ public:
    * maximum duration the sensor will wait for the echo signal before timing out.
    *
    * @param[in]     timeOut  The timeout value in microseconds to be set.
-   * @param[out]    None
-   * @param[inout]  None
    *
    * @attention  Ensure that the timeout value is appropriate for the maximum distance you expect to measure.
    *             Setting a very high timeout value can cause delays in the sensor's responsiveness.

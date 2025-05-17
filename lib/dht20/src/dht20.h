@@ -30,7 +30,7 @@
 /* Public enumerate/structure ----------------------------------------- */
 typedef enum
 {
-  DHT20_OK = 0x1000,  /* No error */
+  DHT20_OK = 0,       /* No error */
   DHT20_ERR,          /* Generic error */
   DHT20_ERR_INIT,     /* Initialization error */
   DHT20_ERR_RESET,    /* Reset error */
@@ -43,6 +43,35 @@ typedef enum
 /* Public variables --------------------------------------------------- */
 
 /* Class Declaration -------------------------------------------------- */
+
+/**
+ * @brief Manages communication with the DHT20 temperature and humidity sensor.
+ *
+ * The `DHT20` class provides an interface for interacting with the DHT20 sensor using I2C communication.
+ * It allows users to initialize the sensor, read temperature and humidity data, and handle sensor status.
+ *
+ * ### Features:
+ *
+ * - Initialization and status management.
+ *
+ * - Reading humidity and temperature values.
+ *
+ * - Handling errors related to sensor communication.
+ *
+ * - Provides retry mechanisms for stable sensor interaction.
+ *
+ * ### Usage:
+ *
+ * The class should be instantiated, followed by calling `begin()` to initialize the sensor.
+ * Temperature and humidity data can be retrieved using `readTempAndHumidity()`, `getTemperature()`,
+ * and `getHumidity()`. The class also includes internal mechanisms to manage sensor resets and diagnostics.
+ *
+ * ### Dependencies:
+ *
+ * - Requires I2C communication for data retrieval.
+ *
+ * - Ensure correct wiring for stable operation.
+ */
 class DHT20
 {
 public:

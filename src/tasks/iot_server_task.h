@@ -37,6 +37,8 @@ void thingsboardLoopTask(void *pvParameters);
 
 void iotServerSetup();
 
+void updateDevicesStateTask(void *pvParameters);
+
 #endif // IOT_SERVER_TASK_H
 
 /* End of file -------------------------------------------------------- */

@@ -43,4 +43,5 @@ constexpr uint8_t HD44780_4_BIT_MODE{0b00000000};
 constexpr int HD44780_SET_CGRAM_ADDR{0b01000000};
 constexpr int HD44780_SET_DDRRAM_ADDR{0b10000000};
 
+
 #endif

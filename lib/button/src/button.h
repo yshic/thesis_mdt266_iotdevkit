@@ -14,6 +14,36 @@ typedef enum
 // Callback function type
 typedef void (*ButtonCallback)(void);
 
+/**
+ * @brief Manages button presses, handling debouncing, click detection, and hold events.
+ *
+ * The `ButtonHandler` class provides functionality for processing button interactions,
+ * including single-click, double-click, and hold events. It utilizes a finite state machine (FSM)
+ * to ensure reliable event detection, minimizing issues related to button bouncing.
+ *
+ * ### Features:
+ *
+ * - Configurable debounce duration for stable input.
+ *
+ * - Detection of single-click, double-click, and hold events.
+ *
+ * - Support for callback functions triggered by button events.
+ *
+ * - Internal state tracking for efficient processing.
+ *
+ * ### Usage:
+ *
+ * After instantiating the class, users should call the `update()` method periodically to process
+ * button states. Callback functions can be attached for various button events to respond dynamically.
+ *
+ * ### Dependencies:
+ *
+ * - Requires connection to a digital input pin.
+ *
+ * - Optional internal pull-up resistor activation.
+ *
+ * - Callbacks should be defined before use.
+ */
 class ButtonHandler
 {
 public:
@@ -26,6 +56,7 @@ public:
    *
    * @return
    *  - BUTTON_OK: Initialization successful.
+   *
    *  - BUTTON_ERR_INVALID_PARAM: Invalid pin number.
    */
   ButtonHandler(int pin, bool isActiveLow = true, bool usePullup = true);
@@ -37,6 +68,7 @@ public:
    *
    * @return
    *  - BUTTON_OK: Parameter set successfully.
+   *
    *  - BUTTON_ERR_INVALID_PARAM: Invalid duration value.
    */
   button_handler_error_t setDebounceDuration(unsigned int ms);
@@ -48,6 +80,7 @@ public:
    *
    * @return
    *  - BUTTON_OK: Parameter set successfully.
+   *
    *  - BUTTON_ERR_INVALID_PARAM: Invalid duration value.
    */
   button_handler_error_t setDoubleClickInterval(unsigned int ms);
@@ -59,6 +92,7 @@ public:
    *
    * @return
    *  - BUTTON_OK: Parameter set successfully.
+   *
    *  - BUTTON_ERR_INVALID_PARAM: Invalid duration value.
    */
   button_handler_error_t setHoldDuration(unsigned int ms);
@@ -70,6 +104,7 @@ public:
    *
    * @return
    *  - BUTTON_OK: Callback attached successfully.
+   *
    *  - BUTTON_ERR_UNINITIALIZED: Button not initialized.
    */
   button_handler_error_t attachSingleClickCallback(ButtonCallback callback);
@@ -81,6 +116,7 @@ public:
    *
    * @return
    *  - BUTTON_OK: Callback attached successfully.
+   *
    *  - BUTTON_ERR_UNINITIALIZED: Button not initialized.
    */
   button_handler_error_t attachDoubleClickCallback(ButtonCallback callback);
@@ -92,6 +128,7 @@ public:
    *
    * @return
    *  - BUTTON_OK: Callback attached successfully.
+   *
    *  - BUTTON_ERR_UNINITIALIZED: Button not initialized.
    */
   button_handler_error_t attachHoldStartCallback(ButtonCallback callback);
@@ -103,6 +140,7 @@ public:
    *
    * @return
    *  - BUTTON_OK: Callback attached successfully.
+   *
    *  - BUTTON_ERR_UNINITIALIZED: Button not initialized.
    */
   button_handler_error_t attachHoldReleaseCallback(ButtonCallback callback);

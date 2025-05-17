@@ -485,11 +485,15 @@ void LCD_I2C::updateScreenState(bool increment)
   if (increment)
   {
     lcdScreenState = (lcd_screen_state_t) ((lcdScreenState + 1) % LCD_SCREEN_COUNT);
+#ifdef DEBUG_PRINT_SCREEN_STATE
     Serial.println(lcdScreenState);
+#endif // DEBUG_PRINT_SCREEN_STATE
   }
   else
   {
     lcdScreenState = (lcd_screen_state_t) ((lcdScreenState - 1 + LCD_SCREEN_COUNT) % LCD_SCREEN_COUNT);
+#ifdef DEBUG_PRINT_SCREEN_STATE
     Serial.println(lcdScreenState);
+#endif // DEBUG_PRINT_SCREEN_STATE
   }
 }

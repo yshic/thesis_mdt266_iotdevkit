@@ -68,9 +68,4 @@ UsbSwitch usbSwitch(USB_SWITCH_PIN_1, USB_SWITCH_PIN_2);
 ButtonHandler button(BUTTON_PIN, false, true);
 #endif
 
-#ifndef ENTERPRISE_WIFI
-char ssid[32]     = "";
-char password[32] = "";
-#endif // ENTERPRISE_WIFI
-
 bool wifiConnected = false;
