@@ -31,93 +31,131 @@
 /* Class Declaration -------------------------------------------------- */
 
 /**
- * @brief  USB Switch control class for managing devices operations.
+ * @brief Manages a USB switch module with two PWM-controlled outputs.
  *
- * This class provides methods to control a usb switch module, including setting the output value for each
- * output, the usb switch module has two output available: USB_OUTPUT1 and USB_OUTPUT2 toggling the output
- * state, checking the status of the output, and setting the output value as a percentage.
+ * The `UsbSwitch` class provides functionality for controlling a USB switch module with two outputs
+ * (USB_OUTPUT1 and USB_OUTPUT2) via PWM-capable pins. It supports setting output values as PWM or percentage,
+ * toggling output states, and retrieving current values and statuses. The class maintains internal state for
+ * both outputs.
  *
- * @attention
- * - If using the grove connector, the yellow wire will control USB_OUTPUT1 and the white wire will control
- * USB_OUTPUT2.
+ * ### Features:
+ *
+ * - Controls two USB outputs with PWM values (0–255).
+ *
+ * - Sets and retrieves output values as percentages (0–100%).
+ *
+ * - Toggles outputs between ON (full PWM) and OFF states.
+ *
+ * - Tracks the ON/OFF status of each output.
+ *
+ * - Supports simultaneous control of both outputs.
+ *
+ * ### Usage:
+ *
+ * Instantiate the class with two PWM-capable pins for USB_OUTPUT1 and USB_OUTPUT2. Use `setOutputValue()` or
+ * `setOutputValuePercentage()` to control output levels, `toggleOutput()` to switch states, and
+ * `getStatus()`, `getOutputValue()`, or `getOutputValuePercentage()` to monitor outputs. Specify output
+ * number (1, 2, or 0 for both) in method calls.
+ *
+ * ### Dependencies:
+ *
+ * - Requires an Arduino-compatible board with PWM support.
+ *
+ * - Outputs must be connected to valid PWM-capable pins (yellow wire for USB_OUTPUT1, white wire for
+ * USB_OUTPUT2 if using Grove connector).
+ *
+ * - Depends on `bsp_gpio.h` for GPIO operations (`bspGpioPinMode`, `bspGpioAnalogWrite`,
+ * `bspGpioAnalogRead`).
  */
 class UsbSwitch
 {
 public:
   /**
-   * @brief  Initializes the USB Switch Module with specified pins.
+   * @brief Constructor to initialize the USB Switch module with specified pins.
    *
-   * @param[in]  pin1  The pin first pin will control USB_OUTPUT1.
-   * @param[in]  pin2  The second pin will ocntrol USB_OUTPUT2.
+   * Configures the provided pins as PWM outputs for controlling USB_OUTPUT1 and USB_OUTPUT2, initializing
+   * both outputs to OFF.
    *
+   * @param[in] pin1 The pin controlling USB_OUTPUT1 (yellow wire if using Grove connector).
+   * @param[in] pin2 The pin controlling USB_OUTPUT2 (white wire if using Grove connector).
+   *
+   * @attention Ensure the pins are PWM-capable and correctly connected to the module.
    */
   UsbSwitch(uint8_t pin1, uint8_t pin2);
 
   /**
-   * @brief  Sets the output value using a PWM value.
+   * @brief Sets the output value using a PWM value.
    *
-   * This function sets the value of the output by writing a PWM value to the control pin.
+   * Writes a PWM value to the specified output(s), updating the internal status based on whether the value is
+   * non-zero.
    *
-   * @param[in] outputNo  The number of the output (1 or 2, 0 for both)
-   * @param[in] value     The output analog value (0-255).
+   * @param[in] outputNo The output to control (1 for USB_OUTPUT1, 2 for USB_OUTPUT2, 0 for both).
+   * @param[in] value The PWM value (0–255).
+   *
+   * @attention Ensure the value is within 0–255 and the output number is valid (0, 1, or 2).
    */
   void setOutputValue(uint8_t outputNo, int value);
 
   /**
-   * @brief  Sets the output value as a percentage.
+   * @brief Sets the output value as a percentage.
    *
-   * This function sets the output value by converting a percentage value to a PWM value and writing it to
-   * the specified control pin.
+   * Converts a percentage to a PWM value and applies it to the specified output(s), updating the internal
+   * status.
    *
-   * @param[in]  outputNo    The output to be used (1 or 2, 0 for both)
-   * @param[in]  percentage  The output value as a percentage (0-100%).
+   * @param[in] outputNo The output to control (1 for USB_OUTPUT1, 2 for USB_OUTPUT2, 0 for both).
+   * @param[in] percentage The output value as a percentage (0–100%).
    *
-   * @attention
-   * - Testing with the pumping motor shows that the motor won't run with percentage value < 59
-   *
+   * @attention For some devices (e.g., pumping motors), a percentage below 59% may not activate the device.
    */
   void setOutputValuePercentage(uint8_t outputNo, int percentage);
 
   /**
-   * @brief  Gets the current output value.
+   * @brief Retrieves the current output value.
    *
-   * This function returns the current output value as a PWM value.
+   * Reads the current PWM value of the specified output from the pin.
    *
-   * @param[in]  outputNo   The specified output to get the value from.
+   * @param[in] outputNo The output to query (1 for USB_OUTPUT1, 2 for USB_OUTPUT2).
    *
-   * @return  int  The current output value (0-255).
+   * @attention Ensure the output number is valid (1 or 2).
+   *
+   * @return int The current PWM value (0–255), or 0 if an invalid output is specified.
    */
   int getOutputValue(uint8_t outputNo);
 
   /**
-   * @brief  Gets the current output value as a percentage.
+   * @brief Retrieves the current output value as a percentage.
    *
-   * This function returns the current output value, converted from the PWM value to a percentage
-   * (0-100%).
+   * Converts the current PWM value of the specified output to a percentage.
    *
-   * @param[in]  outputNo   The specified output to get the value from.
-
+   * @param[in] outputNo The output to query (1 for USB_OUTPUT1, 2 for USB_OUTPUT2).
    *
-   * @return  int  The current output value as a percentage (0-100%).
+   * @attention Ensure the output number is valid (1 or 2).
+   *
+   * @return int The current output value as a percentage (0–100%), or 0 if an invalid output is specified.
    */
   int getOutputValuePercentage(uint8_t outputNo);
 
   /**
-   * @brief  Toggles the output state between ON and OFF.
+   * @brief Toggles the output state between ON and OFF.
    *
-   * This function toggles the state of the output. If the output is currently ON, it will be turned OFF, and
-   * vice versa.
+   * Switches the specified output(s) between ON (PWM 255) and OFF (PWM 0), updating the internal status.
    *
-   * @param[in]   outputNo    The output to be toggled (1 or 2, 0 for both)
+   * @param[in] outputNo The output to toggle (1 for USB_OUTPUT1, 2 for USB_OUTPUT2, 0 for both).
+   *
+   * @attention Ensure the output number is valid (0, 1, or 2).
    */
   void toggleOutput(uint8_t outputNo);
 
   /**
-   * @brief  Checks if the status of the output is currently ON.
+   * @brief Checks the current status of the output.
    *
-   * @param[in]   outputNo   The output to get the status from.
+   * Returns whether the specified output is currently ON (non-zero PWM) or OFF.
    *
-   * @return  true if the output is ON, false otherwise.
+   * @param[in] outputNo The output to check (1 for USB_OUTPUT1, 2 for USB_OUTPUT2).
+   *
+   * @attention Ensure the output number is valid (1 or 2).
+   *
+   * @return bool `true` if the output is ON, `false` otherwise or if an invalid output is specified.
    */
   bool getStatus(uint8_t outputNo);
 

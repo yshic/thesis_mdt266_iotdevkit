@@ -36,7 +36,39 @@
 /* Public function prototypes ----------------------------------------- */
 
 /**
- * @brief  Scan for I2C devices and print the addresses to Serial.
+ * @brief Scans the I2C bus for connected devices.
+ *
+ * The `scanI2CDevices` function probes the I2C bus for devices by attempting communication with addresses
+ * from 1 to 126. It reports detected devices and errors via the Serial interface, providing a summary of the
+ * scan results. The function is designed for debugging and identifying I2C device addresses on an
+ * Arduino-compatible board.
+ *
+ * ### Features:
+ *
+ * - Scans I2C addresses 1 through 126 for responsive devices.
+ *
+ * - Reports detected devices with their hexadecimal addresses.
+ *
+ * - Identifies unknown errors during communication attempts.
+ *
+ * - Summarizes the number of devices found or indicates if none are detected.
+ *
+ * - Includes a delay to allow periodic scanning without overwhelming the Serial output.
+ *
+ * ### Usage:
+ *
+ * Call `scanI2CDevices()` to initiate an I2C bus scan. Ensure the Serial interface is initialized (e.g., with
+ * `Serial.begin(9600)`) and the I2C bus is configured (e.g., with `Wire.begin()`) before calling. The
+ * function outputs results to the Serial monitor and pauses for 2 seconds before completing, suitable for
+ * repeated calls in a loop.
+ *
+ * ### Dependencies:
+ *
+ * - Requires an Arduino-compatible board with I2C support.
+ *
+ * - Depends on the `Wire` library for I2C communication (`Wire.beginTransmission`, `Wire.endTransmission`).
+ *
+ * - Requires the `Serial` interface for output (`Serial.print`, `Serial.println`).
  */
 void scanI2CDevices(void);
 

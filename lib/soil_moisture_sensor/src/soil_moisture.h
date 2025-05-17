@@ -29,81 +29,157 @@
 /* Public variables --------------------------------------------------- */
 
 /* Class Declaration -------------------------------------------------- */
+
+/**
+ * @brief Manages soil moisture measurements using an analog soil moisture sensor.
+ *
+ * The `SoilMoisture` class provides functionality for reading and processing soil moisture data from an
+ * analog sensor connected to an Arduino pin. It supports raw analog readings, mapped values, threshold
+ * detection, averaging, and callback triggering for threshold events.
+ *
+ * ### Features:
+ *
+ * - Reads raw analog soil moisture values with 10-bit resolution.
+ *
+ * - Maps raw values to a user-defined range (e.g., 0–100).
+ *
+ * - Detects if soil moisture exceeds a specified threshold.
+ *
+ * - Computes average readings over multiple samples.
+ *
+ * - Supports callback functions for threshold-crossing events.
+ *
+ * ### Usage:
+ *
+ * Instantiate the class with the appropriate analog pin. Call `read()` to retrieve raw sensor data or
+ * `readAndMap()` for scaled values. Use `isAboveThreshold()` for conditional checks, `getAverageReading()`
+ * for smoothed data, or `onThresholdCross()` to set up event-driven callbacks. Regularly call `read()` to
+ * update sensor values.
+ *
+ * ### Dependencies:
+ *
+ * - Requires an Arduino-compatible board with analog input support (10-bit ADC).
+ *
+ * - Sensor must be connected to a valid analog pin.
+ *
+ * - Depends on `bsp_gpio.h` for GPIO operations (`bspGpioAnalogRead`).
+ *
+ * - Callback functions must be defined before use with `onThresholdCross()`.
+ */
 class SoilMoisture
 {
 public:
   /**
-   * @brief  init the Soil Moisture Sensor with a specified pin
+   * @brief Constructor to initialize the SoilMoisture sensor with a specified pin.
+   *
+   * Configures the SoilMoisture sensor to use the provided analog pin for reading moisture levels.
+   *
+   * @param[in] pin The analog pin connected to the soil moisture sensor.
+   *
+   * @attention Ensure the pin is a valid analog input pin on the microcontroller.
    */
   SoilMoisture(int pin);
 
   /**
-   * @brief  Read the analog value from the sensor using the arduino function analogRead
+   * @brief Reads the analog value from the soil moisture sensor.
    *
-   * @param[in]  void
+   * Uses the `bspGpioAnalogRead` function to retrieve the raw 10-bit analog value (0–1023) from the sensor
+   * and computes a percentage value (0–100), storing both internally.
    *
-   * @return     uint32_t            The analog value read from the sensor.
+   * @param[in] None
    *
+   * @attention Ensure the sensor is properly connected to the specified pin.
    */
   void read();
 
   /**
-   * @brief Read the sensor and map its raw analog values to a range (e.g., 0-100).
+   * @brief Reads and maps the sensor value to a specified range.
    *
-   * @param[in]   minValue      Minimum value of the range
-   * @param[in]   maxValue      Maximum value of the range
+   * Reads the raw analog value from the sensor and maps it to a user-defined range (e.g., 0–100) using linear
+   * scaling.
    *
-   * @return      uint32_t           The calibrated sensor value mapped to a range of minValue to maxValue.
+   * @param[in] minValue Minimum value of the output range.
+   * @param[in] maxValue Maximum value of the output range.
+   *
+   * @attention Ensure `minValue` is less than `maxValue` and the sensor is connected.
+   *
+   * @return uint32_t The mapped sensor value within the specified range.
    */
   uint32_t readAndMap(int minValue, int maxValue);
 
   /**
-   * @brief Check if the moisture level is above or below a threshold.
+   * @brief Checks if the soil moisture level exceeds a threshold.
    *
-   * @param[in] threshold   Threshold value for moisture.
+   * Compares the current raw sensor value against a specified threshold to determine if the moisture level is
+   * above it.
    *
-   * @return bool           True if moisture is above the threshold, false otherwise.
+   * @param[in] threshold The threshold value for soil moisture (0–1023).
+   *
+   * @attention Requires a prior call to `read()` to update the sensor value.
+   *
+   * @return bool `true` if the moisture level is above the threshold, `false` otherwise.
    */
   bool isAboveThreshold(int threshold);
 
   /**
-   * @brief Get the analog sensor value
+   * @brief Retrieves the raw analog soil moisture value.
    *
-   * @param[in]   None
+   * Returns the most recent raw 10-bit analog value (0–1023) read from the sensor.
    *
-   * @return      int           The analog sensor value
+   * @param[in] None
+   *
+   * @attention Requires a prior successful call to `read()`.
+   *
+   * @return int The raw analog sensor value.
    */
   int getMoisture();
 
   /**
-   * @brief Get the percentage sensor value from the analog value
+   * @brief Retrieves the soil moisture as a percentage.
    *
-   * @param[in]   None
+   * Returns the internally stored percentage value (0–100) computed from the raw analog sensor value.
    *
-   * @return      int           The percentage value
+   * @param[in] None
+   *
+   * @attention Requires a prior successful call to `read()`.
+   *
+   * @return int The soil moisture as a percentage.
    */
   int getMoisturePercentage();
 
   /**
-   * @brief Get the average sensor reading over a specified number of samples.
+   * @brief Computes the average sensor reading over multiple samples.
    *
-   * @param[in] samples   Number of samples to average.
+   * Takes multiple readings from the sensor with a 10ms delay between each and returns their average to
+   * reduce noise.
    *
-   * @return int          The averaged sensor value.
+   * @param[in] samples Number of samples to average (default: 10).
+   *
+   * @attention Ensure the sensor is connected and `samples` is a positive integer.
+   *
+   * @return int The averaged raw sensor value.
    */
   int getAverageReading(int samples = 10);
 
   /**
-   * @brief Set a callback function to trigger when moisture crosses a threshold.
+   * @brief Sets a callback function for threshold-crossing events.
    *
-   * @param[in] threshold Threshold for triggering the callback.
-   * @param[in] callback  Function to call when threshold is crossed.
+   * Configures a callback function to be triggered when the soil moisture level crosses the specified
+   * threshold, invoking the callback if the threshold is currently exceeded.
+   *
+   * @param[in] threshold The threshold value for triggering the callback (0–1023).
+   * @param[in] callback The function to call when the threshold is crossed.
+   *
+   * @attention The callback function must be defined, have no parameters, and no return value. Requires a
+   * prior call to `read()` for accurate threshold detection.
    */
   void onThresholdCross(int threshold, void (*callback)());
 
 private:
   int      _pin;                 /** SIG pin of the Soil Moisture Sensor */
   uint32_t sensorValue[2];       /** Value from the sensor */
+                                 // Index 0 : Raw analog value
+                                 // Index 1 : Percentage value
   void (*_callback)() = nullptr; /** Callback function */
 };
 

@@ -28,13 +28,17 @@
 
   #define UNIT_4RELAY_MAX_RELAYS  4
 /* Public enumerate/structure ----------------------------------------- */
+
+/**
+ * @brief Enum for Unit 4-Relay module error codes.
+ */
 typedef enum
 {
-  UNIT_4RELAY_OK = 0x2010, /* No error */
-  UNIT_4RELAY_ERR,         /* Generic error */
-  UNIT_4RELAY_ERR_INIT,    /* Initialization error */
-  UNIT_4RELAY_ERR_INDEX,   /* Index error */
-  UNIT_4RELAY_ERR_I2C,     /* I2C error */
+  UNIT_4RELAY_OK = 0,    /* No error */
+  UNIT_4RELAY_ERR,       /* Generic error */
+  UNIT_4RELAY_ERR_INIT,  /* Initialization error */
+  UNIT_4RELAY_ERR_INDEX, /* Index error */
+  UNIT_4RELAY_ERR_I2C,   /* I2C error */
 } unit_4relay_error_t;
 
 /* Public macros ------------------------------------------------------ */
@@ -42,126 +46,220 @@ typedef enum
 /* Public variables --------------------------------------------------- */
 
 /* Class Declaration -------------------------------------------------- */
+
+/**
+ * @brief Manages a 4-relay module with I2C interface for relay and LED control.
+ *
+ * The `Unit4Relay` class provides functionality for controlling a 4-relay module over I2C, including
+ * initializing the module, setting relay and LED states individually or collectively, switching operating
+ * modes (synchronous/asynchronous), and retrieving relay and LED states. It maintains internal state arrays
+ * for relays and LEDs.
+ *
+ * ### Features:
+ *
+ * - Controls up to four relays with ON/OFF states.
+ *
+ * - Manages indicator LEDs corresponding to each relay.
+ *
+ * - Supports synchronous and asynchronous operating modes.
+ *
+ * - Provides individual and collective control for relays and LEDs.
+ *
+ * - Retrieves current relay and LED states with error handling.
+ *
+ * ### Usage:
+ *
+ * Instantiate the class and call `begin()` to verify I2C connectivity, followed by `init()` to set the
+ * operating mode and reset relays. Use `relayWrite()` or `relayAll()` to control relays, `ledWrite()` or
+ * `ledAll()` for LEDs, and `switchMode()` to change modes. Retrieve states with `getRelayState()` or
+ * `getLedState()`. Use `setRelayState()` to stage relay states without immediate I2C writes.
+ *
+ * ### Dependencies:
+ *
+ * - Requires an Arduino-compatible board with I2C support.
+ *
+ * - Module must be connected to the I2C bus at address `UNIT_4RELAY_I2C_ADDR` (0x26).
+ *
+ * - Depends on `bsp_i2c.h` for I2C operations (`bspI2CExist`, `bspI2CWriteByte`, `bspI2CReadByte`).
+ */
 class Unit4Relay
 {
 public:
   /**
-   * @brief  Initializes the Unit 4-Relay module.
+   * @brief Initializes the Unit 4-Relay module.
    *
-   * This function checks if the device is available on the I2C bus.
+   * Checks for the presence of the module on the I2C bus at address 0x26.
+   *
+   * @param[in] None
+   *
+   * @attention Ensure the module is powered and connected to the I2C bus before calling.
    *
    * @return
-   *  - `UNIT_4RELAY_OK (8208)`: Device detected and ready.
+   *  - `UNIT_4RELAY_OK`: Module detected and ready
    *
-   *  - `UNIT_4RELAY_ERR_I2C (8213)`: Device not found.
+   *  - `UNIT_4RELAY_ERR_I2C`: Module not found or I2C communication error
    */
   unit_4relay_error_t begin();
 
   /**
-   * @brief  Sets the mode of the device and turns off all relays.
+   * @brief Configures the operating mode and turns off all relays.
    *
-   * @param[in] mode Operation mode:
-   *                 - `0`: Asynchronous mode.
-   *                 - `1`: Synchronous mode.
+   * Sets the module to synchronous or asynchronous mode and initializes all relays to OFF.
+   *
+   * @param[in] mode Operating mode:
+   *
+   *                 - `0`: Asynchronous mode
+   *
+   *                 - `1`: Synchronous mode
+   *
+   * @attention Call after `begin()` to ensure proper initialization.
    *
    * @return
-   *  - `UNIT_4RELAY_OK (8208)`: Success.
+   *  - `UNIT_4RELAY_OK`: Success
    *
-   *  - `UNIT_4RELAY_ERR_INIT(8210)`: Failed to write initial configuration to device.
+   *  - `UNIT_4RELAY_ERR_INIT`: Failed to write initial configuration
    */
   unit_4relay_error_t init(bool mode);
 
   /**
    * @brief Sets the state of an individual relay.
    *
-   * This function turns ON or OFF a specified relay by index.
+   * Turns a specified relay ON or OFF by updating the I2C register and internal state.
    *
-   * @param[in] number  Relay number (0-3).
-   * @param[in] state   Desired relay state (`true` = ON, `false` = OFF).
+   * @param[in] number Relay index (0–3).
+   * @param[in] state Desired state (`true` for ON, `false` for OFF).
+   *
+   * @attention Ensure the relay index is valid (0–3).
    *
    * @return
-   *  - `UNIT_4RELAY_OK (8208)`: Success.
+   *  - `UNIT_4RELAY_OK`: Success
    *
-   *  - `UNIT_4RELAY_ERR_INDEX (8211)`: Invalid relay index.
+   *  - `UNIT_4RELAY_ERR_INDEX`: Invalid relay index
    */
   unit_4relay_error_t relayWrite(uint8_t number, bool state);
 
   /**
    * @brief Sets all relays to the same state.
    *
-   * This function turns all relays ON or OFF.
+   * Turns all relays ON or OFF simultaneously and updates the internal state.
    *
-   * @param[in] state  Desired relay state for all (`true` = ON, `false` = OFF).
+   * @param[in] state Desired state for all relays (`true` for ON, `false` for OFF).
    *
    * @return
-   *  - `UNIT_4RELAY_OK (8208)`: Success.
+   *  - `UNIT_4RELAY_OK`: Success
    */
   unit_4relay_error_t relayAll(bool state);
 
   /**
    * @brief Sets the state of an individual LED.
    *
-   * This function turns ON or OFF a specified indicator LED by index.
+   * Turns a specified indicator LED ON or OFF by updating the I2C register and internal state.
    *
-   * @param[in] number  LED number (0-3).
-   * @param[in] state   Desired LED state (`true` = ON, `false` = OFF).
+   * @param[in] number LED index (0–3).
+   * @param[in] state Desired state (`true` for ON, `false` for OFF).
+   *
+   * @attention Ensure the LED index is valid (0–3).
    *
    * @return
-   *  - `UNIT_4RELAY_OK (8208)`: Success.
-   *
-   *  - `UNIT_4RELAY_ERR_INDEX (8211)`: Invalid LED index.
+   *  - `UNIT_4RELAY_OK`: Success
+   *  - `UNIT_4RELAY_ERR_INDEX`: Invalid LED index
    */
   unit_4relay_error_t ledWrite(uint8_t number, bool state);
 
   /**
    * @brief Sets all LEDs to the same state.
    *
-   * This function turns all indicator LEDs ON or OFF.
+   * Turns all indicator LEDs ON or OFF simultaneously and updates the internal state.
    *
-   * @param[in] state  Desired LED state for all (`true` = ON, `false` = OFF).
+   * @param[in] state Desired state for all LEDs (`true` for ON, `false` for OFF).
    *
    * @return
-   *  - `UNIT_4RELAY_OK (8208)`: Success.
+   *  - `UNIT_4RELAY_OK`: Success
    */
   unit_4relay_error_t ledAll(bool state);
 
   /**
-   * @brief Sets the operating mode of the relay unit.
+   * @brief Sets the operating mode of the relay module.
    *
-   * This function changes the internal mode of the device, such as LED or relay mode.
+   * Changes the module’s operating mode to synchronous or asynchronous.
    *
-   * @param[in] mode  Desired mode setting.
+   * @param[in] mode Desired mode (`0` for asynchronous, `1` for synchronous).
    *
    * @return
-   *  - `UNIT_4RELAY_OK (8208)`: Success.
+   *  - `UNIT_4RELAY_OK`: Success
    */
   unit_4relay_error_t switchMode(bool mode);
 
   /**
-   * @brief Gets the state of a specific relay.
+   * @brief Retrieves the state of a specific relay.
    *
-   * @param[in] number  Relay number (0-3).
+   * Returns the current state of the specified relay from the internal state array.
+   *
+   * @param[in] number Relay index (0–3).
+   *
+   * @attention Ensure the relay index is valid (0–3).
    *
    * @return
-   *  - Relay state (`0` = OFF, `1` = ON).
+   *  - `0`: Relay is OFF
    *
-   *  - `UNIT_4RELAY_ERR_INDEX (8211)`: If an invalid index is provided.
+   *  - `1`: Relay is ON
+   *
+   *  - `UNIT_4RELAY_ERR_INDEX`: Invalid relay index
    */
   int getRelayState(uint8_t number);
 
   /**
-   * @brief Gets the state of a specific LED.
+   * @brief Retrieves the state of a specific LED.
    *
-   * @param[in] number  LED number (0-3).
+   * Returns the current state of the specified LED from the internal state array.
+   *
+   * @param[in] number LED index (0–3).
+   *
+   * @attention Ensure the LED index is valid (0–3).
    *
    * @return
-   *  - LED state (`0` = OFF, `1` = ON).
+   *  - `0`: LED is OFF
    *
-   *  - `UNIT_4RELAY_ERR_INDEX (8211)`: If an invalid index is provided.
+   *  - `1`: LED is ON
+   *
+   *  - `UNIT_4RELAY_ERR_INDEX`: Invalid LED index
    */
   int getLedState(uint8_t number);
 
-  void setRelayState(bool state[4]);
+  /**
+   * @brief Stages relay states without writing to the module.
+   *
+   * Updates the internal relay state array with the provided states, deferring physical changes until
+   * `applyRelayState()` is called.
+   *
+   * @param[in] state Array of four boolean values representing the desired state for each relay (`true` for
+   * ON, `false` for OFF).
+   *
+   * @attention The state array must contain exactly four elements. Use `applyRelayState()` to write the
+   * staged states to the module.
+   *
+   * @return
+   *  - `UNIT_4RELAY_OK`: Success
+   */
+  unit_4relay_error_t setRelayStates(bool state[4]);
+
+  /**
+   * @brief Applies the staged relay states to the module.
+   *
+   * Writes the internal relay state array to the module’s I2C register, turning relays ON or OFF as specified
+   * by the states set via `setRelayState()`.
+   *
+   * @param[in] None
+   *
+   * @attention Requires a prior call to `setRelayState()` to stage the desired relay states. Ensure the
+   * module is initialized with `begin()` and `init()`.
+   *
+   * @return
+   *  - `UNIT_4RELAY_OK`: Success
+   *
+   *  - `UNIT_4RELAY_ERR_I2C`: I2C communication error
+   */
+  unit_4relay_error_t applyRelayState();
 
 private:
   bool relayState[4] = {false};
