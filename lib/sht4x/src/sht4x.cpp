@@ -88,14 +88,16 @@ sht4x_error_t SHT4X::update()
   {
     return SHT4X_ERR_CHECKSUM;
   }
-  float t_ticks  = (uint16_t) readBuffer[0] * 256 + (uint16_t) readBuffer[1];
-  float rh_ticks = (uint16_t) readBuffer[3] * 256 + (uint16_t) readBuffer[4];
 
-  sensorValue[SHT4X_HUMIDITY_INDEX] = -6 + 125 * rh_ticks / 65535;
+  uint16_t t_ticks  = ((uint16_t) readBuffer[0] << 8) | readBuffer[1];
+  uint16_t rh_ticks = ((uint16_t) readBuffer[3] << 8) | readBuffer[4];
 
-  sensorValue[SHT4X_HUMIDITY_INDEX] = min(max(sensorValue[SHT4X_HUMIDITY_INDEX], (float) 0.0), (float) 100.0);
+  // Use constants to avoid recalculating
+  const float scale = 1.52590219E-5;
 
-  sensorValue[SHT4X_TEMPERATURE_INDEX] = -45 + 175 * t_ticks / 65535;
+  sensorValue[SHT4X_TEMPERATURE_INDEX] = -45.0f + 175.0f * (t_ticks * scale);
+  sensorValue[SHT4X_HUMIDITY_INDEX]    = -6.0f + 125.0f * (rh_ticks * scale);
+  sensorValue[SHT4X_HUMIDITY_INDEX]    = min(max(sensorValue[SHT4X_HUMIDITY_INDEX], 0.0f), 100.0f);
 
   return SHT4X_OK;
 }
