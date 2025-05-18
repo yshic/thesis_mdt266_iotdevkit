@@ -1,17 +1,17 @@
-/*!
- * @file HUSKYLENS.h
- * @brief HUSKYLENS - An Easy-to-use AI Machine Vision Sensor
- * @n Header file for HUSKYLENS
+/**
+ * @file       HUSKYLENS.h
+ * @license    This project is released under GNU Lesser General Public License.
+ * @version    1.0.0
+ * @date       2024-12-31
+ * @author     [Angelo](Angelo.qiao@dfrobot.com)
+ * @author     [Robert](robert@dfrobot.com)
+ * @author     Tuan Nguyen
  *
- * @copyright	[DFRobot]( http://www.dfrobot.com ), 2016
- * @copyright	GNU Lesser General Public License
+ * @brief      Header file for HUSKYLENS
  *
- * @author [Angelo](Angelo.qiao@dfrobot.com)
- * @author [Robert](robert@dfrobot.com)
- * @version  V1.0.0
- * @date  2020-08-03
+ * @note       None
+ * @example    None
  */
-
 #include "Arduino.h"
 #include "HuskyLensProtocolCore.h"
 #include "Wire.h"
@@ -370,7 +370,7 @@ public:
   }
 
   void read() { result = (get(currentIndex++)); }
-  
+
   // custom
   HUSKYLENSResult getResult() { return result; }
   void            setCameraStatus(bool state) { status = state; }
