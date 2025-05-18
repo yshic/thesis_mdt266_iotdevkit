@@ -99,7 +99,7 @@
 
   // Display
   #ifdef LCD_MODULE
-    #include "LCD-I2C.h"
+    #include "lcd_16x2.h"
 extern LCD_I2C lcd;
   #endif // LCD_MODULE
 

@@ -145,7 +145,7 @@ bsp_i2c_error_t bspI2CReadByte(int address, uint8_t &byte)
     {
       return BSP_I2C_ERR_READ;
     }
-    delay(1);
+    DELAY(1);
   }
   byte = i2cWire->read();
   return BSP_I2C_OK;
