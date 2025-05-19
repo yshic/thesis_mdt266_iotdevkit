@@ -55,13 +55,13 @@ void Ultrasonic::read(char unit)
   switch (unit)
   {
     case 'c':
-      distance[CM_INDEX] = duration() / CM_DIVISOR;
+      distance[CM_INDEX] = duration() / 2 * CM_CONSTANT;
       break;
     case 'm':
-      distance[MM_INDEX] = duration() / MM_DIVISOR;
+      distance[MM_INDEX] = duration() / 2 * MM_CONSTANT;
       break;
     case 'i':
-      distance[IN_INDEX] = duration() / IN_DIVISOR;
+      distance[IN_INDEX] = duration() / 2 * IN_CONSTANT;
       break;
     default:
       break;
