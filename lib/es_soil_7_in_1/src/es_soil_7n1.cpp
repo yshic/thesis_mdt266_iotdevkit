@@ -27,7 +27,7 @@
 
 es_soil_7n1_error_t EsSoil7n1::readSoilPh()
 {
-  byte command[8] = {0x01, 0x03, 0x00, 0x06, 0x00, 0x01, 0x64, 0x0B}; // Reading pH
+  byte command[8] = {ES_SOIL_SLAVE_ID, 0x03, 0x00, 0x06, 0x00, 0x01, 0x64, 0x0B}; // Reading pH
   byte response[7];
 
   rs485Serial1.sendModbusCommand(command, sizeof(command), response, sizeof(response));
@@ -41,7 +41,7 @@ es_soil_7n1_error_t EsSoil7n1::readSoilPh()
   }
 #endif // DEBUG_PRINT_ES_SOIL_RAW_RESPONSE
 
-  if (response[0] != 0x01 || response[1] != 0x03 || response[2] != 0x02)
+  if (response[0] != ES_SOIL_SLAVE_ID || response[1] != 0x03 || response[2] != 0x02)
   {
 #ifdef DEBUG_PRINT
     Serial.println("Error: Invalid response format");
@@ -59,7 +59,7 @@ es_soil_7n1_error_t EsSoil7n1::readSoilPh()
 
 es_soil_7n1_error_t EsSoil7n1::readSoilMoisture()
 {
-  byte command[8] = {0x01, 0x03, 0x00, 0x12, 0x00, 0x01, 0x24, 0x0F}; // Reading Moisture
+  byte command[8] = {ES_SOIL_SLAVE_ID, 0x03, 0x00, 0x12, 0x00, 0x01, 0x24, 0x0F}; // Reading Moisture
   byte response[7];
 
   rs485Serial1.sendModbusCommand(command, sizeof(command), response, sizeof(response));
@@ -73,7 +73,7 @@ es_soil_7n1_error_t EsSoil7n1::readSoilMoisture()
   }
 #endif // DEBUG_PRINT_ES_SOIL_RAW_RESPONSE
 
-  if (response[0] != 0x01 || response[1] != 0x03 || response[2] != 0x02)
+  if (response[0] != ES_SOIL_SLAVE_ID || response[1] != 0x03 || response[2] != 0x02)
   {
 #ifdef DEBUG_PRINT
     Serial.println("Error: Invalid response format");
@@ -91,7 +91,7 @@ es_soil_7n1_error_t EsSoil7n1::readSoilMoisture()
 
 es_soil_7n1_error_t EsSoil7n1::readSoilTemperature()
 {
-  byte command[8] = {0x01, 0x03, 0x00, 0x13, 0x00, 0x01, 0x75, 0xCF}; // Reading Temperature
+  byte command[8] = {ES_SOIL_SLAVE_ID, 0x03, 0x00, 0x13, 0x00, 0x01, 0x75, 0xCF}; // Reading Temperature
   byte response[7];
 
   rs485Serial1.sendModbusCommand(command, sizeof(command), response, sizeof(response));
@@ -105,7 +105,7 @@ es_soil_7n1_error_t EsSoil7n1::readSoilTemperature()
   }
 #endif // DEBUG_PRINT_ES_SOIL_RAW_RESPONSE
 
-  if (response[0] != 0x01 || response[1] != 0x03 || response[2] != 0x02)
+  if (response[0] != ES_SOIL_SLAVE_ID || response[1] != 0x03 || response[2] != 0x02)
   {
 #ifdef DEBUG_PRINT
     Serial.println("Error: Invalid response format");
@@ -123,7 +123,7 @@ es_soil_7n1_error_t EsSoil7n1::readSoilTemperature()
 
 es_soil_7n1_error_t EsSoil7n1::readSoilConductivity()
 {
-  byte command[8] = {0x01, 0x03, 0x00, 0x15, 0x00, 0x01, 0x95, 0xCE}; // Reading Conductivity
+  byte command[8] = {ES_SOIL_SLAVE_ID, 0x03, 0x00, 0x15, 0x00, 0x01, 0x95, 0xCE}; // Reading Conductivity
   byte response[7];
 
   rs485Serial1.sendModbusCommand(command, sizeof(command), response, sizeof(response));
@@ -137,7 +137,7 @@ es_soil_7n1_error_t EsSoil7n1::readSoilConductivity()
   }
 #endif // DEBUG_PRINT_ES_SOIL_RAW_RESPONSE
 
-  if (response[0] != 0x01 || response[1] != 0x03 || response[2] != 0x02)
+  if (response[0] != ES_SOIL_SLAVE_ID || response[1] != 0x03 || response[2] != 0x02)
   {
 #ifdef DEBUG_PRINT
     Serial.println("Error: Invalid response format");
@@ -155,7 +155,7 @@ es_soil_7n1_error_t EsSoil7n1::readSoilConductivity()
 
 es_soil_7n1_error_t EsSoil7n1::readSoilNitrogen()
 {
-  byte command[8] = {0x01, 0x03, 0x00, 0x1e, 0x00, 0x01, 0xE4, 0x0C}; // Reading Nitrogen
+  byte command[8] = {ES_SOIL_SLAVE_ID, 0x03, 0x00, 0x1e, 0x00, 0x01, 0xE4, 0x0C}; // Reading Nitrogen
   byte response[7];
 
   rs485Serial1.sendModbusCommand(command, sizeof(command), response, sizeof(response));
@@ -169,7 +169,7 @@ es_soil_7n1_error_t EsSoil7n1::readSoilNitrogen()
   }
 #endif // DEBUG_PRINT_ES_SOIL_RAW_RESPONSE
 
-  if (response[0] != 0x01 || response[1] != 0x03 || response[2] != 0x02)
+  if (response[0] != ES_SOIL_SLAVE_ID || response[1] != 0x03 || response[2] != 0x02)
   {
 #ifdef DEBUG_PRINT
     Serial.println("Error: Invalid response format");
@@ -187,7 +187,7 @@ es_soil_7n1_error_t EsSoil7n1::readSoilNitrogen()
 
 es_soil_7n1_error_t EsSoil7n1::readSoilPhosphorus()
 {
-  byte command[8] = {0x01, 0x03, 0x00, 0x1f, 0x00, 0x01, 0xB5, 0xCC}; // Reading Phosphorus
+  byte command[8] = {ES_SOIL_SLAVE_ID, 0x03, 0x00, 0x1f, 0x00, 0x01, 0xB5, 0xCC}; // Reading Phosphorus
   byte response[7];
 
   rs485Serial1.sendModbusCommand(command, sizeof(command), response, sizeof(response));
@@ -201,7 +201,7 @@ es_soil_7n1_error_t EsSoil7n1::readSoilPhosphorus()
   }
 #endif // DEBUG_PRINT_ES_SOIL_RAW_RESPONSE
 
-  if (response[0] != 0x01 || response[1] != 0x03 || response[2] != 0x02)
+  if (response[0] != ES_SOIL_SLAVE_ID || response[1] != 0x03 || response[2] != 0x02)
   {
 #ifdef DEBUG_PRINT
     Serial.println("Error: Invalid response format");
@@ -219,7 +219,7 @@ es_soil_7n1_error_t EsSoil7n1::readSoilPhosphorus()
 
 es_soil_7n1_error_t EsSoil7n1::readSoilPotassium()
 {
-  byte command[8] = {0x01, 0x03, 0x00, 0x20, 0x00, 0x01, 0x85, 0xC0}; // Reading Potassium
+  byte command[8] = {ES_SOIL_SLAVE_ID, 0x03, 0x00, 0x20, 0x00, 0x01, 0x85, 0xC0}; // Reading Potassium
   byte response[7];
 
   rs485Serial1.sendModbusCommand(command, sizeof(command), response, sizeof(response));
@@ -233,7 +233,7 @@ es_soil_7n1_error_t EsSoil7n1::readSoilPotassium()
   }
 #endif // DEBUG_PRINT_ES_SOIL_RAW_RESPONSE
 
-  if (response[0] != 0x01 || response[1] != 0x03 || response[2] != 0x02)
+  if (response[0] != ES_SOIL_SLAVE_ID || response[1] != 0x03 || response[2] != 0x02)
   {
 #ifdef DEBUG_PRINT
     Serial.println("Error: Invalid response format");
@@ -251,7 +251,8 @@ es_soil_7n1_error_t EsSoil7n1::readSoilPotassium()
 
 es_soil_7n1_error_t EsSoil7n1::readSoilTempAndMoisture()
 {
-  byte command[8] = {0x01, 0x03, 0x00, 0x12, 0x00, 0x02, 0x64, 0x0E}; // Reading Temperature and Moisture
+  byte command[8] = {
+  ES_SOIL_SLAVE_ID, 0x03, 0x00, 0x12, 0x00, 0x02, 0x64, 0x0E}; // Reading Temperature and Moisture
   byte response[9];
 
   rs485Serial1.sendModbusCommand(command, sizeof(command), response, sizeof(response));
@@ -266,7 +267,7 @@ es_soil_7n1_error_t EsSoil7n1::readSoilTempAndMoisture()
 #endif // DEBUG_PRINT_ES_SOIL_RAW_RESPONSE
 
   // Verify the response format
-  if (response[0] != 0x01 || response[1] != 0x03 || response[2] != 0x04)
+  if (response[0] != ES_SOIL_SLAVE_ID || response[1] != 0x03 || response[2] != 0x04)
   {
 #ifdef DEBUG_PRINT
     Serial.println("Error: Invalid response format");
@@ -288,7 +289,7 @@ es_soil_7n1_error_t EsSoil7n1::readSoilTempAndMoisture()
 
 es_soil_7n1_error_t EsSoil7n1::readSoilNPK()
 {
-  byte command[8] = {0x01, 0x03, 0x00, 0x1E, 0x00, 0x03, 0x65, 0xCD}; // Reading N-P-K
+  byte command[8] = {ES_SOIL_SLAVE_ID, 0x03, 0x00, 0x1E, 0x00, 0x03, 0x65, 0xCD}; // Reading N-P-K
   byte response[11];
 
   rs485Serial1.sendModbusCommand(command, sizeof(command), response, sizeof(response));
@@ -303,7 +304,7 @@ es_soil_7n1_error_t EsSoil7n1::readSoilNPK()
 #endif // DEBUG_PRINT_ES_SOIL_RAW_RESPONSE
 
   // Verify the response format
-  if (response[0] != 0x01 || response[1] != 0x03 || response[2] != 0x06)
+  if (response[0] != ES_SOIL_SLAVE_ID || response[1] != 0x03 || response[2] != 0x06)
   {
 #ifdef DEBUG_PRINT
     Serial.println("Error: Invalid response format");
