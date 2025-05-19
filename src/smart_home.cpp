@@ -40,7 +40,7 @@ void SmartHome::serialSetup(bool uart, bool rs485, bool i2c)
 
   if (i2c)
   {
-    Wire.begin(SDA, SCL, 400000U);
+    Wire.begin();
   }
 }
 

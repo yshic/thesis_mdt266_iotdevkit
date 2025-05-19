@@ -21,7 +21,7 @@
   #endif // DEBUG_PRINT
 
 //  #define DEBUG_PRINT_RTOS_TIMING
-  #define DEBUG_BUTTON_CALLBACK
+//  #define DEBUG_BUTTON_CALLBACK
 // Communication
 /* Wireless   --------------------------------------------------------- */
   #ifdef ESP32

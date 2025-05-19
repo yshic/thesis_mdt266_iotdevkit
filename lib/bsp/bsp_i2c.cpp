@@ -187,7 +187,7 @@ bsp_i2c_error_t bspI2CReadBytes(int address, uint8_t *bytes, uint32_t len)
     {
       return BSP_I2C_ERR_READ;
     }
-    delay(1);
+    DELAY(1);
   }
   for (int i = 0; i < len; i++)
   {

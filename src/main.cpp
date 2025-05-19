@@ -21,7 +21,7 @@ void setup()
     ; // Wait for Serial to be ready
   scanI2CDevices();
 #else
-  bool devices[11]     = {1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0};
+  bool devices[11]     = {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0};
   bool connectivity[2] = {1, 0};
 
   sh.deviceEnable(devices);

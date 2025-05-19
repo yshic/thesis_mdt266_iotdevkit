@@ -13,7 +13,6 @@
 #include "sensors_task.h"
 #include "bsp_rs485.h"
 #include "globals.h"
-#include "logging.h"
 
 /* Private defines ---------------------------------------------------- */
 
