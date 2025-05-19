@@ -1,6 +1,6 @@
-#include "LCD-I2C.h"
+#include "lcd_16x2.h"
 
-#include <LCD_Constants.h>
+#include <lcd_16x2_constants.h>
 
 /**
  * @brief function begin

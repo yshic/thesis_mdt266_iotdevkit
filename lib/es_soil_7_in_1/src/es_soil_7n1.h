@@ -21,8 +21,9 @@
 
   /* Public defines ----------------------------------------------------- */
   #define ES_SOIL_7N1_LIB_VERSION (F("0.1.0"))
+  #define ES_SOIL_SLAVE_ID        0x03
 
-// #define DEBUG_PRINT_ES_SOIL_RAW_RESPONSE
+  #define DEBUG_PRINT_ES_SOIL_RAW_RESPONSE
 
 /* Public enumerate/structure ----------------------------------------- */
 

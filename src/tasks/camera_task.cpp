@@ -88,7 +88,6 @@ void huskylensTask(void *pvParameters)
             vTaskDelay(pdMS_TO_TICKS(5000)); // Delay for going through the door
           }
 #ifdef DEBUG_PRINT
-
           printResult(result);
 #endif // DEBUG_PRINT
         }

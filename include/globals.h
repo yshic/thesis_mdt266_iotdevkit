@@ -21,7 +21,7 @@
   #endif // DEBUG_PRINT
 
 //  #define DEBUG_PRINT_RTOS_TIMING
-  #define DEBUG_BUTTON_CALLBACK
+//  #define DEBUG_BUTTON_CALLBACK
 // Communication
 /* Wireless   --------------------------------------------------------- */
   #ifdef ESP32
@@ -99,7 +99,7 @@
 
   // Display
   #ifdef LCD_MODULE
-    #include "LCD-I2C.h"
+    #include "lcd_16x2.h"
 extern LCD_I2C lcd;
   #endif // LCD_MODULE
 

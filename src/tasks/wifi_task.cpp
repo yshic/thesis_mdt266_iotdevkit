@@ -15,7 +15,6 @@
 #include "globals.h"
 #include <DNSServer.h>
 #include <FS.h>
-#include <LCD-I2C.h>
 #include <LittleFS.h>
 #include <WebServer.h>
 #include <WiFi.h>
