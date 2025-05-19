@@ -88,10 +88,8 @@ sht4x_error_t SHT4X::update()
   {
     return SHT4X_ERR_CHECKSUM;
   }
-
-  uint16_t t_ticks  = ((uint16_t) readBuffer[0] << 8) | readBuffer[1];
-  uint16_t rh_ticks = ((uint16_t) readBuffer[3] << 8) | readBuffer[4];
-
+  float t_ticks  = ((uint16_t) readBuffer[0] << 8) | readBuffer[1];
+  float rh_ticks = ((uint16_t) readBuffer[3] << 8) | readBuffer[4];
   // Use constants to avoid recalculating
   const float scale = 1.52590219E-5;
 
