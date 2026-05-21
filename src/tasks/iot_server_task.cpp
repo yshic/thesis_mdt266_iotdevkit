@@ -37,7 +37,7 @@
 
 // Firmware Title & Version
 constexpr char CURRENT_FIRMWARE_TITLE[]   = "XIAO_SMART_HOME";
-constexpr char CURRENT_FIRMWARE_VERSION[] = "0.8.0";
+constexpr char CURRENT_FIRMWARE_VERSION[] = "1.0.0";
 
 // Maximum amount of retries we attempt to download each firmware chunck over MQTT
 constexpr uint8_t FIRMWARE_FAILURE_RETRIES = 12U;
@@ -639,53 +639,57 @@ void sendTelemetryTask(void *pvParameters)
         }
 #endif // LIGHT_SENSOR_MODULE
 
-#ifdef ES_SOIL_RS485_MODULE
-        float soilPh           = esSoil.getSoilPh();
-        float soilMoisture     = esSoil.getSoilMoisture();
-        float soilTemperature  = esSoil.getSoilTemperature();
-        float soilConductivity = esSoil.getSoilConductivity();
-        float soilNitrogen     = esSoil.getSoilNitrogen();
-        float soilPhosphorus   = esSoil.getSoilPhosphorus();
-        float soilPotassium    = esSoil.getSoilPotassium();
+        /*
+        #ifdef ES_SOIL_RS485_MODULE
 
-  #ifdef DEBUG_PRINT
-        Serial.print("Soil Ph: ");
-        Serial.print(soilPh);
-        Serial.println(" pH");
+                float soilPh           = esSoil.getSoilPh();
+                float soilMoisture     = esSoil.getSoilMoisture();
+                float soilTemperature  = esSoil.getSoilTemperature();
+                float soilConductivity = esSoil.getSoilConductivity();
+                float soilNitrogen     = esSoil.getSoilNitrogen();
+                float soilPhosphorus   = esSoil.getSoilPhosphorus();
+                float soilPotassium    = esSoil.getSoilPotassium();
 
-        Serial.print("Soil Moisture: ");
-        Serial.print(soilMoisture);
-        Serial.println(" % RH");
+          #ifdef DEBUG_PRINT
+                Serial.print("Soil Ph: ");
+                Serial.print(soilPh);
+                Serial.println(" pH");
 
-        Serial.print("Soil Temperature: ");
-        Serial.print(soilTemperature);
-        Serial.println(" *C");
+                Serial.print("Soil Moisture: ");
+                Serial.print(soilMoisture);
+                Serial.println(" % RH");
 
-        Serial.print("Soil Conductivity: ");
-        Serial.print(soilConductivity);
-        Serial.println(" us/cm");
+                Serial.print("Soil Temperature: ");
+                Serial.print(soilTemperature);
+                Serial.println(" *C");
 
-        Serial.print("Soil Nitrogen: ");
-        Serial.print(soilNitrogen);
-        Serial.println(" mg/kg");
+                Serial.print("Soil Conductivity: ");
+                Serial.print(soilConductivity);
+                Serial.println(" us/cm");
 
-        Serial.print("Soil Phosphorus: ");
-        Serial.print(soilPhosphorus);
-        Serial.println(" mg/kg");
+                Serial.print("Soil Nitrogen: ");
+                Serial.print(soilNitrogen);
+                Serial.println(" mg/kg");
 
-        Serial.print("Soil Potassium: ");
-        Serial.print(soilPotassium);
-        Serial.println(" mg/kg");
-  #endif // DEBUG_PRINT
+                Serial.print("Soil Phosphorus: ");
+                Serial.print(soilPhosphorus);
+                Serial.println(" mg/kg");
 
-        tb.sendTelemetryData(SOIL_PH_KEY, soilPh);
-        tb.sendTelemetryData(SOIL_MOISTURE_KEY, soilMoisture);
-        tb.sendTelemetryData(SOIL_TEMPERATURE_KEY, soilTemperature);
-        tb.sendTelemetryData(SOIL_CONDUCTIVITY_KEY, soilConductivity);
-        tb.sendTelemetryData(SOIL_NITROGEN_KEY, soilNitrogen);
-        tb.sendTelemetryData(SOIL_PHOSPHORUS_KEY, soilPhosphorus);
-        tb.sendTelemetryData(SOIL_POTASSIUM_KEY, soilPotassium);
-#endif // ES_SOIL_RS485_MODULE
+                Serial.print("Soil Potassium: ");
+                Serial.print(soilPotassium);
+                Serial.println(" mg/kg");
+          #endif // DEBUG_PRINT
+
+                tb.sendTelemetryData(SOIL_PH_KEY, soilPh);
+                tb.sendTelemetryData(SOIL_MOISTURE_KEY, soilMoisture);
+                tb.sendTelemetryData(SOIL_TEMPERATURE_KEY, soilTemperature);
+                tb.sendTelemetryData(SOIL_CONDUCTIVITY_KEY, soilConductivity);
+                tb.sendTelemetryData(SOIL_NITROGEN_KEY, soilNitrogen);
+                tb.sendTelemetryData(SOIL_PHOSPHORUS_KEY, soilPhosphorus);
+                tb.sendTelemetryData(SOIL_POTASSIUM_KEY, soilPotassium);
+
+        #endif // ES_SOIL_RS485_MODULE
+        */
 
 #if defined(DHT20_MODULE) || defined(SHT4X_MODULE)
         if (!(isnan(temperature) || isnan(humidity)))

@@ -33,7 +33,7 @@ sht4x_error_t SHT4X::update()
 {
   uint8_t  readBuffer[6];
   uint8_t  cmd      = SHT4x_CMD_NOHEAT_HIGHPRECISION;
-  uint16_t duration = 10;
+  uint16_t duration = 9;
   switch (_heater)
   {
     case SHT4X_NO_HEATER:
@@ -41,7 +41,7 @@ sht4x_error_t SHT4X::update()
       {
         case SHT4X_HIGH_PRECISION:
           cmd      = SHT4x_CMD_NOHEAT_HIGHPRECISION;
-          duration = 10;
+          duration = 9;
           break;
         case SHT4X_MED_PRECISION:
           cmd      = SHT4x_CMD_NOHEAT_MEDPRECISION;

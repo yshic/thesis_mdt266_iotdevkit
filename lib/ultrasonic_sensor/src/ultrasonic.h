@@ -23,9 +23,9 @@
   /* Public defines ----------------------------------------------------- */
   #define ULTRASONIC_LIB_VERSION (F("0.1.0"))
 
-  #define CM_DIVISOR             58
-  #define MM_DIVISOR             5.8
-  #define IN_DIVISOR             148
+  #define CM_CONSTANT            0.0343
+  #define MM_CONSTANT            0.343
+  #define IN_CONSTANT            0.0135
 
   #define CM_INDEX               0
   #define MM_INDEX               1
