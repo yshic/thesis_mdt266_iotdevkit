@@ -27,7 +27,7 @@ This project bridges the gap between low-level hardware abstraction and cloud-ba
 
 ## Hardware & Supported Peripherals
 
-The BSP abstracts hardware interactions into Object-Oriented classes, making it incredibly simple to initialize and manage devices.
+The PAL abstracts hardware interactions into Object-Oriented classes, making it incredibly simple to initialize and manage devices.
 
 | Interface | Supported Devices & Modules | Use Case in Demo |
 | :--- | :--- | :--- |
@@ -94,10 +94,12 @@ To validate the development kit, a complete Smart Home system was deployed.
 
 --------------------------------------------------------------------------------
 ### Author
-Nguyen Le Anh Tuan
-LinkedIn: linkedin.com/in/yshic
-GitHub: github.com/yshic
-Email: tuanl799@gmail.com
+
+- Nguyen Le Anh Tuan
+- LinkedIn: linkedin.com/in/yshic
+- GitHub: github.com/yshic
+- Email: tuanl799@gmail.com
+
 This project was completed as a Graduation Thesis for the Faculty of Computer Science and Engineering at the Ho Chi Minh City University of Technology (HCMUT).
 
 # [Documentation](https://yshic.github.io/thesis_dev_kit_docs)
